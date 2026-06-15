@@ -1,0 +1,1237 @@
+{
+  "requests": [
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/ComboManualItem",
+      "name": "Get Combo Manual Items",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/ComboManualItem",
+      "name": "Post Combo Manual Item",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/ComboManualItem/{id}",
+      "name": "Get Combo Manual Item By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/ComboManualItem/{id}",
+      "name": "Put Combo Manual Item",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/ComboManualName",
+      "name": "Get Combo Manual Names",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/ComboManualName/{id}",
+      "name": "Get Combo Manual Name By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/GoodGroup",
+      "name": "GoodGroup Get All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/GoodGroup",
+      "name": "Post group",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/GoodGroup/{id}",
+      "name": "Delete group",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/GoodGroup/{id}",
+      "name": "Put group",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/HospitalBlock",
+      "name": "GET all HospitalBlock",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/HospitalBlock/{id}",
+      "name": "GET one HospitalBlock",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/MedicalCards",
+      "name": "Medical Card Get By Pet (Filter)",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/MedicalCards",
+      "name": "Medical Card Post",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/MedicalCards/AddVaccination",
+      "name": "Post Vaccination",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/AllDiagnoses",
+      "name": "Get All Diagnoses",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/MedcardsTextTemplates",
+      "name": "Medical Card Get Text Templates",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/MedicalcardsDataByClient",
+      "name": "Medical Card Get By Client (With Limit & Offset. Can be used separately)",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/Vaccinations",
+      "name": "Get Vaccinations By Pet",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/{id}",
+      "name": "Medical Card Get By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/MedicalCards/{id}",
+      "name": "Medical Card Put",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/PartyAccount",
+      "name": "GetAllParty",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/PartyAccount/{id}",
+      "name": "GetAllPartyToId",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/PartyAccountDoc",
+      "name": "GetAllPartyAccountDoc",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/PartyAccountDoc/{id}",
+      "name": "GetAllPartyAccountDocToId",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/StoreDocument",
+      "name": "GetAllStoreDocuments",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/StoreDocument/{id}",
+      "name": "GetStoreDocumentsToId",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/StoreDocumentOperation/{id}",
+      "name": "GetStoreDocumentOperationToId",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/Suppliers",
+      "name": "GetAllSuppliers",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/Suppliers",
+      "name": "CreateSupplier",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/Suppliers/{id}",
+      "name": "GetSuppliersToId",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/Unit",
+      "name": "Post unit",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/Unit/{id}",
+      "name": "Delete unit",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/Unit/{id}",
+      "name": "Put unit",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/VmLink/personalAccountLinkByClientId/{clientId}",
+      "name": "Get By ID (With Auth #2)",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/VmLink/personalAccountLinkByPhone/{phone}",
+      "name": "Get By Phone",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/admission",
+      "name": "Get Admissions Filtered By Client & Status",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/admission",
+      "name": "Post Admission",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/admission/{id}",
+      "name": "DeleteAdmission",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/admission/{id}",
+      "name": "GetAdmissionToId",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/admission/{id}",
+      "name": "Put Admission",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/anonymousClient",
+      "name": "Get All Clients",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/anonymousClient/{id}",
+      "name": "Get Client By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/breed",
+      "name": "Get All Breeds Filtered By Pet Type",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/breed/{id}",
+      "name": "Get Breed By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cassa",
+      "name": "Get Cassa All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cassa/{id}",
+      "name": "Get Cassa By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cassaclose",
+      "name": "Get Cassa Close All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cassaclose/{id}",
+      "name": "Get Cassa Close By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cassarashod",
+      "name": "Get Cassa Rashod All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cassarashod/{id}",
+      "name": "Get Cassa Rashod By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/city",
+      "name": "Get All Cities",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/city",
+      "name": "Post City",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/city/{id}",
+      "name": "Delete",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/city/{id}",
+      "name": "Get City By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/city/{id}",
+      "name": "City editing",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cityType",
+      "name": "Get All CityTypes",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/cityType",
+      "name": "Post CityType",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/cityType/{id}",
+      "name": "Delete",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/cityType/{id}",
+      "name": "Get CityType By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/cityType/{id}",
+      "name": "CityType Editing",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/client",
+      "name": "Get All Clients",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/client/{id}",
+      "name": "Delete",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/client/{id}",
+      "name": "Get Client By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/client/{id}",
+      "name": "Post Client",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/client/{id}",
+      "name": "Client editing",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/clinics",
+      "name": "Get All Clinics",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/clinics/{id}",
+      "name": "Get Clinic By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/closingOfInvoices",
+      "name": "Get Closing Of Invoice All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/closingOfInvoices/{id}",
+      "name": "Get Closing Of Invoice By Id",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/fiscalRegisterData",
+      "name": "Get All Fiscal Register Data",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/fiscalRegisterData/{id}",
+      "name": "Get Fiscal Register Data By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/fiscalTaxSystems",
+      "name": "Get All Fiscal Tax System",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/fiscalTaxSystems/{id}",
+      "name": "Get Fiscal Tax System By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/good",
+      "name": "Good Get All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/good",
+      "name": "Good Post",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/good/{id}",
+      "name": "Good Delete",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/good/{id}",
+      "name": "Good Get By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/good/{id}",
+      "name": "Good Put",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/goodGroup/{id}",
+      "name": "GoodGroup Get By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/goodSaleParam",
+      "name": "GoodSaleParam Get All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/goodSaleParam/{id}",
+      "name": "Put GoodSaleParam",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/goodTag",
+      "name": "Get All Good Tags",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/goodTag",
+      "name": "Create Good Tag",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/goodTag/{id}",
+      "name": "Delete Good Tag",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/goodTag/{id}",
+      "name": "Get Good Tag By Id",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/goodTag/{id}",
+      "name": "Update Good Tag By Id",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/hospital",
+      "name": "GET all hospital",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/hospital/{id}",
+      "name": "GET one hospital",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/hospital/{id}",
+      "name": "Update Hospital",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/invoice",
+      "name": "Invoice Get All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/invoice/{id}",
+      "name": "Invoice Get By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/invoiceDocument",
+      "name": "InvoiceDocument Get All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/invoiceDocument/{id}",
+      "name": "InvoiceDocument Get By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/messages/all",
+      "name": "Send to all",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/messages/reports",
+      "name": "Message Get Reports",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/messages/roles",
+      "name": "Send by roles",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/messages/users",
+      "name": "Send to concrete users",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/payment",
+      "name": "Get Payments All",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/payment/{id}",
+      "name": "Get Payments By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/pet",
+      "name": "Get All Pets",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/pet",
+      "name": "Post Pet",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/pet/{id}",
+      "name": "Delete Pet",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/pet/{id}",
+      "name": "Get Pet By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/pet/{id}",
+      "name": "Put Pet",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/petType",
+      "name": "Get All PetTypes",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/petType/{id}",
+      "name": "Get PetType By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/properties",
+      "name": "Get All Properties",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/report-ai-job",
+      "name": "Create Report AI Job",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/report-ai-job/{id}",
+      "name": "Get Report AI Job By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/report-ai-job/{id}/confirm",
+      "name": "Confirm Report AI Job Candidate",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/report-ai-job/{id}/data",
+      "name": "Get Report AI Job Data",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/report-ai-job/{id}/save",
+      "name": "Save Report AI Job",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/report/StartReport",
+      "name": "StartReport",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/report/reportFile",
+      "name": "GetURLReportResult",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/role",
+      "name": "Get All Roles",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/role/{id}",
+      "name": "Get Role By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/stores/RestOfGoodInWarehouse",
+      "name": "GetQuantityGood",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/street",
+      "name": "Get Street By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/street",
+      "name": "Post Street",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/street/{id}",
+      "name": "Delete Street",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/street/{id}",
+      "name": "Put Street",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/timesheet",
+      "name": "Get All TimeSheets",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/timesheet/{id}",
+      "name": "Get TimeSheets ById",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/unit",
+      "name": "Get All Units",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/unit/{id}",
+      "name": "Get Unit By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/user",
+      "name": "User Get By FIrst And Last Names",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/user/anonymousList",
+      "name": "User Get Anonymous",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/user/{id}",
+      "name": "User Get By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/user/{id}",
+      "name": "User editing",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/userPosition",
+      "name": "Get All UserPositions",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/rest/api/userPosition",
+      "name": "Post UserPosition",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "DELETE",
+      "path": "/rest/api/userPosition/{id}",
+      "name": "Delete UserPosition",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "GET",
+      "path": "/rest/api/userPosition/{id}",
+      "name": "Get UserPosition By ID",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "PUT",
+      "path": "/rest/api/userPosition/{id}",
+      "name": "Update UserPosition",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    },
+    {
+      "source": "postman_public",
+      "method": "POST",
+      "path": "/token_auth.php",
+      "name": "Get Token (by User Login & Password)",
+      "folder": "",
+      "has_body": false,
+      "query_params": []
+    }
+  ],
+  "counts": {
+    "requests": 136,
+    "methods": {
+      "GET": 87,
+      "POST": 22,
+      "DELETE": 11,
+      "PUT": 16
+    }
+  }
+}

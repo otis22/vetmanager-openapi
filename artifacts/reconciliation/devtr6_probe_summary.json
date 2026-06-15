@@ -1,0 +1,1014 @@
+{
+  "base_url": "https://devtr6.vetmanager2.ru",
+  "api_key_present": true,
+  "policy": "GET collection endpoints only; raw response bodies are not stored",
+  "probes": [
+    {
+      "method": "GET",
+      "path": "/rest/api/ComboManualItem",
+      "url_path_only": "/rest/api/ComboManualItem",
+      "http_status": 200,
+      "elapsed_ms": 210,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "comboManualItem",
+          "totalCount"
+        ],
+        "totalCount": 155
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/ComboManualName",
+      "url_path_only": "/rest/api/ComboManualName",
+      "http_status": 200,
+      "elapsed_ms": 170,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "comboManualName",
+          "totalCount"
+        ],
+        "totalCount": 19
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/GoodGroup",
+      "url_path_only": "/rest/api/GoodGroup",
+      "http_status": 200,
+      "elapsed_ms": 181,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "goodGroup",
+          "totalCount"
+        ],
+        "totalCount": 22
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/HospitalBlock",
+      "url_path_only": "/rest/api/HospitalBlock",
+      "http_status": 200,
+      "elapsed_ms": 176,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "hospitalBlock",
+          "totalCount"
+        ],
+        "totalCount": 2
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/MedicalCards",
+      "url_path_only": "/rest/api/MedicalCards",
+      "http_status": 200,
+      "elapsed_ms": 178,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "medicalCards",
+          "totalCount"
+        ],
+        "totalCount": 407
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/AllDiagnoses",
+      "url_path_only": "/rest/api/MedicalCards/AllDiagnoses",
+      "http_status": 200,
+      "elapsed_ms": 1048,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "success"
+        ],
+        "success": true,
+        "data_keys": [
+          "diagnoses"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/MedcardsTextTemplates",
+      "url_path_only": "/rest/api/MedicalCards/MedcardsTextTemplates",
+      "http_status": 200,
+      "elapsed_ms": 419,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "success"
+        ],
+        "success": true,
+        "data_keys": [
+          "medicalcards"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/MedicalcardsDataByClient",
+      "url_path_only": "/rest/api/MedicalCards/MedicalcardsDataByClient",
+      "http_status": 500,
+      "elapsed_ms": 184,
+      "error": "Internal Server Error"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/MedicalCards/Vaccinations",
+      "url_path_only": "/rest/api/MedicalCards/Vaccinations",
+      "http_status": 200,
+      "elapsed_ms": 182,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "success"
+        ],
+        "success": true,
+        "data_keys": [
+          "medicalcards"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/PartyAccount",
+      "url_path_only": "/rest/api/PartyAccount",
+      "http_status": 200,
+      "elapsed_ms": 177,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "partyAccount",
+          "totalCount"
+        ],
+        "totalCount": 15
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/PartyAccountDoc",
+      "url_path_only": "/rest/api/PartyAccountDoc",
+      "http_status": 200,
+      "elapsed_ms": 173,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "partyAccountDoc",
+          "totalCount"
+        ],
+        "totalCount": 19
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/StoreDocument",
+      "url_path_only": "/rest/api/StoreDocument",
+      "http_status": 200,
+      "elapsed_ms": 172,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "storeDocument",
+          "totalCount"
+        ],
+        "totalCount": 17
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/Suppliers",
+      "url_path_only": "/rest/api/Suppliers",
+      "http_status": 200,
+      "elapsed_ms": 174,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "suppliers",
+          "totalCount"
+        ],
+        "totalCount": 4
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/admission",
+      "url_path_only": "/rest/api/admission",
+      "http_status": 200,
+      "elapsed_ms": 5207,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "admission",
+          "totalCount"
+        ],
+        "totalCount": 426
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/anonymousClient",
+      "url_path_only": "/rest/api/anonymousClient",
+      "http_status": 200,
+      "elapsed_ms": 176,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "anonymousClient",
+          "totalCount"
+        ],
+        "totalCount": 230
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/breed",
+      "url_path_only": "/rest/api/breed",
+      "http_status": 200,
+      "elapsed_ms": 184,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "breed",
+          "totalCount"
+        ],
+        "totalCount": 384
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/cassa",
+      "url_path_only": "/rest/api/cassa",
+      "http_status": 200,
+      "elapsed_ms": 222,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "cassa",
+          "totalCount"
+        ],
+        "totalCount": 5
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/cassaclose",
+      "url_path_only": "/rest/api/cassaclose",
+      "http_status": 200,
+      "elapsed_ms": 230,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "cassaclose",
+          "totalCount"
+        ],
+        "totalCount": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/cassarashod",
+      "url_path_only": "/rest/api/cassarashod",
+      "http_status": 200,
+      "elapsed_ms": 170,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "cassarashod",
+          "totalCount"
+        ],
+        "totalCount": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/city",
+      "url_path_only": "/rest/api/city",
+      "http_status": 200,
+      "elapsed_ms": 200,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "city",
+          "totalCount"
+        ],
+        "totalCount": 11
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/cityType",
+      "url_path_only": "/rest/api/cityType",
+      "http_status": 200,
+      "elapsed_ms": 174,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "cityType",
+          "totalCount"
+        ],
+        "totalCount": 10
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/client",
+      "url_path_only": "/rest/api/client",
+      "http_status": 200,
+      "elapsed_ms": 182,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "client",
+          "totalCount"
+        ],
+        "totalCount": 230
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/clinics",
+      "url_path_only": "/rest/api/clinics",
+      "http_status": 200,
+      "elapsed_ms": 173,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "clinics",
+          "totalCount"
+        ],
+        "totalCount": 2
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/closingOfInvoices",
+      "url_path_only": "/rest/api/closingOfInvoices",
+      "http_status": 200,
+      "elapsed_ms": 184,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "closingOfInvoices",
+          "totalCount"
+        ],
+        "totalCount": 133
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/fiscalRegisterData",
+      "url_path_only": "/rest/api/fiscalRegisterData",
+      "http_status": 200,
+      "elapsed_ms": 181,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "fiscalRegisterData",
+          "totalCount"
+        ],
+        "totalCount": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/fiscalTaxSystems",
+      "url_path_only": "/rest/api/fiscalTaxSystems",
+      "http_status": 200,
+      "elapsed_ms": 179,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "success"
+        ],
+        "success": true,
+        "data_len": 6,
+        "first_data_keys": [
+          "id",
+          "is_show",
+          "number",
+          "title"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/good",
+      "url_path_only": "/rest/api/good",
+      "http_status": 200,
+      "elapsed_ms": 196,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "good",
+          "totalCount"
+        ],
+        "totalCount": 246
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/goodSaleParam",
+      "url_path_only": "/rest/api/goodSaleParam",
+      "http_status": 200,
+      "elapsed_ms": 205,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "goodSaleParam",
+          "totalCount"
+        ],
+        "totalCount": 486
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/goodTag",
+      "url_path_only": "/rest/api/goodTag",
+      "http_status": 200,
+      "elapsed_ms": 206,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "goodTag",
+          "totalCount"
+        ],
+        "totalCount": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/hospital",
+      "url_path_only": "/rest/api/hospital",
+      "http_status": 200,
+      "elapsed_ms": 177,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "hospital",
+          "totalCount"
+        ],
+        "totalCount": 9
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/invoice",
+      "url_path_only": "/rest/api/invoice",
+      "http_status": 200,
+      "elapsed_ms": 181,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "invoice",
+          "totalCount"
+        ],
+        "totalCount": 113
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/invoiceDocument",
+      "url_path_only": "/rest/api/invoiceDocument",
+      "http_status": 200,
+      "elapsed_ms": 179,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "invoiceDocument",
+          "totalCount"
+        ],
+        "totalCount": 154
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/messages/reports",
+      "url_path_only": "/rest/api/messages/reports",
+      "http_status": 200,
+      "elapsed_ms": 175,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "errors",
+          "success"
+        ],
+        "success": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/payment",
+      "url_path_only": "/rest/api/payment",
+      "http_status": 200,
+      "elapsed_ms": 174,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "payment",
+          "totalCount"
+        ],
+        "totalCount": 128
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/pet",
+      "url_path_only": "/rest/api/pet",
+      "http_status": 200,
+      "elapsed_ms": 193,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "pet",
+          "totalCount"
+        ],
+        "totalCount": 50
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/petType",
+      "url_path_only": "/rest/api/petType",
+      "http_status": 200,
+      "elapsed_ms": 210,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "petType",
+          "totalCount"
+        ],
+        "totalCount": 7
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/properties",
+      "url_path_only": "/rest/api/properties",
+      "http_status": 200,
+      "elapsed_ms": 173,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "properties",
+          "totalCount"
+        ],
+        "totalCount": 185
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/report/StartReport",
+      "url_path_only": "/rest/api/report/StartReport",
+      "http_status": 401,
+      "elapsed_ms": 166,
+      "error": "Unauthorized"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/report/reportFile",
+      "url_path_only": "/rest/api/report/reportFile",
+      "http_status": 401,
+      "elapsed_ms": 172,
+      "error": "Unauthorized"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/role",
+      "url_path_only": "/rest/api/role",
+      "http_status": 200,
+      "elapsed_ms": 163,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "role",
+          "totalCount"
+        ],
+        "totalCount": 10
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/stores/RestOfGoodInWarehouse",
+      "url_path_only": "/rest/api/stores/RestOfGoodInWarehouse",
+      "http_status": 401,
+      "elapsed_ms": 178,
+      "error": "Unauthorized"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/street",
+      "url_path_only": "/rest/api/street",
+      "http_status": 200,
+      "elapsed_ms": 188,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "street",
+          "totalCount"
+        ],
+        "totalCount": 3
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/timesheet",
+      "url_path_only": "/rest/api/timesheet",
+      "http_status": 200,
+      "elapsed_ms": 171,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "is_empty_shedules",
+          "timesheet",
+          "totalCount"
+        ],
+        "totalCount": 135
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/unit",
+      "url_path_only": "/rest/api/unit",
+      "http_status": 200,
+      "elapsed_ms": 167,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "totalCount",
+          "unit"
+        ],
+        "totalCount": 11
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/user",
+      "url_path_only": "/rest/api/user",
+      "http_status": 200,
+      "elapsed_ms": 182,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "totalCount",
+          "user"
+        ],
+        "totalCount": 21
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/user/anonymousList",
+      "url_path_only": "/rest/api/user/anonymousList",
+      "http_status": 200,
+      "elapsed_ms": 178,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "success"
+        ],
+        "success": true,
+        "data_len": 21,
+        "first_data_keys": [
+          "id",
+          "role_id",
+          "role_name"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/rest/api/userPosition",
+      "url_path_only": "/rest/api/userPosition",
+      "http_status": 200,
+      "elapsed_ms": 168,
+      "content_type": "application/json",
+      "json_summary": {
+        "type": "dict",
+        "keys": [
+          "data",
+          "message",
+          "success"
+        ],
+        "success": true,
+        "message": "Records Retrieved Successfully",
+        "data_keys": [
+          "totalCount",
+          "userPosition"
+        ],
+        "totalCount": 6
+      }
+    }
+  ],
+  "counts": {
+    "200": 43,
+    "500": 1,
+    "401": 3
+  }
+}
