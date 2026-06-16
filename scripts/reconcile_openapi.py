@@ -29,9 +29,9 @@ except ImportError:  # pragma: no cover
     yaml = None
 
 
-ROOT = Path("/home/otis/myprojects/vetmanager-openapi")
-MCP_ROOT = Path("/home/otis/myprojects/vetmanager-mcp")
-EXTJS_ROOT = Path("/home/otis/myprojects/vetmanager-extjs")
+ROOT = Path(__file__).resolve().parents[1]
+MCP_ROOT = ROOT.parent / "vetmanager-mcp"
+EXTJS_ROOT = ROOT.parent / "vetmanager-extjs"
 ARTIFACTS = ROOT / "artifacts" / "reconciliation"
 
 OPENAPI_JSON = ROOT / "vetmanager_openapi_v6.json"
@@ -51,6 +51,33 @@ POSTMAN_SYNC_URL = (
 
 HTTP_METHODS = {"get", "post", "put", "delete", "patch", "head", "options"}
 MUTATING = {"post", "put", "delete", "patch"}
+
+
+def configure_paths(args: argparse.Namespace) -> None:
+    global ROOT
+    global MCP_ROOT
+    global EXTJS_ROOT
+    global ARTIFACTS
+    global OPENAPI_JSON
+    global OPENAPI_YAML
+    global MCP_OPENAPI_JSON
+    global MCP_POSTMAN_JSON
+    global EXTJS_CONTROLLERS
+    global EXTJS_MAIN
+    global DB_DUMP
+
+    ROOT = args.openapi_root.resolve()
+    MCP_ROOT = args.mcp_root.resolve()
+    EXTJS_ROOT = args.extjs_root.resolve()
+    ARTIFACTS = args.artifacts_dir.resolve()
+
+    OPENAPI_JSON = ROOT / "vetmanager_openapi_v6.json"
+    OPENAPI_YAML = ROOT / "vetmanager_openapi_v6.yaml"
+    MCP_OPENAPI_JSON = MCP_ROOT / "artifacts" / "vetmanager_openapi_v6.json"
+    MCP_POSTMAN_JSON = MCP_ROOT / "artifacts" / "vetmanager_postman_collection.json"
+    EXTJS_CONTROLLERS = EXTJS_ROOT / "rest" / "protected" / "controllers"
+    EXTJS_MAIN = EXTJS_ROOT / "rest" / "protected" / "config" / "main.php"
+    DB_DUMP = args.dump.resolve() if args.dump else ROOT / "vm_devtr6.sql.gz"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -401,17 +428,17 @@ def extract_db_nullable() -> dict[str, set[str]]:
 
 
 def extract_rest_key() -> str | None:
+    env_key = os.environ.get("VETMANAGER_REST_API_KEY")
+    if env_key:
+        return env_key
     candidates = [
-        ROOT / "README.md",
         MCP_ROOT / ".env",
         MCP_ROOT / ".env.local",
-        MCP_ROOT / "README.md",
     ]
     patterns = [
         re.compile(r"X-REST-API-KEY\s*[:=]\s*([A-Za-z0-9._:-]{12,})", re.I),
         re.compile(r"REST_API_KEY\s*=\s*['\"]?([^'\"\s]+)", re.I),
         re.compile(r"api[_-]?key\s*[:=]\s*['\"]?([A-Za-z0-9._:-]{12,})", re.I),
-        re.compile(r"Use this API key:\s*`?([A-Za-z0-9._:-]{12,})`?", re.I),
     ]
     for path in candidates:
         if not path.exists():
@@ -423,20 +450,14 @@ def extract_rest_key() -> str | None:
                 token = match.group(1).strip()
                 if "{{" not in token and "example" not in token.lower():
                     return token
-    return os.environ.get("VETMANAGER_REST_API_KEY")
+    return None
 
 
 def extract_devtr6_base_url() -> str:
     env = os.environ.get("VETMANAGER_DEVTR6_BASE_URL")
     if env:
         return env.rstrip("/")
-    readme = ROOT / "README.md"
-    if readme.exists():
-        text = readme.read_text(encoding="utf-8", errors="ignore")
-        match = re.search(r"https?://[A-Za-z0-9._:-]*devtr6[A-Za-z0-9._:-]*(?:/[A-Za-z0-9._~:/?#\[\]@!$&()*+,;=%-]*)?", text, re.I)
-        if match:
-            return match.group(0).strip().strip("`'\".,;").rstrip("/")
-    return "https://devtr6.vetmanager.cloud"
+    return "https://devtr6.vetmanager2.ru"
 
 
 def summarize_json_payload(payload: Any) -> dict[str, Any]:
@@ -698,9 +719,15 @@ def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dic
 
 def main() -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--openapi-root", type=Path, default=ROOT, help="Repository containing vetmanager_openapi_v6.json/yaml")
+    parser.add_argument("--mcp-root", type=Path, default=MCP_ROOT, help="vetmanager-mcp repository root")
+    parser.add_argument("--extjs-root", type=Path, default=EXTJS_ROOT, help="vetmanager-extjs repository root")
+    parser.add_argument("--dump", type=Path, default=None, help="Optional vm_devtr6 .sql.gz dump for nullable extraction")
+    parser.add_argument("--artifacts-dir", type=Path, default=ARTIFACTS, help="Directory for sanitized reconciliation artifacts")
     parser.add_argument("--skip-network", action="store_true", help="Do not fetch Postman or probe devtr6")
     parser.add_argument("--probe-limit", type=int, default=80)
     args = parser.parse_args()
+    configure_paths(args)
 
     ARTIFACTS.mkdir(parents=True, exist_ok=True)
 

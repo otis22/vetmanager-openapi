@@ -1,195 +1,131 @@
-# VetManager API - OpenAPI Specification
+# VetManager OpenAPI Specification
 
-This repository contains the OpenAPI 3.0 specification for the VetManager REST API. The specification is generated based on real API responses and is enhanced with nullable information from the database schema.
+This repository contains the public OpenAPI 3.0 specification for the VetManager REST API and a small maintenance toolchain for reconciling it against upstream sources.
 
-**Version:** 6.0.0 (Real API Responses)
-**Date:** 2025-12-05
+Primary artifacts:
 
-## 🔗 Useful Links
+- `vetmanager_openapi_v6.yaml` - primary OpenAPI specification used by Swagger UI.
+- `vetmanager_openapi_v6.json` - JSON equivalent of the same specification.
+- `scripts/reconcile_openapi.py` - reconciliation flow for Postman, MCP artifacts, ExtJS API sources, an optional DB dump, and devtr6 probes.
+- `scripts/validate_openapi.py` - local and CI validation for the committed specification.
+- `artifacts/reconciliation/` - sanitized audit output from the latest reconciliation run.
 
-- **Postman Collection:** [VetManager API Collection](https://www.postman.com/vetmanager/vetmanager-api/collection/x5iqwq5/vetmanager-collection)
-- **Official API Documentation:** [VetManager REST API Documentation](https://help.vetmanager.ru/article/25187)
+Useful links:
 
-## 📁 Files in this Repository
+- Public Postman collection: https://www.postman.com/vetmanager/vetmanager-api/collection/x5iqwq5/vetmanager-collection
+- Official API documentation: https://help.vetmanager.ru/article/25187
 
-- `vetmanager_openapi_v6.yaml`: The primary OpenAPI specification in YAML format.
-- `vetmanager_openapi_v6.json`: The same specification in JSON format.
-- `README.md`: This file, containing instructions on how to use and update the specification.
+## View Documentation
 
-## 🚀 How to Use
-
-The OpenAPI specification can be used to generate client SDKs, set up API testing, or create interactive documentation.
-
-### 1. Interactive Documentation with Swagger UI
-
-To view the documentation in a browser, you can use Swagger UI.
+Run Swagger UI locally:
 
 ```bash
-# Run Swagger UI in Docker
 docker run -p 8080:8080 \
   -e SWAGGER_JSON=/openapi/vetmanager_openapi_v6.yaml \
-  -v $(pwd):/openapi \
+  -v "$(pwd):/openapi" \
   swaggerapi/swagger-ui
 ```
 
-Then open [http://localhost:8080](http://localhost:8080) in your browser.
+Then open http://localhost:8080.
 
-### 2. Import into Postman
+The committed static Swagger UI uses `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`.
 
-1. Open Postman.
-2. Click **Import**.
-3. Select **Upload Files**.
-4. Choose either `vetmanager_openapi_v6.yaml` or `vetmanager_openapi_v6.json`.
+## Validate
 
-Postman will automatically create a new collection based on the specification.
-
-### 3. Generate Client SDKs
-
-You can use `openapi-generator-cli` to generate a typed client for your preferred programming language.
+Install the only local Python dependency if needed:
 
 ```bash
-# Example: Generate a Python client
-openapi-generator-cli generate \
-  -i vetmanager_openapi_v6.yaml \
-  -g python \
-  --additional-properties=packageName=vetmanager_api
-
-# Example: Generate a TypeScript client
-openapi-generator-cli generate \
-  -i vetmanager_openapi_v6.yaml \
-  -g typescript-axios
+python3 -m pip install pyyaml
 ```
 
----
+Run:
 
-## 🔄 How to Update (Regenerate) the Specification
+```bash
+python3 scripts/validate_openapi.py
+```
 
-When the VetManager API is updated, you will need to regenerate this OpenAPI specification. You can delegate this task to an AI agent (like Manus, ChatGPT with Code Interpreter, etc.) using the prompt below.
+The validator checks:
 
-### Instructions
+- JSON and YAML equivalence.
+- Basic OpenAPI structure.
+- unique `operationId` values.
+- declared path parameters.
+- no trailing-slash paths.
+- no literal numeric example segments such as `/client/116468`.
+- Swagger UI references to `vetmanager_openapi_v6.yaml`.
+- no obvious secret literals in README, scripts, or reconciliation artifacts.
 
-1. **Export new files:**
-   - Export the latest Postman collection as a JSON file.
-   - Get a new database dump (`.sql.gz`).
-2. **Start a new task** with your AI agent.
-3. **Copy and paste** the entire prompt from the section below.
-4. **Attach the required files** to the prompt.
-5. The agent will perform the necessary steps and provide you with the updated `openapi.yaml` and `openapi.json` files.
+The same validation runs in GitHub Actions on pushes and pull requests.
 
----
+## Reconcile The Specification
 
-## 🤖 Prompt for AI Agent Regeneration
+The reconciliation flow compares the committed spec with:
 
-**Instructions:** Copy the text below into a new task for your AI agent.
+- the public Postman collection fetched from Postman APIs.
+- `vetmanager-mcp` OpenAPI/Postman artifacts.
+- `vetmanager-extjs` REST route/controller sources.
+- an optional `vm_devtr6.sql.gz` dump for nullable metadata.
+- optional devtr6 GET probes.
+
+Expected local layout:
 
 ```text
-Hello! I need you to update the OpenAPI specification for the VetManager API.
-
-Your task is to create a new OpenAPI 3.0 specification (`openapi.yaml` and `openapi.json`) based on the attached files. Please follow this exact methodology:
-
-**Methodology:**
-
-1.  **Primary Source:** The main source of truth for data types and structure must be **real API responses**.
-2.  **Secondary Source:** The database dump should **only** be used for two purposes:
-    - To find valid IDs for testing endpoints (e.g., `GET /api/client/{id}`).
-    - To determine which fields can be `NULL` (`nullable: true/false`).
-
-**Do not** use the database schema to determine the `type` of a field (e.g., `integer`, `string`). The type must come from the actual JSON response from the API.
-
-**Step-by-Step Plan:**
-
-1.  **Unpack Files:** Unzip the database dump (`.sql.gz`).
-
-2.  **Extract IDs from Database:** Parse the `.sql` file to find valid IDs from `INSERT` statements for as many tables as possible.
-
-3.  **Test API Endpoints:**
-    - Parse the attached Postman collection to get a list of all `GET` endpoints.
-    - Test as many endpoints as possible (at least 100).
-    - For endpoints that require an ID, use the valid IDs you extracted from the database.
-    - Use this API key: `600e562402f47b4f24ebca4f02331783` and base URL: `https://devtr6.vetmanager2.ru`.
-    - Save all successful responses into a single, comprehensive JSON file (e.g., `api_responses.json`).
-
-4.  **Generate Schemas from API Responses:**
-    - Parse the `api_responses.json` file.
-    - For each unique entity (e.g., `client`, `admission`, `pet`), create a JSON schema. The `type` of each property must be inferred from the value in the JSON response (e.g., "123" is a `string`, 123 is an `integer`).
-
-5.  **Enhance Schemas with Nullable Info:**
-    - Parse the database schema from the `.sql` file to identify which columns are `NOT NULL`.
-    - Update the schemas generated in the previous step by adding `nullable: true` or `nullable: false` to each property based on the database schema.
-
-6.  **Generate Final OpenAPI Specification:**
-    - Create the final OpenAPI 3.0 specification.
-    - Use the enhanced schemas from the previous step.
-    - Include all endpoints from the Postman collection (GET, POST, PUT, DELETE).
-    - Add standard parameters (`limit`, `offset`, `sort`, `filter`) to all `GET` collection endpoints.
-
-7.  **Deliver Final Files:**
-    - Provide the final, validated `openapi.yaml`.
-    - Provide the final, validated `openapi.json`.
-    - Provide a summary of the work done (e.g., how many endpoints were tested, how many schemas were generated).
-
-**Required Files to Attach:**
-
-1.  `VetmanagerCollection.postman_collection.json` (The exported Postman collection)
-2.  `vm_devtr6_dump_data.sql.gz` (The gzipped SQL database dump)
-
-Thank you!
+/home/otis/myprojects/
+  vetmanager-openapi/
+  vetmanager-mcp/
+  vetmanager-extjs/
 ```
-## How to host Swagger API documentation with GitHub Pages
-[<img alt="The blog of Peter Evans: How to Host Swagger Documentation With Github Pages" title="View blog post" src="https://peterevans.dev/img/blog-published-badge.svg">](https://peterevans.dev/posts/how-to-host-swagger-docs-with-github-pages/)
 
-This repository is a template for using the [Swagger UI](https://github.com/swagger-api/swagger-ui) to dynamically generate beautiful documentation for your API and host it for free with GitHub Pages.
+Default run from this repository:
 
-The template will periodically auto-update the Swagger UI dependency and create a pull request. See the [GitHub Actions workflow here](.github/workflows/update-swagger.yml).
+```bash
+VETMANAGER_REST_API_KEY=... \
+VETMANAGER_DEVTR6_BASE_URL=https://devtr6.vetmanager2.ru \
+python3 scripts/reconcile_openapi.py --dump ./vm_devtr6.sql.gz
+```
 
-The example API specification used by this repository can be seen hosted at [https://peter-evans.github.io/swagger-github-pages](https://peter-evans.github.io/swagger-github-pages/).
+Portable run with explicit paths:
 
-## Steps to use this template
+```bash
+VETMANAGER_REST_API_KEY=... \
+python3 scripts/reconcile_openapi.py \
+  --openapi-root /path/to/vetmanager-openapi \
+  --mcp-root /path/to/vetmanager-mcp \
+  --extjs-root /path/to/vetmanager-extjs \
+  --dump /path/to/vm_devtr6.sql.gz
+```
 
-1. Click the `Use this template` button above to create a new repository from this template.
+Offline reconciliation without Postman/devtr6 network calls:
 
-2. Go to the settings for your repository at `https://github.com/{github-username}/{repository-name}/settings` and enable GitHub Pages.
+```bash
+python3 scripts/reconcile_openapi.py --skip-network
+```
 
-    ![Headers](/screenshots/swagger-github-pages.png?raw=true)
-    
-3. Browse to the Swagger documentation at `https://{github-username}.github.io/{repository-name}/`.
+Security notes:
 
+- Do not commit `.sql`, `.sql.gz`, raw Postman exports, raw API responses, `.env`, or secrets.
+- The reconciliation script stores sanitized Postman metadata only.
+- devtr6 probe artifacts store compact status/shape summaries only, not raw response bodies.
+- `VETMANAGER_REST_API_KEY` must come from environment variables or CI secrets.
 
-## Steps to manually configure in your own repository
+## Reconciliation Artifacts
 
-1. Download the latest stable release of the Swagger UI [here](https://github.com/swagger-api/swagger-ui/releases).
+The repository keeps only the latest sanitized reconciliation snapshot:
 
-2. Extract the contents and copy the "dist" directory to the root of your repository.
+- `reconciliation_summary.json` - source and status counts.
+- `endpoint_matrix.json` - method/path presence across sources.
+- `postman_public_sanitized.json` - public Postman method/path metadata without raw responses.
+- `devtr6_probe_summary.json` - GET probe status and compact JSON-shape summaries.
+- `source_gaps.md` - human-readable summary of documented gaps and ExtJS-only candidates.
 
-3. Move the file "index.html" from the directory "dist" to the root of your repository.
-    ```
-    mv dist/index.html .
-    ```
-    
-4. Copy the YAML specification file for your API to the root of your repository.
+Raw Postman payloads and raw API responses are intentionally not stored.
 
-5. Edit [dist/swagger-initializer.js](dist/swagger-initializer.js) and change the `url` property to reference your local YAML file. 
-    ```javascript
-        window.ui = SwaggerUIBundle({
-            url: "swagger.yaml",
-        ...
-    ```
-    Then fix any references to files in the "dist" directory.
-    ```html
-    ...
-    <link rel="stylesheet" type="text/css" href="dist/swagger-ui.css" >
-    <link rel="icon" type="image/png" href="dist/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="dist/favicon-16x16.png" sizes="16x16" />    
-    ...
-    <script src="dist/swagger-ui-bundle.js"> </script>
-    <script src="dist/swagger-ui-standalone-preset.js"> </script>    
-    ...
-    ```
-    
-6. Go to the settings for your repository at `https://github.com/{github-username}/{repository-name}/settings` and enable GitHub Pages.
+## Swagger UI Updates
 
-    ![Headers](/screenshots/swagger-github-pages.png?raw=true)
-    
-7. Browse to the Swagger documentation at `https://{github-username}.github.io/{repository-name}/`.
+`.github/workflows/update-swagger.yml` updates the bundled Swagger UI dependency and must keep `dist/swagger-initializer.js` pointing at:
 
-   The example API specification used by this repository can be seen hosted at [https://peter-evans.github.io/swagger-github-pages](https://peter-evans.github.io/swagger-github-pages/).
+```javascript
+url: "vetmanager_openapi_v6.yaml"
+```
+
+The validation workflow checks this so an automated Swagger UI update cannot silently switch back to `swagger.yaml`.
