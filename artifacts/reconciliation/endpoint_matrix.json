@@ -696,7 +696,8 @@
     "present_in": [
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "intentionally_undocumented",
+    "reason": "disabled"
   },
   {
     "key": "DELETE /rest/api/invoiceDocument/{id}",
@@ -6873,12 +6874,13 @@
     "present_in": [
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "intentionally_undocumented",
+    "reason": "disabled"
   },
   {
-    "key": "POST /rest/api/invoice/create-invoice",
+    "key": "POST /rest/api/invoice/createinvoice",
     "method": "POST",
-    "path": "/rest/api/invoice/create-invoice",
+    "path": "/rest/api/invoice/createinvoice",
     "openapi": false,
     "mcp_openapi": false,
     "mcp_postman": false,
@@ -6890,12 +6892,13 @@
     "present_in": [
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "intentionally_undocumented",
+    "reason": "internal_mobile_only"
   },
   {
-    "key": "POST /rest/api/invoice/pay-invoice",
+    "key": "POST /rest/api/invoice/payinvoice",
     "method": "POST",
-    "path": "/rest/api/invoice/pay-invoice",
+    "path": "/rest/api/invoice/payinvoice",
     "openapi": false,
     "mcp_openapi": false,
     "mcp_postman": false,
@@ -6907,7 +6910,8 @@
     "present_in": [
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "intentionally_undocumented",
+    "reason": "internal_mobile_only"
   },
   {
     "key": "POST /rest/api/invoiceDocument",
@@ -8632,7 +8636,8 @@
     "present_in": [
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "intentionally_undocumented",
+    "reason": "disabled"
   },
   {
     "key": "PUT /rest/api/invoiceDocument/{id}",

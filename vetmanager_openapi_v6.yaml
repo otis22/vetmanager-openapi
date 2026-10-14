@@ -15,6 +15,9 @@ servers:
       description: Домен вашей клиники
 security:
 - ApiKeyAuth: []
+tags:
+- name: Invoice
+  description: Публичный REST API счетов работает только на чтение. Создание, изменение и удаление счетов через публичный API недоступны.
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -9853,7 +9856,7 @@ paths:
         - postman_public
         status: confirmed
 x-reconciliation:
-  generatedAt: '2026-06-15T15:20:29Z'
+  generatedAt: '2026-10-14T09:58:29Z'
   sources:
     postmanPublicUpdatedAt: '2026-05-26T14:01:03.000Z'
     mcpOpenapi: /home/otis/myprojects/vetmanager-mcp/artifacts/vetmanager_openapi_v6.json
@@ -9862,4 +9865,5 @@ x-reconciliation:
     dbDump: /home/otis/myprojects/vetmanager-openapi/vm_devtr6.sql.gz
   counts:
     confirmed: 136
-    extjs_only_candidate: 336
+    extjs_only_candidate: 331
+    intentionally_undocumented: 5

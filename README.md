@@ -1,5 +1,7 @@
 # VetManager OpenAPI Specification
 
+[English](README.md) | [Русский](README.ru.md)
+
 This repository contains the public OpenAPI 3.0 specification for the VetManager REST API and a small maintenance toolchain for reconciling it against upstream sources.
 
 Primary artifacts:
@@ -32,17 +34,24 @@ The committed static Swagger UI uses `dist/swagger-initializer.js` and loads `ve
 
 ## Validate
 
-Install the only local Python dependency if needed:
+For ordinary specification or documentation changes, validation is the only
+required local command. Create a temporary virtual environment and install the
+only Python dependency:
 
 ```bash
-python3 -m pip install pyyaml
+python3 -m venv /tmp/vetmanager-openapi-venv
+/tmp/vetmanager-openapi-venv/bin/pip install pyyaml
 ```
 
-Run:
+Then run:
 
 ```bash
-python3 scripts/validate_openapi.py
+/tmp/vetmanager-openapi-venv/bin/python scripts/validate_openapi.py
 ```
+
+The environment under `/tmp` is intentionally outside the repository and can
+be removed or recreated at any time. If PyYAML is already installed in the
+active Python environment, `python3 scripts/validate_openapi.py` is sufficient.
 
 The validator checks:
 
@@ -58,6 +67,10 @@ The validator checks:
 The same validation runs in GitHub Actions on pushes and pull requests.
 
 ## Reconcile The Specification
+
+Reconciliation is a maintainer workflow, not a prerequisite for every OpenAPI
+or README edit. Run it only when endpoint/source reconciliation artifacts need
+to be regenerated.
 
 The reconciliation flow compares the committed spec with:
 
@@ -100,6 +113,11 @@ Offline reconciliation without Postman/devtr6 network calls:
 ```bash
 python3 scripts/reconcile_openapi.py --skip-network
 ```
+
+`--skip-network` disables Postman downloads and devtr6 probes only. It still
+requires the local `vetmanager-mcp` artifacts and `vetmanager-extjs` sources
+shown in the expected layout above. Use `scripts/validate_openapi.py` instead
+when only validating an already prepared specification change.
 
 Security notes:
 

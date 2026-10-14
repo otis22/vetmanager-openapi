@@ -52,6 +52,14 @@ POSTMAN_SYNC_URL = (
 HTTP_METHODS = {"get", "post", "put", "delete", "patch", "head", "options"}
 MUTATING = {"post", "put", "delete", "patch"}
 
+INVOICE_INTENTIONALLY_UNDOCUMENTED = {
+    "POST /rest/api/invoice": "disabled",
+    "PUT /rest/api/invoice/{id}": "disabled",
+    "DELETE /rest/api/invoice/{id}": "disabled",
+    "POST /rest/api/invoice/createinvoice": "internal_mobile_only",
+    "POST /rest/api/invoice/payinvoice": "internal_mobile_only",
+}
+
 
 def configure_paths(args: argparse.Namespace) -> None:
     global ROOT
@@ -388,6 +396,10 @@ def collect_extjs_routes() -> dict[str, dict[str, Any]]:
         for m in re.finditer(r"function\s+doCustomRest(Get|Post|Put)([A-Za-z0-9_]+)\s*\(", text):
             verb, suffix = m.groups()
             custom = custom_suffix_to_path(suffix)
+            if controller.name == "InvoiceController.php" and suffix in {"CreateInvoice", "PayInvoice"}:
+                # These mobile-only endpoints are called with their literal,
+                # separator-free route IDs by mobileappserverside.
+                custom = suffix.lower()
             method = verb.upper()
             if verb == "Put":
                 path = f"{base}/{{id}}/{custom}"
@@ -579,6 +591,9 @@ def merge_endpoint_sources(*sources: tuple[str, dict[str, dict[str, Any]]]) -> l
             row["status"] = "missing_from_openapi_documented"
         else:
             row["status"] = "extjs_only_candidate"
+        if key in INVOICE_INTENTIONALLY_UNDOCUMENTED and not row.get("openapi"):
+            row["status"] = "intentionally_undocumented"
+            row["reason"] = INVOICE_INTENTIONALLY_UNDOCUMENTED[key]
         rows.append(row)
     return rows
 
@@ -682,6 +697,7 @@ def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dic
     counts = Counter(row["status"] for row in matrix)
     missing = [row for row in matrix if row["status"] == "missing_from_openapi_documented"]
     extjs_only = [row for row in matrix if row["status"] == "extjs_only_candidate"]
+    intentionally_undocumented = [row for row in matrix if row["status"] == "intentionally_undocumented"]
     openapi_only = [row for row in matrix if row["status"] == "openapi_only"]
 
     lines = [
@@ -708,6 +724,12 @@ def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dic
         lines.append(f"- `{row['method']} {row['path']}`: {row.get('extjs_source', 'extjs')}")
     if len(extjs_only) > 150:
         lines.append(f"- ... {len(extjs_only) - 150} more")
+    lines.extend(["", "## Intentionally undocumented routes", ""])
+    if intentionally_undocumented:
+        for row in intentionally_undocumented:
+            lines.append(f"- `{row['method']} {row['path']}`: {row['reason']}")
+    else:
+        lines.append("- None")
     lines.extend(["", "## OpenAPI-only entries", ""])
     if openapi_only:
         for row in openapi_only[:100]:
