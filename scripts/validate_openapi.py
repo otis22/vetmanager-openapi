@@ -115,6 +115,7 @@ def validate_swagger_ui(root: Path, errors: list[str]) -> None:
 def validate_no_secrets(root: Path, errors: list[str]) -> None:
     checked_roots = [
         root / "README.md",
+        root / "README.ru.md",
         root / "scripts",
         root / "artifacts" / "reconciliation",
         root / "vetmanager_openapi_v6.json",

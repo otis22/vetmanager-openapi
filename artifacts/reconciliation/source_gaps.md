@@ -1,6 +1,6 @@
 # Vetmanager OpenAPI reconciliation
 
-Generated: 2026-06-15T15:20:29Z
+Generated: 2026-10-14T09:58:29Z
 
 ## Source counts
 
@@ -14,7 +14,8 @@ Generated: 2026-06-15T15:20:29Z
 ## Matrix status
 
 - confirmed: 136
-- extjs_only_candidate: 336
+- extjs_only_candidate: 331
+- intentionally_undocumented: 5
 
 ## Documented elsewhere but missing from OpenAPI
 
@@ -51,7 +52,6 @@ Generated: 2026-06-15T15:20:29Z
 - `DELETE /rest/api/goodSaleParam/{id}`: extjs_default_rest
 - `DELETE /rest/api/hospital/{id}`: extjs_default_rest
 - `DELETE /rest/api/hospitalBlock/{id}`: extjs_default_rest
-- `DELETE /rest/api/invoice/{id}`: extjs_default_rest
 - `DELETE /rest/api/invoiceDocument/{id}`: extjs_default_rest
 - `DELETE /rest/api/lastTime/{id}`: extjs_default_rest
 - `DELETE /rest/api/medicalCards/{id}`: extjs_default_rest
@@ -172,7 +172,16 @@ Generated: 2026-06-15T15:20:29Z
 - `GET /rest/api/reportAiJobs`: extjs_default_rest
 - `GET /rest/api/reportAiJobs/{id}`: extjs_default_rest
 - `GET /rest/api/servicePrice`: extjs_default_rest
-- ... 186 more
+- `GET /rest/api/servicePrice/{id}`: extjs_default_rest
+- ... 181 more
+
+## Intentionally undocumented routes
+
+- `DELETE /rest/api/invoice/{id}`: disabled
+- `POST /rest/api/invoice`: disabled
+- `POST /rest/api/invoice/createinvoice`: internal_mobile_only
+- `POST /rest/api/invoice/payinvoice`: internal_mobile_only
+- `PUT /rest/api/invoice/{id}`: disabled
 
 ## OpenAPI-only entries
 

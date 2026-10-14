@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T15:20:29Z",
+  "generated_at": "2026-10-14T09:58:29Z",
   "source_counts": {
     "openapi_operations": 136,
     "mcp_openapi_operations": 126,
@@ -10,7 +10,8 @@
   },
   "matrix_status_counts": {
     "confirmed": 136,
-    "extjs_only_candidate": 336
+    "extjs_only_candidate": 331,
+    "intentionally_undocumented": 5
   },
   "postman_meta": {
     "name": "Vetmanager Collection",
