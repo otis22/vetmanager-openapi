@@ -126,16 +126,7 @@ def validate_no_secrets(root: Path, errors: list[str]) -> None:
         for path in paths:
             if not path.is_file():
                 continue
-            if "__pycache__" in path.parts or path.suffix.lower() in {
-                ".gif",
-                ".ico",
-                ".jpeg",
-                ".jpg",
-                ".png",
-                ".pyc",
-                ".pyo",
-                ".webp",
-            }:
+            if "__pycache__" in path.parts or path.suffix in {".pyc", ".pyo"}:
                 continue
             text = path.read_text(encoding="utf-8", errors="ignore")
             for pattern in SECRET_PATTERNS:
