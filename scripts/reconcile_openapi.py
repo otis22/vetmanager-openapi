@@ -630,7 +630,7 @@ def apply_reconciliation_to_spec(
     updated["paths"] = canonicalize_spec_paths(updated.get("paths", {}))
 
     # Preserve the current generated paths as the authority for documented API, but
-    # add reconciliation tags and route evidence to matching operations.
+    # add reconciliation metadata and route evidence to matching operations.
     by_key = {row["key"]: row for row in matrix}
     for path, item in updated.get("paths", {}).items():
         if not isinstance(item, dict):
@@ -639,10 +639,11 @@ def apply_reconciliation_to_spec(
             if method.lower() not in HTTP_METHODS or not isinstance(operation, dict):
                 continue
             row = by_key.get(endpoint_key(method, path), {})
-            tags = list(operation.get("tags") or [])
-            if "Reconciled" not in tags:
-                tags.append("Reconciled")
-            operation["tags"] = tags
+            tags = [tag for tag in operation.get("tags") or [] if tag != "Reconciled"]
+            if tags:
+                operation["tags"] = tags
+            else:
+                operation.pop("tags", None)
             operation["x-reconciliation"] = {
                 "presentIn": row.get("present_in", []),
                 "status": row.get("status", "unknown"),

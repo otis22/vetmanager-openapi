@@ -4996,8 +4996,7 @@
       "get": {
         "summary": "Get Combo Manual Item By Filtered by combo_manual_id",
         "tags": [
-          "Combo Manual Item",
-          "Reconciled"
+          "Combo Manual Item"
         ],
         "operationId": "get_rest_api_ComboManualItem",
         "parameters": [
@@ -5068,8 +5067,7 @@
       "post": {
         "summary": "Post Combo Manual Item",
         "tags": [
-          "Combo Manual Item",
-          "Reconciled"
+          "Combo Manual Item"
         ],
         "operationId": "post_rest_api_ComboManualItem",
         "parameters": [],
@@ -5131,8 +5129,7 @@
       "get": {
         "summary": "Get Combo Manual Item By ID",
         "tags": [
-          "Combo Manual Item",
-          "Reconciled"
+          "Combo Manual Item"
         ],
         "operationId": "get_rest_api_ComboManualItem_ID",
         "parameters": [
@@ -5192,8 +5189,7 @@
       "put": {
         "summary": "Put Combo Manual Item",
         "tags": [
-          "Combo Manual Item",
-          "Reconciled"
+          "Combo Manual Item"
         ],
         "operationId": "put_rest_api_ComboManualItem_ID",
         "parameters": [
@@ -5264,8 +5260,7 @@
       "get": {
         "summary": "Get Combo Manual Name Filtered By Name",
         "tags": [
-          "Combo Manual Name",
-          "Reconciled"
+          "Combo Manual Name"
         ],
         "operationId": "get_rest_api_ComboManualName",
         "parameters": [
@@ -5338,8 +5333,7 @@
       "get": {
         "summary": "Get Combo Manual Name By ID",
         "tags": [
-          "Combo Manual Name",
-          "Reconciled"
+          "Combo Manual Name"
         ],
         "operationId": "get_rest_api_ComboManualName_ID",
         "parameters": [
@@ -5401,8 +5395,7 @@
       "get": {
         "summary": "GoodGroup Get All",
         "tags": [
-          "GoodGroup",
-          "Reconciled"
+          "GoodGroup"
         ],
         "operationId": "get_rest_api_GoodGroup",
         "parameters": [
@@ -5467,8 +5460,7 @@
       "post": {
         "summary": "Post group",
         "tags": [
-          "GoodGroup",
-          "Reconciled"
+          "GoodGroup"
         ],
         "operationId": "post_rest_api_GoodGroup",
         "parameters": [],
@@ -5530,8 +5522,7 @@
       "put": {
         "summary": "Put group",
         "tags": [
-          "GoodGroup",
-          "Reconciled"
+          "GoodGroup"
         ],
         "operationId": "put_rest_api_GoodGroup_ID",
         "parameters": [
@@ -5600,8 +5591,7 @@
       "delete": {
         "summary": "Delete group",
         "tags": [
-          "GoodGroup",
-          "Reconciled"
+          "GoodGroup"
         ],
         "operationId": "delete_rest_api_GoodGroup_ID",
         "parameters": [
@@ -5663,8 +5653,7 @@
       "get": {
         "summary": "GET all HospitalBlock",
         "tags": [
-          "Hospital",
-          "Reconciled"
+          "Hospital"
         ],
         "operationId": "get_rest_api_HospitalBlock",
         "parameters": [
@@ -5731,8 +5720,7 @@
       "get": {
         "summary": "GET one HospitalBlock",
         "tags": [
-          "Hospital",
-          "Reconciled"
+          "Hospital"
         ],
         "operationId": "get_rest_api_HospitalBlock_ID",
         "parameters": [
@@ -5794,8 +5782,7 @@
       "get": {
         "summary": "Medical Card Get All",
         "tags": [
-          "Medical Card",
-          "Reconciled"
+          "Medical Card"
         ],
         "operationId": "get_rest_api_MedicalCards",
         "parameters": [
@@ -5860,8 +5847,7 @@
       "post": {
         "summary": "Medical Card Post",
         "tags": [
-          "Medical Card",
-          "Reconciled"
+          "Medical Card"
         ],
         "operationId": "post_rest_api_MedicalCards",
         "parameters": [],
@@ -5923,8 +5909,7 @@
       "post": {
         "summary": "Post Vaccination",
         "tags": [
-          "Medical Card / Vaccination",
-          "Reconciled"
+          "Medical Card / Vaccination"
         ],
         "operationId": "post_rest_api_MedicalCards_AddVaccination",
         "parameters": [
@@ -5996,8 +5981,7 @@
       "get": {
         "summary": "Get All Diagnoses",
         "tags": [
-          "Medical Card / Diagnose",
-          "Reconciled"
+          "Medical Card / Diagnose"
         ],
         "operationId": "get_rest_api_MedicalCards_AllDiagnoses",
         "parameters": [
@@ -6064,8 +6048,7 @@
       "get": {
         "summary": "Medical Card Get Text Templates",
         "tags": [
-          "Medical Card",
-          "Reconciled"
+          "Medical Card"
         ],
         "operationId": "get_rest_api_MedicalCards_MedcardsTextTemplates",
         "parameters": [
@@ -6132,8 +6115,7 @@
       "get": {
         "summary": "Medical Card Get By Client (Without parameters returns first 10)",
         "tags": [
-          "Medical Card By Client",
-          "Reconciled"
+          "Medical Card By Client"
         ],
         "operationId": "get_rest_api_MedicalCards_MedicalcardsDataByClient",
         "parameters": [
@@ -6208,8 +6190,7 @@
       "get": {
         "summary": "Get Vaccinations By Pet",
         "tags": [
-          "Medical Card / Vaccination",
-          "Reconciled"
+          "Medical Card / Vaccination"
         ],
         "operationId": "get_rest_api_MedicalCards_Vaccinations",
         "parameters": [
@@ -6285,8 +6266,7 @@
       "get": {
         "summary": "Medical Card Get By ID",
         "tags": [
-          "Medical Card",
-          "Reconciled"
+          "Medical Card"
         ],
         "operationId": "get_rest_api_MedicalCards_ID",
         "parameters": [
@@ -6346,8 +6326,7 @@
       "put": {
         "summary": "Medical Card Put",
         "tags": [
-          "Medical Card",
-          "Reconciled"
+          "Medical Card"
         ],
         "operationId": "put_rest_api_MedicalCards_ID",
         "parameters": [
@@ -6418,8 +6397,7 @@
       "get": {
         "summary": "GetAllParty",
         "tags": [
-          "Good Parties in Store",
-          "Reconciled"
+          "Good Parties in Store"
         ],
         "operationId": "get_rest_api_PartyAccount",
         "parameters": [
@@ -6486,8 +6464,7 @@
       "get": {
         "summary": "GetAllPartyToId",
         "tags": [
-          "Good Parties in Store",
-          "Reconciled"
+          "Good Parties in Store"
         ],
         "operationId": "get_rest_api_PartyAccount_ID",
         "parameters": [
@@ -6549,8 +6526,7 @@
       "get": {
         "summary": "GetAllPartyAccountDoc",
         "tags": [
-          "Good Parties in Store",
-          "Reconciled"
+          "Good Parties in Store"
         ],
         "operationId": "get_rest_api_PartyAccountDoc",
         "parameters": [
@@ -6617,8 +6593,7 @@
       "get": {
         "summary": "GetAllPartyAccountDocToId",
         "tags": [
-          "Good Parties in Store",
-          "Reconciled"
+          "Good Parties in Store"
         ],
         "operationId": "get_rest_api_PartyAccountDoc_ID",
         "parameters": [
@@ -6680,8 +6655,7 @@
       "get": {
         "summary": "GetAllStoreDocuments",
         "tags": [
-          "Store",
-          "Reconciled"
+          "Store"
         ],
         "operationId": "get_rest_api_StoreDocument",
         "parameters": [
@@ -6748,8 +6722,7 @@
       "get": {
         "summary": "GetStoreDocumentsToId",
         "tags": [
-          "Store",
-          "Reconciled"
+          "Store"
         ],
         "operationId": "get_rest_api_StoreDocument_ID",
         "parameters": [
@@ -6811,8 +6784,7 @@
       "get": {
         "summary": "GetStoreDocumentOperationToId",
         "tags": [
-          "Store",
-          "Reconciled"
+          "Store"
         ],
         "operationId": "get_rest_api_StoreDocumentOperation_ID",
         "parameters": [
@@ -6864,8 +6836,7 @@
       "get": {
         "summary": "GetAllSuppliers",
         "tags": [
-          "Suppliers",
-          "Reconciled"
+          "Suppliers"
         ],
         "operationId": "get_rest_api_Suppliers",
         "parameters": [
@@ -6930,8 +6901,7 @@
       "post": {
         "summary": "CreateSupplier",
         "tags": [
-          "Suppliers",
-          "Reconciled"
+          "Suppliers"
         ],
         "operationId": "post_rest_api_Suppliers",
         "parameters": [],
@@ -6993,8 +6963,7 @@
       "get": {
         "summary": "GetSuppliersToId",
         "tags": [
-          "Suppliers",
-          "Reconciled"
+          "Suppliers"
         ],
         "operationId": "get_rest_api_Suppliers_ID",
         "parameters": [
@@ -7056,8 +7025,7 @@
       "post": {
         "summary": "Post unit",
         "tags": [
-          "Unit",
-          "Reconciled"
+          "Unit"
         ],
         "operationId": "post_rest_api_Unit",
         "parameters": [],
@@ -7119,8 +7087,7 @@
       "put": {
         "summary": "Put unit",
         "tags": [
-          "Unit",
-          "Reconciled"
+          "Unit"
         ],
         "operationId": "put_rest_api_Unit_ID",
         "parameters": [
@@ -7189,8 +7156,7 @@
       "delete": {
         "summary": "Delete unit",
         "tags": [
-          "Unit",
-          "Reconciled"
+          "Unit"
         ],
         "operationId": "delete_rest_api_Unit_ID",
         "parameters": [
@@ -7252,8 +7218,7 @@
       "get": {
         "summary": "Get By ID",
         "tags": [
-          "General",
-          "Reconciled"
+          "General"
         ],
         "operationId": "get_rest_api_VmLink_personalAccountLinkByClientId_1",
         "parameters": [
@@ -7317,8 +7282,7 @@
       "get": {
         "summary": "Get By Phone",
         "tags": [
-          "Get Link to Owner Cabinet (VM-Link)",
-          "Reconciled"
+          "Get Link to Owner Cabinet (VM-Link)"
         ],
         "operationId": "get_rest_api_VmLink_personalAccountLinkByPhone_3322122",
         "parameters": [
@@ -7382,8 +7346,7 @@
       "get": {
         "summary": "Get Admissions Filtered By Pet & Status",
         "tags": [
-          "Admission",
-          "Reconciled"
+          "Admission"
         ],
         "operationId": "get_rest_api_admission",
         "parameters": [
@@ -7455,8 +7418,7 @@
       "post": {
         "summary": "Post Admission",
         "tags": [
-          "Admission",
-          "Reconciled"
+          "Admission"
         ],
         "operationId": "post_rest_api_admission",
         "parameters": [],
@@ -7519,8 +7481,7 @@
       "get": {
         "summary": "Get Admission By ID",
         "tags": [
-          "Admission",
-          "Reconciled"
+          "Admission"
         ],
         "operationId": "get_rest_api_admission_ID",
         "parameters": [
@@ -7581,8 +7542,7 @@
       "put": {
         "summary": "Put Admission",
         "tags": [
-          "Admission",
-          "Reconciled"
+          "Admission"
         ],
         "operationId": "put_rest_api_admission_ID",
         "parameters": [
@@ -7652,8 +7612,7 @@
       "delete": {
         "summary": "DeleteAdmission",
         "tags": [
-          "Calendar",
-          "Reconciled"
+          "Calendar"
         ],
         "operationId": "delete_rest_api_admission_ID",
         "parameters": [
@@ -7716,8 +7675,7 @@
       "get": {
         "summary": "Get All Clients",
         "tags": [
-          "AnonymousClient",
-          "Reconciled"
+          "AnonymousClient"
         ],
         "operationId": "get_rest_api_anonymousClient",
         "parameters": [
@@ -7785,8 +7743,7 @@
       "get": {
         "summary": "Get Client By ID",
         "tags": [
-          "AnonymousClient",
-          "Reconciled"
+          "AnonymousClient"
         ],
         "operationId": "get_rest_api_anonymousClient_116468",
         "parameters": [
@@ -7861,8 +7818,7 @@
       "get": {
         "summary": "Get All Breeds",
         "tags": [
-          "Breed",
-          "Reconciled"
+          "Breed"
         ],
         "operationId": "get_rest_api_breed",
         "parameters": [
@@ -7930,8 +7886,7 @@
       "get": {
         "summary": "Get Breed By ID",
         "tags": [
-          "Breed",
-          "Reconciled"
+          "Breed"
         ],
         "operationId": "get_rest_api_breed_ID",
         "parameters": [
@@ -7994,8 +7949,7 @@
       "get": {
         "summary": "Get Cassa All",
         "tags": [
-          "Cassa / Cassa",
-          "Reconciled"
+          "Cassa / Cassa"
         ],
         "operationId": "get_rest_api_cassa",
         "parameters": [
@@ -8063,8 +8017,7 @@
       "get": {
         "summary": "Get Cassa By ID",
         "tags": [
-          "Cassa / Cassa",
-          "Reconciled"
+          "Cassa / Cassa"
         ],
         "operationId": "get_rest_api_cassa_ID",
         "parameters": [
@@ -8127,8 +8080,7 @@
       "get": {
         "summary": "Get Cassa Close All",
         "tags": [
-          "Cassa / Cassa Close",
-          "Reconciled"
+          "Cassa / Cassa Close"
         ],
         "operationId": "get_rest_api_cassaclose",
         "parameters": [
@@ -8196,8 +8148,7 @@
       "get": {
         "summary": "Get Cassa Close By ID",
         "tags": [
-          "Cassa / Cassa Close",
-          "Reconciled"
+          "Cassa / Cassa Close"
         ],
         "operationId": "get_rest_api_cassaclose_ID",
         "parameters": [
@@ -8260,8 +8211,7 @@
       "get": {
         "summary": "Get Cassa Rashod All",
         "tags": [
-          "Cassa / Cassa Rasshod",
-          "Reconciled"
+          "Cassa / Cassa Rasshod"
         ],
         "operationId": "get_rest_api_cassarashod",
         "parameters": [
@@ -8319,8 +8269,7 @@
       "get": {
         "summary": "Get Cassa Rashod By ID",
         "tags": [
-          "Cassa / Cassa Rasshod",
-          "Reconciled"
+          "Cassa / Cassa Rasshod"
         ],
         "operationId": "get_rest_api_cassarashod_ID",
         "parameters": [
@@ -8373,8 +8322,7 @@
       "get": {
         "summary": "Get All Cities",
         "tags": [
-          "City",
-          "Reconciled"
+          "City"
         ],
         "operationId": "get_rest_api_city",
         "parameters": [
@@ -8440,8 +8388,7 @@
       "post": {
         "summary": "Post City",
         "tags": [
-          "City",
-          "Reconciled"
+          "City"
         ],
         "operationId": "post_rest_api_city",
         "parameters": [],
@@ -8504,8 +8451,7 @@
       "put": {
         "summary": "City editing",
         "tags": [
-          "City",
-          "Reconciled"
+          "City"
         ],
         "operationId": "put_rest_api_city_ID",
         "parameters": [
@@ -8575,8 +8521,7 @@
       "delete": {
         "summary": "Delete",
         "tags": [
-          "City",
-          "Reconciled"
+          "City"
         ],
         "operationId": "delete_rest_api_city_ID",
         "parameters": [
@@ -8639,8 +8584,7 @@
       "get": {
         "summary": "Get City By ID",
         "tags": [
-          "City",
-          "Reconciled"
+          "City"
         ],
         "operationId": "get_rest_api_city_255",
         "parameters": [
@@ -8715,8 +8659,7 @@
       "get": {
         "summary": "Get All CityTypes",
         "tags": [
-          "CityType",
-          "Reconciled"
+          "CityType"
         ],
         "operationId": "get_rest_api_cityType",
         "parameters": [
@@ -8782,8 +8725,7 @@
       "post": {
         "summary": "Post CityType",
         "tags": [
-          "CityType",
-          "Reconciled"
+          "CityType"
         ],
         "operationId": "post_rest_api_cityType",
         "parameters": [],
@@ -8846,8 +8788,7 @@
       "get": {
         "summary": "Get CityType By ID",
         "tags": [
-          "CityType",
-          "Reconciled"
+          "CityType"
         ],
         "operationId": "get_rest_api_cityType_ID",
         "parameters": [
@@ -8908,8 +8849,7 @@
       "put": {
         "summary": "CityType Editing",
         "tags": [
-          "CityType",
-          "Reconciled"
+          "CityType"
         ],
         "operationId": "put_rest_api_cityType_ID",
         "parameters": [
@@ -8979,8 +8919,7 @@
       "delete": {
         "summary": "Delete",
         "tags": [
-          "CityType",
-          "Reconciled"
+          "CityType"
         ],
         "operationId": "delete_rest_api_cityType_ID",
         "parameters": [
@@ -9043,8 +8982,7 @@
       "get": {
         "summary": "Get All Clients",
         "tags": [
-          "Client",
-          "Reconciled"
+          "Client"
         ],
         "operationId": "get_rest_api_client",
         "parameters": [
@@ -9112,8 +9050,7 @@
       "post": {
         "summary": "Post Client",
         "tags": [
-          "Client",
-          "Reconciled"
+          "Client"
         ],
         "operationId": "post_rest_api_client_ID",
         "parameters": [
@@ -9182,8 +9119,7 @@
       "put": {
         "summary": "Client editing",
         "tags": [
-          "Client",
-          "Reconciled"
+          "Client"
         ],
         "operationId": "put_rest_api_client_ID",
         "parameters": [
@@ -9253,8 +9189,7 @@
       "delete": {
         "summary": "Delete",
         "tags": [
-          "Client",
-          "Reconciled"
+          "Client"
         ],
         "operationId": "delete_rest_api_client_ID",
         "parameters": [
@@ -9317,8 +9252,7 @@
       "get": {
         "summary": "Get Client By ID",
         "tags": [
-          "Client",
-          "Reconciled"
+          "Client"
         ],
         "operationId": "get_rest_api_client_116468",
         "parameters": [
@@ -9393,8 +9327,7 @@
       "get": {
         "summary": "Get All Clinics",
         "tags": [
-          "Clinic",
-          "Reconciled"
+          "Clinic"
         ],
         "operationId": "get_rest_api_clinics",
         "parameters": [
@@ -9462,8 +9395,7 @@
       "get": {
         "summary": "Get Clinic By ID",
         "tags": [
-          "Clinic",
-          "Reconciled"
+          "Clinic"
         ],
         "operationId": "get_rest_api_clinics_ID",
         "parameters": [
@@ -9526,8 +9458,7 @@
       "get": {
         "summary": "Get Closing Of Invoice All",
         "tags": [
-          "Payments",
-          "Reconciled"
+          "Payments"
         ],
         "operationId": "get_rest_api_closingOfInvoices",
         "parameters": [
@@ -9595,8 +9526,7 @@
       "get": {
         "summary": "Get Closing Of Invoice By Id",
         "tags": [
-          "Payments",
-          "Reconciled"
+          "Payments"
         ],
         "operationId": "get_rest_api_closingOfInvoices_ID",
         "parameters": [
@@ -9659,8 +9589,7 @@
       "get": {
         "summary": "Get All Fiscal Register Data",
         "tags": [
-          "FiscalRegistrator",
-          "Reconciled"
+          "FiscalRegistrator"
         ],
         "operationId": "get_rest_api_fiscalRegisterData",
         "parameters": [
@@ -9718,8 +9647,7 @@
       "get": {
         "summary": "Get Fiscal Register Data By ID",
         "tags": [
-          "FiscalRegistrator",
-          "Reconciled"
+          "FiscalRegistrator"
         ],
         "operationId": "get_rest_api_fiscalRegisterData_ID",
         "parameters": [
@@ -9772,8 +9700,7 @@
       "get": {
         "summary": "Get All Fiscal Tax System",
         "tags": [
-          "FiscalRegistrator",
-          "Reconciled"
+          "FiscalRegistrator"
         ],
         "operationId": "get_rest_api_fiscalTaxSystems",
         "parameters": [
@@ -9831,8 +9758,7 @@
       "get": {
         "summary": "Get Fiscal Tax System By ID",
         "tags": [
-          "FiscalRegistrator",
-          "Reconciled"
+          "FiscalRegistrator"
         ],
         "operationId": "get_rest_api_fiscalTaxSystems_ID",
         "parameters": [
@@ -9885,8 +9811,7 @@
       "get": {
         "summary": "Good Get All",
         "tags": [
-          "Good",
-          "Reconciled"
+          "Good"
         ],
         "operationId": "get_rest_api_good",
         "parameters": [
@@ -9952,8 +9877,7 @@
       "post": {
         "summary": "Good Post",
         "tags": [
-          "Good",
-          "Reconciled"
+          "Good"
         ],
         "operationId": "post_rest_api_good",
         "parameters": [],
@@ -10016,8 +9940,7 @@
       "get": {
         "summary": "Good Get By ID",
         "tags": [
-          "Good",
-          "Reconciled"
+          "Good"
         ],
         "operationId": "get_rest_api_good_ID",
         "parameters": [
@@ -10078,8 +10001,7 @@
       "put": {
         "summary": "Good Put",
         "tags": [
-          "Good",
-          "Reconciled"
+          "Good"
         ],
         "operationId": "put_rest_api_good_ID",
         "parameters": [
@@ -10149,8 +10071,7 @@
       "delete": {
         "summary": "Good Delete",
         "tags": [
-          "Good",
-          "Reconciled"
+          "Good"
         ],
         "operationId": "delete_rest_api_good_ID",
         "parameters": [
@@ -10213,8 +10134,7 @@
       "get": {
         "summary": "GoodGroup Get By ID",
         "tags": [
-          "GoodGroup",
-          "Reconciled"
+          "GoodGroup"
         ],
         "operationId": "get_rest_api_goodGroup_9",
         "parameters": [
@@ -10289,8 +10209,7 @@
       "get": {
         "summary": "GoodSaleParam Get By ID",
         "tags": [
-          "GoodSaleParam",
-          "Reconciled"
+          "GoodSaleParam"
         ],
         "operationId": "get_rest_api_goodSaleParam",
         "parameters": [
@@ -10358,8 +10277,7 @@
       "put": {
         "summary": "Put GoodSaleParam",
         "tags": [
-          "GoodSaleParam",
-          "Reconciled"
+          "GoodSaleParam"
         ],
         "operationId": "put_rest_api_goodSaleParam_ID",
         "parameters": [
@@ -10431,8 +10349,7 @@
       "get": {
         "summary": "Get All Good Tags",
         "tags": [
-          "GoodTag",
-          "Reconciled"
+          "GoodTag"
         ],
         "operationId": "get_rest_api_goodTag",
         "parameters": [
@@ -10487,8 +10404,7 @@
       "post": {
         "summary": "Create Good Tag",
         "tags": [
-          "GoodTag",
-          "Reconciled"
+          "GoodTag"
         ],
         "operationId": "post_rest_api_goodTag",
         "parameters": [],
@@ -10541,8 +10457,7 @@
       "get": {
         "summary": "Get Good Tag By Id",
         "tags": [
-          "GoodTag",
-          "Reconciled"
+          "GoodTag"
         ],
         "operationId": "get_rest_api_goodTag_203",
         "parameters": [
@@ -10604,8 +10519,7 @@
       "put": {
         "summary": "Update Good Tag By Id",
         "tags": [
-          "GoodTag",
-          "Reconciled"
+          "GoodTag"
         ],
         "operationId": "put_rest_api_goodTag_203",
         "parameters": [
@@ -10665,8 +10579,7 @@
       "delete": {
         "summary": "Delete Good Tag",
         "tags": [
-          "GoodTag",
-          "Reconciled"
+          "GoodTag"
         ],
         "operationId": "delete_rest_api_goodTag_203",
         "parameters": [
@@ -10718,8 +10631,7 @@
       "get": {
         "summary": "GET all hospital",
         "tags": [
-          "Hospital",
-          "Reconciled"
+          "Hospital"
         ],
         "operationId": "get_rest_api_hospital",
         "parameters": [
@@ -10787,8 +10699,7 @@
       "get": {
         "summary": "GET one hospital",
         "tags": [
-          "Hospital",
-          "Reconciled"
+          "Hospital"
         ],
         "operationId": "get_rest_api_hospital_ID",
         "parameters": [
@@ -10849,8 +10760,7 @@
       "put": {
         "summary": "Update Hospital",
         "tags": [
-          "Hospital",
-          "Reconciled"
+          "Hospital"
         ],
         "operationId": "put_rest_api_hospital_ID",
         "parameters": [
@@ -10922,8 +10832,7 @@
       "get": {
         "summary": "Invoice Get All",
         "tags": [
-          "Invoice",
-          "Reconciled"
+          "Invoice"
         ],
         "operationId": "get_rest_api_invoice",
         "parameters": [
@@ -10991,8 +10900,7 @@
       "get": {
         "summary": "Invoice Get By ID",
         "tags": [
-          "Invoice",
-          "Reconciled"
+          "Invoice"
         ],
         "operationId": "get_rest_api_invoice_ID",
         "parameters": [
@@ -11055,8 +10963,7 @@
       "get": {
         "summary": "InvoiceDocument Get All WithFilter",
         "tags": [
-          "General",
-          "Reconciled"
+          "General"
         ],
         "operationId": "get_rest_api_invoiceDocument",
         "parameters": [
@@ -11130,8 +11037,7 @@
       "get": {
         "summary": "InvoiceDocument Get By ID",
         "tags": [
-          "InvoiceDocument",
-          "Reconciled"
+          "InvoiceDocument"
         ],
         "operationId": "get_rest_api_invoiceDocument_ID",
         "parameters": [
@@ -11194,8 +11100,7 @@
       "post": {
         "summary": "Send to all",
         "tags": [
-          "Global Messages",
-          "Reconciled"
+          "Global Messages"
         ],
         "operationId": "post_rest_api_messages_all",
         "parameters": [],
@@ -11249,8 +11154,7 @@
       "get": {
         "summary": "Message Get Reports",
         "tags": [
-          "Global Messages",
-          "Reconciled"
+          "Global Messages"
         ],
         "operationId": "get_rest_api_messages_reports",
         "parameters": [
@@ -11317,8 +11221,7 @@
       "post": {
         "summary": "Send by roles",
         "tags": [
-          "Global Messages",
-          "Reconciled"
+          "Global Messages"
         ],
         "operationId": "post_rest_api_messages_roles",
         "parameters": [],
@@ -11372,8 +11275,7 @@
       "post": {
         "summary": "Send to concrete users",
         "tags": [
-          "Global Messages",
-          "Reconciled"
+          "Global Messages"
         ],
         "operationId": "post_rest_api_messages_users",
         "parameters": [],
@@ -11427,8 +11329,7 @@
       "get": {
         "summary": "Get Payments By Invoice ID (Filter)",
         "tags": [
-          "Payments",
-          "Reconciled"
+          "Payments"
         ],
         "operationId": "get_rest_api_payment",
         "parameters": [
@@ -11502,8 +11403,7 @@
       "get": {
         "summary": "Get Payments By ID",
         "tags": [
-          "Payments",
-          "Reconciled"
+          "Payments"
         ],
         "operationId": "get_rest_api_payment_ID",
         "parameters": [
@@ -11566,8 +11466,7 @@
       "get": {
         "summary": "Get All Pets By Owner Id And Not Deleted",
         "tags": [
-          "Pet",
-          "Reconciled"
+          "Pet"
         ],
         "operationId": "get_rest_api_pet",
         "parameters": [
@@ -11639,8 +11538,7 @@
       "post": {
         "summary": "Post Pet",
         "tags": [
-          "Pet",
-          "Reconciled"
+          "Pet"
         ],
         "operationId": "post_rest_api_pet",
         "parameters": [],
@@ -11703,8 +11601,7 @@
       "put": {
         "summary": "Put Pet",
         "tags": [
-          "Pet",
-          "Reconciled"
+          "Pet"
         ],
         "operationId": "put_rest_api_pet_ID",
         "parameters": [
@@ -11776,8 +11673,7 @@
       "delete": {
         "summary": "Delete Pet",
         "tags": [
-          "Pet",
-          "Reconciled"
+          "Pet"
         ],
         "operationId": "delete_rest_api_pet_122",
         "parameters": [
@@ -11838,8 +11734,7 @@
       "get": {
         "summary": "Get Pet By ID",
         "tags": [
-          "Pet",
-          "Reconciled"
+          "Pet"
         ],
         "operationId": "get_rest_api_pet_74",
         "parameters": [
@@ -11914,8 +11809,7 @@
       "get": {
         "summary": "Get All PetTypes",
         "tags": [
-          "PetType",
-          "Reconciled"
+          "PetType"
         ],
         "operationId": "get_rest_api_petType",
         "parameters": [
@@ -11983,8 +11877,7 @@
       "get": {
         "summary": "Get PetType By ID",
         "tags": [
-          "PetType",
-          "Reconciled"
+          "PetType"
         ],
         "operationId": "get_rest_api_petType_ID",
         "parameters": [
@@ -12047,8 +11940,7 @@
       "get": {
         "summary": "Get All Properties By Filter",
         "tags": [
-          "Properties",
-          "Reconciled"
+          "Properties"
         ],
         "operationId": "get_rest_api_properties",
         "parameters": [
@@ -12116,8 +12008,7 @@
       "post": {
         "summary": "Create Report AI Job",
         "tags": [
-          "Report AI Job",
-          "Reconciled"
+          "Report AI Job"
         ],
         "operationId": "post_rest_api_report_ai_job",
         "parameters": [],
@@ -12170,8 +12061,7 @@
       "get": {
         "summary": "Get Report AI Job By ID",
         "tags": [
-          "Report AI Job",
-          "Reconciled"
+          "Report AI Job"
         ],
         "operationId": "get_rest_api_report_ai_job_id",
         "parameters": [
@@ -12223,8 +12113,7 @@
       "post": {
         "summary": "Confirm Report AI Job Candidate",
         "tags": [
-          "Report AI Job",
-          "Reconciled"
+          "Report AI Job"
         ],
         "operationId": "post_rest_api_report_ai_job_id_confirm",
         "parameters": [
@@ -12286,8 +12175,7 @@
       "get": {
         "summary": "Get Report AI Job Data",
         "tags": [
-          "Report AI Job",
-          "Reconciled"
+          "Report AI Job"
         ],
         "operationId": "get_rest_api_report_ai_job_id_data",
         "parameters": [
@@ -12339,8 +12227,7 @@
       "post": {
         "summary": "Save Report AI Job",
         "tags": [
-          "Report AI Job",
-          "Reconciled"
+          "Report AI Job"
         ],
         "operationId": "post_rest_api_report_ai_job_id_save",
         "parameters": [
@@ -12402,8 +12289,7 @@
       "get": {
         "summary": "StartReportWithFilter",
         "tags": [
-          "Reports",
-          "Reconciled"
+          "Reports"
         ],
         "operationId": "get_rest_api_report_StartReport",
         "parameters": [
@@ -12478,8 +12364,7 @@
       "get": {
         "summary": "GetURLReportResult",
         "tags": [
-          "Reports",
-          "Reconciled"
+          "Reports"
         ],
         "operationId": "get_rest_api_report_reportFile",
         "parameters": [
@@ -12545,8 +12430,7 @@
       "get": {
         "summary": "Get All Roles",
         "tags": [
-          "Role",
-          "Reconciled"
+          "Role"
         ],
         "operationId": "get_rest_api_role",
         "parameters": [
@@ -12614,8 +12498,7 @@
       "get": {
         "summary": "Get Role By ID",
         "tags": [
-          "Role",
-          "Reconciled"
+          "Role"
         ],
         "operationId": "get_rest_api_role_2",
         "parameters": [
@@ -12690,8 +12573,7 @@
       "get": {
         "summary": "GetQuantityGood",
         "tags": [
-          "Store",
-          "Reconciled"
+          "Store"
         ],
         "operationId": "get_rest_api_stores_RestOfGoodInWarehouse",
         "parameters": [
@@ -12766,8 +12648,7 @@
       "get": {
         "summary": "Get All Streets",
         "tags": [
-          "Streets",
-          "Reconciled"
+          "Streets"
         ],
         "operationId": "get_rest_api_street",
         "parameters": [
@@ -12833,8 +12714,7 @@
       "post": {
         "summary": "Post Street",
         "tags": [
-          "Streets",
-          "Reconciled"
+          "Streets"
         ],
         "operationId": "post_rest_api_street",
         "parameters": [],
@@ -12897,8 +12777,7 @@
       "put": {
         "summary": "Put Street",
         "tags": [
-          "Streets",
-          "Reconciled"
+          "Streets"
         ],
         "operationId": "put_rest_api_street_ID",
         "parameters": [
@@ -12968,8 +12847,7 @@
       "delete": {
         "summary": "Delete Street",
         "tags": [
-          "Streets",
-          "Reconciled"
+          "Streets"
         ],
         "operationId": "delete_rest_api_street_ID",
         "parameters": [
@@ -13032,8 +12910,7 @@
       "get": {
         "summary": "Get All TimeSheets",
         "tags": [
-          "Calendar",
-          "Reconciled"
+          "Calendar"
         ],
         "operationId": "get_rest_api_timesheet",
         "parameters": [
@@ -13101,8 +12978,7 @@
       "get": {
         "summary": "Get TimeSheets ById",
         "tags": [
-          "Calendar",
-          "Reconciled"
+          "Calendar"
         ],
         "operationId": "get_rest_api_timesheet_ID",
         "parameters": [
@@ -13165,8 +13041,7 @@
       "get": {
         "summary": "Get All Units",
         "tags": [
-          "Unit",
-          "Reconciled"
+          "Unit"
         ],
         "operationId": "get_rest_api_unit",
         "parameters": [
@@ -13234,8 +13109,7 @@
       "get": {
         "summary": "Get Unit By ID",
         "tags": [
-          "Unit",
-          "Reconciled"
+          "Unit"
         ],
         "operationId": "get_rest_api_unit_1",
         "parameters": [
@@ -13310,8 +13184,7 @@
       "get": {
         "summary": "Use Token",
         "tags": [
-          "Auth #3 (by User Login & Password -> Token)",
-          "Reconciled"
+          "Auth #3 (by User Login & Password -> Token)"
         ],
         "operationId": "get_rest_api_user",
         "parameters": [
@@ -13379,8 +13252,7 @@
       "get": {
         "summary": "User Get Anonymous",
         "tags": [
-          "User",
-          "Reconciled"
+          "User"
         ],
         "operationId": "get_rest_api_user_anonymousList",
         "parameters": [
@@ -13447,8 +13319,7 @@
       "get": {
         "summary": "Get All Webhooks",
         "tags": [
-          "WebHook",
-          "Reconciled"
+          "WebHook"
         ],
         "operationId": "get_rest_api_user_ID",
         "parameters": [
@@ -13509,8 +13380,7 @@
       "put": {
         "summary": "User editing",
         "tags": [
-          "User",
-          "Reconciled"
+          "User"
         ],
         "operationId": "put_rest_api_user_ID",
         "parameters": [
@@ -13582,8 +13452,7 @@
       "get": {
         "summary": "Get All UserPositions",
         "tags": [
-          "User Positons",
-          "Reconciled"
+          "User Positons"
         ],
         "operationId": "get_rest_api_userPosition",
         "parameters": [
@@ -13649,8 +13518,7 @@
       "post": {
         "summary": "Post UserPosition",
         "tags": [
-          "User Positons",
-          "Reconciled"
+          "User Positons"
         ],
         "operationId": "post_rest_api_userPosition",
         "parameters": [],
@@ -13713,8 +13581,7 @@
       "get": {
         "summary": "Get UserPosition By ID",
         "tags": [
-          "User Positons",
-          "Reconciled"
+          "User Positons"
         ],
         "operationId": "get_rest_api_userPosition_ID",
         "parameters": [
@@ -13775,8 +13642,7 @@
       "put": {
         "summary": "Update UserPosition",
         "tags": [
-          "User Positons",
-          "Reconciled"
+          "User Positons"
         ],
         "operationId": "put_rest_api_userPosition_ID",
         "parameters": [
@@ -13846,8 +13712,7 @@
       "delete": {
         "summary": "Delete UserPosition",
         "tags": [
-          "User Positons",
-          "Reconciled"
+          "User Positons"
         ],
         "operationId": "delete_rest_api_userPosition_ID",
         "parameters": [
@@ -13910,8 +13775,7 @@
       "post": {
         "summary": "Get Token (by User Login & Password)",
         "tags": [
-          "Auth #3 (by User Login & Password -> Token)",
-          "Reconciled"
+          "Auth #3 (by User Login & Password -> Token)"
         ],
         "operationId": "post_token_auth_php",
         "parameters": [],

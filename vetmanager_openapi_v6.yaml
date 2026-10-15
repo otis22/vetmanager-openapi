@@ -4103,7 +4103,6 @@ paths:
       summary: Get Combo Manual Item By Filtered by combo_manual_id
       tags:
       - Combo Manual Item
-      - Reconciled
       operationId: get_rest_api_ComboManualItem
       parameters:
       - name: filter
@@ -4148,7 +4147,6 @@ paths:
       summary: Post Combo Manual Item
       tags:
       - Combo Manual Item
-      - Reconciled
       operationId: post_rest_api_ComboManualItem
       parameters: []
       responses:
@@ -4189,7 +4187,6 @@ paths:
       summary: Get Combo Manual Item By ID
       tags:
       - Combo Manual Item
-      - Reconciled
       operationId: get_rest_api_ComboManualItem_ID
       parameters:
       - name: ID
@@ -4229,7 +4226,6 @@ paths:
       summary: Put Combo Manual Item
       tags:
       - Combo Manual Item
-      - Reconciled
       operationId: put_rest_api_ComboManualItem_ID
       parameters:
       - name: ID
@@ -4275,7 +4271,6 @@ paths:
       summary: Get Combo Manual Name Filtered By Name
       tags:
       - Combo Manual Name
-      - Reconciled
       operationId: get_rest_api_ComboManualName
       parameters:
       - name: filter
@@ -4321,7 +4316,6 @@ paths:
       summary: Get Combo Manual Name By ID
       tags:
       - Combo Manual Name
-      - Reconciled
       operationId: get_rest_api_ComboManualName_ID
       parameters:
       - name: ID
@@ -4362,7 +4356,6 @@ paths:
       summary: GoodGroup Get All
       tags:
       - GoodGroup
-      - Reconciled
       operationId: get_rest_api_GoodGroup
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -4402,7 +4395,6 @@ paths:
       summary: Post group
       tags:
       - GoodGroup
-      - Reconciled
       operationId: post_rest_api_GoodGroup
       parameters: []
       responses:
@@ -4443,7 +4435,6 @@ paths:
       summary: Put group
       tags:
       - GoodGroup
-      - Reconciled
       operationId: put_rest_api_GoodGroup_ID
       parameters:
       - name: ID
@@ -4488,7 +4479,6 @@ paths:
       summary: Delete group
       tags:
       - GoodGroup
-      - Reconciled
       operationId: delete_rest_api_GoodGroup_ID
       parameters:
       - name: ID
@@ -4529,7 +4519,6 @@ paths:
       summary: GET all HospitalBlock
       tags:
       - Hospital
-      - Reconciled
       operationId: get_rest_api_HospitalBlock
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -4570,7 +4559,6 @@ paths:
       summary: GET one HospitalBlock
       tags:
       - Hospital
-      - Reconciled
       operationId: get_rest_api_HospitalBlock_ID
       parameters:
       - name: ID
@@ -4611,7 +4599,6 @@ paths:
       summary: Medical Card Get All
       tags:
       - Medical Card
-      - Reconciled
       operationId: get_rest_api_MedicalCards
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -4651,7 +4638,6 @@ paths:
       summary: Medical Card Post
       tags:
       - Medical Card
-      - Reconciled
       operationId: post_rest_api_MedicalCards
       parameters: []
       responses:
@@ -4692,7 +4678,6 @@ paths:
       summary: Post Vaccination
       tags:
       - Medical Card / Vaccination
-      - Reconciled
       operationId: post_rest_api_MedicalCards_AddVaccination
       parameters:
       - name: pet_id
@@ -4739,7 +4724,6 @@ paths:
       summary: Get All Diagnoses
       tags:
       - Medical Card / Diagnose
-      - Reconciled
       operationId: get_rest_api_MedicalCards_AllDiagnoses
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -4780,7 +4764,6 @@ paths:
       summary: Medical Card Get Text Templates
       tags:
       - Medical Card
-      - Reconciled
       operationId: get_rest_api_MedicalCards_MedcardsTextTemplates
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -4821,7 +4804,6 @@ paths:
       summary: Medical Card Get By Client (Without parameters returns first 10)
       tags:
       - Medical Card By Client
-      - Reconciled
       operationId: get_rest_api_MedicalCards_MedicalcardsDataByClient
       parameters:
       - name: client_id
@@ -4867,7 +4849,6 @@ paths:
       summary: Get Vaccinations By Pet
       tags:
       - Medical Card / Vaccination
-      - Reconciled
       operationId: get_rest_api_MedicalCards_Vaccinations
       parameters:
       - name: pet_id
@@ -4914,7 +4895,6 @@ paths:
       summary: Medical Card Get By ID
       tags:
       - Medical Card
-      - Reconciled
       operationId: get_rest_api_MedicalCards_ID
       parameters:
       - name: ID
@@ -4954,7 +4934,6 @@ paths:
       summary: Medical Card Put
       tags:
       - Medical Card
-      - Reconciled
       operationId: put_rest_api_MedicalCards_ID
       parameters:
       - name: ID
@@ -5000,7 +4979,6 @@ paths:
       summary: GetAllParty
       tags:
       - Good Parties in Store
-      - Reconciled
       operationId: get_rest_api_PartyAccount
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -5041,7 +5019,6 @@ paths:
       summary: GetAllPartyToId
       tags:
       - Good Parties in Store
-      - Reconciled
       operationId: get_rest_api_PartyAccount_ID
       parameters:
       - name: ID
@@ -5082,7 +5059,6 @@ paths:
       summary: GetAllPartyAccountDoc
       tags:
       - Good Parties in Store
-      - Reconciled
       operationId: get_rest_api_PartyAccountDoc
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -5123,7 +5099,6 @@ paths:
       summary: GetAllPartyAccountDocToId
       tags:
       - Good Parties in Store
-      - Reconciled
       operationId: get_rest_api_PartyAccountDoc_ID
       parameters:
       - name: ID
@@ -5164,7 +5139,6 @@ paths:
       summary: GetAllStoreDocuments
       tags:
       - Store
-      - Reconciled
       operationId: get_rest_api_StoreDocument
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -5205,7 +5179,6 @@ paths:
       summary: GetStoreDocumentsToId
       tags:
       - Store
-      - Reconciled
       operationId: get_rest_api_StoreDocument_ID
       parameters:
       - name: ID
@@ -5246,7 +5219,6 @@ paths:
       summary: GetStoreDocumentOperationToId
       tags:
       - Store
-      - Reconciled
       operationId: get_rest_api_StoreDocumentOperation_ID
       parameters:
       - name: ID
@@ -5281,7 +5253,6 @@ paths:
       summary: GetAllSuppliers
       tags:
       - Suppliers
-      - Reconciled
       operationId: get_rest_api_Suppliers
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -5321,7 +5292,6 @@ paths:
       summary: CreateSupplier
       tags:
       - Suppliers
-      - Reconciled
       operationId: post_rest_api_Suppliers
       parameters: []
       responses:
@@ -5362,7 +5332,6 @@ paths:
       summary: GetSuppliersToId
       tags:
       - Suppliers
-      - Reconciled
       operationId: get_rest_api_Suppliers_ID
       parameters:
       - name: ID
@@ -5403,7 +5372,6 @@ paths:
       summary: Post unit
       tags:
       - Unit
-      - Reconciled
       operationId: post_rest_api_Unit
       parameters: []
       responses:
@@ -5444,7 +5412,6 @@ paths:
       summary: Put unit
       tags:
       - Unit
-      - Reconciled
       operationId: put_rest_api_Unit_ID
       parameters:
       - name: ID
@@ -5489,7 +5456,6 @@ paths:
       summary: Delete unit
       tags:
       - Unit
-      - Reconciled
       operationId: delete_rest_api_Unit_ID
       parameters:
       - name: ID
@@ -5530,7 +5496,6 @@ paths:
       summary: Get By ID
       tags:
       - General
-      - Reconciled
       operationId: get_rest_api_VmLink_personalAccountLinkByClientId_1
       parameters:
       - name: clientId
@@ -5569,7 +5534,6 @@ paths:
       summary: Get By Phone
       tags:
       - Get Link to Owner Cabinet (VM-Link)
-      - Reconciled
       operationId: get_rest_api_VmLink_personalAccountLinkByPhone_3322122
       parameters:
       - name: phone
@@ -5608,7 +5572,6 @@ paths:
       summary: Get Admissions Filtered By Pet & Status
       tags:
       - Admission
-      - Reconciled
       operationId: get_rest_api_admission
       parameters:
       - name: filter
@@ -5654,7 +5617,6 @@ paths:
       summary: Post Admission
       tags:
       - Admission
-      - Reconciled
       operationId: post_rest_api_admission
       parameters: []
       responses:
@@ -5696,7 +5658,6 @@ paths:
       summary: Get Admission By ID
       tags:
       - Admission
-      - Reconciled
       operationId: get_rest_api_admission_ID
       parameters:
       - name: ID
@@ -5737,7 +5698,6 @@ paths:
       summary: Put Admission
       tags:
       - Admission
-      - Reconciled
       operationId: put_rest_api_admission_ID
       parameters:
       - name: ID
@@ -5783,7 +5743,6 @@ paths:
       summary: DeleteAdmission
       tags:
       - Calendar
-      - Reconciled
       operationId: delete_rest_api_admission_ID
       parameters:
       - name: ID
@@ -5825,7 +5784,6 @@ paths:
       summary: Get All Clients
       tags:
       - AnonymousClient
-      - Reconciled
       operationId: get_rest_api_anonymousClient
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -5867,7 +5825,6 @@ paths:
       summary: Get Client By ID
       tags:
       - AnonymousClient
-      - Reconciled
       operationId: get_rest_api_anonymousClient_116468
       parameters:
       - name: id
@@ -5913,7 +5870,6 @@ paths:
       summary: Get All Breeds
       tags:
       - Breed
-      - Reconciled
       operationId: get_rest_api_breed
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -5955,7 +5911,6 @@ paths:
       summary: Get Breed By ID
       tags:
       - Breed
-      - Reconciled
       operationId: get_rest_api_breed_ID
       parameters:
       - name: ID
@@ -5997,7 +5952,6 @@ paths:
       summary: Get Cassa All
       tags:
       - Cassa / Cassa
-      - Reconciled
       operationId: get_rest_api_cassa
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6039,7 +5993,6 @@ paths:
       summary: Get Cassa By ID
       tags:
       - Cassa / Cassa
-      - Reconciled
       operationId: get_rest_api_cassa_ID
       parameters:
       - name: ID
@@ -6081,7 +6034,6 @@ paths:
       summary: Get Cassa Close All
       tags:
       - Cassa / Cassa Close
-      - Reconciled
       operationId: get_rest_api_cassaclose
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6123,7 +6075,6 @@ paths:
       summary: Get Cassa Close By ID
       tags:
       - Cassa / Cassa Close
-      - Reconciled
       operationId: get_rest_api_cassaclose_ID
       parameters:
       - name: ID
@@ -6165,7 +6116,6 @@ paths:
       summary: Get Cassa Rashod All
       tags:
       - Cassa / Cassa Rasshod
-      - Reconciled
       operationId: get_rest_api_cassarashod
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6201,7 +6151,6 @@ paths:
       summary: Get Cassa Rashod By ID
       tags:
       - Cassa / Cassa Rasshod
-      - Reconciled
       operationId: get_rest_api_cassarashod_ID
       parameters:
       - name: ID
@@ -6237,7 +6186,6 @@ paths:
       summary: Get All Cities
       tags:
       - City
-      - Reconciled
       operationId: get_rest_api_city
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6278,7 +6226,6 @@ paths:
       summary: Post City
       tags:
       - City
-      - Reconciled
       operationId: post_rest_api_city
       parameters: []
       responses:
@@ -6320,7 +6267,6 @@ paths:
       summary: City editing
       tags:
       - City
-      - Reconciled
       operationId: put_rest_api_city_ID
       parameters:
       - name: ID
@@ -6366,7 +6312,6 @@ paths:
       summary: Delete
       tags:
       - City
-      - Reconciled
       operationId: delete_rest_api_city_ID
       parameters:
       - name: ID
@@ -6408,7 +6353,6 @@ paths:
       summary: Get City By ID
       tags:
       - City
-      - Reconciled
       operationId: get_rest_api_city_255
       parameters:
       - name: id
@@ -6454,7 +6398,6 @@ paths:
       summary: Get All CityTypes
       tags:
       - CityType
-      - Reconciled
       operationId: get_rest_api_cityType
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6495,7 +6438,6 @@ paths:
       summary: Post CityType
       tags:
       - CityType
-      - Reconciled
       operationId: post_rest_api_cityType
       parameters: []
       responses:
@@ -6537,7 +6479,6 @@ paths:
       summary: Get CityType By ID
       tags:
       - CityType
-      - Reconciled
       operationId: get_rest_api_cityType_ID
       parameters:
       - name: ID
@@ -6578,7 +6519,6 @@ paths:
       summary: CityType Editing
       tags:
       - CityType
-      - Reconciled
       operationId: put_rest_api_cityType_ID
       parameters:
       - name: ID
@@ -6624,7 +6564,6 @@ paths:
       summary: Delete
       tags:
       - CityType
-      - Reconciled
       operationId: delete_rest_api_cityType_ID
       parameters:
       - name: ID
@@ -6666,7 +6605,6 @@ paths:
       summary: Get All Clients
       tags:
       - Client
-      - Reconciled
       operationId: get_rest_api_client
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6708,7 +6646,6 @@ paths:
       summary: Post Client
       tags:
       - Client
-      - Reconciled
       operationId: post_rest_api_client_ID
       parameters:
       - name: ID
@@ -6753,7 +6690,6 @@ paths:
       summary: Client editing
       tags:
       - Client
-      - Reconciled
       operationId: put_rest_api_client_ID
       parameters:
       - name: ID
@@ -6799,7 +6735,6 @@ paths:
       summary: Delete
       tags:
       - Client
-      - Reconciled
       operationId: delete_rest_api_client_ID
       parameters:
       - name: ID
@@ -6841,7 +6776,6 @@ paths:
       summary: Get Client By ID
       tags:
       - Client
-      - Reconciled
       operationId: get_rest_api_client_116468
       parameters:
       - name: id
@@ -6887,7 +6821,6 @@ paths:
       summary: Get All Clinics
       tags:
       - Clinic
-      - Reconciled
       operationId: get_rest_api_clinics
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6929,7 +6862,6 @@ paths:
       summary: Get Clinic By ID
       tags:
       - Clinic
-      - Reconciled
       operationId: get_rest_api_clinics_ID
       parameters:
       - name: ID
@@ -6971,7 +6903,6 @@ paths:
       summary: Get Closing Of Invoice All
       tags:
       - Payments
-      - Reconciled
       operationId: get_rest_api_closingOfInvoices
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7013,7 +6944,6 @@ paths:
       summary: Get Closing Of Invoice By Id
       tags:
       - Payments
-      - Reconciled
       operationId: get_rest_api_closingOfInvoices_ID
       parameters:
       - name: ID
@@ -7055,7 +6985,6 @@ paths:
       summary: Get All Fiscal Register Data
       tags:
       - FiscalRegistrator
-      - Reconciled
       operationId: get_rest_api_fiscalRegisterData
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7091,7 +7020,6 @@ paths:
       summary: Get Fiscal Register Data By ID
       tags:
       - FiscalRegistrator
-      - Reconciled
       operationId: get_rest_api_fiscalRegisterData_ID
       parameters:
       - name: ID
@@ -7127,7 +7055,6 @@ paths:
       summary: Get All Fiscal Tax System
       tags:
       - FiscalRegistrator
-      - Reconciled
       operationId: get_rest_api_fiscalTaxSystems
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7163,7 +7090,6 @@ paths:
       summary: Get Fiscal Tax System By ID
       tags:
       - FiscalRegistrator
-      - Reconciled
       operationId: get_rest_api_fiscalTaxSystems_ID
       parameters:
       - name: ID
@@ -7199,7 +7125,6 @@ paths:
       summary: Good Get All
       tags:
       - Good
-      - Reconciled
       operationId: get_rest_api_good
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7240,7 +7165,6 @@ paths:
       summary: Good Post
       tags:
       - Good
-      - Reconciled
       operationId: post_rest_api_good
       parameters: []
       responses:
@@ -7282,7 +7206,6 @@ paths:
       summary: Good Get By ID
       tags:
       - Good
-      - Reconciled
       operationId: get_rest_api_good_ID
       parameters:
       - name: ID
@@ -7323,7 +7246,6 @@ paths:
       summary: Good Put
       tags:
       - Good
-      - Reconciled
       operationId: put_rest_api_good_ID
       parameters:
       - name: ID
@@ -7369,7 +7291,6 @@ paths:
       summary: Good Delete
       tags:
       - Good
-      - Reconciled
       operationId: delete_rest_api_good_ID
       parameters:
       - name: ID
@@ -7411,7 +7332,6 @@ paths:
       summary: GoodGroup Get By ID
       tags:
       - GoodGroup
-      - Reconciled
       operationId: get_rest_api_goodGroup_9
       parameters:
       - name: id
@@ -7457,7 +7377,6 @@ paths:
       summary: GoodSaleParam Get By ID
       tags:
       - GoodSaleParam
-      - Reconciled
       operationId: get_rest_api_goodSaleParam
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7499,7 +7418,6 @@ paths:
       summary: Put GoodSaleParam
       tags:
       - GoodSaleParam
-      - Reconciled
       operationId: put_rest_api_goodSaleParam_ID
       parameters:
       - name: ID
@@ -7546,7 +7464,6 @@ paths:
       summary: Get All Good Tags
       tags:
       - GoodTag
-      - Reconciled
       operationId: get_rest_api_goodTag
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7592,7 +7509,6 @@ paths:
       summary: Create Good Tag
       tags:
       - GoodTag
-      - Reconciled
       operationId: post_rest_api_goodTag
       parameters: []
       responses:
@@ -7644,7 +7560,6 @@ paths:
       summary: Get Good Tag By Id
       tags:
       - GoodTag
-      - Reconciled
       operationId: get_rest_api_goodTag_203
       parameters:
       - name: id
@@ -7690,7 +7605,6 @@ paths:
       summary: Update Good Tag By Id
       tags:
       - GoodTag
-      - Reconciled
       operationId: put_rest_api_goodTag_203
       parameters:
       - name: id
@@ -7749,7 +7663,6 @@ paths:
       summary: Delete Good Tag
       tags:
       - GoodTag
-      - Reconciled
       operationId: delete_rest_api_goodTag_203
       parameters:
       - name: id
@@ -7789,7 +7702,6 @@ paths:
       summary: GET all hospital
       tags:
       - Hospital
-      - Reconciled
       operationId: get_rest_api_hospital
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7831,7 +7743,6 @@ paths:
       summary: GET one hospital
       tags:
       - Hospital
-      - Reconciled
       operationId: get_rest_api_hospital_ID
       parameters:
       - name: ID
@@ -7872,7 +7783,6 @@ paths:
       summary: Update Hospital
       tags:
       - Hospital
-      - Reconciled
       operationId: put_rest_api_hospital_ID
       parameters:
       - name: ID
@@ -7919,7 +7829,6 @@ paths:
       summary: Invoice Get All
       tags:
       - Invoice
-      - Reconciled
       operationId: get_rest_api_invoice
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -7961,7 +7870,6 @@ paths:
       summary: Invoice Get By ID
       tags:
       - Invoice
-      - Reconciled
       operationId: get_rest_api_invoice_ID
       parameters:
       - name: ID
@@ -8003,7 +7911,6 @@ paths:
       summary: InvoiceDocument Get All WithFilter
       tags:
       - General
-      - Reconciled
       operationId: get_rest_api_invoiceDocument
       parameters:
       - name: filter
@@ -8050,7 +7957,6 @@ paths:
       summary: InvoiceDocument Get By ID
       tags:
       - InvoiceDocument
-      - Reconciled
       operationId: get_rest_api_invoiceDocument_ID
       parameters:
       - name: ID
@@ -8092,7 +7998,6 @@ paths:
       summary: Send to all
       tags:
       - Global Messages
-      - Reconciled
       operationId: post_rest_api_messages_all
       parameters: []
       responses:
@@ -8129,7 +8034,6 @@ paths:
       summary: Message Get Reports
       tags:
       - Global Messages
-      - Reconciled
       operationId: get_rest_api_messages_reports
       parameters:
       - name: campaign
@@ -8171,7 +8075,6 @@ paths:
       summary: Send by roles
       tags:
       - Global Messages
-      - Reconciled
       operationId: post_rest_api_messages_roles
       parameters: []
       responses:
@@ -8208,7 +8111,6 @@ paths:
       summary: Send to concrete users
       tags:
       - Global Messages
-      - Reconciled
       operationId: post_rest_api_messages_users
       parameters: []
       responses:
@@ -8245,7 +8147,6 @@ paths:
       summary: Get Payments By Invoice ID (Filter)
       tags:
       - Payments
-      - Reconciled
       operationId: get_rest_api_payment
       parameters:
       - name: filter
@@ -8292,7 +8193,6 @@ paths:
       summary: Get Payments By ID
       tags:
       - Payments
-      - Reconciled
       operationId: get_rest_api_payment_ID
       parameters:
       - name: ID
@@ -8334,7 +8234,6 @@ paths:
       summary: Get All Pets By Owner Id And Not Deleted
       tags:
       - Pet
-      - Reconciled
       operationId: get_rest_api_pet
       parameters:
       - name: filter
@@ -8380,7 +8279,6 @@ paths:
       summary: Post Pet
       tags:
       - Pet
-      - Reconciled
       operationId: post_rest_api_pet
       parameters: []
       responses:
@@ -8422,7 +8320,6 @@ paths:
       summary: Put Pet
       tags:
       - Pet
-      - Reconciled
       operationId: put_rest_api_pet_ID
       parameters:
       - name: ID
@@ -8469,7 +8366,6 @@ paths:
       summary: Delete Pet
       tags:
       - Pet
-      - Reconciled
       operationId: delete_rest_api_pet_122
       parameters:
       - name: id
@@ -8510,7 +8406,6 @@ paths:
       summary: Get Pet By ID
       tags:
       - Pet
-      - Reconciled
       operationId: get_rest_api_pet_74
       parameters:
       - name: id
@@ -8556,7 +8451,6 @@ paths:
       summary: Get All PetTypes
       tags:
       - PetType
-      - Reconciled
       operationId: get_rest_api_petType
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -8598,7 +8492,6 @@ paths:
       summary: Get PetType By ID
       tags:
       - PetType
-      - Reconciled
       operationId: get_rest_api_petType_ID
       parameters:
       - name: ID
@@ -8640,7 +8533,6 @@ paths:
       summary: Get All Properties By Filter
       tags:
       - Properties
-      - Reconciled
       operationId: get_rest_api_properties
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -8682,7 +8574,6 @@ paths:
       summary: Create Report AI Job
       tags:
       - Report AI Job
-      - Reconciled
       operationId: post_rest_api_report_ai_job
       parameters: []
       responses:
@@ -8719,7 +8610,6 @@ paths:
       summary: Get Report AI Job By ID
       tags:
       - Report AI Job
-      - Reconciled
       operationId: get_rest_api_report_ai_job_id
       parameters:
       - name: id
@@ -8755,7 +8645,6 @@ paths:
       summary: Confirm Report AI Job Candidate
       tags:
       - Report AI Job
-      - Reconciled
       operationId: post_rest_api_report_ai_job_id_confirm
       parameters:
       - name: id
@@ -8797,7 +8686,6 @@ paths:
       summary: Get Report AI Job Data
       tags:
       - Report AI Job
-      - Reconciled
       operationId: get_rest_api_report_ai_job_id_data
       parameters:
       - name: id
@@ -8833,7 +8721,6 @@ paths:
       summary: Save Report AI Job
       tags:
       - Report AI Job
-      - Reconciled
       operationId: post_rest_api_report_ai_job_id_save
       parameters:
       - name: id
@@ -8875,7 +8762,6 @@ paths:
       summary: StartReportWithFilter
       tags:
       - Reports
-      - Reconciled
       operationId: get_rest_api_report_StartReport
       parameters:
       - name: report_id
@@ -8922,7 +8808,6 @@ paths:
       summary: GetURLReportResult
       tags:
       - Reports
-      - Reconciled
       operationId: get_rest_api_report_reportFile
       parameters:
       - name: file_id
@@ -8963,7 +8848,6 @@ paths:
       summary: Get All Roles
       tags:
       - Role
-      - Reconciled
       operationId: get_rest_api_role
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -9005,7 +8889,6 @@ paths:
       summary: Get Role By ID
       tags:
       - Role
-      - Reconciled
       operationId: get_rest_api_role_2
       parameters:
       - name: id
@@ -9051,7 +8934,6 @@ paths:
       summary: GetQuantityGood
       tags:
       - Store
-      - Reconciled
       operationId: get_rest_api_stores_RestOfGoodInWarehouse
       parameters:
       - name: clinic_id
@@ -9098,7 +8980,6 @@ paths:
       summary: Get All Streets
       tags:
       - Streets
-      - Reconciled
       operationId: get_rest_api_street
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -9139,7 +9020,6 @@ paths:
       summary: Post Street
       tags:
       - Streets
-      - Reconciled
       operationId: post_rest_api_street
       parameters: []
       responses:
@@ -9181,7 +9061,6 @@ paths:
       summary: Put Street
       tags:
       - Streets
-      - Reconciled
       operationId: put_rest_api_street_ID
       parameters:
       - name: ID
@@ -9227,7 +9106,6 @@ paths:
       summary: Delete Street
       tags:
       - Streets
-      - Reconciled
       operationId: delete_rest_api_street_ID
       parameters:
       - name: ID
@@ -9269,7 +9147,6 @@ paths:
       summary: Get All TimeSheets
       tags:
       - Calendar
-      - Reconciled
       operationId: get_rest_api_timesheet
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -9311,7 +9188,6 @@ paths:
       summary: Get TimeSheets ById
       tags:
       - Calendar
-      - Reconciled
       operationId: get_rest_api_timesheet_ID
       parameters:
       - name: ID
@@ -9353,7 +9229,6 @@ paths:
       summary: Get All Units
       tags:
       - Unit
-      - Reconciled
       operationId: get_rest_api_unit
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -9395,7 +9270,6 @@ paths:
       summary: Get Unit By ID
       tags:
       - Unit
-      - Reconciled
       operationId: get_rest_api_unit_1
       parameters:
       - name: id
@@ -9441,7 +9315,6 @@ paths:
       summary: Use Token
       tags:
       - 'Auth #3 (by User Login & Password -> Token)'
-      - Reconciled
       operationId: get_rest_api_user
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -9483,7 +9356,6 @@ paths:
       summary: User Get Anonymous
       tags:
       - User
-      - Reconciled
       operationId: get_rest_api_user_anonymousList
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -9524,7 +9396,6 @@ paths:
       summary: Get All Webhooks
       tags:
       - WebHook
-      - Reconciled
       operationId: get_rest_api_user_ID
       parameters:
       - name: ID
@@ -9565,7 +9436,6 @@ paths:
       summary: User editing
       tags:
       - User
-      - Reconciled
       operationId: put_rest_api_user_ID
       parameters:
       - name: ID
@@ -9612,7 +9482,6 @@ paths:
       summary: Get All UserPositions
       tags:
       - User Positons
-      - Reconciled
       operationId: get_rest_api_userPosition
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -9653,7 +9522,6 @@ paths:
       summary: Post UserPosition
       tags:
       - User Positons
-      - Reconciled
       operationId: post_rest_api_userPosition
       parameters: []
       responses:
@@ -9695,7 +9563,6 @@ paths:
       summary: Get UserPosition By ID
       tags:
       - User Positons
-      - Reconciled
       operationId: get_rest_api_userPosition_ID
       parameters:
       - name: ID
@@ -9736,7 +9603,6 @@ paths:
       summary: Update UserPosition
       tags:
       - User Positons
-      - Reconciled
       operationId: put_rest_api_userPosition_ID
       parameters:
       - name: ID
@@ -9782,7 +9648,6 @@ paths:
       summary: Delete UserPosition
       tags:
       - User Positons
-      - Reconciled
       operationId: delete_rest_api_userPosition_ID
       parameters:
       - name: ID
@@ -9824,7 +9689,6 @@ paths:
       summary: Get Token (by User Login & Password)
       tags:
       - 'Auth #3 (by User Login & Password -> Token)'
-      - Reconciled
       operationId: post_token_auth_php
       parameters: []
       responses:
