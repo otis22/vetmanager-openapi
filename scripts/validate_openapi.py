@@ -97,14 +97,20 @@ def validate_structure(spec: dict[str, Any], errors: list[str]) -> None:
 def validate_swagger_ui(root: Path, errors: list[str]) -> None:
     index = root / "index.html"
     initializer = root / "dist" / "swagger-initializer.js"
+    initializer_template = root / "scripts" / "swagger-initializer.js"
     spec = root / "vetmanager_openapi_v6.yaml"
-    for path in (index, initializer, spec):
+    for path in (index, initializer, initializer_template, spec):
         if not path.exists():
             fail(errors, f"required Swagger UI file is missing: {path.relative_to(root)}")
     if initializer.exists():
         text = initializer.read_text(encoding="utf-8", errors="ignore")
         if 'url: "vetmanager_openapi_v6.yaml"' not in text:
             fail(errors, "dist/swagger-initializer.js must reference vetmanager_openapi_v6.yaml")
+        if "operationsSorter" not in text:
+            fail(errors, "dist/swagger-initializer.js must define operationsSorter")
+    if initializer.exists() and initializer_template.exists():
+        if initializer.read_bytes() != initializer_template.read_bytes():
+            fail(errors, "dist/swagger-initializer.js must match scripts/swagger-initializer.js")
     if index.exists():
         text = index.read_text(encoding="utf-8", errors="ignore")
         for asset in ("dist/swagger-ui.css", "dist/swagger-ui-bundle.js", "dist/swagger-ui-standalone-preset.js", "dist/swagger-initializer.js"):

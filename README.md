@@ -137,10 +137,10 @@ Raw Postman payloads and raw API responses are intentionally not stored.
 
 ## Swagger UI Updates
 
-`.github/workflows/update-swagger.yml` updates the bundled Swagger UI dependency and must keep `dist/swagger-initializer.js` pointing at:
+`.github/workflows/update-swagger.yml` updates the bundled Swagger UI dependency and then restores `dist/swagger-initializer.js` from the project-owned `scripts/swagger-initializer.js` template. The template points at:
 
 ```javascript
 url: "vetmanager_openapi_v6.yaml"
 ```
 
-The validation workflow checks this so an automated Swagger UI update cannot silently switch back to `swagger.yaml`.
+The template also owns GET → POST → PUT → DELETE operation sorting. Validation checks the URL, the presence of `operationsSorter`, and exact equality between the template and the generated `dist` file, so an automated Swagger UI update cannot silently remove project settings.

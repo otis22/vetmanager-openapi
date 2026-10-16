@@ -128,10 +128,10 @@ python3 scripts/reconcile_openapi.py --skip-network
 
 ## Обновление Swagger UI
 
-Workflow `.github/workflows/update-swagger.yml` обновляет встроенную версию Swagger UI и должен сохранять ссылку из `dist/swagger-initializer.js` на:
+Workflow `.github/workflows/update-swagger.yml` обновляет встроенную версию Swagger UI, а затем восстанавливает `dist/swagger-initializer.js` из постоянного шаблона `scripts/swagger-initializer.js`. Шаблон содержит ссылку:
 
 ```javascript
 url: "vetmanager_openapi_v6.yaml"
 ```
 
-Workflow проверки контролирует это, чтобы автоматическое обновление Swagger UI не могло незаметно вернуть ссылку на `swagger.yaml`.
+В шаблоне также хранится сортировка операций GET → POST → PUT → DELETE. Проверка контролирует ссылку, наличие `operationsSorter` и полное совпадение шаблона с файлом в `dist`, поэтому автоматическое обновление Swagger UI не может незаметно удалить настройки проекта.
