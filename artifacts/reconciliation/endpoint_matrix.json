@@ -6881,7 +6881,9 @@
     "key": "POST /rest/api/invoice/createinvoice",
     "method": "POST",
     "path": "/rest/api/invoice/createinvoice",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Создать счет",
+    "openapi_source": "openapi",
     "mcp_openapi": false,
     "mcp_postman": false,
     "postman_public": false,
@@ -6890,10 +6892,10 @@
     "extjs_source": "extjs_custom_rest",
     "extjs_method_name": "doCustomRestPostCreateInvoice",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "intentionally_undocumented",
-    "reason": "internal_mobile_only"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/invoice/payinvoice",
@@ -6911,7 +6913,7 @@
       "extjs"
     ],
     "status": "intentionally_undocumented",
-    "reason": "internal_mobile_only"
+    "reason": "requires_user_token"
   },
   {
     "key": "POST /rest/api/invoiceDocument",

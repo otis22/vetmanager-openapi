@@ -56,8 +56,7 @@ INVOICE_INTENTIONALLY_UNDOCUMENTED = {
     "POST /rest/api/invoice": "disabled",
     "PUT /rest/api/invoice/{id}": "disabled",
     "DELETE /rest/api/invoice/{id}": "disabled",
-    "POST /rest/api/invoice/createinvoice": "internal_mobile_only",
-    "POST /rest/api/invoice/payinvoice": "internal_mobile_only",
+    "POST /rest/api/invoice/payinvoice": "requires_user_token",
 }
 
 

@@ -24,8 +24,7 @@
   ],
   "tags": [
     {
-      "name": "Invoice",
-      "description": "Публичный REST API счетов работает только на чтение. Создание, изменение и удаление счетов через публичный API недоступны."
+      "name": "Invoice"
     }
   ],
   "components": {
@@ -10896,6 +10895,169 @@
         }
       }
     },
+    "/rest/api/invoice/createinvoice": {
+      "post": {
+        "summary": "Создать счет",
+        "description": "Создает счет с товарами или услугами. Поле `goods` передается как JSON-строка с массивом позиций счета.",
+        "tags": [
+          "Invoice"
+        ],
+        "operationId": "post_rest_api_invoice_createinvoice",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "invoice_data"
+                ],
+                "properties": {
+                  "invoice_data": {
+                    "type": "object",
+                    "required": [
+                      "doctor_id",
+                      "clinic_id",
+                      "client_id",
+                      "pet_id",
+                      "goods"
+                    ],
+                    "properties": {
+                      "doctor_id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 26
+                      },
+                      "clinic_id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 1
+                      },
+                      "client_id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 12
+                      },
+                      "pet_id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 10
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "save"
+                      },
+                      "create_date": {
+                        "type": "string",
+                        "description": "Дата создания или значение `now()`.",
+                        "example": "now()"
+                      },
+                      "discount": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "discount_amount": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "increase": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "increase_amount": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "invoice_amount": {
+                        "type": "number",
+                        "example": 1500
+                      },
+                      "amount": {
+                        "type": "number",
+                        "example": 1500
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "client_note": {
+                        "type": "string"
+                      },
+                      "night": {
+                        "type": "integer",
+                        "enum": [
+                          0,
+                          1
+                        ],
+                        "default": 0
+                      },
+                      "call": {
+                        "type": "integer",
+                        "enum": [
+                          0,
+                          1
+                        ],
+                        "default": 0
+                      },
+                      "goods": {
+                        "type": "string",
+                        "description": "JSON-строка с массивом позиций. Для каждой позиции используются поля `id`, `cnt`, `pr`, `ruid`, `iddfrp`, `tag_id`, `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.",
+                        "example": "[{\"id\":\"101_5_2\",\"cnt\":1,\"pr\":1500,\"ruid\":26,\"iddfrp\":1,\"tag_id\":0,\"dsc\":0,\"dp\":1500,\"di\":0,\"pa\":\"\",\"pac\":0,\"fdd\":0,\"fdp\":0,\"fid\":0,\"fip\":0}]"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Результат создания счета. При бизнес-ошибке `success` имеет значение `false`, а описание находится в `messages`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "messages": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "invoice": {
+                          "type": "object",
+                          "additionalProperties": true,
+                          "properties": {
+                            "invoice_id": {
+                              "type": "integer",
+                              "nullable": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
     "/rest/api/invoice/{ID}": {
       "get": {
         "summary": "Invoice Get By ID",
@@ -13835,9 +13997,9 @@
       "dbDump": "/home/otis/myprojects/vetmanager-openapi/vm_devtr6.sql.gz"
     },
     "counts": {
-      "confirmed": 136,
+      "confirmed": 137,
       "extjs_only_candidate": 331,
-      "intentionally_undocumented": 5
+      "intentionally_undocumented": 4
     }
   }
 }
