@@ -19,18 +19,15 @@
 
 ## Просмотр документации
 
-Запустите Swagger UI локально:
+Запустите сохранённый в репозитории Swagger UI локально из корня проекта:
 
 ```bash
-docker run -p 8080:8080 \
-  -e SWAGGER_JSON=/openapi/vetmanager_openapi_v6.yaml \
-  -v "$(pwd):/openapi" \
-  swaggerapi/swagger-ui
+python3 -m http.server 8080
 ```
 
 После этого откройте http://localhost:8080.
 
-Сохранённый в репозитории статический Swagger UI использует `dist/swagger-initializer.js` и загружает `vetmanager_openapi_v6.yaml`.
+Этот способ использует `dist/swagger-initializer.js` из проекта и загружает `vetmanager_openapi_v6.yaml`. Поэтому локально применяются настройки интерфейса проекта, включая сортировку операций GET → POST → PUT → DELETE. Если порт 8080 уже занят ранее запущенным Docker-контейнером, сначала остановите его или используйте другой порт, например `python3 -m http.server 8081`.
 
 ## Проверка
 
@@ -131,10 +128,10 @@ python3 scripts/reconcile_openapi.py --skip-network
 
 ## Обновление Swagger UI
 
-Workflow `.github/workflows/update-swagger.yml` обновляет встроенную версию Swagger UI и должен сохранять ссылку из `dist/swagger-initializer.js` на:
+Workflow `.github/workflows/update-swagger.yml` обновляет встроенную версию Swagger UI, а затем восстанавливает `dist/swagger-initializer.js` из постоянного шаблона `scripts/swagger-initializer.js`. Шаблон содержит ссылку:
 
 ```javascript
 url: "vetmanager_openapi_v6.yaml"
 ```
 
-Workflow проверки контролирует это, чтобы автоматическое обновление Swagger UI не могло незаметно вернуть ссылку на `swagger.yaml`.
+В шаблоне также хранится сортировка операций GET → POST → PUT → DELETE. Проверка контролирует ссылку, наличие `operationsSorter` и полное совпадение шаблона с файлом в `dist`, поэтому автоматическое обновление Swagger UI не может незаметно удалить настройки проекта.

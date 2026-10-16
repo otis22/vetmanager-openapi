@@ -19,18 +19,15 @@ Useful links:
 
 ## View Documentation
 
-Run Swagger UI locally:
+Run the repository's bundled Swagger UI from the project root:
 
 ```bash
-docker run -p 8080:8080 \
-  -e SWAGGER_JSON=/openapi/vetmanager_openapi_v6.yaml \
-  -v "$(pwd):/openapi" \
-  swaggerapi/swagger-ui
+python3 -m http.server 8080
 ```
 
 Then open http://localhost:8080.
 
-The committed static Swagger UI uses `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`.
+This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as GET → POST → PUT → DELETE operation sorting. If port 8080 is occupied by a previously started Docker container, stop it first or use another port, for example `python3 -m http.server 8081`.
 
 ## Validate
 
@@ -140,10 +137,10 @@ Raw Postman payloads and raw API responses are intentionally not stored.
 
 ## Swagger UI Updates
 
-`.github/workflows/update-swagger.yml` updates the bundled Swagger UI dependency and must keep `dist/swagger-initializer.js` pointing at:
+`.github/workflows/update-swagger.yml` updates the bundled Swagger UI dependency and then restores `dist/swagger-initializer.js` from the project-owned `scripts/swagger-initializer.js` template. The template points at:
 
 ```javascript
 url: "vetmanager_openapi_v6.yaml"
 ```
 
-The validation workflow checks this so an automated Swagger UI update cannot silently switch back to `swagger.yaml`.
+The template also owns GET → POST → PUT → DELETE operation sorting. Validation checks the URL, the presence of `operationsSorter`, and exact equality between the template and the generated `dist` file, so an automated Swagger UI update cannot silently remove project settings.

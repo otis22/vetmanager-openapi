@@ -4,7 +4,7 @@ Generated: 2026-10-14T09:58:29Z
 
 ## Source counts
 
-- openapi_operations: 136
+- openapi_operations: 137
 - mcp_openapi_operations: 126
 - mcp_postman_operations: 126
 - postman_public_operations: 136
@@ -13,9 +13,9 @@ Generated: 2026-10-14T09:58:29Z
 
 ## Matrix status
 
-- confirmed: 136
+- confirmed: 137
 - extjs_only_candidate: 331
-- intentionally_undocumented: 5
+- intentionally_undocumented: 4
 
 ## Documented elsewhere but missing from OpenAPI
 
@@ -179,8 +179,7 @@ Generated: 2026-10-14T09:58:29Z
 
 - `DELETE /rest/api/invoice/{id}`: disabled
 - `POST /rest/api/invoice`: disabled
-- `POST /rest/api/invoice/createinvoice`: internal_mobile_only
-- `POST /rest/api/invoice/payinvoice`: internal_mobile_only
+- `POST /rest/api/invoice/payinvoice`: requires_user_token
 - `PUT /rest/api/invoice/{id}`: disabled
 
 ## OpenAPI-only entries
