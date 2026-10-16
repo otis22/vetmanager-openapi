@@ -92,7 +92,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "description": {
             "type": "string",
@@ -176,7 +176,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "escorter_id": {
             "type": "integer",
@@ -297,7 +297,11 @@
             "type": "array",
             "example": [],
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "x-source": "real_api_response",
@@ -367,7 +371,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "datetime",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "end_datetime": {
             "type": "string",
@@ -376,7 +380,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "datetime",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "type": {
             "type": "integer",
@@ -391,7 +395,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "datetime",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "title": {
             "type": "string",
@@ -461,7 +465,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "client_cass": {
             "type": "integer",
@@ -577,7 +581,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "id_cassa": {
             "type": "integer",
@@ -854,7 +858,11 @@
               }
             ],
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "x-source": "real_api_response",
@@ -941,7 +949,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "cell_phone": {
             "type": "string",
@@ -1054,7 +1062,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "number_of_journal": {
             "type": "string",
@@ -1116,7 +1124,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "city_id": {
             "type": "integer",
@@ -1568,7 +1576,11 @@
                 "dop_param3": "",
                 "is_active": 1
               }
-            ]
+            ],
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "x-source": "real_api_response"
@@ -1745,7 +1757,11 @@
               }
             ],
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "x-source": "real_api_response",
@@ -1834,7 +1850,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "edit_dt": {
             "type": "string",
@@ -1843,7 +1859,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "exec_dt": {
             "type": "string",
@@ -1852,7 +1868,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "supplier_id": {
             "type": "integer",
@@ -1891,7 +1907,11 @@
               }
             ],
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "x-source": "real_api_response",
@@ -2197,7 +2217,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "end_date": {
             "type": "string",
@@ -2206,7 +2226,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "place": {
             "type": "string",
@@ -2501,7 +2521,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "old_id": {
             "type": "string",
@@ -2552,7 +2572,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "payment_status": {
             "type": "string",
@@ -2793,7 +2813,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "discount_cause": {
             "type": "string",
@@ -2934,7 +2954,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "date_edit": {
             "type": "string",
@@ -2943,7 +2963,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": true,
             "x-db-type": "datetime",
-            "default": "NULL,"
+            "x-db-default": "NULL,"
           },
           "diagnos": {
             "type": "string",
@@ -3188,7 +3208,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "payed_user": {
             "type": "integer",
@@ -3274,7 +3294,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "plus_type_document": {
             "type": "string",
@@ -3448,7 +3468,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "birthday": {
             "type": "string",
@@ -3457,7 +3477,7 @@
             "description": "Format: YYYY-MM-DD",
             "nullable": true,
             "x-db-type": "date",
-            "default": "NULL,"
+            "x-db-default": "NULL,"
           },
           "note": {
             "type": "string",
@@ -3546,7 +3566,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": true,
             "x-db-type": "datetime",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "owner": {
             "type": "object",
@@ -4219,7 +4239,11 @@
               }
             ],
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "x-source": "real_api_response",
@@ -4359,7 +4383,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "edit_dt": {
             "type": "string",
@@ -4368,7 +4392,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "CURRENT_TIMESTAMP,"
+            "x-db-default": "CURRENT_TIMESTAMP,"
           },
           "exec_dt": {
             "type": "string",
@@ -4377,7 +4401,7 @@
             "description": "Format: YYYY-MM-DD HH:MM:SS",
             "nullable": false,
             "x-db-type": "timestamp",
-            "default": "0000-00-00 00:00:00"
+            "x-db-default": "0000-00-00 00:00:00"
           },
           "receiver_id": {
             "type": "integer",
@@ -4400,7 +4424,7 @@
             "description": "Format: YYYY-MM-DD",
             "nullable": false,
             "x-db-type": "date",
-            "default": "0000-00-00"
+            "x-db-default": "0000-00-00"
           },
           "creator_id": {
             "type": "integer",
@@ -4593,7 +4617,11 @@
               }
             ],
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "x-source": "real_api_response",

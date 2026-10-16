@@ -7,6 +7,7 @@ import argparse
 import json
 import re
 import sys
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +31,9 @@ ALLOWED_PLACEHOLDER_TOKENS = {
     "+7 (000) 000-00-00",
     "(000) 000-00-00",
 }
+RFC3339_DATETIME_RE = re.compile(
+    r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
+)
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -46,6 +50,40 @@ def fail(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
+def is_valid_formatted_default(value: Any, format_name: str) -> bool:
+    if not isinstance(value, str):
+        return False
+    try:
+        if format_name == "date":
+            return date.fromisoformat(value).isoformat() == value
+        if format_name == "date-time" and RFC3339_DATETIME_RE.fullmatch(value):
+            datetime.fromisoformat(value.replace("Z", "+00:00"))
+            return True
+    except ValueError:
+        return False
+    return False
+
+
+def validate_schema_nodes(node: Any, errors: list[str], path: str = "") -> None:
+    if isinstance(node, dict):
+        if node.get("type") == "array" and "items" not in node:
+            fail(errors, f"array schema is missing items: {path}")
+
+        format_name = node.get("format")
+        if (
+            format_name in {"date", "date-time"}
+            and "default" in node
+            and not is_valid_formatted_default(node["default"], format_name)
+        ):
+            fail(errors, f"invalid {format_name} default at {path}: {node['default']!r}")
+
+        for key, value in node.items():
+            validate_schema_nodes(value, errors, f"{path}.{key}" if path else key)
+    elif isinstance(node, list):
+        for index, value in enumerate(node):
+            validate_schema_nodes(value, errors, f"{path}[{index}]")
+
+
 def validate_structure(spec: dict[str, Any], errors: list[str]) -> None:
     if not isinstance(spec.get("openapi"), str) or not spec["openapi"].startswith("3.0."):
         fail(errors, "openapi must be 3.0.x")
@@ -53,6 +91,8 @@ def validate_structure(spec: dict[str, Any], errors: list[str]) -> None:
         fail(errors, "info.title is required")
     if not isinstance(spec.get("paths"), dict) or not spec["paths"]:
         fail(errors, "paths must be a non-empty object")
+
+    validate_schema_nodes(spec.get("components", {}).get("schemas", {}), errors, "components.schemas")
 
     operation_ids: set[str] = set()
     for path, path_item in spec.get("paths", {}).items():
