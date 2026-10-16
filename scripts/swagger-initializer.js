@@ -1,6 +1,4 @@
 window.onload = function() {
-  //<editor-fold desc="Changeable Configuration Block">
-
   const methodOrder = {
     get: 0,
     post: 1,
@@ -38,6 +36,4 @@ window.onload = function() {
     },
     layout: "StandaloneLayout"
   });
-
-  //</editor-fold>
 };
