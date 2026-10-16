@@ -19,18 +19,15 @@ Useful links:
 
 ## View Documentation
 
-Run Swagger UI locally:
+Run the repository's bundled Swagger UI from the project root:
 
 ```bash
-docker run -p 8080:8080 \
-  -e SWAGGER_JSON=/openapi/vetmanager_openapi_v6.yaml \
-  -v "$(pwd):/openapi" \
-  swaggerapi/swagger-ui
+python3 -m http.server 8080
 ```
 
 Then open http://localhost:8080.
 
-The committed static Swagger UI uses `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`.
+This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as GET → POST → PUT → DELETE operation sorting. If port 8080 is occupied by a previously started Docker container, stop it first or use another port, for example `python3 -m http.server 8081`.
 
 ## Validate
 
