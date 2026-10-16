@@ -20,6 +20,7 @@ import urllib.parse
 import urllib.request
 from collections import Counter, defaultdict
 from copy import deepcopy
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -58,6 +59,63 @@ INVOICE_INTENTIONALLY_UNDOCUMENTED = {
     "DELETE /rest/api/invoice/{id}": "disabled",
     "POST /rest/api/invoice/payinvoice": "requires_user_token",
 }
+
+RFC3339_DATETIME_RE = re.compile(
+    r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
+)
+
+
+def is_valid_formatted_default(value: Any, format_name: str) -> bool:
+    if not isinstance(value, str):
+        return False
+    try:
+        if format_name == "date":
+            return date.fromisoformat(value).isoformat() == value
+        if format_name == "date-time" and RFC3339_DATETIME_RE.fullmatch(value):
+            datetime.fromisoformat(value.replace("Z", "+00:00"))
+            return True
+    except ValueError:
+        return False
+    return False
+
+
+def infer_array_items(schema: dict[str, Any]) -> dict[str, Any]:
+    example = schema.get("example")
+    if isinstance(example, list) and example:
+        first = example[0]
+        if isinstance(first, dict):
+            return {"type": "object", "additionalProperties": True}
+        if isinstance(first, bool):
+            return {"type": "boolean"}
+        if isinstance(first, int):
+            return {"type": "integer"}
+        if isinstance(first, float):
+            return {"type": "number"}
+        if isinstance(first, str):
+            return {"type": "string"}
+    return {"type": "object", "additionalProperties": True}
+
+
+def sanitize_openapi_schemas(node: Any) -> None:
+    """Remove database-only defaults and complete incomplete array schemas."""
+    if isinstance(node, dict):
+        if node.get("type") == "array" and "items" not in node:
+            node["items"] = infer_array_items(node)
+
+        format_name = node.get("format")
+        if (
+            format_name in {"date", "date-time"}
+            and "default" in node
+            and not is_valid_formatted_default(node["default"], format_name)
+        ):
+            node.setdefault("x-db-default", node["default"])
+            del node["default"]
+
+        for value in node.values():
+            sanitize_openapi_schemas(value)
+    elif isinstance(node, list):
+        for value in node:
+            sanitize_openapi_schemas(value)
 
 
 def configure_paths(args: argparse.Namespace) -> None:
@@ -647,6 +705,7 @@ def apply_reconciliation_to_spec(
                 "presentIn": row.get("present_in", []),
                 "status": row.get("status", "unknown"),
             }
+    sanitize_openapi_schemas(updated.get("components", {}).get("schemas", {}))
     return updated
 
 

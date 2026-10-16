@@ -69,7 +69,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         description:
           type: string
           example: На основании медкарты
@@ -141,7 +141,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         escorter_id:
           type: integer
           example: 0
@@ -250,6 +250,9 @@ components:
           example: []
           nullable: true
           x-computed: true
+          items:
+            type: object
+            additionalProperties: true
       x-source: real_api_response
       x-db-table: admission
     breed:
@@ -306,7 +309,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: datetime
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         end_datetime:
           type: string
           example: '2021-01-05 22:00:00'
@@ -314,7 +317,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: datetime
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         type:
           type: integer
           example: 2
@@ -327,7 +330,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: datetime
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         title:
           type: string
           example: ''
@@ -386,7 +389,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         client_cass:
           type: integer
           example: 1
@@ -484,7 +487,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         id_cassa:
           type: integer
           example: 8
@@ -722,6 +725,9 @@ components:
             parent_id: 0
           nullable: true
           x-computed: true
+          items:
+            type: object
+            additionalProperties: true
       x-source: real_api_response
       x-db-table: cassaclose
     client:
@@ -794,7 +800,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         cell_phone:
           type: string
           example: +7 (000) 000-00-00
@@ -890,7 +896,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         number_of_journal:
           type: string
           example: ''
@@ -941,7 +947,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         city_id:
           type: integer
           example: 251
@@ -1311,6 +1317,9 @@ components:
             dop_param2: 00:00:00
             dop_param3: ''
             is_active: 1
+          items:
+            type: object
+            additionalProperties: true
       x-source: real_api_response
     good:
       type: object
@@ -1460,6 +1469,9 @@ components:
             is_skip_marking: 0
           nullable: true
           x-computed: true
+          items:
+            type: object
+            additionalProperties: true
       x-source: real_api_response
       x-db-table: good
     goodGroup:
@@ -1533,7 +1545,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         edit_dt:
           type: string
           example: '2020-05-14 14:44:21'
@@ -1541,7 +1553,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         exec_dt:
           type: string
           example: '2024-06-04 14:46:34'
@@ -1549,7 +1561,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         supplier_id:
           type: integer
           example: 4
@@ -1582,6 +1594,9 @@ components:
             stavka_nds_percent: 9
           nullable: true
           x-computed: true
+          items:
+            type: object
+            additionalProperties: true
       x-source: real_api_response
       x-db-table: party_account
     partyAccountDoc:
@@ -1841,7 +1856,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         end_date:
           type: string
           example: '2023-09-25 17:08:00'
@@ -1849,7 +1864,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         place:
           type: string
           example: '45'
@@ -2105,7 +2120,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         old_id:
           type: string
           example: null
@@ -2149,7 +2164,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         payment_status:
           type: string
           example: full
@@ -2360,7 +2375,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         discount_cause:
           type: string
           example: ''
@@ -2484,7 +2499,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         date_edit:
           type: string
           example: '2020-05-13 12:22:00'
@@ -2492,7 +2507,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: true
           x-db-type: datetime
-          default: NULL,
+          x-db-default: NULL,
         diagnos:
           type: string
           example: '0'
@@ -2698,7 +2713,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         payed_user:
           type: integer
           example: 1
@@ -2772,7 +2787,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         plus_type_document:
           type: string
           example: payment
@@ -2925,7 +2940,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         birthday:
           type: string
           example: '2012-09-02'
@@ -2933,7 +2948,7 @@ components:
           description: 'Format: YYYY-MM-DD'
           nullable: true
           x-db-type: date
-          default: NULL,
+          x-db-default: NULL,
         note:
           type: string
           example: Примечание
@@ -3009,7 +3024,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: true
           x-db-type: datetime
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         owner:
           type: object
           example:
@@ -3443,6 +3458,9 @@ components:
             pet_type_id: 1
           nullable: true
           x-computed: true
+          items:
+            type: object
+            additionalProperties: true
       x-source: real_api_response
       x-db-table: pet_type
     properties:
@@ -3559,7 +3577,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         edit_dt:
           type: string
           example: '2024-06-04 14:49:53'
@@ -3567,7 +3585,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: CURRENT_TIMESTAMP,
+          x-db-default: CURRENT_TIMESTAMP,
         exec_dt:
           type: string
           example: '2024-06-04 14:46:34'
@@ -3575,7 +3593,7 @@ components:
           description: 'Format: YYYY-MM-DD HH:MM:SS'
           nullable: false
           x-db-type: timestamp
-          default: '0000-00-00 00:00:00'
+          x-db-default: '0000-00-00 00:00:00'
         receiver_id:
           type: integer
           example: 0
@@ -3595,7 +3613,7 @@ components:
           description: 'Format: YYYY-MM-DD'
           nullable: false
           x-db-type: date
-          default: '0000-00-00'
+          x-db-default: '0000-00-00'
         creator_id:
           type: integer
           example: 1
@@ -3769,6 +3787,9 @@ components:
             total_good_cost_after: '219.7440000000'
           nullable: true
           x-computed: true
+          items:
+            type: object
+            additionalProperties: true
       x-source: real_api_response
       x-db-table: store_document
     street:
@@ -7948,11 +7969,13 @@ paths:
                       default: 0
                     goods:
                       type: string
-                      description: JSON-строка с массивом позиций. Для каждой позиции используются поля `id`, `cnt`, `pr`, `ruid`, `iddfrp`, `tag_id`, `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.
+                      description: JSON-строка с массивом позиций. Для каждой позиции используются поля `id`, `cnt`, `pr`,
+                        `ruid`, `iddfrp`, `tag_id`, `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.
                       example: '[{"id":"101_5_2","cnt":1,"pr":1500,"ruid":26,"iddfrp":1,"tag_id":0,"dsc":0,"dp":1500,"di":0,"pa":"","pac":0,"fdd":0,"fdp":0,"fid":0,"fip":0}]'
       responses:
         '201':
-          description: Результат создания счета. При бизнес-ошибке `success` имеет значение `false`, а описание находится в `messages`.
+          description: Результат создания счета. При бизнес-ошибке `success` имеет значение `false`, а описание находится
+            в `messages`.
           content:
             application/json:
               schema:
