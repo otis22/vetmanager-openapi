@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Reconcile Vetmanager OpenAPI against Postman, MCP, ExtJS and devtr6.
-
-The script intentionally never writes raw Postman sync payloads or raw devtr6
-responses. Artifacts contain endpoint metadata and compact response summaries.
-"""
+"""Reconcile the public Vetmanager OpenAPI against ExtJS routes and devtr6."""
 
 from __future__ import annotations
 
@@ -12,7 +8,6 @@ import gzip
 import json
 import os
 import re
-import ssl
 import sys
 import time
 import urllib.error
@@ -31,34 +26,18 @@ except ImportError:  # pragma: no cover
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MCP_ROOT = ROOT.parent / "vetmanager-mcp"
 EXTJS_ROOT = ROOT.parent / "vetmanager-extjs"
 ARTIFACTS = ROOT / "artifacts" / "reconciliation"
 
 OPENAPI_JSON = ROOT / "vetmanager_openapi_v6.json"
 OPENAPI_YAML = ROOT / "vetmanager_openapi_v6.yaml"
-MCP_OPENAPI_JSON = MCP_ROOT / "artifacts" / "vetmanager_openapi_v6.json"
-MCP_POSTMAN_JSON = MCP_ROOT / "artifacts" / "vetmanager_postman_collection.json"
 EXTJS_CONTROLLERS = EXTJS_ROOT / "rest" / "protected" / "controllers"
 EXTJS_MAIN = EXTJS_ROOT / "rest" / "protected" / "config" / "main.php"
 DB_DUMP = ROOT / "vm_devtr6.sql.gz"
 
-POSTMAN_UID = "23836400-17133b76-0f52-4bb4-8b38-28a64781074e"
-POSTMAN_META_URL = f"https://www.postman.com/_api/collection/{POSTMAN_UID}"
-POSTMAN_SYNC_URL = (
-    f"https://www.postman.com/_api/collection/{POSTMAN_UID}/sync"
-    "?since_id=0&favorite=true&exclude=response%2Crequest"
-)
-
 HTTP_METHODS = {"get", "post", "put", "delete", "patch", "head", "options"}
 MUTATING = {"post", "put", "delete", "patch"}
-
-INVOICE_INTENTIONALLY_UNDOCUMENTED = {
-    "POST /rest/api/invoice": "disabled",
-    "PUT /rest/api/invoice/{id}": "disabled",
-    "DELETE /rest/api/invoice/{id}": "disabled",
-    "POST /rest/api/invoice/payinvoice": "requires_user_token",
-}
+EXCLUDED_ROUTES_FILE = ROOT / "excluded_routes.md"
 
 RFC3339_DATETIME_RE = re.compile(
     r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
@@ -120,29 +99,25 @@ def sanitize_openapi_schemas(node: Any) -> None:
 
 def configure_paths(args: argparse.Namespace) -> None:
     global ROOT
-    global MCP_ROOT
     global EXTJS_ROOT
     global ARTIFACTS
     global OPENAPI_JSON
     global OPENAPI_YAML
-    global MCP_OPENAPI_JSON
-    global MCP_POSTMAN_JSON
     global EXTJS_CONTROLLERS
     global EXTJS_MAIN
     global DB_DUMP
+    global EXCLUDED_ROUTES_FILE
 
     ROOT = args.openapi_root.resolve()
-    MCP_ROOT = args.mcp_root.resolve()
     EXTJS_ROOT = args.extjs_root.resolve()
     ARTIFACTS = args.artifacts_dir.resolve()
 
     OPENAPI_JSON = ROOT / "vetmanager_openapi_v6.json"
     OPENAPI_YAML = ROOT / "vetmanager_openapi_v6.yaml"
-    MCP_OPENAPI_JSON = MCP_ROOT / "artifacts" / "vetmanager_openapi_v6.json"
-    MCP_POSTMAN_JSON = MCP_ROOT / "artifacts" / "vetmanager_postman_collection.json"
     EXTJS_CONTROLLERS = EXTJS_ROOT / "rest" / "protected" / "controllers"
     EXTJS_MAIN = EXTJS_ROOT / "rest" / "protected" / "config" / "main.php"
     DB_DUMP = args.dump.resolve() if args.dump else ROOT / "vm_devtr6.sql.gz"
+    EXCLUDED_ROUTES_FILE = ROOT / "excluded_routes.md"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -150,24 +125,34 @@ def read_json(path: Path) -> dict[str, Any]:
         return json.load(fh)
 
 
+def load_excluded_routes(path: Path) -> dict[str, str]:
+    """Read `- `METHOD /path`: reason` entries from the route-exclusion registry."""
+    if not path.exists():
+        raise RuntimeError(f"Excluded-routes registry is missing: {path}")
+
+    route_re = re.compile(r"^\s*-\s+`([A-Z]+)\s+([^`]+)`\s*:\s*(.+?)\s*$")
+    excluded: dict[str, str] = {}
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        match = route_re.match(line)
+        if not match:
+            continue
+        method, route_path, reason = match.groups()
+        if method.lower() not in HTTP_METHODS:
+            raise RuntimeError(f"Unsupported method in {path}:{number}: {method}")
+        if not route_path.startswith("/"):
+            raise RuntimeError(f"Route must start with / in {path}:{number}: {route_path}")
+        key = endpoint_key(method, route_path)
+        if key in excluded:
+            raise RuntimeError(f"Duplicate route in {path}:{number}: {key}")
+        excluded[key] = reason
+    return excluded
+
+
 def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False, indent=2, sort_keys=False)
         fh.write("\n")
-
-
-def request_json(url: str, *, timeout: int = 45) -> dict[str, Any]:
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": "vetmanager-openapi-reconciliation/1.0",
-            "Accept": "application/json",
-        },
-    )
-    context = ssl.create_default_context()
-    with urllib.request.urlopen(req, timeout=timeout, context=context) as response:
-        return json.loads(response.read().decode("utf-8"))
 
 
 def normalize_path(path: str) -> str:
@@ -226,21 +211,6 @@ def endpoint_key(method: str, path: str) -> str:
     return f"{method.upper()} {normalized}"
 
 
-def path_from_postman_url(url: Any) -> str | None:
-    if isinstance(url, str):
-        return normalize_path(url)
-    if not isinstance(url, dict):
-        return None
-    raw = url.get("raw")
-    if raw:
-        return normalize_path(str(raw).replace("{{accountName}}", "domain").replace("{{server}}", "domain"))
-    parts = url.get("path")
-    if isinstance(parts, list):
-        joined = "/" + "/".join(str(part) for part in parts)
-        return normalize_path(joined)
-    return None
-
-
 def collect_openapi(spec: dict[str, Any], source: str) -> dict[str, dict[str, Any]]:
     result: dict[str, dict[str, Any]] = {}
     for path, item in spec.get("paths", {}).items():
@@ -258,114 +228,6 @@ def collect_openapi(spec: dict[str, Any], source: str) -> dict[str, dict[str, An
                 "operationId": (op or {}).get("operationId") if isinstance(op, dict) else "",
             }
     return result
-
-
-def iter_postman_items(obj: Any, folder: tuple[str, ...] = ()):
-    if isinstance(obj, dict):
-        name = obj.get("name") or obj.get("data", {}).get("name")
-        next_folder = folder + ((str(name),) if name and "request" not in obj else ())
-        if "request" in obj:
-            yield obj, folder
-        for child in obj.get("item", []) or []:
-            yield from iter_postman_items(child, next_folder)
-        for child in obj.get("data", {}).get("item", []) or []:
-            yield from iter_postman_items(child, next_folder)
-    elif isinstance(obj, list):
-        for child in obj:
-            yield from iter_postman_items(child, folder)
-
-
-def collect_postman_collection(collection: dict[str, Any], source: str) -> dict[str, dict[str, Any]]:
-    result: dict[str, dict[str, Any]] = {}
-    for item, folder in iter_postman_items(collection):
-        request = item.get("request") or {}
-        method = str(request.get("method") or "GET").upper()
-        path = path_from_postman_url(request.get("url"))
-        if not path:
-            continue
-        key = endpoint_key(method, path)
-        result[key] = {
-            "source": source,
-            "method": method,
-            "path": normalize_path(path),
-            "name": item.get("name") or "",
-            "folder": "/".join(folder),
-            "has_body": bool(request.get("body")),
-            "query_params": [
-                q.get("key")
-                for q in (request.get("url") or {}).get("query", [])
-                if isinstance(q, dict) and q.get("key")
-            ]
-            if isinstance(request.get("url"), dict)
-            else [],
-        }
-    return result
-
-
-def collect_postman_sync(sync: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
-    requests: dict[str, dict[str, Any]] = {}
-    folders: dict[str, str] = {}
-
-    def visit(node: Any, folder: tuple[str, ...] = ()) -> None:
-        if isinstance(node, list):
-            for child in node:
-                visit(child, folder)
-            return
-        if not isinstance(node, dict):
-            return
-        data = node.get("data") if isinstance(node.get("data"), dict) else node
-        model = node.get("model") or data.get("model")
-        name = data.get("name") or node.get("name") or ""
-        if model == "folder" and data.get("id"):
-            folders[str(data["id"])] = str(name)
-        if "request" in data or model == "request" or ("method" in data and "url" in data):
-            request = data.get("request") or {}
-            method = str(request.get("method") or data.get("method") or "GET").upper()
-            path = path_from_postman_url(request.get("url") or data.get("url"))
-            if path:
-                parent = data.get("folder") or data.get("folderId") or data.get("parent")
-                folder_name = folders.get(str(parent), "") if parent else "/".join(folder)
-                key = endpoint_key(method, path)
-                requests[key] = {
-                    "source": "postman_public",
-                    "method": method,
-                    "path": normalize_path(path),
-                    "name": str(name),
-                    "folder": folder_name,
-                    "has_body": bool(request.get("body") or data.get("body")),
-                    "query_params": [
-                        q.get("key")
-                        for q in (request.get("url") or data.get("url") or {}).get("query", [])
-                        if isinstance(q, dict) and q.get("key")
-                    ]
-                    if isinstance(request.get("url") or data.get("url"), dict)
-                    else [],
-                }
-        child_folder = folder + ((str(name),) if model == "folder" and name else ())
-        for key in ("item", "items", "children"):
-            if key in data:
-                visit(data[key], child_folder)
-        if node is sync:
-            for entity in sync.get("entities", []) or []:
-                if isinstance(entity, dict) and isinstance(entity.get("data"), dict):
-                    visit(entity["data"], folder)
-            for key in ("folders", "requests"):
-                if key in sync:
-                    visit(sync[key], folder)
-        if node is not sync:
-            for key in ("folders", "requests"):
-                if key in data:
-                    visit(data[key], folder)
-
-    visit(sync)
-    sanitized = {
-        "requests": sorted(requests.values(), key=lambda x: (x["path"], x["method"])),
-        "counts": {
-            "requests": len(requests),
-            "methods": dict(Counter(req["method"] for req in requests.values())),
-        },
-    }
-    return requests, sanitized
 
 
 def controller_api_name(controller_file: Path) -> str:
@@ -497,29 +359,7 @@ def extract_db_nullable() -> dict[str, set[str]]:
 
 
 def extract_rest_key() -> str | None:
-    env_key = os.environ.get("VETMANAGER_REST_API_KEY")
-    if env_key:
-        return env_key
-    candidates = [
-        MCP_ROOT / ".env",
-        MCP_ROOT / ".env.local",
-    ]
-    patterns = [
-        re.compile(r"X-REST-API-KEY\s*[:=]\s*([A-Za-z0-9._:-]{12,})", re.I),
-        re.compile(r"REST_API_KEY\s*=\s*['\"]?([^'\"\s]+)", re.I),
-        re.compile(r"api[_-]?key\s*[:=]\s*['\"]?([A-Za-z0-9._:-]{12,})", re.I),
-    ]
-    for path in candidates:
-        if not path.exists():
-            continue
-        text = path.read_text(encoding="utf-8", errors="ignore")
-        for pattern in patterns:
-            match = pattern.search(text)
-            if match:
-                token = match.group(1).strip()
-                if "{{" not in token and "example" not in token.lower():
-                    return token
-    return None
+    return os.environ.get("VETMANAGER_REST_API_KEY") or None
 
 
 def extract_devtr6_base_url() -> str:
@@ -623,7 +463,10 @@ def probe_devtr6(openapi_endpoints: dict[str, dict[str, Any]], limit: int = 80) 
     }
 
 
-def merge_endpoint_sources(*sources: tuple[str, dict[str, dict[str, Any]]]) -> list[dict[str, Any]]:
+def merge_endpoint_sources(
+    *sources: tuple[str, dict[str, dict[str, Any]]],
+    excluded_routes: dict[str, str],
+) -> list[dict[str, Any]]:
     keys = sorted({key for _, data in sources for key in data})
     rows = []
     for key in keys:
@@ -640,17 +483,20 @@ def merge_endpoint_sources(*sources: tuple[str, dict[str, dict[str, Any]]]) -> l
                     if source_row.get(field) and f"{name}_{field}" not in row:
                         row[f"{name}_{field}"] = source_row[field]
         row["present_in"] = present
-        if row.get("openapi") and (row.get("postman_public") or row.get("mcp_openapi") or row.get("extjs")):
+        if row.get("openapi") and row.get("extjs"):
             row["status"] = "confirmed"
         elif row.get("openapi"):
             row["status"] = "openapi_only"
-        elif row.get("postman_public") or row.get("mcp_openapi") or row.get("mcp_postman"):
-            row["status"] = "missing_from_openapi_documented"
         else:
             row["status"] = "extjs_only_candidate"
-        if key in INVOICE_INTENTIONALLY_UNDOCUMENTED and not row.get("openapi"):
+        if key in excluded_routes:
+            if row.get("openapi"):
+                raise RuntimeError(
+                    f"Excluded route is present in OpenAPI: {key}. "
+                    f"Remove it from {EXCLUDED_ROUTES_FILE} or unpublish the route first."
+                )
             row["status"] = "intentionally_undocumented"
-            row["reason"] = INVOICE_INTENTIONALLY_UNDOCUMENTED[key]
+            row["reason"] = excluded_routes[key]
         rows.append(row)
     return rows
 
@@ -658,28 +504,21 @@ def merge_endpoint_sources(*sources: tuple[str, dict[str, dict[str, Any]]]) -> l
 def apply_reconciliation_to_spec(
     spec: dict[str, Any],
     matrix: list[dict[str, Any]],
-    postman_meta: dict[str, Any],
     nullable: dict[str, set[str]],
 ) -> dict[str, Any]:
     updated = deepcopy(spec)
     info = updated.setdefault("info", {})
-    meta = postman_meta.get("data") or postman_meta
-    updated_at = meta.get("updatedAt") or meta.get("updated_at") or "unknown"
     info["version"] = "1.3.1"
     info["description"] = (
         "OpenAPI 3.0 specification for the VetManager REST API. "
-        f"Reconciled against public Postman collection updated at {updated_at}, "
-        "vetmanager-mcp artifacts, vetmanager-extjs routes/controllers and devtr6 GET probes. "
+        "Reconciled against vetmanager-extjs routes/controllers and devtr6 GET probes. "
         "Schemas are preserved from prior real API response inference; nullable flags are refreshed from vm_devtr6.sql.gz where table mappings are known."
     )
     updated["x-reconciliation"] = {
         "generatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "sources": {
-            "postmanPublicUpdatedAt": updated_at,
-            "mcpOpenapi": str(MCP_OPENAPI_JSON),
-            "mcpPostman": str(MCP_POSTMAN_JSON),
-            "extjs": str(EXTJS_ROOT),
-            "dbDump": str(DB_DUMP),
+            "extjs": "configured",
+            "dbDumpProvided": DB_DUMP.exists(),
         },
         "counts": dict(Counter(row["status"] for row in matrix)),
     }
@@ -754,9 +593,7 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
 
 def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dict[str, Any]]) -> None:
     counts = Counter(row["status"] for row in matrix)
-    missing = [row for row in matrix if row["status"] == "missing_from_openapi_documented"]
     extjs_only = [row for row in matrix if row["status"] == "extjs_only_candidate"]
-    intentionally_undocumented = [row for row in matrix if row["status"] == "intentionally_undocumented"]
     openapi_only = [row for row in matrix if row["status"] == "openapi_only"]
 
     lines = [
@@ -772,23 +609,11 @@ def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dic
     lines.extend(["", "## Matrix status", ""])
     for key, value in sorted(counts.items()):
         lines.append(f"- {key}: {value}")
-    lines.extend(["", "## Documented elsewhere but missing from OpenAPI", ""])
-    if missing:
-        for row in missing[:100]:
-            lines.append(f"- `{row['method']} {row['path']}`: {', '.join(row['present_in'])}")
-    else:
-        lines.append("- None")
     lines.extend(["", "## ExtJS-only route candidates", ""])
     for row in extjs_only[:150]:
         lines.append(f"- `{row['method']} {row['path']}`: {row.get('extjs_source', 'extjs')}")
     if len(extjs_only) > 150:
         lines.append(f"- ... {len(extjs_only) - 150} more")
-    lines.extend(["", "## Intentionally undocumented routes", ""])
-    if intentionally_undocumented:
-        for row in intentionally_undocumented:
-            lines.append(f"- `{row['method']} {row['path']}`: {row['reason']}")
-    else:
-        lines.append("- None")
     lines.extend(["", "## OpenAPI-only entries", ""])
     if openapi_only:
         for row in openapi_only[:100]:
@@ -801,11 +626,10 @@ def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dic
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--openapi-root", type=Path, default=ROOT, help="Repository containing vetmanager_openapi_v6.json/yaml")
-    parser.add_argument("--mcp-root", type=Path, default=MCP_ROOT, help="vetmanager-mcp repository root")
     parser.add_argument("--extjs-root", type=Path, default=EXTJS_ROOT, help="vetmanager-extjs repository root")
     parser.add_argument("--dump", type=Path, default=None, help="Optional vm_devtr6 .sql.gz dump for nullable extraction")
     parser.add_argument("--artifacts-dir", type=Path, default=ARTIFACTS, help="Directory for sanitized reconciliation artifacts")
-    parser.add_argument("--skip-network", action="store_true", help="Do not fetch Postman or probe devtr6")
+    parser.add_argument("--offline", action="store_true", help="Do not run external API checks")
     parser.add_argument("--probe-limit", type=int, default=80)
     args = parser.parse_args()
     configure_paths(args)
@@ -813,33 +637,24 @@ def main() -> int:
     ARTIFACTS.mkdir(parents=True, exist_ok=True)
 
     current_openapi = read_json(OPENAPI_JSON)
-    mcp_openapi = read_json(MCP_OPENAPI_JSON)
-    mcp_postman = read_json(MCP_POSTMAN_JSON)
-
-    postman_meta: dict[str, Any] = {"data": {"updatedAt": "network-skipped"}}
-    public_postman: dict[str, dict[str, Any]] = {}
-    public_sanitized: dict[str, Any] = {"requests": [], "counts": {}}
-    if not args.skip_network:
-        postman_meta = request_json(POSTMAN_META_URL)
-        public_sync = request_json(POSTMAN_SYNC_URL)
-        public_postman, public_sanitized = collect_postman_sync(public_sync)
+    excluded_routes = load_excluded_routes(EXCLUDED_ROUTES_FILE)
 
     openapi_eps = collect_openapi(current_openapi, "openapi")
-    mcp_openapi_eps = collect_openapi(mcp_openapi, "mcp_openapi")
-    mcp_postman_eps = collect_postman_collection(mcp_postman, "mcp_postman")
     extjs_eps = collect_extjs_routes()
     nullable = extract_db_nullable()
 
     matrix = merge_endpoint_sources(
         ("openapi", openapi_eps),
-        ("mcp_openapi", mcp_openapi_eps),
-        ("mcp_postman", mcp_postman_eps),
-        ("postman_public", public_postman),
         ("extjs", extjs_eps),
+        excluded_routes=excluded_routes,
     )
 
-    devtr6 = {"skipped": True}
-    if not args.skip_network:
+    devtr6_path = ARTIFACTS / "devtr6_probe_summary.json"
+    previous_devtr6 = read_json(devtr6_path) if devtr6_path.exists() else {"counts": {}}
+    devtr6 = previous_devtr6
+    has_api_key = extract_rest_key() is not None
+    run_external_checks = not args.offline and has_api_key
+    if run_external_checks:
         devtr6 = probe_devtr6(openapi_eps, limit=args.probe_limit)
         successful_paths = {
             endpoint_key("GET", row["path"])
@@ -852,7 +667,7 @@ def main() -> int:
                 if "devtr6" not in row["present_in"]:
                     row["present_in"].append("devtr6")
 
-    updated = apply_reconciliation_to_spec(current_openapi, matrix, postman_meta, nullable)
+    updated = apply_reconciliation_to_spec(current_openapi, matrix, nullable)
     write_json(OPENAPI_JSON, updated)
     write_yaml(OPENAPI_YAML, updated)
 
@@ -860,24 +675,19 @@ def main() -> int:
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "source_counts": {
             "openapi_operations": len(openapi_eps),
-            "mcp_openapi_operations": len(mcp_openapi_eps),
-            "mcp_postman_operations": len(mcp_postman_eps),
-            "postman_public_operations": len(public_postman),
             "extjs_route_candidates": len(extjs_eps),
             "db_nullable_tables": len(nullable),
         },
         "matrix_status_counts": dict(Counter(row["status"] for row in matrix)),
-        "postman_meta": {
-            "name": (postman_meta.get("data") or postman_meta).get("name"),
-            "updatedAt": (postman_meta.get("data") or postman_meta).get("updatedAt"),
-            "id": (postman_meta.get("data") or postman_meta).get("id"),
-        },
         "devtr6_counts": devtr6.get("counts", {}),
+        "external_checks": (
+            "skipped_by_flag" if args.offline else "completed" if has_api_key else "not_run_no_api_key"
+        ),
     }
 
-    write_json(ARTIFACTS / "postman_public_sanitized.json", public_sanitized)
     write_json(ARTIFACTS / "endpoint_matrix.json", matrix)
-    write_json(ARTIFACTS / "devtr6_probe_summary.json", devtr6)
+    if run_external_checks:
+        write_json(devtr6_path, devtr6)
     write_json(ARTIFACTS / "reconciliation_summary.json", summary)
     write_markdown_summary(ARTIFACTS / "source_gaps.md", summary, matrix)
 

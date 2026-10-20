@@ -8,14 +8,9 @@
 
 - `vetmanager_openapi_v6.yaml` — основная спецификация OpenAPI, используемая Swagger UI.
 - `vetmanager_openapi_v6.json` — эквивалент той же спецификации в формате JSON.
-- `scripts/reconcile_openapi.py` — сверка с Postman, артефактами MCP, исходниками ExtJS API, необязательным дампом базы данных и проверочными запросами к devtr6.
+- `scripts/reconcile_openapi.py` — сверка с исходниками ExtJS API, необязательным дампом базы данных и проверочными GET-запросами.
 - `scripts/validate_openapi.py` — локальная и CI-проверка сохранённой спецификации.
 - `artifacts/reconciliation/` — очищенные результаты последнего запуска сверки.
-
-Полезные ссылки:
-
-- Публичная коллекция Postman: https://www.postman.com/vetmanager/vetmanager-api/collection/x5iqwq5/vetmanager-collection
-- Официальная документация API: https://help.vetmanager.ru/article/25187
 
 ## Просмотр документации
 
@@ -63,54 +58,46 @@ python3 -m venv /tmp/vetmanager-openapi-venv
 
 Сверка — служебная процедура для сопровождающих проект, а не обязательный шаг после каждого изменения OpenAPI или README. Запускайте её только тогда, когда требуется заново сформировать артефакты сверки эндпоинтов и источников.
 
-Процедура сопоставляет сохранённую спецификацию со следующими источниками:
-
-- публичной коллекцией Postman, загружаемой через Postman API;
-- OpenAPI/Postman-артефактами `vetmanager-mcp`;
-- REST-маршрутами и контроллерами `vetmanager-extjs`;
-- необязательным дампом `vm_devtr6.sql.gz` для определения `nullable`;
-- необязательными проверочными GET-запросами к devtr6.
+Процедура сопоставляет сохранённую спецификацию с REST-маршрутами и
+контроллерами `vetmanager-extjs`. Дополнительно она может использовать
+необязательный дамп `vm_devtr6.sql.gz` для определения `nullable` и выполнять
+проверочные GET-запросы.
 
 Ожидаемая структура локальных каталогов:
 
 ```text
 /home/otis/myprojects/
   vetmanager-openapi/
-  vetmanager-mcp/
   vetmanager-extjs/
 ```
 
 Стандартный запуск из этого репозитория:
 
 ```bash
-VETMANAGER_REST_API_KEY=... \
-VETMANAGER_DEVTR6_BASE_URL=https://devtr6.vetmanager2.ru \
-python3 scripts/reconcile_openapi.py --dump ./vm_devtr6.sql.gz
+python3 scripts/reconcile_openapi.py
 ```
 
 Переносимый вариант с явным указанием путей:
 
 ```bash
-VETMANAGER_REST_API_KEY=... \
 python3 scripts/reconcile_openapi.py \
   --openapi-root /path/to/vetmanager-openapi \
-  --mcp-root /path/to/vetmanager-mcp \
-  --extjs-root /path/to/vetmanager-extjs \
-  --dump /path/to/vm_devtr6.sql.gz
+  --extjs-root /path/to/vetmanager-extjs
 ```
 
-Автономная сверка без обращений к Postman и devtr6:
+Запуск без необязательных GET-проверок:
 
 ```bash
-python3 scripts/reconcile_openapi.py --skip-network
+python3 scripts/reconcile_openapi.py --offline
 ```
 
-Параметр `--skip-network` отключает только загрузку Postman и проверочные запросы к devtr6. Для запуска по-прежнему нужны локальные артефакты `vetmanager-mcp` и исходники `vetmanager-extjs` из приведённой выше структуры. Если требуется лишь проверить уже подготовленное изменение спецификации, используйте `scripts/validate_openapi.py`.
+Единственный обязательный соседний репозиторий — `vetmanager-extjs`. Если
+требуется лишь проверить уже подготовленное изменение спецификации, используйте
+`scripts/validate_openapi.py`.
 
 Требования безопасности:
 
-- Не добавляйте в репозиторий `.sql`, `.sql.gz`, необработанные экспорты Postman, исходные ответы API, `.env` и секреты.
-- Скрипт сверки сохраняет только очищенные метаданные Postman.
+- Не добавляйте в репозиторий `.sql`, `.sql.gz`, исходные ответы API, `.env` и секреты.
 - Артефакты проверок devtr6 содержат только краткие сведения о статусе и структуре JSON, но не исходные тела ответов.
 - `VETMANAGER_REST_API_KEY` должен передаваться через переменные окружения или секреты CI.
 
@@ -120,11 +107,10 @@ python3 scripts/reconcile_openapi.py --skip-network
 
 - `reconciliation_summary.json` — количество источников и статусов;
 - `endpoint_matrix.json` — наличие пар «метод/путь» в разных источниках;
-- `postman_public_sanitized.json` — метаданные публичных методов и путей Postman без исходных ответов;
 - `devtr6_probe_summary.json` — статусы GET-проверок и краткое описание структуры JSON;
 - `source_gaps.md` — читаемая сводка пробелов документации и маршрутов-кандидатов только из ExtJS.
 
-Необработанные данные Postman и исходные ответы API намеренно не сохраняются.
+Исходные ответы API намеренно не сохраняются.
 
 ## Обновление Swagger UI
 
@@ -133,5 +119,3 @@ Workflow `.github/workflows/update-swagger.yml` обновляет встрое�
 ```javascript
 url: "vetmanager_openapi_v6.yaml"
 ```
-
-В шаблоне также хранится сортировка операций GET → POST → PUT → DELETE. Проверка контролирует ссылку, наличие `operationsSorter` и полное совпадение шаблона с файлом в `dist`, поэтому автоматическое обновление Swagger UI не может незаметно удалить настройки проекта.
