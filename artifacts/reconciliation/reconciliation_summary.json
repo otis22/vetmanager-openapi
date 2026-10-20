@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-14T09:58:29Z",
+  "generated_at": "2026-10-20T14:54:35Z",
   "source_counts": {
     "openapi_operations": 137,
     "mcp_openapi_operations": 126,
     "mcp_postman_operations": 126,
     "postman_public_operations": 136,
-    "extjs_route_candidates": 430,
-    "db_nullable_tables": 146
+    "extjs_route_candidates": 439,
+    "db_nullable_tables": 0
   },
   "matrix_status_counts": {
     "confirmed": 137,
-    "extjs_only_candidate": 331,
-    "intentionally_undocumented": 4
+    "extjs_only_candidate": 333,
+    "intentionally_undocumented": 11
   },
   "postman_meta": {
     "name": "Vetmanager Collection",
@@ -21,6 +21,7 @@
   "devtr6_counts": {
     "200": 43,
     "500": 1,
-    "401": 3
+    "400": 2,
+    "401": 1
   }
 }

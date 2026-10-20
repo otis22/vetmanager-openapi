@@ -52,13 +52,7 @@ POSTMAN_SYNC_URL = (
 
 HTTP_METHODS = {"get", "post", "put", "delete", "patch", "head", "options"}
 MUTATING = {"post", "put", "delete", "patch"}
-
-INVOICE_INTENTIONALLY_UNDOCUMENTED = {
-    "POST /rest/api/invoice": "disabled",
-    "PUT /rest/api/invoice/{id}": "disabled",
-    "DELETE /rest/api/invoice/{id}": "disabled",
-    "POST /rest/api/invoice/payinvoice": "requires_user_token",
-}
+EXCLUDED_ROUTES_FILE = ROOT / "excluded_routes.md"
 
 RFC3339_DATETIME_RE = re.compile(
     r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
@@ -130,6 +124,7 @@ def configure_paths(args: argparse.Namespace) -> None:
     global EXTJS_CONTROLLERS
     global EXTJS_MAIN
     global DB_DUMP
+    global EXCLUDED_ROUTES_FILE
 
     ROOT = args.openapi_root.resolve()
     MCP_ROOT = args.mcp_root.resolve()
@@ -143,11 +138,35 @@ def configure_paths(args: argparse.Namespace) -> None:
     EXTJS_CONTROLLERS = EXTJS_ROOT / "rest" / "protected" / "controllers"
     EXTJS_MAIN = EXTJS_ROOT / "rest" / "protected" / "config" / "main.php"
     DB_DUMP = args.dump.resolve() if args.dump else ROOT / "vm_devtr6.sql.gz"
+    EXCLUDED_ROUTES_FILE = ROOT / "excluded_routes.md"
 
 
 def read_json(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as fh:
         return json.load(fh)
+
+
+def load_excluded_routes(path: Path) -> dict[str, str]:
+    """Read `- `METHOD /path`: reason` entries from the route-exclusion registry."""
+    if not path.exists():
+        raise RuntimeError(f"Excluded-routes registry is missing: {path}")
+
+    route_re = re.compile(r"^\s*-\s+`([A-Z]+)\s+([^`]+)`\s*:\s*(.+?)\s*$")
+    excluded: dict[str, str] = {}
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        match = route_re.match(line)
+        if not match:
+            continue
+        method, route_path, reason = match.groups()
+        if method.lower() not in HTTP_METHODS:
+            raise RuntimeError(f"Unsupported method in {path}:{number}: {method}")
+        if not route_path.startswith("/"):
+            raise RuntimeError(f"Route must start with / in {path}:{number}: {route_path}")
+        key = endpoint_key(method, route_path)
+        if key in excluded:
+            raise RuntimeError(f"Duplicate route in {path}:{number}: {key}")
+        excluded[key] = reason
+    return excluded
 
 
 def write_json(path: Path, data: Any) -> None:
@@ -623,7 +642,10 @@ def probe_devtr6(openapi_endpoints: dict[str, dict[str, Any]], limit: int = 80) 
     }
 
 
-def merge_endpoint_sources(*sources: tuple[str, dict[str, dict[str, Any]]]) -> list[dict[str, Any]]:
+def merge_endpoint_sources(
+    *sources: tuple[str, dict[str, dict[str, Any]]],
+    excluded_routes: dict[str, str],
+) -> list[dict[str, Any]]:
     keys = sorted({key for _, data in sources for key in data})
     rows = []
     for key in keys:
@@ -648,9 +670,15 @@ def merge_endpoint_sources(*sources: tuple[str, dict[str, dict[str, Any]]]) -> l
             row["status"] = "missing_from_openapi_documented"
         else:
             row["status"] = "extjs_only_candidate"
-        if key in INVOICE_INTENTIONALLY_UNDOCUMENTED and not row.get("openapi"):
+        if key in excluded_routes:
+            public_sources = [name for name in ("openapi", "postman_public") if row.get(name)]
+            if public_sources:
+                raise RuntimeError(
+                    f"Excluded route is present in {', '.join(public_sources)}: {key}. "
+                    f"Remove it from {EXCLUDED_ROUTES_FILE} or unpublish the route first."
+                )
             row["status"] = "intentionally_undocumented"
-            row["reason"] = INVOICE_INTENTIONALLY_UNDOCUMENTED[key]
+            row["reason"] = excluded_routes[key]
         rows.append(row)
     return rows
 
@@ -756,7 +784,6 @@ def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dic
     counts = Counter(row["status"] for row in matrix)
     missing = [row for row in matrix if row["status"] == "missing_from_openapi_documented"]
     extjs_only = [row for row in matrix if row["status"] == "extjs_only_candidate"]
-    intentionally_undocumented = [row for row in matrix if row["status"] == "intentionally_undocumented"]
     openapi_only = [row for row in matrix if row["status"] == "openapi_only"]
 
     lines = [
@@ -783,12 +810,6 @@ def write_markdown_summary(path: Path, summary: dict[str, Any], matrix: list[dic
         lines.append(f"- `{row['method']} {row['path']}`: {row.get('extjs_source', 'extjs')}")
     if len(extjs_only) > 150:
         lines.append(f"- ... {len(extjs_only) - 150} more")
-    lines.extend(["", "## Intentionally undocumented routes", ""])
-    if intentionally_undocumented:
-        for row in intentionally_undocumented:
-            lines.append(f"- `{row['method']} {row['path']}`: {row['reason']}")
-    else:
-        lines.append("- None")
     lines.extend(["", "## OpenAPI-only entries", ""])
     if openapi_only:
         for row in openapi_only[:100]:
@@ -815,6 +836,7 @@ def main() -> int:
     current_openapi = read_json(OPENAPI_JSON)
     mcp_openapi = read_json(MCP_OPENAPI_JSON)
     mcp_postman = read_json(MCP_POSTMAN_JSON)
+    excluded_routes = load_excluded_routes(EXCLUDED_ROUTES_FILE)
 
     postman_meta: dict[str, Any] = {"data": {"updatedAt": "network-skipped"}}
     public_postman: dict[str, dict[str, Any]] = {}
@@ -836,6 +858,7 @@ def main() -> int:
         ("mcp_postman", mcp_postman_eps),
         ("postman_public", public_postman),
         ("extjs", extjs_eps),
+        excluded_routes=excluded_routes,
     )
 
     devtr6 = {"skipped": True}

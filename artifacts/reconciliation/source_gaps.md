@@ -1,6 +1,6 @@
 # Vetmanager OpenAPI reconciliation
 
-Generated: 2026-10-14T09:58:29Z
+Generated: 2026-10-20T14:54:35Z
 
 ## Source counts
 
@@ -8,14 +8,14 @@ Generated: 2026-10-14T09:58:29Z
 - mcp_openapi_operations: 126
 - mcp_postman_operations: 126
 - postman_public_operations: 136
-- extjs_route_candidates: 430
-- db_nullable_tables: 146
+- extjs_route_candidates: 439
+- db_nullable_tables: 0
 
 ## Matrix status
 
 - confirmed: 137
-- extjs_only_candidate: 331
-- intentionally_undocumented: 4
+- extjs_only_candidate: 333
+- intentionally_undocumented: 11
 
 ## Documented elsewhere but missing from OpenAPI
 
@@ -143,6 +143,7 @@ Generated: 2026-10-14T09:58:29Z
 - `GET /rest/api/lastTime/{id}`: extjs_default_rest
 - `GET /rest/api/medicalCards`: extjs_default_rest
 - `GET /rest/api/medicalCards/all-diagnoses`: extjs_custom_rest
+- `GET /rest/api/medicalCards/laboratory-results`: extjs_custom_rest
 - `GET /rest/api/medicalCards/medcards-text-templates`: extjs_custom_rest
 - `GET /rest/api/medicalCards/medicalcard-item-by-client`: extjs_custom_rest
 - `GET /rest/api/medicalCards/medicalcards-data-by-client`: extjs_custom_rest
@@ -172,15 +173,7 @@ Generated: 2026-10-14T09:58:29Z
 - `GET /rest/api/reportAiJobs`: extjs_default_rest
 - `GET /rest/api/reportAiJobs/{id}`: extjs_default_rest
 - `GET /rest/api/servicePrice`: extjs_default_rest
-- `GET /rest/api/servicePrice/{id}`: extjs_default_rest
-- ... 181 more
-
-## Intentionally undocumented routes
-
-- `DELETE /rest/api/invoice/{id}`: disabled
-- `POST /rest/api/invoice`: disabled
-- `POST /rest/api/invoice/payinvoice`: requires_user_token
-- `PUT /rest/api/invoice/{id}`: disabled
+- ... 183 more
 
 ## OpenAPI-only entries
 

@@ -10,6 +10,7 @@ Primary artifacts:
 - `vetmanager_openapi_v6.json` - JSON equivalent of the same specification.
 - `scripts/reconcile_openapi.py` - reconciliation flow for Postman, MCP artifacts, ExtJS API sources, an optional DB dump, and devtr6 probes.
 - `scripts/validate_openapi.py` - local and CI validation for the committed specification.
+- `excluded_routes.md` - working routes intentionally excluded from the public Swagger.
 - `artifacts/reconciliation/` - sanitized audit output from the latest reconciliation run.
 
 Useful links:
@@ -132,6 +133,12 @@ The repository keeps only the latest sanitized reconciliation snapshot:
 - `postman_public_sanitized.json` - public Postman method/path metadata without raw responses.
 - `devtr6_probe_summary.json` - GET probe status and compact JSON-shape summaries.
 - `source_gaps.md` - human-readable summary of documented gaps and ExtJS-only candidates.
+
+Routes listed in `excluded_routes.md` receive the
+`intentionally_undocumented` status and do not appear among ExtJS-only
+candidates. The registry is the only detailed list; `source_gaps.md` reports
+only the status count. Add a route there only after confirming that it must
+not be part of the public API contract.
 
 Raw Postman payloads and raw API responses are intentionally not stored.
 

@@ -4035,6 +4035,23 @@
     "status": "extjs_only_candidate"
   },
   {
+    "key": "GET /rest/api/medicalCards/laboratory-results",
+    "method": "GET",
+    "path": "/rest/api/medicalCards/laboratory-results",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_controller": "MedicalCardsController.php",
+    "extjs_source": "extjs_custom_rest",
+    "extjs_method_name": "doCustomRestGetLaboratoryResults",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "extjs_only_candidate"
+  },
+  {
     "key": "GET /rest/api/medicalCards/medcards-text-templates",
     "method": "GET",
     "path": "/rest/api/medicalCards/medcards-text-templates",
@@ -4570,6 +4587,23 @@
       "extjs"
     ],
     "status": "extjs_only_candidate"
+  },
+  {
+    "key": "GET /rest/api/provider-lab-requests/list",
+    "method": "GET",
+    "path": "/rest/api/provider-lab-requests/list",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_source": "extjs_explicit_route",
+    "extjs_target": "providerLabRequests/list",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "intentionally_undocumented",
+    "reason": "provider_service_api"
   },
   {
     "key": "GET /rest/api/providerLabRequests",
@@ -6663,6 +6697,24 @@
     "status": "extjs_only_candidate"
   },
   {
+    "key": "POST /rest/api/fiscalRegister/evotor-telemetry",
+    "method": "POST",
+    "path": "/rest/api/fiscalRegister/evotor-telemetry",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_controller": "FiscalRegisterController.php",
+    "extjs_source": "extjs_custom_rest",
+    "extjs_method_name": "doCustomRestPostEvotorTelemetry",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "intentionally_undocumented",
+    "reason": "internal_telemetry"
+  },
+  {
     "key": "POST /rest/api/fiscalRegisterData",
     "method": "POST",
     "path": "/rest/api/fiscalRegisterData",
@@ -7262,6 +7314,74 @@
     "status": "extjs_only_candidate"
   },
   {
+    "key": "POST /rest/api/provider-lab-requests/result-html",
+    "method": "POST",
+    "path": "/rest/api/provider-lab-requests/result-html",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_source": "extjs_explicit_route",
+    "extjs_target": "providerLabRequests/resultHtml",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "intentionally_undocumented",
+    "reason": "provider_service_api"
+  },
+  {
+    "key": "POST /rest/api/provider-lab-requests/result-values",
+    "method": "POST",
+    "path": "/rest/api/provider-lab-requests/result-values",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_source": "extjs_explicit_route",
+    "extjs_target": "providerLabRequests/resultValues",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "intentionally_undocumented",
+    "reason": "provider_service_api"
+  },
+  {
+    "key": "POST /rest/api/provider-lab-requests/take",
+    "method": "POST",
+    "path": "/rest/api/provider-lab-requests/take",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_source": "extjs_explicit_route",
+    "extjs_target": "providerLabRequests/take",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "intentionally_undocumented",
+    "reason": "provider_service_api"
+  },
+  {
+    "key": "POST /rest/api/provider-lab-requests/waiting",
+    "method": "POST",
+    "path": "/rest/api/provider-lab-requests/waiting",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_source": "extjs_explicit_route",
+    "extjs_target": "providerLabRequests/waiting",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "intentionally_undocumented",
+    "reason": "provider_service_api"
+  },
+  {
     "key": "POST /rest/api/providerLabRequests",
     "method": "POST",
     "path": "/rest/api/providerLabRequests",
@@ -7352,6 +7472,22 @@
       "extjs"
     ],
     "status": "confirmed"
+  },
+  {
+    "key": "POST /rest/api/report-ai-job/{id}/reject",
+    "method": "POST",
+    "path": "/rest/api/report-ai-job/{id}/reject",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_source": "extjs_explicit_route",
+    "extjs_target": "reportAiJobs/reject",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "extjs_only_candidate"
   },
   {
     "key": "POST /rest/api/report-ai-job/{id}/save",
@@ -7820,6 +7956,23 @@
       "extjs"
     ],
     "status": "extjs_only_candidate"
+  },
+  {
+    "key": "POST /rest/api/{controller}/list",
+    "method": "POST",
+    "path": "/rest/api/{controller}/list",
+    "openapi": false,
+    "mcp_openapi": false,
+    "mcp_postman": false,
+    "postman_public": false,
+    "extjs": true,
+    "extjs_source": "extjs_explicit_route",
+    "extjs_target": "<controller>/restList",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "intentionally_undocumented",
+    "reason": "framework_route_template"
   },
   {
     "key": "POST /rest/api/{controller}/{id}",
