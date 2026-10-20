@@ -8,14 +8,13 @@ Primary artifacts:
 
 - `vetmanager_openapi_v6.yaml` - primary OpenAPI specification used by Swagger UI.
 - `vetmanager_openapi_v6.json` - JSON equivalent of the same specification.
-- `scripts/reconcile_openapi.py` - reconciliation flow for Postman, MCP artifacts, ExtJS API sources, an optional DB dump, and devtr6 probes.
+- `scripts/reconcile_openapi.py` - reconciliation flow for ExtJS API sources, an optional DB dump, and devtr6 probes.
 - `scripts/validate_openapi.py` - local and CI validation for the committed specification.
 - `excluded_routes.md` - working routes intentionally excluded from the public Swagger.
 - `artifacts/reconciliation/` - sanitized audit output from the latest reconciliation run.
 
 Useful links:
 
-- Public Postman collection: https://www.postman.com/vetmanager/vetmanager-api/collection/x5iqwq5/vetmanager-collection
 - Official API documentation: https://help.vetmanager.ru/article/25187
 
 ## View Documentation
@@ -70,57 +69,45 @@ Reconciliation is a maintainer workflow, not a prerequisite for every OpenAPI
 or README edit. Run it only when endpoint/source reconciliation artifacts need
 to be regenerated.
 
-The reconciliation flow compares the committed spec with:
-
-- the public Postman collection fetched from Postman APIs.
-- `vetmanager-mcp` OpenAPI/Postman artifacts.
-- `vetmanager-extjs` REST route/controller sources.
-- an optional `vm_devtr6.sql.gz` dump for nullable metadata.
-- optional devtr6 GET probes.
+The reconciliation flow compares the committed specification with
+`vetmanager-extjs` REST route/controller sources. It can also use an optional
+`vm_devtr6.sql.gz` dump for nullable metadata and run devtr6 GET probes.
 
 Expected local layout:
 
 ```text
-/home/otis/myprojects/
+/home/art/Projects/
   vetmanager-openapi/
-  vetmanager-mcp/
   vetmanager-extjs/
 ```
 
 Default run from this repository:
 
 ```bash
-VETMANAGER_REST_API_KEY=... \
-VETMANAGER_DEVTR6_BASE_URL=https://devtr6.vetmanager2.ru \
-python3 scripts/reconcile_openapi.py --dump ./vm_devtr6.sql.gz
+python3 scripts/reconcile_openapi.py
 ```
 
 Portable run with explicit paths:
 
 ```bash
-VETMANAGER_REST_API_KEY=... \
 python3 scripts/reconcile_openapi.py \
   --openapi-root /path/to/vetmanager-openapi \
-  --mcp-root /path/to/vetmanager-mcp \
-  --extjs-root /path/to/vetmanager-extjs \
-  --dump /path/to/vm_devtr6.sql.gz
+  --extjs-root /path/to/vetmanager-extjs
 ```
 
-Offline reconciliation without Postman/devtr6 network calls:
+Skip optional devtr6 probes:
 
 ```bash
-python3 scripts/reconcile_openapi.py --skip-network
+python3 scripts/reconcile_openapi.py --offline
 ```
 
-`--skip-network` disables Postman downloads and devtr6 probes only. It still
-requires the local `vetmanager-mcp` artifacts and `vetmanager-extjs` sources
-shown in the expected layout above. Use `scripts/validate_openapi.py` instead
-when only validating an already prepared specification change.
+The only required neighbouring repository is `vetmanager-extjs`. Use
+`scripts/validate_openapi.py` when only validating an already prepared
+specification change.
 
 Security notes:
 
-- Do not commit `.sql`, `.sql.gz`, raw Postman exports, raw API responses, `.env`, or secrets.
-- The reconciliation script stores sanitized Postman metadata only.
+- Do not commit `.sql`, `.sql.gz`, raw API responses, `.env`, or secrets.
 - devtr6 probe artifacts store compact status/shape summaries only, not raw response bodies.
 - `VETMANAGER_REST_API_KEY` must come from environment variables or CI secrets.
 
@@ -130,7 +117,6 @@ The repository keeps only the latest sanitized reconciliation snapshot:
 
 - `reconciliation_summary.json` - source and status counts.
 - `endpoint_matrix.json` - method/path presence across sources.
-- `postman_public_sanitized.json` - public Postman method/path metadata without raw responses.
 - `devtr6_probe_summary.json` - GET probe status and compact JSON-shape summaries.
 - `source_gaps.md` - human-readable summary of documented gaps and ExtJS-only candidates.
 
@@ -140,7 +126,7 @@ candidates. The registry is the only detailed list; `source_gaps.md` reports
 only the status count. Add a route there only after confirming that it must
 not be part of the public API contract.
 
-Raw Postman payloads and raw API responses are intentionally not stored.
+Raw API responses are intentionally not stored.
 
 ## Swagger UI Updates
 

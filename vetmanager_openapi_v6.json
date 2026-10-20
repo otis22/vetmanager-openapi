@@ -3,7 +3,7 @@
   "info": {
     "title": "VetManager REST API",
     "version": "1.3.1",
-    "description": "OpenAPI 3.0 specification for the VetManager REST API. Reconciled against public Postman collection updated at 2026-05-26T14:01:03.000Z, vetmanager-mcp artifacts, vetmanager-extjs routes/controllers and devtr6 GET probes. Schemas are preserved from prior real API response inference; nullable flags are refreshed from vm_devtr6.sql.gz where table mappings are known."
+    "description": "OpenAPI 3.0 specification for the VetManager REST API. Reconciled against vetmanager-extjs routes/controllers and devtr6 GET probes. Schemas are preserved from prior real API response inference; nullable flags are refreshed from vm_devtr6.sql.gz where table mappings are known."
   },
   "servers": [
     {
@@ -5082,13 +5082,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "post": {
@@ -5143,12 +5139,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5205,12 +5198,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "put": {
@@ -5274,12 +5264,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5346,13 +5333,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5409,12 +5392,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5475,13 +5455,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "post": {
@@ -5536,12 +5512,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5607,12 +5580,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "delete": {
@@ -5667,12 +5637,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5733,13 +5700,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5796,12 +5759,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5862,13 +5822,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "post": {
@@ -5923,12 +5879,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -5995,12 +5948,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6061,13 +6011,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6128,13 +6074,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6204,12 +6146,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6279,13 +6218,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6342,12 +6277,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "put": {
@@ -6411,12 +6343,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6477,13 +6406,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6540,12 +6465,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6606,13 +6528,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6669,12 +6587,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6735,13 +6650,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6798,12 +6709,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6850,12 +6758,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -6916,13 +6821,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "post": {
@@ -6977,12 +6878,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -7039,12 +6937,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -7101,12 +6996,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -7172,12 +7064,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "delete": {
@@ -7232,12 +7121,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -7296,12 +7182,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -7360,12 +7243,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -7433,11 +7313,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -7495,9 +7371,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -7558,9 +7431,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -7628,9 +7498,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -7689,9 +7556,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -7756,11 +7620,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -7832,9 +7692,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -7899,11 +7756,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -7963,9 +7816,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8030,11 +7880,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -8094,9 +7940,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8161,11 +8004,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -8225,9 +8064,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8282,11 +8118,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -8336,9 +8168,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8403,11 +8232,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -8465,9 +8290,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8537,9 +8359,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8598,9 +8417,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8673,9 +8489,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8740,11 +8553,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -8802,9 +8611,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8865,9 +8671,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8935,9 +8738,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -8996,9 +8796,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9063,11 +8860,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -9135,12 +8928,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       },
       "put": {
@@ -9205,9 +8995,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9266,9 +9053,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9341,9 +9125,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9408,11 +9189,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -9472,9 +9249,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9539,11 +9313,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -9603,9 +9373,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9660,11 +9427,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -9714,9 +9477,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9771,11 +9531,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -9825,9 +9581,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -9892,11 +9645,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -9954,9 +9703,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10017,9 +9763,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10087,9 +9830,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10148,9 +9888,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10223,9 +9960,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10290,11 +10024,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -10363,9 +10093,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10421,9 +10148,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -10473,7 +10198,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10537,7 +10261,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10597,7 +10320,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10647,7 +10369,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10712,11 +10433,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -10776,9 +10493,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10846,9 +10560,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -10913,11 +10624,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -11140,9 +10847,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11213,11 +10917,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -11277,9 +10977,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11331,9 +11028,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11397,11 +11091,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -11452,9 +11142,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11506,9 +11193,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11579,11 +11263,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -11643,9 +11323,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11716,11 +11393,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -11778,9 +11451,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11850,9 +11520,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11913,9 +11580,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -11986,9 +11650,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12053,11 +11714,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -12117,9 +11774,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12184,11 +11838,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -12240,7 +11890,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12292,7 +11941,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12354,7 +12002,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12406,7 +12053,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12468,7 +12114,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12540,13 +12185,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -12606,13 +12247,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -12674,11 +12311,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -12750,9 +12383,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -12824,13 +12454,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -12892,11 +12518,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -12954,9 +12576,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13026,9 +12645,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13087,9 +12703,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13154,11 +12767,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -13218,9 +12827,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13285,11 +12891,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -13361,9 +12963,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13428,11 +13027,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -13495,13 +13090,9 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "devtr6"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     },
@@ -13559,9 +13150,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13629,9 +13217,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13696,11 +13281,7 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
-            "extjs",
-            "devtr6"
+            "extjs"
           ],
           "status": "confirmed"
         }
@@ -13758,9 +13339,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13821,9 +13399,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13891,9 +13466,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -13952,9 +13524,6 @@
         "x-reconciliation": {
           "presentIn": [
             "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public",
             "extjs"
           ],
           "status": "confirmed"
@@ -14005,29 +13574,24 @@
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "mcp_openapi",
-            "mcp_postman",
-            "postman_public"
+            "openapi"
           ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     }
   },
   "x-reconciliation": {
-    "generatedAt": "2026-10-14T09:58:29Z",
+    "generatedAt": "2026-10-20T15:19:57Z",
     "sources": {
-      "postmanPublicUpdatedAt": "2026-05-26T14:01:03.000Z",
-      "mcpOpenapi": "/home/otis/myprojects/vetmanager-mcp/artifacts/vetmanager_openapi_v6.json",
-      "mcpPostman": "/home/otis/myprojects/vetmanager-mcp/artifacts/vetmanager_postman_collection.json",
-      "extjs": "/home/otis/myprojects/vetmanager-extjs",
-      "dbDump": "/home/otis/myprojects/vetmanager-openapi/vm_devtr6.sql.gz"
+      "extjs": "configured",
+      "dbDumpProvided": false
     },
     "counts": {
-      "confirmed": 137,
-      "extjs_only_candidate": 331,
-      "intentionally_undocumented": 4
+      "openapi_only": 42,
+      "confirmed": 95,
+      "extjs_only_candidate": 333,
+      "intentionally_undocumented": 11
     }
   }
 }

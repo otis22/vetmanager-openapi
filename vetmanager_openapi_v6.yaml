@@ -2,10 +2,9 @@ openapi: 3.0.0
 info:
   title: VetManager REST API
   version: 1.3.1
-  description: OpenAPI 3.0 specification for the VetManager REST API. Reconciled against public Postman collection updated
-    at 2026-05-26T14:01:03.000Z, vetmanager-mcp artifacts, vetmanager-extjs routes/controllers and devtr6 GET probes. Schemas
-    are preserved from prior real API response inference; nullable flags are refreshed from vm_devtr6.sql.gz where table mappings
-    are known.
+  description: OpenAPI 3.0 specification for the VetManager REST API. Reconciled against vetmanager-extjs routes/controllers
+    and devtr6 GET probes. Schemas are preserved from prior real API response inference; nullable flags are refreshed from
+    vm_devtr6.sql.gz where table mappings are known.
 servers:
 - url: https://{domain}
   description: VetManager API Server
@@ -4158,11 +4157,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
     post:
       summary: Post Combo Manual Item
       tags:
@@ -4198,10 +4193,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/ComboManualItem/{ID}:
     get:
       summary: Get Combo Manual Item By ID
@@ -4238,10 +4230,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
     put:
       summary: Put Combo Manual Item
       tags:
@@ -4282,10 +4271,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/ComboManualName:
     get:
       summary: Get Combo Manual Name Filtered By Name
@@ -4326,11 +4312,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/ComboManualName/{ID}:
     get:
       summary: Get Combo Manual Name By ID
@@ -4367,10 +4349,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/GoodGroup:
     get:
       summary: GoodGroup Get All
@@ -4406,11 +4385,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
     post:
       summary: Post group
       tags:
@@ -4446,10 +4421,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/GoodGroup/{ID}:
     put:
       summary: Put group
@@ -4491,10 +4463,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
     delete:
       summary: Delete group
       tags:
@@ -4530,10 +4499,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/HospitalBlock:
     get:
       summary: GET all HospitalBlock
@@ -4569,11 +4535,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/HospitalBlock/{ID}:
     get:
       summary: GET one HospitalBlock
@@ -4610,10 +4572,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/MedicalCards:
     get:
       summary: Medical Card Get All
@@ -4649,11 +4608,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
     post:
       summary: Medical Card Post
       tags:
@@ -4689,10 +4644,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/MedicalCards/AddVaccination:
     post:
       summary: Post Vaccination
@@ -4735,10 +4687,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/MedicalCards/AllDiagnoses:
     get:
       summary: Get All Diagnoses
@@ -4774,11 +4723,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/MedicalCards/MedcardsTextTemplates:
     get:
       summary: Medical Card Get Text Templates
@@ -4814,11 +4759,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/MedicalCards/MedicalcardsDataByClient:
     get:
       summary: Medical Card Get By Client (Without parameters returns first 10)
@@ -4860,10 +4801,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/MedicalCards/Vaccinations:
     get:
       summary: Get Vaccinations By Pet
@@ -4905,11 +4843,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/MedicalCards/{ID}:
     get:
       summary: Medical Card Get By ID
@@ -4946,10 +4880,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
     put:
       summary: Medical Card Put
       tags:
@@ -4990,10 +4921,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/PartyAccount:
     get:
       summary: GetAllParty
@@ -5029,11 +4957,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/PartyAccount/{ID}:
     get:
       summary: GetAllPartyToId
@@ -5070,10 +4994,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/PartyAccountDoc:
     get:
       summary: GetAllPartyAccountDoc
@@ -5109,11 +5030,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/PartyAccountDoc/{ID}:
     get:
       summary: GetAllPartyAccountDocToId
@@ -5150,10 +5067,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/StoreDocument:
     get:
       summary: GetAllStoreDocuments
@@ -5189,11 +5103,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/StoreDocument/{ID}:
     get:
       summary: GetStoreDocumentsToId
@@ -5230,10 +5140,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/StoreDocumentOperation/{ID}:
     get:
       summary: GetStoreDocumentOperationToId
@@ -5264,10 +5171,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/Suppliers:
     get:
       summary: GetAllSuppliers
@@ -5303,11 +5207,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
     post:
       summary: CreateSupplier
       tags:
@@ -5343,10 +5243,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/Suppliers/{ID}:
     get:
       summary: GetSuppliersToId
@@ -5383,10 +5280,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/Unit:
     post:
       summary: Post unit
@@ -5423,10 +5317,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/Unit/{ID}:
     put:
       summary: Put unit
@@ -5468,10 +5359,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
     delete:
       summary: Delete unit
       tags:
@@ -5507,10 +5395,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/VmLink/personalAccountLinkByClientId/{clientId}:
     get:
       summary: Get By ID
@@ -5545,10 +5430,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/VmLink/personalAccountLinkByPhone/{phone}:
     get:
       summary: Get By Phone
@@ -5583,10 +5465,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
   /rest/api/admission:
     get:
       summary: Get Admissions Filtered By Pet & Status
@@ -5627,11 +5506,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Post Admission
@@ -5668,9 +5543,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/admission/{ID}:
@@ -5709,9 +5581,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     put:
@@ -5754,9 +5623,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -5794,9 +5660,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/anonymousClient:
@@ -5834,11 +5697,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/anonymousClient/{id}:
     get:
@@ -5880,9 +5739,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/breed:
@@ -5920,11 +5776,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/breed/{ID}:
     get:
@@ -5962,9 +5814,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/cassa:
@@ -6002,11 +5851,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/cassa/{ID}:
     get:
@@ -6044,9 +5889,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/cassaclose:
@@ -6084,11 +5926,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/cassaclose/{ID}:
     get:
@@ -6126,9 +5964,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/cassarashod:
@@ -6160,11 +5995,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/cassarashod/{ID}:
     get:
@@ -6196,9 +6027,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/city:
@@ -6236,11 +6064,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Post City
@@ -6277,9 +6101,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/city/{ID}:
@@ -6323,9 +6144,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -6363,9 +6181,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/city/{id}:
@@ -6408,9 +6223,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/cityType:
@@ -6448,11 +6260,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Post CityType
@@ -6489,9 +6297,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/cityType/{ID}:
@@ -6530,9 +6335,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     put:
@@ -6575,9 +6377,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -6615,9 +6414,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/client:
@@ -6655,11 +6451,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/client/{ID}:
     post:
@@ -6702,10 +6494,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
     put:
       summary: Client editing
       tags:
@@ -6746,9 +6535,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -6786,9 +6572,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/client/{id}:
@@ -6831,9 +6614,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/clinics:
@@ -6871,11 +6651,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/clinics/{ID}:
     get:
@@ -6913,9 +6689,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/closingOfInvoices:
@@ -6953,11 +6726,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/closingOfInvoices/{ID}:
     get:
@@ -6995,9 +6764,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/fiscalRegisterData:
@@ -7029,11 +6795,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/fiscalRegisterData/{ID}:
     get:
@@ -7065,9 +6827,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/fiscalTaxSystems:
@@ -7099,11 +6858,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/fiscalTaxSystems/{ID}:
     get:
@@ -7135,9 +6890,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/good:
@@ -7175,11 +6927,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Good Post
@@ -7216,9 +6964,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/good/{ID}:
@@ -7257,9 +7002,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     put:
@@ -7302,9 +7044,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -7342,9 +7081,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/goodGroup/{id}:
@@ -7387,9 +7123,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/goodSaleParam:
@@ -7427,11 +7160,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/goodSaleParam/{ID}:
     put:
@@ -7474,9 +7203,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/goodTag:
@@ -7521,9 +7247,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Create Good Tag
@@ -7572,7 +7296,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/goodTag/{id}:
@@ -7618,7 +7341,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
     put:
@@ -7676,7 +7398,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -7714,7 +7435,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/hospital:
@@ -7752,11 +7472,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/hospital/{ID}:
     get:
@@ -7794,9 +7510,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     put:
@@ -7839,9 +7552,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/invoice:
@@ -7879,11 +7589,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/invoice/createinvoice:
     post:
@@ -8039,9 +7745,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/invoiceDocument:
@@ -8084,11 +7787,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/invoiceDocument/{ID}:
     get:
@@ -8126,9 +7825,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/messages/all:
@@ -8162,9 +7858,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/messages/reports:
@@ -8202,11 +7895,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/messages/roles:
     post:
@@ -8239,9 +7928,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/messages/users:
@@ -8275,9 +7961,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/payment:
@@ -8320,11 +8003,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/payment/{ID}:
     get:
@@ -8362,9 +8041,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/pet:
@@ -8407,11 +8083,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Post Pet
@@ -8448,9 +8120,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/pet/{ID}:
@@ -8494,9 +8163,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/pet/{id}:
@@ -8535,9 +8201,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     get:
@@ -8579,9 +8242,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/petType:
@@ -8619,11 +8279,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/petType/{ID}:
     get:
@@ -8661,9 +8317,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/properties:
@@ -8701,11 +8354,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/report-ai-job:
     post:
@@ -8740,7 +8389,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/report-ai-job/{id}:
@@ -8775,7 +8423,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/report-ai-job/{id}/confirm:
@@ -8816,7 +8463,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/report-ai-job/{id}/data:
@@ -8851,7 +8497,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/report-ai-job/{id}/save:
@@ -8892,7 +8537,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/report/StartReport:
@@ -8936,11 +8580,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/report/reportFile:
     get:
       summary: GetURLReportResult
@@ -8976,11 +8616,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/role:
     get:
       summary: Get All Roles
@@ -9016,11 +8652,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/role/{id}:
     get:
@@ -9062,9 +8694,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/stores/RestOfGoodInWarehouse:
@@ -9108,11 +8737,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/street:
     get:
       summary: Get All Streets
@@ -9148,11 +8773,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Post Street
@@ -9189,9 +8810,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/street/{ID}:
@@ -9235,9 +8853,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -9275,9 +8890,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/timesheet:
@@ -9315,11 +8927,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/timesheet/{ID}:
     get:
@@ -9357,9 +8965,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/unit:
@@ -9397,11 +9002,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/unit/{id}:
     get:
@@ -9443,9 +9044,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/user:
@@ -9483,11 +9081,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
   /rest/api/user/anonymousList:
     get:
@@ -9524,11 +9118,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        - devtr6
-        status: confirmed
+        status: openapi_only
   /rest/api/user/{ID}:
     get:
       summary: Get All Webhooks
@@ -9565,9 +9155,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     put:
@@ -9610,9 +9197,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/userPosition:
@@ -9650,11 +9234,7 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
-        - devtr6
         status: confirmed
     post:
       summary: Post UserPosition
@@ -9691,9 +9271,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /rest/api/userPosition/{ID}:
@@ -9732,9 +9309,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     put:
@@ -9777,9 +9351,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
     delete:
@@ -9817,9 +9388,6 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
         - extjs
         status: confirmed
   /token_auth.php:
@@ -9853,19 +9421,14 @@ paths:
       x-reconciliation:
         presentIn:
         - openapi
-        - mcp_openapi
-        - mcp_postman
-        - postman_public
-        status: confirmed
+        status: openapi_only
 x-reconciliation:
-  generatedAt: '2026-10-14T09:58:29Z'
+  generatedAt: '2026-10-20T15:19:57Z'
   sources:
-    postmanPublicUpdatedAt: '2026-05-26T14:01:03.000Z'
-    mcpOpenapi: /home/otis/myprojects/vetmanager-mcp/artifacts/vetmanager_openapi_v6.json
-    mcpPostman: /home/otis/myprojects/vetmanager-mcp/artifacts/vetmanager_postman_collection.json
-    extjs: /home/otis/myprojects/vetmanager-extjs
-    dbDump: /home/otis/myprojects/vetmanager-openapi/vm_devtr6.sql.gz
+    extjs: configured
+    dbDumpProvided: false
   counts:
-    confirmed: 137
-    extjs_only_candidate: 331
-    intentionally_undocumented: 4
+    openapi_only: 42
+    confirmed: 95
+    extjs_only_candidate: 333
+    intentionally_undocumented: 11

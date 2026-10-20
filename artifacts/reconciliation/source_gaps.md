@@ -1,25 +1,19 @@
 # Vetmanager OpenAPI reconciliation
 
-Generated: 2026-10-20T14:54:35Z
+Generated: 2026-10-20T15:19:57Z
 
 ## Source counts
 
 - openapi_operations: 137
-- mcp_openapi_operations: 126
-- mcp_postman_operations: 126
-- postman_public_operations: 136
 - extjs_route_candidates: 439
 - db_nullable_tables: 0
 
 ## Matrix status
 
-- confirmed: 137
+- confirmed: 95
 - extjs_only_candidate: 333
 - intentionally_undocumented: 11
-
-## Documented elsewhere but missing from OpenAPI
-
-- None
+- openapi_only: 42
 
 ## ExtJS-only route candidates
 
@@ -177,4 +171,45 @@ Generated: 2026-10-20T14:54:35Z
 
 ## OpenAPI-only entries
 
-- None
+- `DELETE /rest/api/GoodGroup/{id}`
+- `DELETE /rest/api/Unit/{id}`
+- `GET /rest/api/ComboManualItem`
+- `GET /rest/api/ComboManualItem/{id}`
+- `GET /rest/api/ComboManualName`
+- `GET /rest/api/ComboManualName/{id}`
+- `GET /rest/api/GoodGroup`
+- `GET /rest/api/HospitalBlock`
+- `GET /rest/api/HospitalBlock/{id}`
+- `GET /rest/api/MedicalCards`
+- `GET /rest/api/MedicalCards/AllDiagnoses`
+- `GET /rest/api/MedicalCards/MedcardsTextTemplates`
+- `GET /rest/api/MedicalCards/MedicalcardsDataByClient`
+- `GET /rest/api/MedicalCards/Vaccinations`
+- `GET /rest/api/MedicalCards/{id}`
+- `GET /rest/api/PartyAccount`
+- `GET /rest/api/PartyAccount/{id}`
+- `GET /rest/api/PartyAccountDoc`
+- `GET /rest/api/PartyAccountDoc/{id}`
+- `GET /rest/api/StoreDocument`
+- `GET /rest/api/StoreDocument/{id}`
+- `GET /rest/api/StoreDocumentOperation/{id}`
+- `GET /rest/api/Suppliers`
+- `GET /rest/api/Suppliers/{id}`
+- `GET /rest/api/VmLink/personalAccountLinkByClientId/{clientId}`
+- `GET /rest/api/VmLink/personalAccountLinkByPhone/{phone}`
+- `GET /rest/api/report/StartReport`
+- `GET /rest/api/report/reportFile`
+- `GET /rest/api/stores/RestOfGoodInWarehouse`
+- `GET /rest/api/user/anonymousList`
+- `POST /rest/api/ComboManualItem`
+- `POST /rest/api/GoodGroup`
+- `POST /rest/api/MedicalCards`
+- `POST /rest/api/MedicalCards/AddVaccination`
+- `POST /rest/api/Suppliers`
+- `POST /rest/api/Unit`
+- `POST /rest/api/client/{id}`
+- `POST /token_auth.php`
+- `PUT /rest/api/ComboManualItem/{id}`
+- `PUT /rest/api/GoodGroup/{id}`
+- `PUT /rest/api/MedicalCards/{id}`
+- `PUT /rest/api/Unit/{id}`
