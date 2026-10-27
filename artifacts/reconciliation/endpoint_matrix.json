@@ -4768,16 +4768,18 @@
     "key": "POST /rest/api/invoice/payinvoice",
     "method": "POST",
     "path": "/rest/api/invoice/payinvoice",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Оплатить счет (в разработке)",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "InvoiceController.php",
     "extjs_source": "extjs_custom_rest",
     "extjs_method_name": "doCustomRestPostPayInvoice",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "intentionally_undocumented",
-    "reason": "requires_user_token"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/invoiceDocument",
