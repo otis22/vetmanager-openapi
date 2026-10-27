@@ -15,7 +15,6 @@
 
 - `DELETE /rest/api/invoice/{id}`: disabled
 - `POST /rest/api/invoice`: disabled
-- `POST /rest/api/invoice/payinvoice`: requires_user_token
 - `PUT /rest/api/invoice/{id}`: disabled
 
 ## API лабораторных провайдеров

@@ -629,7 +629,6 @@
               "first_name": "Admin1",
               "middle_name": "",
               "login": "demo_user",
-              "passwd": "00000000000000000000000000000000",
               "position_id": 8,
               "email": "user@example.test",
               "phone": "",
@@ -2357,7 +2356,6 @@
               "first_name": "Владимир",
               "middle_name": "aad",
               "login": "demo_user",
-              "passwd": "00000000000000000000000000000000",
               "position_id": 8,
               "email": "user@example.test",
               "phone": "",
@@ -2688,7 +2686,6 @@
               "first_name": "Владимир",
               "middle_name": "",
               "login": "demo_user",
-              "passwd": "00000000000000000000000000000000",
               "position_id": 8,
               "email": "user@example.test",
               "phone": "",
@@ -4869,12 +4866,6 @@
             "example": "admin",
             "nullable": false,
             "x-db-type": "varchar(45)"
-          },
-          "passwd": {
-            "type": "string",
-            "example": "00000000000000000000000000000000",
-            "nullable": false,
-            "x-db-type": "varchar(32)"
           },
           "position_id": {
             "type": "integer",
@@ -10633,7 +10624,7 @@
     "/rest/api/invoice/createinvoice": {
       "post": {
         "summary": "Создать счет",
-        "description": "Создает счет с товарами или услугами. Поле `goods` передается как JSON-строка с массивом позиций счета.",
+        "description": "Создает счет с товарами или услугами.\n\n`amount` — общая сумма счета. Поле обязательное: укажите сумму цен всех позиций.\n\n`goods` — обязательная JSON-строка со списком позиций. В обычной позиции укажите `id`, `cnt`, `pr`, `tag_id`, `ruid`, `iddfrp`. Для комбинации с отрицательным `id` достаточно `id` и `cnt`.",
         "tags": [
           "Invoice"
         ],
@@ -10645,80 +10636,105 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "user_id",
                   "invoice_data"
                 ],
                 "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Сотрудник, от имени которого создается счет.",
+                    "example": 1
+                  },
                   "invoice_data": {
                     "type": "object",
+                    "description": "Данные нового счета.",
                     "required": [
                       "doctor_id",
                       "clinic_id",
                       "client_id",
                       "pet_id",
+                      "amount",
+                      "description",
                       "goods"
                     ],
                     "properties": {
                       "doctor_id": {
                         "type": "integer",
                         "minimum": 1,
-                        "example": 26
+                        "description": "Ответственный врач.",
+                        "example": 1
                       },
                       "clinic_id": {
                         "type": "integer",
                         "minimum": 1,
+                        "description": "Клиника, в которой создается счет.",
                         "example": 1
                       },
                       "client_id": {
                         "type": "integer",
                         "minimum": 1,
-                        "example": 12
+                        "description": "Клиент, которому создается счет.",
+                        "example": 19441
                       },
                       "pet_id": {
                         "type": "integer",
                         "minimum": 1,
-                        "example": 10
+                        "description": "Питомец клиента.",
+                        "example": 19817
                       },
                       "status": {
                         "type": "string",
+                        "description": "Статус нового счета. Для сохраненного счета укажите save.",
                         "example": "save"
                       },
-                      "create_date": {
+                      "invoice_date": {
                         "type": "string",
-                        "description": "Дата создания или значение `now()`.",
-                        "example": "now()"
+                        "description": "Дата счета. Если поле не передано, сервер использует текущую дату и время.",
+                        "example": "2026-10-27 10:30:00"
                       },
                       "discount": {
                         "type": "number",
+                        "description": "Процент скидки на счет.",
                         "default": 0
                       },
                       "discount_amount": {
                         "type": "number",
+                        "description": "Сумма скидки.",
                         "default": 0
                       },
                       "increase": {
                         "type": "number",
+                        "description": "Процент наценки на счет.",
                         "default": 0
                       },
                       "increase_amount": {
                         "type": "number",
+                        "description": "Сумма наценки.",
                         "default": 0
                       },
                       "invoice_amount": {
                         "type": "number",
-                        "example": 1500
+                        "description": "Сумма счета до применения скидки или наценки.",
+                        "example": 80
                       },
                       "amount": {
                         "type": "number",
-                        "example": 1500
+                        "description": "Общая сумма счета. Укажите сумму цен всех позиций.",
+                        "example": 80
                       },
                       "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Описание счета. Поле нужно передать, значение может быть пустым.",
+                        "example": "Счет за услуги"
                       },
                       "client_note": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Заметка о клиенте."
                       },
                       "night": {
                         "type": "integer",
+                        "description": "Признак ночного счета. Итоговое значение определяет сервер.",
                         "enum": [
                           0,
                           1
@@ -10727,6 +10743,7 @@
                       },
                       "call": {
                         "type": "integer",
+                        "description": "Признак выездного приема.",
                         "enum": [
                           0,
                           1
@@ -10735,8 +10752,8 @@
                       },
                       "goods": {
                         "type": "string",
-                        "description": "JSON-строка с массивом позиций. Для каждой позиции используются поля `id`, `cnt`, `pr`, `ruid`, `iddfrp`, `tag_id`, `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.",
-                        "example": "[{\"id\":\"101_5_2\",\"cnt\":1,\"pr\":1500,\"ruid\":26,\"iddfrp\":1,\"tag_id\":0,\"dsc\":0,\"dp\":1500,\"di\":0,\"pa\":\"\",\"pac\":0,\"fdd\":0,\"fdp\":0,\"fid\":0,\"fip\":0}]"
+                        "description": "JSON-строка с массивом позиций. Поля обычной позиции: `id` — идентификаторы товара, параметра продажи и склада в формате `good_id_sale_param_id_store_id`; `cnt` — количество; `pr` — сумма позиции; `tag_id` — характеристика товара или 0; `ruid` — ответственный сотрудник; `iddfrp` — 1, чтобы использовать врача из `doctor_id`, иначе 0. Для комбинации с отрицательным `id` обязательны только `id` и `cnt`. Дополнительные поля: `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.",
+                        "example": "[{\"id\":\"36760_337982_0\",\"cnt\":1,\"pr\":80,\"dp\":80,\"tag_id\":0,\"pa\":\"\",\"pac\":0,\"ruid\":1,\"iddfrp\":0}]"
                       }
                     }
                   }
@@ -10747,7 +10764,7 @@
         },
         "responses": {
           "201": {
-            "description": "Результат создания счета. При бизнес-ошибке `success` имеет значение `false`, а описание находится в `messages`.",
+            "description": "Счет создан. В ответе возвращаются данные созданного счета.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10758,25 +10775,334 @@
                   ],
                   "properties": {
                     "success": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "true, если счет создан.",
+                      "example": true
                     },
                     "messages": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "При успехе пустая строка.",
+                      "example": ""
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "Результат создания счета.",
+                      "properties": {
+                        "invoice": {
+                          "type": "object",
+                          "description": "Данные созданного счета.",
+                          "additionalProperties": false,
+                          "properties": {
+                            "invoice_id": {
+                              "type": "integer",
+                              "description": "Номер созданного счета.",
+                              "example": 3615
+                            },
+                            "clinic_id": {
+                              "type": "integer",
+                              "description": "Клиника счета.",
+                              "example": 1
+                            },
+                            "client_id": {
+                              "type": "integer",
+                              "description": "Клиент счета.",
+                              "example": 19441
+                            },
+                            "pet_id": {
+                              "type": "integer",
+                              "description": "Питомец счета.",
+                              "example": 19817
+                            },
+                            "creator_id": {
+                              "type": "integer",
+                              "description": "Сотрудник, создавший счет.",
+                              "example": 1
+                            },
+                            "doctor_id": {
+                              "type": "integer",
+                              "description": "Ответственный врач.",
+                              "example": 1
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Описание счета из запроса.",
+                              "example": "BT-14451 public API check"
+                            },
+                            "invoice_date": {
+                              "type": "string",
+                              "description": "Дата счета из запроса.",
+                              "example": "2026-10-27 10:30:00"
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "Статус, переданный в запросе.",
+                              "example": "save"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "description": "Общая сумма счета.",
+                              "example": 80
+                            },
+                            "paid_amount": {
+                              "type": "number",
+                              "description": "Оплаченная сумма. Для нового счета равна 0.",
+                              "example": 0
+                            },
+                            "percent": {
+                              "type": "number",
+                              "description": "Процент, переданный в запросе.",
+                              "example": 0
+                            },
+                            "night": {
+                              "type": "integer",
+                              "description": "Признак ночного счета, рассчитанный сервером.",
+                              "example": 0
+                            },
+                            "call": {
+                              "type": "integer",
+                              "description": "Признак выездного приема.",
+                              "example": 0
+                            },
+                            "goods": {
+                              "type": "array",
+                              "description": "Позиции созданного счета. В ответе это массив, а не JSON-строка.",
+                              "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "description": "Идентификаторы товара, параметра продажи и склада.",
+                                    "example": "36760_337982_0"
+                                  },
+                                  "cnt": {
+                                    "type": "number",
+                                    "description": "Количество.",
+                                    "example": 1
+                                  },
+                                  "pr": {
+                                    "type": "number",
+                                    "description": "Сумма позиции.",
+                                    "example": 80
+                                  },
+                                  "dp": {
+                                    "type": "number",
+                                    "description": "Цена позиции до скидки.",
+                                    "example": 80
+                                  },
+                                  "tag_id": {
+                                    "type": "integer",
+                                    "description": "Характеристика товара или 0.",
+                                    "example": 0
+                                  },
+                                  "pa": {
+                                    "type": "string",
+                                    "description": "Данные партий товара. Для услуги пустая строка.",
+                                    "example": ""
+                                  },
+                                  "pac": {
+                                    "type": "integer",
+                                    "description": "Количество выбранных партий.",
+                                    "example": 0
+                                  },
+                                  "ruid": {
+                                    "type": "integer",
+                                    "description": "Ответственный сотрудник.",
+                                    "example": 1
+                                  },
+                                  "iddfrp": {
+                                    "type": "integer",
+                                    "description": "Признак использования врача из doctor_id.",
+                                    "example": 0
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "messages": "",
+                  "data": {
+                    "invoice": {
+                      "invoice_id": 3615,
+                      "clinic_id": 1,
+                      "client_id": 19441,
+                      "pet_id": 19817,
+                      "creator_id": 1,
+                      "doctor_id": 1,
+                      "description": "BT-14451 public API check",
+                      "invoice_date": "2026-10-27 10:30:00",
+                      "status": "save",
+                      "amount": 80,
+                      "paid_amount": 0,
+                      "percent": 0,
+                      "night": 0,
+                      "call": 0,
+                      "goods": [
+                        {
+                          "id": "36760_337982_0",
+                          "cnt": 1,
+                          "pr": 80,
+                          "dp": 80,
+                          "tag_id": 0,
+                          "pa": "",
+                          "pac": 0,
+                          "ruid": 1,
+                          "iddfrp": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/invoice/payinvoice": {
+      "post": {
+        "summary": "Оплатить счет (в разработке)",
+        "description": "Оплачивает счет от имени сотрудника `user_id`. Сумма передается в `amount`. Касса выбирается на сервере.",
+        "tags": [
+          "Invoice"
+        ],
+        "operationId": "post_rest_api_invoice_payinvoice",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "user_id",
+                  "clinic_id",
+                  "invoice_data"
+                ],
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Сотрудник, от имени которого проводится оплата.",
+                    "example": 1
+                  },
+                  "clinic_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Клиника, в которой создан счет.",
+                    "example": 1
+                  },
+                  "invoice_data": {
+                    "type": "object",
+                    "description": "Данные оплачиваемого счета.",
+                    "required": [
+                      "client_id",
+                      "invoice_id",
+                      "amount"
+                    ],
+                    "properties": {
+                      "client_id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "Клиент, которому принадлежит счет.",
+                        "example": 19441
+                      },
+                      "invoice_id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "Номер оплачиваемого счета.",
+                        "example": 3615
+                      },
+                      "amount": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "Сумма оплаты. Можно передать 0, если счет оплачивается с баланса клиента.",
+                        "example": 80
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Счет оплачен. В ответе номер счета и оплаченная сумма.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "true, если счет оплачен.",
+                      "example": true
+                    },
+                    "messages": {
+                      "type": "string",
+                      "description": "При успехе пустая строка.",
+                      "example": ""
                     },
                     "data": {
                       "type": "object",
                       "properties": {
                         "invoice": {
                           "type": "object",
-                          "additionalProperties": true,
+                          "description": "Состояние счета после оплаты.",
+                          "additionalProperties": false,
                           "properties": {
                             "invoice_id": {
                               "type": "integer",
-                              "nullable": true
+                              "description": "Номер оплаченного счета.",
+                              "example": 3615
+                            },
+                            "status": {
+                              "type": "string",
+                              "description": "После оплаты статус счета exec.",
+                              "example": "exec"
+                            },
+                            "amount": {
+                              "type": "string",
+                              "description": "Сумма счета.",
+                              "example": "80.0000000000"
+                            },
+                            "paid_amount": {
+                              "type": "string",
+                              "description": "Оплаченная сумма.",
+                              "example": "80.0000000000"
                             }
                           }
                         }
                       }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "messages": "",
+                  "data": {
+                    "invoice": {
+                      "invoice_id": 3615,
+                      "status": "exec",
+                      "amount": "80.0000000000",
+                      "paid_amount": "80.0000000000"
                     }
                   }
                 }
