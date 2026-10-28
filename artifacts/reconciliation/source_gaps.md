@@ -1,18 +1,18 @@
 # Vetmanager OpenAPI reconciliation
 
-Generated: 2026-10-20T15:19:57Z
+Generated: 2026-10-28T09:46:58Z
 
 ## Source counts
 
-- openapi_operations: 137
+- openapi_operations: 139
 - extjs_route_candidates: 439
 - db_nullable_tables: 0
 
 ## Matrix status
 
-- confirmed: 95
-- extjs_only_candidate: 333
-- intentionally_undocumented: 11
+- confirmed: 97
+- extjs_only_candidate: 332
+- intentionally_undocumented: 10
 - openapi_only: 42
 
 ## ExtJS-only route candidates
@@ -167,7 +167,7 @@ Generated: 2026-10-20T15:19:57Z
 - `GET /rest/api/reportAiJobs`: extjs_default_rest
 - `GET /rest/api/reportAiJobs/{id}`: extjs_default_rest
 - `GET /rest/api/servicePrice`: extjs_default_rest
-- ... 183 more
+- ... 182 more
 
 ## OpenAPI-only entries
 

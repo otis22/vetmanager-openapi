@@ -5164,14 +5164,17 @@
     "key": "POST /rest/api/report-ai-job/{id}/reject",
     "method": "POST",
     "path": "/rest/api/report-ai-job/{id}/reject",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Reject Report AI Job Candidates",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_source": "extjs_explicit_route",
     "extjs_target": "reportAiJobs/reject",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/report-ai-job/{id}/save",

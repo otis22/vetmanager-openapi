@@ -8758,6 +8758,47 @@ paths:
         - openapi
         - extjs
         status: confirmed
+  /rest/api/report-ai-job/{id}/reject:
+    post:
+      summary: Reject Report AI Job Candidates
+      tags:
+      - Report AI Job
+      operationId: post_rest_api_report_ai_job_id_reject
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    additionalProperties: true
+      description: Доступно только из status=needs_confirmation. Тело запроса должно быть пустым JSON-объектом. Отменяет все
+        предложенные кандидаты и запускает построение собственного preview. Иначе → 409 INVALID_TRANSITION / 400.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
   /rest/api/report-ai-job/{id}/save:
     post:
       summary: Save Report AI Job
@@ -9682,12 +9723,12 @@ paths:
         - openapi
         status: openapi_only
 x-reconciliation:
-  generatedAt: '2026-10-20T15:19:57Z'
+  generatedAt: '2026-10-28T09:46:58Z'
   sources:
     extjs: configured
     dbDumpProvided: false
   counts:
     openapi_only: 42
-    confirmed: 95
-    extjs_only_candidate: 333
-    intentionally_undocumented: 11
+    confirmed: 97
+    extjs_only_candidate: 332
+    intentionally_undocumented: 10
