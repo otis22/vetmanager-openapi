@@ -4794,6 +4794,169 @@ paths:
         presentIn:
         - openapi
         status: openapi_only
+  /rest/api/medicalCards/laboratoryResults:
+    get:
+      summary: Get laboratory results by client
+      description: >-
+        Returns active medical cards of the specified client only when a laboratory result has been
+        recorded for the card. The HTML displayed as the laboratory result is returned in
+        `data.medicalcards[].healing_process`.
+      tags:
+      - Medical Card
+      operationId: get_rest_api_medicalCards_laboratoryResults
+      parameters:
+      - name: client_id
+        in: query
+        description: Identifier of the client whose laboratory-result medical cards are requested.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+        example: 123
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: Laboratory-result medical cards.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    required:
+                    - medicalcards
+                    properties:
+                      medicalcards:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - medical_card_id
+                          - medical_card_status
+                          - client_id
+                          - pet_id
+                          - healing_process
+                          properties:
+                            medical_card_id:
+                              type: integer
+                              example: 48
+                            medical_card_status:
+                              type: string
+                              enum:
+                              - active
+                              description: The endpoint returns active medical cards only.
+                            date_edit:
+                              type: string
+                              description: Date and time when the medical card was last edited.
+                              example: '2026-10-28 15:39:32'
+                            diagnos:
+                              type: string
+                              description: JSON-encoded diagnoses from the medical card.
+                            diagnos_data:
+                              type: array
+                              description: Resolved diagnoses when the medical card contains diagnoses.
+                              items:
+                                type: object
+                                properties:
+                                  diagnos_id:
+                                    type: integer
+                                  title:
+                                    type: string
+                            doctor_id:
+                              type: integer
+                            client_id:
+                              type: integer
+                              example: 123
+                            pet_id:
+                              type: integer
+                              example: 14
+                            alias:
+                              type: string
+                              description: Pet name.
+                            birthday:
+                              type: string
+                              nullable: true
+                              description: Pet birth date.
+                            sex:
+                              type: string
+                              nullable: true
+                            note:
+                              type: string
+                              description: Pet note.
+                            pet_type:
+                              type: string
+                              nullable: true
+                            breed:
+                              type: string
+                              nullable: true
+                            first_name:
+                              type: string
+                              description: Client first name.
+                            last_name:
+                              type: string
+                              description: Client last name.
+                            middle_name:
+                              type: string
+                              nullable: true
+                              description: Client middle name.
+                            phone:
+                              type: string
+                              description: Client contact phone selected from cell, home, or work phone.
+                            healing_process:
+                              type: string
+                              description: HTML content of the laboratory result.
+                              example: '<p>Laboratory result</p>'
+                            recomendation:
+                              type: string
+                              description: Medical-card recommendation. Field name is kept for API compatibility.
+                            weight:
+                              type: number
+                            temperature:
+                              type: number
+                            meet_result_id:
+                              type: integer
+                            admission_type:
+                              type: integer
+                            doctor_nickname:
+                              type: string
+                              nullable: true
+                            doctor_first_name:
+                              type: string
+                              nullable: true
+                            doctor_last_name:
+                              type: string
+                              nullable: true
+                            doctor_middle_name:
+                              type: string
+                              nullable: true
+                            editable:
+                              type: integer
+                              enum:
+                              - 0
+                              - 1
+                              description: Whether the medical card can be edited.
+                            meet_result_title:
+                              type: string
+                              description: Display name for meet_result_id.
+                            admission_type_title:
+                              type: string
+                              description: Display name for admission_type.
+        '401':
+          description: REST API is disabled or the API key is invalid.
+        '500':
+          description: The required client_id parameter is missing or invalid.
+      x-reconciliation:
+        presentIn:
+        - openapi
+        status: openapi_only
   /rest/api/MedicalCards/Vaccinations:
     get:
       summary: Get Vaccinations By Pet
