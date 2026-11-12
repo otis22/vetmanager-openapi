@@ -4775,7 +4775,7 @@ components:
 paths:
   /rest/api/ComboManualItem:
     get:
-      summary: Get Combo Manual Item By Filtered by combo_manual_id
+      summary: Список элементов справочника
       tags:
       - Combo Manual Item
       operationId: get_rest_api_ComboManualItem
@@ -4815,7 +4815,7 @@ paths:
         - openapi
         status: openapi_only
     post:
-      summary: Post Combo Manual Item
+      summary: Создать элемент справочника
       tags:
       - Combo Manual Item
       operationId: post_rest_api_ComboManualItem
@@ -4852,7 +4852,7 @@ paths:
         status: openapi_only
   /rest/api/ComboManualItem/{ID}:
     get:
-      summary: Get Combo Manual Item By ID
+      summary: Элемент справочника по id
       tags:
       - Combo Manual Item
       operationId: get_rest_api_ComboManualItem_ID
@@ -4888,7 +4888,7 @@ paths:
         - openapi
         status: openapi_only
     put:
-      summary: Put Combo Manual Item
+      summary: Изменить элемент справочника
       tags:
       - Combo Manual Item
       operationId: put_rest_api_ComboManualItem_ID
@@ -4930,7 +4930,7 @@ paths:
         status: openapi_only
   /rest/api/ComboManualName:
     get:
-      summary: Get Combo Manual Name Filtered By Name
+      summary: Список справочников по названию
       tags:
       - Combo Manual Name
       operationId: get_rest_api_ComboManualName
@@ -4971,7 +4971,7 @@ paths:
         status: openapi_only
   /rest/api/ComboManualName/{ID}:
     get:
-      summary: Get Combo Manual Name By ID
+      summary: Справочник по id
       tags:
       - Combo Manual Name
       operationId: get_rest_api_ComboManualName_ID
@@ -5008,7 +5008,7 @@ paths:
         status: openapi_only
   /rest/api/GoodGroup:
     get:
-      summary: GoodGroup Get All
+      summary: Список групп товаров
       tags:
       - GoodGroup
       operationId: get_rest_api_GoodGroup
@@ -5043,7 +5043,7 @@ paths:
         - openapi
         status: openapi_only
     post:
-      summary: Post group
+      summary: Создать группу товаров
       tags:
       - GoodGroup
       operationId: post_rest_api_GoodGroup
@@ -5080,7 +5080,7 @@ paths:
         status: openapi_only
   /rest/api/GoodGroup/{ID}:
     put:
-      summary: Put group
+      summary: Изменить группу товаров
       tags:
       - GoodGroup
       operationId: put_rest_api_GoodGroup_ID
@@ -5121,7 +5121,7 @@ paths:
         - openapi
         status: openapi_only
     delete:
-      summary: Delete group
+      summary: Удалить группу товаров
       tags:
       - GoodGroup
       operationId: delete_rest_api_GoodGroup_ID
@@ -5158,7 +5158,7 @@ paths:
         status: openapi_only
   /rest/api/HospitalBlock:
     get:
-      summary: GET all HospitalBlock
+      summary: Список блоков стационара
       tags:
       - Hospital
       operationId: get_rest_api_HospitalBlock
@@ -5194,7 +5194,7 @@ paths:
         status: openapi_only
   /rest/api/HospitalBlock/{ID}:
     get:
-      summary: GET one HospitalBlock
+      summary: Блок стационара по id
       tags:
       - Hospital
       operationId: get_rest_api_HospitalBlock_ID
@@ -5231,7 +5231,7 @@ paths:
         status: openapi_only
   /rest/api/MedicalCards:
     get:
-      summary: Medical Card Get All
+      summary: Список медкарт
       tags:
       - Medical Card
       operationId: get_rest_api_MedicalCards
@@ -5266,7 +5266,7 @@ paths:
         - openapi
         status: openapi_only
     post:
-      summary: Medical Card Post
+      summary: Создать медкарту
       tags:
       - Medical Card
       operationId: post_rest_api_MedicalCards
@@ -5303,7 +5303,7 @@ paths:
         status: openapi_only
   /rest/api/MedicalCards/AddVaccination:
     post:
-      summary: Post Vaccination
+      summary: Создать вакцинацию
       tags:
       - Medical Card / Vaccination
       operationId: post_rest_api_MedicalCards_AddVaccination
@@ -5346,7 +5346,7 @@ paths:
         status: openapi_only
   /rest/api/MedicalCards/AllDiagnoses:
     get:
-      summary: Get All Diagnoses
+      summary: Список диагнозов
       tags:
       - Medical Cards
       operationId: get_rest_api_MedicalCards_AllDiagnoses
@@ -5382,7 +5382,7 @@ paths:
         status: openapi_only
   /rest/api/MedicalCards/MedcardsTextTemplates:
     get:
-      summary: Medical Card Get Text Templates
+      summary: Шаблоны текста медкарты
       tags:
       - Medical Cards
       operationId: get_rest_api_MedicalCards_MedcardsTextTemplates
@@ -5418,7 +5418,7 @@ paths:
         status: openapi_only
   /rest/api/MedicalCards/MedicalcardsDataByClient:
     get:
-      summary: Medical Card Get By Client (Without parameters returns first 10)
+      summary: Медкарты клиента
       tags:
       - Medical Cards
       operationId: get_rest_api_MedicalCards_MedicalcardsDataByClient
@@ -5460,7 +5460,7 @@ paths:
         status: openapi_only
   /rest/api/MedicalCards/Vaccinations:
     get:
-      summary: Get Vaccinations By Pet
+      summary: Вакцинации питомца
       tags:
       - Medical Card / Vaccination
       operationId: get_rest_api_MedicalCards_Vaccinations
@@ -5502,7 +5502,7 @@ paths:
         status: openapi_only
   /rest/api/MedicalCards/{ID}:
     get:
-      summary: Medical Card Get By ID
+      summary: Медкарта по id
       tags:
       - Medical Card
       operationId: get_rest_api_MedicalCards_ID
@@ -5538,7 +5538,7 @@ paths:
         - openapi
         status: openapi_only
     put:
-      summary: Medical Card Put
+      summary: Изменить медкарту
       tags:
       - Medical Card
       operationId: put_rest_api_MedicalCards_ID
@@ -5580,7 +5580,7 @@ paths:
         status: openapi_only
   /rest/api/PartyAccount:
     get:
-      summary: GetAllParty
+      summary: Список партий
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccount
@@ -5616,7 +5616,7 @@ paths:
         status: openapi_only
   /rest/api/PartyAccount/{ID}:
     get:
-      summary: GetAllPartyToId
+      summary: Партия по id
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccount_ID
@@ -5653,7 +5653,7 @@ paths:
         status: openapi_only
   /rest/api/PartyAccountDoc:
     get:
-      summary: GetAllPartyAccountDoc
+      summary: Список документов партий
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccountDoc
@@ -5689,7 +5689,7 @@ paths:
         status: openapi_only
   /rest/api/PartyAccountDoc/{ID}:
     get:
-      summary: GetAllPartyAccountDocToId
+      summary: Документ партии по id
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccountDoc_ID
@@ -5726,7 +5726,7 @@ paths:
         status: openapi_only
   /rest/api/StoreDocument:
     get:
-      summary: GetAllStoreDocuments
+      summary: Список складских документов
       tags:
       - Store
       operationId: get_rest_api_StoreDocument
@@ -5762,7 +5762,7 @@ paths:
         status: openapi_only
   /rest/api/StoreDocument/{ID}:
     get:
-      summary: GetStoreDocumentsToId
+      summary: Складской документ по id
       tags:
       - Store
       operationId: get_rest_api_StoreDocument_ID
@@ -5799,7 +5799,7 @@ paths:
         status: openapi_only
   /rest/api/StoreDocumentOperation/{ID}:
     get:
-      summary: GetStoreDocumentOperationToId
+      summary: Операция складского документа по id
       tags:
       - Store
       operationId: get_rest_api_StoreDocumentOperation_ID
@@ -5830,7 +5830,7 @@ paths:
         status: openapi_only
   /rest/api/Suppliers:
     get:
-      summary: GetAllSuppliers
+      summary: Список поставщиков
       tags:
       - Suppliers
       operationId: get_rest_api_Suppliers
@@ -5865,7 +5865,7 @@ paths:
         - openapi
         status: openapi_only
     post:
-      summary: CreateSupplier
+      summary: Создать поставщика
       tags:
       - Suppliers
       operationId: post_rest_api_Suppliers
@@ -5902,7 +5902,7 @@ paths:
         status: openapi_only
   /rest/api/Suppliers/{ID}:
     get:
-      summary: GetSuppliersToId
+      summary: Поставщик по id
       tags:
       - Suppliers
       operationId: get_rest_api_Suppliers_ID
@@ -5939,7 +5939,7 @@ paths:
         status: openapi_only
   /rest/api/Unit:
     post:
-      summary: Post unit
+      summary: Создать единицу измерения
       tags:
       - Unit
       operationId: post_rest_api_Unit
@@ -5976,7 +5976,7 @@ paths:
         status: openapi_only
   /rest/api/Unit/{ID}:
     put:
-      summary: Put unit
+      summary: Изменить единицу измерения
       tags:
       - Unit
       operationId: put_rest_api_Unit_ID
@@ -6017,7 +6017,7 @@ paths:
         - openapi
         status: openapi_only
     delete:
-      summary: Delete unit
+      summary: Удалить единицу измерения
       tags:
       - Unit
       operationId: delete_rest_api_Unit_ID
@@ -6054,7 +6054,7 @@ paths:
         status: openapi_only
   /rest/api/VmLink/personalAccountLinkByClientId/{clientId}:
     get:
-      summary: Personal account link by client id
+      summary: Ссылка на личный кабинет по id клиента
       tags:
       - VM-Link
       operationId: get_rest_api_VmLink_personalAccountLinkByClientId_1
@@ -6089,7 +6089,7 @@ paths:
         status: openapi_only
   /rest/api/VmLink/personalAccountLinkByPhone/{phone}:
     get:
-      summary: Personal account link by phone
+      summary: Ссылка на личный кабинет по телефону
       tags:
       - VM-Link
       operationId: get_rest_api_VmLink_personalAccountLinkByPhone_3322122
@@ -6124,7 +6124,7 @@ paths:
         status: openapi_only
   /rest/api/admission:
     get:
-      summary: Get Admissions Filtered By Pet & Status
+      summary: Список приёмов
       tags:
       - Admission
       operationId: get_rest_api_admission
@@ -6165,7 +6165,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Post Admission
+      summary: Создать приём
       tags:
       - Admission
       operationId: post_rest_api_admission
@@ -6203,7 +6203,7 @@ paths:
         status: confirmed
   /rest/api/admission/{ID}:
     get:
-      summary: Get Admission By ID
+      summary: Приём по id
       tags:
       - Admission
       operationId: get_rest_api_admission_ID
@@ -6240,7 +6240,7 @@ paths:
         - extjs
         status: confirmed
     put:
-      summary: Put Admission
+      summary: Изменить приём
       tags:
       - Admission
       operationId: put_rest_api_admission_ID
@@ -6282,7 +6282,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: DeleteAdmission
+      summary: Удалить приём
       tags:
       - Admission
       operationId: delete_rest_api_admission_ID
@@ -6320,7 +6320,7 @@ paths:
         status: confirmed
   /rest/api/anonymousClient:
     get:
-      summary: Get All Clients
+      summary: Список клиентов без персональных данных
       tags:
       - AnonymousClient
       operationId: get_rest_api_anonymousClient
@@ -6357,7 +6357,7 @@ paths:
         status: confirmed
   /rest/api/anonymousClient/{id}:
     get:
-      summary: Get Client By ID
+      summary: Клиент без персональных данных по id
       tags:
       - AnonymousClient
       operationId: get_rest_api_anonymousClient_116468
@@ -6399,7 +6399,7 @@ paths:
         status: confirmed
   /rest/api/breed:
     get:
-      summary: Get All Breeds
+      summary: Список пород
       tags:
       - Breed
       operationId: get_rest_api_breed
@@ -6436,7 +6436,7 @@ paths:
         status: confirmed
   /rest/api/breed/{ID}:
     get:
-      summary: Get Breed By ID
+      summary: Порода по id
       tags:
       - Breed
       operationId: get_rest_api_breed_ID
@@ -6474,9 +6474,9 @@ paths:
         status: confirmed
   /rest/api/cassa:
     get:
-      summary: Get Cassa All
+      summary: Список касс
       tags:
-      - Cassa / Cassa
+      - Cassa
       operationId: get_rest_api_cassa
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -6511,9 +6511,9 @@ paths:
         status: confirmed
   /rest/api/cassa/{ID}:
     get:
-      summary: Get Cassa By ID
+      summary: Касса по id
       tags:
-      - Cassa / Cassa
+      - Cassa
       operationId: get_rest_api_cassa_ID
       parameters:
       - name: ID
@@ -6549,7 +6549,7 @@ paths:
         status: confirmed
   /rest/api/cassaclose:
     get:
-      summary: Get Cassa Close All
+      summary: Список итогов закрытия кассы
       tags:
       - Cassa / Cassa Close
       operationId: get_rest_api_cassaclose
@@ -6586,7 +6586,7 @@ paths:
         status: confirmed
   /rest/api/cassaclose/{ID}:
     get:
-      summary: Get Cassa Close By ID
+      summary: Итог закрытия кассы по id
       tags:
       - Cassa / Cassa Close
       operationId: get_rest_api_cassaclose_ID
@@ -6624,7 +6624,7 @@ paths:
         status: confirmed
   /rest/api/cassarashod:
     get:
-      summary: Get Cassa Rashod All
+      summary: Список расходов из кассы
       tags:
       - Cassa / Cassa Rasshod
       operationId: get_rest_api_cassarashod
@@ -6655,7 +6655,7 @@ paths:
         status: confirmed
   /rest/api/cassarashod/{ID}:
     get:
-      summary: Get Cassa Rashod By ID
+      summary: Расход из кассы по id
       tags:
       - Cassa / Cassa Rasshod
       operationId: get_rest_api_cassarashod_ID
@@ -6687,7 +6687,7 @@ paths:
         status: confirmed
   /rest/api/city:
     get:
-      summary: Get All Cities
+      summary: Список городов
       tags:
       - City
       operationId: get_rest_api_city
@@ -6723,7 +6723,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Post City
+      summary: Создать город
       tags:
       - City
       operationId: post_rest_api_city
@@ -6761,7 +6761,7 @@ paths:
         status: confirmed
   /rest/api/city/{ID}:
     put:
-      summary: City editing
+      summary: Изменить город
       tags:
       - City
       operationId: put_rest_api_city_ID
@@ -6803,7 +6803,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: Delete
+      summary: Удалить город
       tags:
       - City
       operationId: delete_rest_api_city_ID
@@ -6841,7 +6841,7 @@ paths:
         status: confirmed
   /rest/api/city/{id}:
     get:
-      summary: Get City By ID
+      summary: Город по id
       tags:
       - City
       operationId: get_rest_api_city_255
@@ -6883,7 +6883,7 @@ paths:
         status: confirmed
   /rest/api/cityType:
     get:
-      summary: Get All CityTypes
+      summary: Список типов городов
       tags:
       - CityType
       operationId: get_rest_api_cityType
@@ -6919,7 +6919,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Post CityType
+      summary: Создать тип города
       tags:
       - CityType
       operationId: post_rest_api_cityType
@@ -6957,7 +6957,7 @@ paths:
         status: confirmed
   /rest/api/cityType/{ID}:
     get:
-      summary: Get CityType By ID
+      summary: Тип города по id
       tags:
       - CityType
       operationId: get_rest_api_cityType_ID
@@ -6994,7 +6994,7 @@ paths:
         - extjs
         status: confirmed
     put:
-      summary: CityType Editing
+      summary: Изменить тип города
       tags:
       - CityType
       operationId: put_rest_api_cityType_ID
@@ -7036,7 +7036,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: Delete
+      summary: Удалить тип города
       tags:
       - CityType
       operationId: delete_rest_api_cityType_ID
@@ -7074,7 +7074,7 @@ paths:
         status: confirmed
   /rest/api/client:
     get:
-      summary: Get All Clients
+      summary: Список клиентов
       tags:
       - Client
       operationId: get_rest_api_client
@@ -7111,7 +7111,7 @@ paths:
         status: confirmed
   /rest/api/client/{ID}:
     post:
-      summary: Post Client
+      summary: Создать клиента
       tags:
       - Client
       operationId: post_rest_api_client_ID
@@ -7152,7 +7152,7 @@ paths:
         - openapi
         status: openapi_only
     put:
-      summary: Client editing
+      summary: Изменить клиента
       tags:
       - Client
       operationId: put_rest_api_client_ID
@@ -7194,7 +7194,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: Delete
+      summary: Удалить клиента
       tags:
       - Client
       operationId: delete_rest_api_client_ID
@@ -7232,7 +7232,7 @@ paths:
         status: confirmed
   /rest/api/client/{id}:
     get:
-      summary: Get Client By ID
+      summary: Клиент по id
       tags:
       - Client
       operationId: get_rest_api_client_116468
@@ -7660,7 +7660,7 @@ paths:
         status: confirmed
   /rest/api/clinics:
     get:
-      summary: Get All Clinics
+      summary: Список клиник
       tags:
       - Clinic
       operationId: get_rest_api_clinics
@@ -7697,7 +7697,7 @@ paths:
         status: confirmed
   /rest/api/clinics/{ID}:
     get:
-      summary: Get Clinic By ID
+      summary: Клиника по id
       tags:
       - Clinic
       operationId: get_rest_api_clinics_ID
@@ -7735,7 +7735,7 @@ paths:
         status: confirmed
   /rest/api/closingOfInvoices:
     get:
-      summary: Get Closing Of Invoice All
+      summary: Список закрытий счетов
       tags:
       - Payments
       operationId: get_rest_api_closingOfInvoices
@@ -7772,7 +7772,7 @@ paths:
         status: confirmed
   /rest/api/closingOfInvoices/{ID}:
     get:
-      summary: Get Closing Of Invoice By Id
+      summary: Закрытие счёта по id
       tags:
       - Payments
       operationId: get_rest_api_closingOfInvoices_ID
@@ -8318,7 +8318,7 @@ paths:
         status: confirmed
   /rest/api/fiscalRegisterData:
     get:
-      summary: Get All Fiscal Register Data
+      summary: Список данных фискальных регистраторов
       tags:
       - Fiscal Register Data
       operationId: get_rest_api_fiscalRegisterData
@@ -8349,7 +8349,7 @@ paths:
         status: confirmed
   /rest/api/fiscalRegisterData/{ID}:
     get:
-      summary: Get Fiscal Register Data By ID
+      summary: Данные фискального регистратора по id
       tags:
       - Fiscal Register Data
       operationId: get_rest_api_fiscalRegisterData_ID
@@ -8381,7 +8381,7 @@ paths:
         status: confirmed
   /rest/api/fiscalTaxSystems:
     get:
-      summary: Get All Fiscal Tax System
+      summary: Список систем налогообложения
       tags:
       - Fiscal Tax Systems
       operationId: get_rest_api_fiscalTaxSystems
@@ -8412,7 +8412,7 @@ paths:
         status: confirmed
   /rest/api/fiscalTaxSystems/{ID}:
     get:
-      summary: Get Fiscal Tax System By ID
+      summary: Система налогообложения по id
       tags:
       - Fiscal Tax Systems
       operationId: get_rest_api_fiscalTaxSystems_ID
@@ -8444,7 +8444,7 @@ paths:
         status: confirmed
   /rest/api/good:
     get:
-      summary: Good Get All
+      summary: Список товаров и услуг
       tags:
       - Good
       operationId: get_rest_api_good
@@ -8480,7 +8480,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Good Post
+      summary: Создать товар или услугу
       tags:
       - Good
       operationId: post_rest_api_good
@@ -8518,7 +8518,7 @@ paths:
         status: confirmed
   /rest/api/good/{ID}:
     get:
-      summary: Good Get By ID
+      summary: Товар или услуга по id
       tags:
       - Good
       operationId: get_rest_api_good_ID
@@ -8555,7 +8555,7 @@ paths:
         - extjs
         status: confirmed
     put:
-      summary: Good Put
+      summary: Изменить товар или услугу
       tags:
       - Good
       operationId: put_rest_api_good_ID
@@ -8597,7 +8597,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: Good Delete
+      summary: Удалить товар или услугу
       tags:
       - Good
       operationId: delete_rest_api_good_ID
@@ -8635,7 +8635,7 @@ paths:
         status: confirmed
   /rest/api/goodGroup/{id}:
     get:
-      summary: GoodGroup Get By ID
+      summary: Группа товаров по id
       tags:
       - GoodGroup
       operationId: get_rest_api_goodGroup_9
@@ -8677,7 +8677,7 @@ paths:
         status: confirmed
   /rest/api/goodSaleParam:
     get:
-      summary: GoodSaleParam Get By ID
+      summary: Список параметров продажи
       tags:
       - GoodSaleParam
       operationId: get_rest_api_goodSaleParam
@@ -8714,7 +8714,7 @@ paths:
         status: confirmed
   /rest/api/goodSaleParam/{ID}:
     put:
-      summary: Put GoodSaleParam
+      summary: Изменить параметр продажи
       tags:
       - GoodSaleParam
       operationId: put_rest_api_goodSaleParam_ID
@@ -8757,7 +8757,7 @@ paths:
         status: confirmed
   /rest/api/goodTag:
     get:
-      summary: Get All Good Tags
+      summary: Список комбинаций товаров
       tags:
       - GoodTag
       operationId: get_rest_api_goodTag
@@ -8800,7 +8800,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Create Good Tag
+      summary: Создать комбинацию товаров
       tags:
       - GoodTag
       operationId: post_rest_api_goodTag
@@ -8850,7 +8850,7 @@ paths:
         status: confirmed
   /rest/api/goodTag/{id}:
     get:
-      summary: Get Good Tag By Id
+      summary: Комбинация товаров по id
       tags:
       - GoodTag
       operationId: get_rest_api_goodTag_203
@@ -8894,7 +8894,7 @@ paths:
         - extjs
         status: confirmed
     put:
-      summary: Update Good Tag By Id
+      summary: Изменить комбинацию товаров
       tags:
       - GoodTag
       operationId: put_rest_api_goodTag_203
@@ -8951,7 +8951,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: Delete Good Tag
+      summary: Удалить комбинацию товаров
       tags:
       - GoodTag
       operationId: delete_rest_api_goodTag_203
@@ -8989,7 +8989,7 @@ paths:
         status: confirmed
   /rest/api/hospital:
     get:
-      summary: GET all hospital
+      summary: Список стационаров
       tags:
       - Hospital
       operationId: get_rest_api_hospital
@@ -9026,7 +9026,7 @@ paths:
         status: confirmed
   /rest/api/hospital/{ID}:
     get:
-      summary: GET one hospital
+      summary: Стационар по id
       tags:
       - Hospital
       operationId: get_rest_api_hospital_ID
@@ -9063,7 +9063,7 @@ paths:
         - extjs
         status: confirmed
     put:
-      summary: Update Hospital
+      summary: Изменить стационар
       tags:
       - Hospital
       operationId: put_rest_api_hospital_ID
@@ -9106,7 +9106,7 @@ paths:
         status: confirmed
   /rest/api/invoice:
     get:
-      summary: Invoice Get All
+      summary: Список счетов
       tags:
       - Invoice
       operationId: get_rest_api_invoice
@@ -9577,7 +9577,7 @@ paths:
         status: confirmed
   /rest/api/invoice/{ID}:
     get:
-      summary: Invoice Get By ID
+      summary: Счёт по id
       tags:
       - Invoice
       operationId: get_rest_api_invoice_ID
@@ -9615,7 +9615,7 @@ paths:
         status: confirmed
   /rest/api/invoiceDocument:
     get:
-      summary: InvoiceDocument Get All WithFilter
+      summary: Список строк счёта
       tags:
       - InvoiceDocument
       operationId: get_rest_api_invoiceDocument
@@ -9657,7 +9657,7 @@ paths:
         status: confirmed
   /rest/api/invoiceDocument/{ID}:
     get:
-      summary: InvoiceDocument Get By ID
+      summary: Строка счёта по id
       tags:
       - InvoiceDocument
       operationId: get_rest_api_invoiceDocument_ID
@@ -9695,7 +9695,7 @@ paths:
         status: confirmed
   /rest/api/medicalCards/laboratoryResults:
     get:
-      summary: Get laboratory results by client
+      summary: Лабораторные результаты клиента
       description: Returns active medical cards of the specified client only when a laboratory result has been recorded for
         the card. The HTML displayed as the laboratory result is returned in `data.medicalcards[].healing_process`.
       tags:
@@ -10079,7 +10079,7 @@ paths:
         status: confirmed
   /rest/api/payment:
     get:
-      summary: Get Payments By Invoice ID (Filter)
+      summary: Список оплат по счёту
       tags:
       - Payments
       operationId: get_rest_api_payment
@@ -10121,7 +10121,7 @@ paths:
         status: confirmed
   /rest/api/payment/{ID}:
     get:
-      summary: Get Payments By ID
+      summary: Оплата по id
       tags:
       - Payments
       operationId: get_rest_api_payment_ID
@@ -10159,7 +10159,7 @@ paths:
         status: confirmed
   /rest/api/pet:
     get:
-      summary: Get All Pets By Owner Id And Not Deleted
+      summary: Список питомцев владельца
       tags:
       - Pet
       operationId: get_rest_api_pet
@@ -10200,7 +10200,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Post Pet
+      summary: Создать питомца
       tags:
       - Pet
       operationId: post_rest_api_pet
@@ -10238,7 +10238,7 @@ paths:
         status: confirmed
   /rest/api/pet/{ID}:
     put:
-      summary: Put Pet
+      summary: Изменить питомца
       tags:
       - Pet
       operationId: put_rest_api_pet_ID
@@ -10281,7 +10281,7 @@ paths:
         status: confirmed
   /rest/api/pet/{id}:
     delete:
-      summary: Delete Pet
+      summary: Удалить питомца
       tags:
       - Pet
       operationId: delete_rest_api_pet_122
@@ -10318,7 +10318,7 @@ paths:
         - extjs
         status: confirmed
     get:
-      summary: Get Pet By ID
+      summary: Питомец по id
       tags:
       - Pet
       operationId: get_rest_api_pet_74
@@ -10360,7 +10360,7 @@ paths:
         status: confirmed
   /rest/api/petType:
     get:
-      summary: Get All PetTypes
+      summary: Список видов животных
       tags:
       - PetType
       operationId: get_rest_api_petType
@@ -10397,7 +10397,7 @@ paths:
         status: confirmed
   /rest/api/petType/{ID}:
     get:
-      summary: Get PetType By ID
+      summary: Вид животного по id
       tags:
       - PetType
       operationId: get_rest_api_petType_ID
@@ -10435,7 +10435,7 @@ paths:
         status: confirmed
   /rest/api/properties:
     get:
-      summary: Get All Properties By Filter
+      summary: Список настроек
       tags:
       - Properties
       operationId: get_rest_api_properties
@@ -10472,7 +10472,7 @@ paths:
         status: confirmed
   /rest/api/report-ai-job:
     post:
-      summary: Create Report AI Job
+      summary: Создать задачу отчёта
       tags:
       - Report AI Job
       operationId: post_rest_api_report_ai_job
@@ -10507,7 +10507,7 @@ paths:
         status: confirmed
   /rest/api/report-ai-job/{id}:
     get:
-      summary: Get Report AI Job By ID
+      summary: Задача отчёта по id
       tags:
       - Report AI Job
       operationId: get_rest_api_report_ai_job_id
@@ -10541,7 +10541,7 @@ paths:
         status: confirmed
   /rest/api/report-ai-job/{id}/confirm:
     post:
-      summary: Confirm Report AI Job Candidate
+      summary: Подтвердить кандидата задачи отчёта
       tags:
       - Report AI Job
       operationId: post_rest_api_report_ai_job_id_confirm
@@ -10581,7 +10581,7 @@ paths:
         status: confirmed
   /rest/api/report-ai-job/{id}/data:
     get:
-      summary: Get Report AI Job Data
+      summary: Данные задачи отчёта
       tags:
       - Report AI Job
       operationId: get_rest_api_report_ai_job_id_data
@@ -10615,7 +10615,7 @@ paths:
         status: confirmed
   /rest/api/report-ai-job/{id}/save:
     post:
-      summary: Save Report AI Job
+      summary: Сохранить задачу отчёта
       tags:
       - Report AI Job
       operationId: post_rest_api_report_ai_job_id_save
@@ -10655,7 +10655,7 @@ paths:
         status: confirmed
   /rest/api/report/StartReport:
     get:
-      summary: StartReportWithFilter
+      summary: Запустить отчёт
       tags:
       - Reports
       operationId: get_rest_api_report_StartReport
@@ -10697,7 +10697,7 @@ paths:
         status: openapi_only
   /rest/api/report/reportFile:
     get:
-      summary: GetURLReportResult
+      summary: Ссылка на файл отчёта
       tags:
       - Reports
       operationId: get_rest_api_report_reportFile
@@ -10733,7 +10733,7 @@ paths:
         status: openapi_only
   /rest/api/role:
     get:
-      summary: Get All Roles
+      summary: Список ролей
       tags:
       - Role
       operationId: get_rest_api_role
@@ -10770,7 +10770,7 @@ paths:
         status: confirmed
   /rest/api/role/{id}:
     get:
-      summary: Get Role By ID
+      summary: Роль по id
       tags:
       - Role
       operationId: get_rest_api_role_2
@@ -10812,7 +10812,7 @@ paths:
         status: confirmed
   /rest/api/stores/RestOfGoodInWarehouse:
     get:
-      summary: GetQuantityGood
+      summary: Остаток товара на складе
       tags:
       - Store
       operationId: get_rest_api_stores_RestOfGoodInWarehouse
@@ -10854,7 +10854,7 @@ paths:
         status: openapi_only
   /rest/api/street:
     get:
-      summary: Get All Streets
+      summary: Список улиц
       tags:
       - Streets
       operationId: get_rest_api_street
@@ -10890,7 +10890,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Post Street
+      summary: Создать улицу
       tags:
       - Streets
       operationId: post_rest_api_street
@@ -10928,7 +10928,7 @@ paths:
         status: confirmed
   /rest/api/street/{ID}:
     put:
-      summary: Put Street
+      summary: Изменить улицу
       tags:
       - Streets
       operationId: put_rest_api_street_ID
@@ -10970,7 +10970,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: Delete Street
+      summary: Удалить улицу
       tags:
       - Streets
       operationId: delete_rest_api_street_ID
@@ -11008,7 +11008,7 @@ paths:
         status: confirmed
   /rest/api/timesheet:
     get:
-      summary: Get All TimeSheets
+      summary: Список графиков
       tags:
       - Calendar
       operationId: get_rest_api_timesheet
@@ -11045,7 +11045,7 @@ paths:
         status: confirmed
   /rest/api/timesheet/{ID}:
     get:
-      summary: Get TimeSheets ById
+      summary: График по id
       tags:
       - Calendar
       operationId: get_rest_api_timesheet_ID
@@ -11083,7 +11083,7 @@ paths:
         status: confirmed
   /rest/api/unit:
     get:
-      summary: Get All Units
+      summary: Список единиц измерения
       tags:
       - Unit
       operationId: get_rest_api_unit
@@ -11120,7 +11120,7 @@ paths:
         status: confirmed
   /rest/api/unit/{id}:
     get:
-      summary: Get Unit By ID
+      summary: Единица измерения по id
       tags:
       - Unit
       operationId: get_rest_api_unit_1
@@ -11162,7 +11162,7 @@ paths:
         status: confirmed
   /rest/api/user:
     get:
-      summary: Get All Users
+      summary: Список пользователей
       tags:
       - User
       operationId: get_rest_api_user
@@ -11236,7 +11236,7 @@ paths:
         status: openapi_only
   /rest/api/user/{ID}:
     get:
-      summary: Get User By ID
+      summary: Пользователь по id
       tags:
       - User
       operationId: get_rest_api_user_ID
@@ -11273,7 +11273,7 @@ paths:
         - extjs
         status: confirmed
     put:
-      summary: User editing
+      summary: Изменить пользователя
       tags:
       - User
       operationId: put_rest_api_user_ID
@@ -11474,7 +11474,7 @@ paths:
         status: confirmed
   /rest/api/userPosition:
     get:
-      summary: Get All UserPositions
+      summary: Список должностей
       tags:
       - User Positons
       operationId: get_rest_api_userPosition
@@ -11510,7 +11510,7 @@ paths:
         - extjs
         status: confirmed
     post:
-      summary: Post UserPosition
+      summary: Создать должность
       tags:
       - User Positons
       operationId: post_rest_api_userPosition
@@ -11548,7 +11548,7 @@ paths:
         status: confirmed
   /rest/api/userPosition/{ID}:
     get:
-      summary: Get UserPosition By ID
+      summary: Должность по id
       tags:
       - User Positons
       operationId: get_rest_api_userPosition_ID
@@ -11585,7 +11585,7 @@ paths:
         - extjs
         status: confirmed
     put:
-      summary: Update UserPosition
+      summary: Изменить должность
       tags:
       - User Positons
       operationId: put_rest_api_userPosition_ID
@@ -11627,7 +11627,7 @@ paths:
         - extjs
         status: confirmed
     delete:
-      summary: Delete UserPosition
+      summary: Удалить должность
       tags:
       - User Positons
       operationId: delete_rest_api_userPosition_ID
@@ -12051,7 +12051,7 @@ paths:
         - extjs
         status: confirmed
 x-reconciliation:
-  generatedAt: '2026-11-12T13:40:56Z'
+  generatedAt: '2026-11-12T15:44:57Z'
   sources:
     extjs: configured
     dbDumpProvided: false

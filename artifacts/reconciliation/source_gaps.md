@@ -1,6 +1,6 @@
 # Vetmanager OpenAPI reconciliation
 
-Generated: 2026-11-12T13:40:56Z
+Generated: 2026-11-12T15:44:57Z
 
 ## Source counts
 
