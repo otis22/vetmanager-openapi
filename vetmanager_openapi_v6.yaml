@@ -6054,9 +6054,9 @@ paths:
         status: openapi_only
   /rest/api/VmLink/personalAccountLinkByClientId/{clientId}:
     get:
-      summary: Get By ID
+      summary: Personal account link by client id
       tags:
-      - General
+      - VM-Link
       operationId: get_rest_api_VmLink_personalAccountLinkByClientId_1
       parameters:
       - name: clientId
@@ -6089,9 +6089,9 @@ paths:
         status: openapi_only
   /rest/api/VmLink/personalAccountLinkByPhone/{phone}:
     get:
-      summary: Get By Phone
+      summary: Personal account link by phone
       tags:
-      - Get Link to Owner Cabinet (VM-Link)
+      - VM-Link
       operationId: get_rest_api_VmLink_personalAccountLinkByPhone_3322122
       parameters:
       - name: phone
@@ -6284,7 +6284,7 @@ paths:
     delete:
       summary: DeleteAdmission
       tags:
-      - Calendar
+      - Admission
       operationId: delete_rest_api_admission_ID
       parameters:
       - name: ID
@@ -8320,7 +8320,7 @@ paths:
     get:
       summary: Get All Fiscal Register Data
       tags:
-      - FiscalRegistrator
+      - Fiscal Register Data
       operationId: get_rest_api_fiscalRegisterData
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -8351,7 +8351,7 @@ paths:
     get:
       summary: Get Fiscal Register Data By ID
       tags:
-      - FiscalRegistrator
+      - Fiscal Register Data
       operationId: get_rest_api_fiscalRegisterData_ID
       parameters:
       - name: ID
@@ -8383,7 +8383,7 @@ paths:
     get:
       summary: Get All Fiscal Tax System
       tags:
-      - FiscalRegistrator
+      - Fiscal Tax Systems
       operationId: get_rest_api_fiscalTaxSystems
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -8414,7 +8414,7 @@ paths:
     get:
       summary: Get Fiscal Tax System By ID
       tags:
-      - FiscalRegistrator
+      - Fiscal Tax Systems
       operationId: get_rest_api_fiscalTaxSystems_ID
       parameters:
       - name: ID
@@ -9617,7 +9617,7 @@ paths:
     get:
       summary: InvoiceDocument Get All WithFilter
       tags:
-      - General
+      - InvoiceDocument
       operationId: get_rest_api_invoiceDocument
       parameters:
       - name: filter
@@ -11162,9 +11162,9 @@ paths:
         status: confirmed
   /rest/api/user:
     get:
-      summary: Use Token
+      summary: Get All Users
       tags:
-      - 'Auth #3 (by User Login & Password -> Token)'
+      - User
       operationId: get_rest_api_user
       parameters:
       - $ref: '#/components/parameters/limit'
@@ -11236,9 +11236,9 @@ paths:
         status: openapi_only
   /rest/api/user/{ID}:
     get:
-      summary: Get All Webhooks
+      summary: Get User By ID
       tags:
-      - WebHook
+      - User
       operationId: get_rest_api_user_ID
       parameters:
       - name: ID
@@ -12050,45 +12050,13 @@ paths:
         - openapi
         - extjs
         status: confirmed
-  /token_auth.php:
-    post:
-      summary: Get Token (by User Login & Password)
-      tags:
-      - 'Auth #3 (by User Login & Password -> Token)'
-      operationId: post_token_auth_php
-      parameters: []
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    additionalProperties: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      x-reconciliation:
-        presentIn:
-        - openapi
-        status: openapi_only
 x-reconciliation:
   generatedAt: '2026-11-12T13:40:56Z'
   sources:
     extjs: configured
     dbDumpProvided: false
   counts:
-    openapi_only: 43
+    openapi_only: 42
     confirmed: 114
     extjs_only_candidate: 316
     intentionally_undocumented: 10

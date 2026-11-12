@@ -5637,19 +5637,6 @@
     "status": "extjs_only_candidate"
   },
   {
-    "key": "POST /token_auth.php",
-    "method": "POST",
-    "path": "/token_auth.php",
-    "openapi": true,
-    "openapi_summary": "Get Token (by User Login & Password)",
-    "openapi_source": "openapi",
-    "extjs": false,
-    "present_in": [
-      "openapi"
-    ],
-    "status": "openapi_only"
-  },
-  {
     "key": "PUT /rest/api/ComboManualItem/{id}",
     "method": "PUT",
     "path": "/rest/api/ComboManualItem/{id}",

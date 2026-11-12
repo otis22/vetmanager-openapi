@@ -1,12 +1,12 @@
 {
   "generated_at": "2026-11-12T13:40:56Z",
   "source_counts": {
-    "openapi_operations": 157,
+    "openapi_operations": 156,
     "extjs_route_candidates": 440,
     "db_nullable_tables": 0
   },
   "matrix_status_counts": {
-    "openapi_only": 43,
+    "openapi_only": 42,
     "confirmed": 114,
     "extjs_only_candidate": 316,
     "intentionally_undocumented": 10

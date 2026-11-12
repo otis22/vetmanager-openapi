@@ -4,7 +4,7 @@ Generated: 2026-11-12T13:40:56Z
 
 ## Source counts
 
-- openapi_operations: 157
+- openapi_operations: 156
 - extjs_route_candidates: 440
 - db_nullable_tables: 0
 
@@ -13,7 +13,7 @@ Generated: 2026-11-12T13:40:56Z
 - confirmed: 114
 - extjs_only_candidate: 316
 - intentionally_undocumented: 10
-- openapi_only: 43
+- openapi_only: 42
 
 ## ExtJS-only route candidates
 
@@ -209,7 +209,6 @@ Generated: 2026-11-12T13:40:56Z
 - `POST /rest/api/Suppliers`
 - `POST /rest/api/Unit`
 - `POST /rest/api/client/{id}`
-- `POST /token_auth.php`
 - `PUT /rest/api/ComboManualItem/{id}`
 - `PUT /rest/api/GoodGroup/{id}`
 - `PUT /rest/api/MedicalCards/{id}`
