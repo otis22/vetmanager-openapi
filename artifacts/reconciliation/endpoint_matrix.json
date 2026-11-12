@@ -184,14 +184,17 @@
     "key": "DELETE /rest/api/clientDiscountCard/{id}",
     "method": "DELETE",
     "path": "/rest/api/clientDiscountCard/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Удалить скидочную карту",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "ClientDiscountCardController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "DELETE /rest/api/clientPhone/{id}",
@@ -366,14 +369,17 @@
     "key": "DELETE /rest/api/failedHook/{id}",
     "method": "DELETE",
     "path": "/rest/api/failedHook/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Удалить запись ошибки доставки",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "FailedHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "DELETE /rest/api/fiscalRegister/{id}",
@@ -967,14 +973,17 @@
     "key": "DELETE /rest/api/webHook/{id}",
     "method": "DELETE",
     "path": "/rest/api/webHook/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Удалить вебхук",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "WebHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "DELETE /rest/api/{controller}",
@@ -1667,6 +1676,20 @@
     "status": "extjs_only_candidate"
   },
   {
+    "key": "GET /rest/api/client/client-resolve",
+    "method": "GET",
+    "path": "/rest/api/client/client-resolve",
+    "openapi": false,
+    "extjs": true,
+    "extjs_controller": "ClientController.php",
+    "extjs_source": "extjs_custom_rest",
+    "extjs_method_name": "doCustomRestGetClientResolve",
+    "present_in": [
+      "extjs"
+    ],
+    "status": "extjs_only_candidate"
+  },
+  {
     "key": "GET /rest/api/client/clients-match-data",
     "method": "GET",
     "path": "/rest/api/client/clients-match-data",
@@ -1714,27 +1737,33 @@
     "key": "GET /rest/api/clientDiscountCard",
     "method": "GET",
     "path": "/rest/api/clientDiscountCard",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Список скидочных карт",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "ClientDiscountCardController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "GET /rest/api/clientDiscountCard/{id}",
     "method": "GET",
     "path": "/rest/api/clientDiscountCard/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Скидочная карта по id",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "ClientDiscountCardController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "GET /rest/api/clientPhone",
@@ -2078,53 +2107,65 @@
     "key": "GET /rest/api/documentNumber",
     "method": "GET",
     "path": "/rest/api/documentNumber",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Список номеров документов",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "DocumentNumberController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "GET /rest/api/documentNumber/{id}",
     "method": "GET",
     "path": "/rest/api/documentNumber/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Номер документа по id",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "DocumentNumberController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "GET /rest/api/failedHook",
     "method": "GET",
     "path": "/rest/api/failedHook",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Список ошибок доставки вебхуков",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "FailedHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "GET /rest/api/failedHook/{id}",
     "method": "GET",
     "path": "/rest/api/failedHook/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Ошибка доставки по id",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "FailedHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "GET /rest/api/fiscalRegister",
@@ -2696,6 +2737,19 @@
     "status": "extjs_only_candidate"
   },
   {
+    "key": "GET /rest/api/medicalCards/laboratoryResults",
+    "method": "GET",
+    "path": "/rest/api/medicalCards/laboratoryResults",
+    "openapi": true,
+    "openapi_summary": "Get laboratory results by client",
+    "openapi_source": "openapi",
+    "extjs": false,
+    "present_in": [
+      "openapi"
+    ],
+    "status": "openapi_only"
+  },
+  {
     "key": "GET /rest/api/medicalCards/medcards-text-templates",
     "method": "GET",
     "path": "/rest/api/medicalCards/medcards-text-templates",
@@ -2782,7 +2836,7 @@
     "method": "GET",
     "path": "/rest/api/messages/reports",
     "openapi": true,
-    "openapi_summary": "Message Get Reports",
+    "openapi_summary": "Отчет по кампании",
     "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "MessagesController.php",
@@ -3693,7 +3747,7 @@
     "method": "GET",
     "path": "/rest/api/user/anonymousList",
     "openapi": true,
-    "openapi_summary": "User Get Anonymous",
+    "openapi_summary": "Активные пользователи без персональных данных",
     "openapi_source": "openapi",
     "extjs": false,
     "present_in": [
@@ -4037,27 +4091,33 @@
     "key": "GET /rest/api/webHook",
     "method": "GET",
     "path": "/rest/api/webHook",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Список вебхуков",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "WebHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "GET /rest/api/webHook/{id}",
     "method": "GET",
     "path": "/rest/api/webHook/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Вебхук по id",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "WebHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/ComboManualItem",
@@ -4348,14 +4408,17 @@
     "key": "POST /rest/api/clientDiscountCard",
     "method": "POST",
     "path": "/rest/api/clientDiscountCard",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Создать скидочную карту",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "ClientDiscountCardController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/clientPhone",
@@ -4530,14 +4593,17 @@
     "key": "POST /rest/api/failedHook",
     "method": "POST",
     "path": "/rest/api/failedHook",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Создать запись ошибки доставки",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "FailedHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/fiscalRegister",
@@ -4880,7 +4946,7 @@
     "method": "POST",
     "path": "/rest/api/messages/all",
     "openapi": true,
-    "openapi_summary": "Send to all",
+    "openapi_summary": "Сообщение всем активным пользователям",
     "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "MessagesController.php",
@@ -4897,7 +4963,7 @@
     "method": "POST",
     "path": "/rest/api/messages/roles",
     "openapi": true,
-    "openapi_summary": "Send by roles",
+    "openapi_summary": "Сообщение пользователям ролей",
     "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "MessagesController.php",
@@ -4914,7 +4980,7 @@
     "method": "POST",
     "path": "/rest/api/messages/users",
     "openapi": true,
-    "openapi_summary": "Send to concrete users",
+    "openapi_summary": "Сообщение выбранным пользователям",
     "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "MessagesController.php",
@@ -5406,14 +5472,17 @@
     "key": "POST /rest/api/userCalls",
     "method": "POST",
     "path": "/rest/api/userCalls",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Создать задачу (в разработке)",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "UserCallsController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/userCalls/exec-call",
@@ -5502,14 +5571,17 @@
     "key": "POST /rest/api/webHook",
     "method": "POST",
     "path": "/rest/api/webHook",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Создать вебхук",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "WebHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "POST /rest/api/{controller}",
@@ -5788,14 +5860,17 @@
     "key": "PUT /rest/api/clientDiscountCard/{id}",
     "method": "PUT",
     "path": "/rest/api/clientDiscountCard/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Изменить скидочную карту",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "ClientDiscountCardController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "PUT /rest/api/clientPhone/{id}",
@@ -5970,14 +6045,17 @@
     "key": "PUT /rest/api/failedHook/{id}",
     "method": "PUT",
     "path": "/rest/api/failedHook/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Изменить запись ошибки доставки",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "FailedHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "PUT /rest/api/fiscalRegister/{id}",
@@ -6580,14 +6658,17 @@
     "key": "PUT /rest/api/webHook/{id}",
     "method": "PUT",
     "path": "/rest/api/webHook/{id}",
-    "openapi": false,
+    "openapi": true,
+    "openapi_summary": "Изменить вебхук",
+    "openapi_source": "openapi",
     "extjs": true,
     "extjs_controller": "WebHookController.php",
     "extjs_source": "extjs_default_rest",
     "present_in": [
+      "openapi",
       "extjs"
     ],
-    "status": "extjs_only_candidate"
+    "status": "confirmed"
   },
   {
     "key": "PUT /rest/api/{controller}",

@@ -22,12 +22,12 @@ Useful links:
 Run the repository's bundled Swagger UI from the project root:
 
 ```bash
-python3 -m http.server 8080
+python3 -m http.server 8081
 ```
 
-Then open http://localhost:8080.
+Then open http://localhost:8081.
 
-This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as alphabetical tag order and GET → POST → PUT → DELETE operation sorting. If port 8080 is occupied by a previously started Docker container, stop it first or use another port, for example `python3 -m http.server 8081`.
+This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as alphabetical tag order and GET → POST → PUT → DELETE operation sorting. Port 8081 is used because Vetmanager already listens on 8080.
 
 ## Validate
 

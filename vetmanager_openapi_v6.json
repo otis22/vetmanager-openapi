@@ -7007,233 +7007,6 @@
         }
       }
     },
-    "/rest/api/medicalCards/laboratoryResults": {
-      "get": {
-        "summary": "Get laboratory results by client",
-        "description": "Returns active medical cards of the specified client only when a laboratory result has been recorded for the card. The HTML displayed as the laboratory result is returned in `data.medicalcards[].healing_process`.",
-        "tags": [
-          "Medical Cards"
-        ],
-        "operationId": "get_rest_api_medicalCards_laboratoryResults",
-        "parameters": [
-          {
-            "name": "client_id",
-            "in": "query",
-            "description": "Identifier of the client whose laboratory-result medical cards are requested.",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "example": 123
-          },
-          {
-            "$ref": "#/components/parameters/limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Laboratory-result medical cards.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "success",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "medicalcards"
-                      ],
-                      "properties": {
-                        "medicalcards": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "required": [
-                              "medical_card_id",
-                              "medical_card_status",
-                              "client_id",
-                              "pet_id",
-                              "healing_process"
-                            ],
-                            "properties": {
-                              "medical_card_id": {
-                                "type": "integer",
-                                "example": 48
-                              },
-                              "medical_card_status": {
-                                "type": "string",
-                                "enum": [
-                                  "active"
-                                ],
-                                "description": "The endpoint returns active medical cards only."
-                              },
-                              "date_edit": {
-                                "type": "string",
-                                "description": "Date and time when the medical card was last edited.",
-                                "example": "2026-10-28 15:39:32"
-                              },
-                              "diagnos": {
-                                "type": "string",
-                                "description": "JSON-encoded diagnoses from the medical card."
-                              },
-                              "diagnos_data": {
-                                "type": "array",
-                                "description": "Resolved diagnoses when the medical card contains diagnoses.",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "diagnos_id": {
-                                      "type": "integer"
-                                    },
-                                    "title": {
-                                      "type": "string"
-                                    }
-                                  }
-                                }
-                              },
-                              "doctor_id": {
-                                "type": "integer"
-                              },
-                              "client_id": {
-                                "type": "integer",
-                                "example": 123
-                              },
-                              "pet_id": {
-                                "type": "integer",
-                                "example": 14
-                              },
-                              "alias": {
-                                "type": "string",
-                                "description": "Pet name."
-                              },
-                              "birthday": {
-                                "type": "string",
-                                "nullable": true,
-                                "description": "Pet birth date."
-                              },
-                              "sex": {
-                                "type": "string",
-                                "nullable": true
-                              },
-                              "note": {
-                                "type": "string",
-                                "description": "Pet note."
-                              },
-                              "pet_type": {
-                                "type": "string",
-                                "nullable": true
-                              },
-                              "breed": {
-                                "type": "string",
-                                "nullable": true
-                              },
-                              "first_name": {
-                                "type": "string",
-                                "description": "Client first name."
-                              },
-                              "last_name": {
-                                "type": "string",
-                                "description": "Client last name."
-                              },
-                              "middle_name": {
-                                "type": "string",
-                                "nullable": true,
-                                "description": "Client middle name."
-                              },
-                              "phone": {
-                                "type": "string",
-                                "description": "Client contact phone selected from cell, home, or work phone."
-                              },
-                              "healing_process": {
-                                "type": "string",
-                                "description": "HTML content of the laboratory result.",
-                                "example": "<p>Laboratory result</p>"
-                              },
-                              "recomendation": {
-                                "type": "string",
-                                "description": "Medical-card recommendation. Field name is kept for API compatibility."
-                              },
-                              "weight": {
-                                "type": "number"
-                              },
-                              "temperature": {
-                                "type": "number"
-                              },
-                              "meet_result_id": {
-                                "type": "integer"
-                              },
-                              "admission_type": {
-                                "type": "integer"
-                              },
-                              "doctor_nickname": {
-                                "type": "string",
-                                "nullable": true
-                              },
-                              "doctor_first_name": {
-                                "type": "string",
-                                "nullable": true
-                              },
-                              "doctor_last_name": {
-                                "type": "string",
-                                "nullable": true
-                              },
-                              "doctor_middle_name": {
-                                "type": "string",
-                                "nullable": true
-                              },
-                              "editable": {
-                                "type": "integer",
-                                "enum": [
-                                  0,
-                                  1
-                                ],
-                                "description": "Whether the medical card can be edited."
-                              },
-                              "meet_result_title": {
-                                "type": "string",
-                                "description": "Display name for meet_result_id."
-                              },
-                              "admission_type_title": {
-                                "type": "string",
-                                "description": "Display name for admission_type."
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "REST API is disabled or the API key is invalid."
-          },
-          "500": {
-            "description": "The required client_id parameter is missing or invalid."
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi"
-          ],
-          "status": "openapi_only"
-        }
-      }
-    },
     "/rest/api/MedicalCards/Vaccinations": {
       "get": {
         "summary": "Get Vaccinations By Pet",
@@ -10213,6 +9986,562 @@
         }
       }
     },
+    "/rest/api/clientDiscountCard": {
+      "get": {
+        "summary": "Список скидочных карт",
+        "description": "Возвращает карты client_discount_card. В каждой карте вложен клиент. Параметры limit, offset, sort и filter работают как у остальных списков.",
+        "tags": [
+          "ClientDiscountCard"
+        ],
+        "operationId": "get_rest_api_clientDiscountCard",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список карт.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Records Retrieved Successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "clientDiscountCard"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "clientDiscountCard": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/clientDiscountCard"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Records Retrieved Successfully",
+                  "data": {
+                    "totalCount": 1,
+                    "clientDiscountCard": [
+                      {
+                        "id": 1,
+                        "number": "123456",
+                        "create_date": "2014-10-31 14:28:14",
+                        "client_id": 4,
+                        "card_type_id": 1,
+                        "is_default": 1,
+                        "end_date": null,
+                        "pet_id": 0,
+                        "start_date": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      },
+      "post": {
+        "summary": "Создать скидочную карту",
+        "description": "Создает карту. Обязательны number, client_id, pet_id и существующий card_type_id. Без number, client_id или pet_id ответ 406. Без card_type_id или с неизвестным типом ответ 500 из-за внешнего ключа. В ответе создания нет вложенного клиента, id приходит строкой, create_date равен null.",
+        "tags": [
+          "ClientDiscountCard"
+        ],
+        "operationId": "post_rest_api_clientDiscountCard",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/clientDiscountCardWrite"
+              },
+              "example": {
+                "number": "openapi-probe-card",
+                "client_id": 4,
+                "pet_id": 0,
+                "card_type_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Карта создана.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record(s) Created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "clientDiscountCard"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "clientDiscountCard": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/clientDiscountCard"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Record(s) Created",
+                  "data": {
+                    "totalCount": 1,
+                    "clientDiscountCard": [
+                      {
+                        "number": "openapi-probe-card",
+                        "is_default": 0,
+                        "pet_id": 0,
+                        "client_id": 4,
+                        "card_type_id": 1,
+                        "id": "3",
+                        "create_date": null,
+                        "end_date": null,
+                        "start_date": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Не переданы number, client_id или pet_id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "Model could not be saved"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "card_type_id не передан или такого типа карты нет.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "CDbCommand не удалось исполнить SQL-запрос: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`one`.`client_discount_card`, CONSTRAINT `fk_client_discount_card_type_id` FOREIGN KEY (`card_type_id`) REFERENCES `discount_card_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)"
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/clientDiscountCard/{ID}": {
+      "get": {
+        "summary": "Скидочная карта по id",
+        "description": "Возвращает одну карту объектом, с вложенным клиентом. Если записи нет, код все равно 200, totalCount равен 0, а clientDiscountCard — пустой массив.",
+        "tags": [
+          "ClientDiscountCard"
+        ],
+        "operationId": "get_rest_api_clientDiscountCard_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Карта найдена либо список пуст.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record Retrieved Successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "clientDiscountCard"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer"
+                        },
+                        "clientDiscountCard": {
+                          "oneOf": [
+                            {
+                              "$ref": "#/components/schemas/clientDiscountCard"
+                            },
+                            {
+                              "type": "array",
+                              "maxItems": 0
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "found": {
+                    "summary": "Карта найдена",
+                    "value": {
+                      "success": true,
+                      "message": "Record Retrieved Successfully",
+                      "data": {
+                        "totalCount": 1,
+                        "clientDiscountCard": {
+                          "id": 1,
+                          "number": "123456",
+                          "create_date": "2014-10-31 14:28:14",
+                          "client_id": 4,
+                          "card_type_id": 1,
+                          "is_default": 1,
+                          "end_date": null,
+                          "pet_id": 0,
+                          "start_date": null
+                        }
+                      }
+                    }
+                  },
+                  "missing": {
+                    "summary": "Карты нет",
+                    "value": {
+                      "success": true,
+                      "message": "Record Retrieved Successfully",
+                      "data": {
+                        "totalCount": 0,
+                        "clientDiscountCard": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      },
+      "put": {
+        "summary": "Изменить скидочную карту",
+        "description": "Обновляет переданные поля. В ответе карта объектом и с вложенным клиентом.",
+        "tags": [
+          "ClientDiscountCard"
+        ],
+        "operationId": "put_rest_api_clientDiscountCard_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/clientDiscountCardUpdate"
+              },
+              "example": {
+                "is_default": 0,
+                "end_date": "2030-01-01"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Карта обновлена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record Updated"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "clientDiscountCard"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "clientDiscountCard": {
+                          "$ref": "#/components/schemas/clientDiscountCard"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Record Updated",
+                  "data": {
+                    "totalCount": 1,
+                    "clientDiscountCard": {
+                      "id": 3,
+                      "number": "openapi-probe-card",
+                      "create_date": "2026-11-12 14:56:32",
+                      "client_id": 4,
+                      "card_type_id": 1,
+                      "is_default": 0,
+                      "end_date": "2030-01-01",
+                      "pet_id": 0,
+                      "start_date": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Карта не найдена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "Record not found"
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      },
+      "delete": {
+        "summary": "Удалить скидочную карту",
+        "tags": [
+          "ClientDiscountCard"
+        ],
+        "operationId": "delete_rest_api_clientDiscountCard_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Карта удалена. id в ответе — строка.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record Deleted"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "3"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Record Deleted",
+                  "data": {
+                    "id": "3"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Карта не найдена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "Record not found"
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
     "/rest/api/clinics": {
       "get": {
         "summary": "Get All Clinics",
@@ -10447,6 +10776,755 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/documentNumber": {
+      "get": {
+        "summary": "Список номеров документов",
+        "description": "Возвращает записи document_number.",
+        "tags": [
+          "DocumentNumber"
+        ],
+        "operationId": "get_rest_api_documentNumber",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список номеров.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Records Retrieved Successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "documentNumber"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "documentNumber": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/documentNumber"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Records Retrieved Successfully",
+                  "data": {
+                    "totalCount": 1,
+                    "documentNumber": [
+                      {
+                        "id": 1,
+                        "document_type": "invoice",
+                        "document_id": 1,
+                        "document_number": "1",
+                        "number_mask": "{d}",
+                        "number_clear": 1,
+                        "clinic_id": 1,
+                        "unique_crutch": 1
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/documentNumber/{ID}": {
+      "get": {
+        "summary": "Номер документа по id",
+        "description": "Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а documentNumber — пустой массив.",
+        "tags": [
+          "DocumentNumber"
+        ],
+        "operationId": "get_rest_api_documentNumber_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Запись найдена либо список пуст.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record Retrieved Successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "documentNumber"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer"
+                        },
+                        "documentNumber": {
+                          "oneOf": [
+                            {
+                              "$ref": "#/components/schemas/documentNumber"
+                            },
+                            {
+                              "type": "array",
+                              "maxItems": 0
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "found": {
+                    "summary": "Запись найдена",
+                    "value": {
+                      "success": true,
+                      "message": "Record Retrieved Successfully",
+                      "data": {
+                        "totalCount": 1,
+                        "documentNumber": {
+                          "id": 1,
+                          "document_type": "invoice",
+                          "document_id": 1,
+                          "document_number": "1",
+                          "number_mask": "{d}",
+                          "number_clear": 1,
+                          "clinic_id": 1,
+                          "unique_crutch": 1
+                        }
+                      }
+                    }
+                  },
+                  "missing": {
+                    "summary": "Записи нет",
+                    "value": {
+                      "success": true,
+                      "message": "Record Retrieved Successfully",
+                      "data": {
+                        "totalCount": 0,
+                        "documentNumber": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/failedHook": {
+      "get": {
+        "summary": "Список ошибок доставки вебхуков",
+        "description": "Возвращает записи failed_hook. Параметры limit, offset, sort и filter работают как у остальных списков.",
+        "tags": [
+          "FailedHook"
+        ],
+        "operationId": "get_rest_api_failedHook",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список ошибок доставки.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Records Retrieved Successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "failedHook"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "failedHook": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/failedHook"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Records Retrieved Successfully",
+                  "data": {
+                    "totalCount": 1,
+                    "failedHook": [
+                      {
+                        "id": 3,
+                        "create_date": "2026-11-12 16:06:00",
+                        "hook_data": "name=invoiceAdd",
+                        "hook_url": "https://example.invalid/openapi-probe",
+                        "error_message": "probe",
+                        "hook_name": "invoiceAdd",
+                        "deactivated_at": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      },
+      "post": {
+        "summary": "Создать запись ошибки доставки",
+        "description": "Создает строку failed_hook. Адрес длиннее 300 символов отвечает 406. В ответе запись массивом, id приходит строкой.",
+        "tags": [
+          "FailedHook"
+        ],
+        "operationId": "post_rest_api_failedHook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/failedHookWrite"
+              },
+              "example": {
+                "hook_url": "https://example.invalid/openapi-probe",
+                "hook_name": "invoiceAdd",
+                "hook_data": "name=invoiceAdd",
+                "error_message": "probe",
+                "create_date": "2026-11-12 16:06:00"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Запись создана.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record(s) Created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "failedHook"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "failedHook": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/failedHook"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Record(s) Created",
+                  "data": {
+                    "totalCount": 1,
+                    "failedHook": [
+                      {
+                        "hook_name": "invoiceAdd",
+                        "hook_url": "https://example.invalid/openapi-probe",
+                        "hook_data": "name=invoiceAdd",
+                        "error_message": "probe",
+                        "create_date": "2026-11-12 16:06:00",
+                        "id": "3",
+                        "deactivated_at": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Поле не входит в модель или не проходит проверку.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "Model could not be saved"
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/failedHook/{ID}": {
+      "get": {
+        "summary": "Ошибка доставки по id",
+        "description": "Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а failedHook — пустой массив.",
+        "tags": [
+          "FailedHook"
+        ],
+        "operationId": "get_rest_api_failedHook_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Запись найдена либо список пуст.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record Retrieved Successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "failedHook"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer"
+                        },
+                        "failedHook": {
+                          "oneOf": [
+                            {
+                              "$ref": "#/components/schemas/failedHook"
+                            },
+                            {
+                              "type": "array",
+                              "maxItems": 0
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "found": {
+                    "summary": "Запись найдена",
+                    "value": {
+                      "success": true,
+                      "message": "Record Retrieved Successfully",
+                      "data": {
+                        "totalCount": 1,
+                        "failedHook": {
+                          "id": 3,
+                          "create_date": "2026-11-12 16:06:00",
+                          "hook_data": "name=invoiceAdd",
+                          "hook_url": "https://example.invalid/openapi-probe",
+                          "error_message": "probe",
+                          "hook_name": "invoiceAdd",
+                          "deactivated_at": null
+                        }
+                      }
+                    }
+                  },
+                  "missing": {
+                    "summary": "Записи нет",
+                    "value": {
+                      "success": true,
+                      "message": "Record Retrieved Successfully",
+                      "data": {
+                        "totalCount": 0,
+                        "failedHook": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      },
+      "put": {
+        "summary": "Изменить запись ошибки доставки",
+        "description": "Обновляет переданные поля. В ответе запись объектом.",
+        "tags": [
+          "FailedHook"
+        ],
+        "operationId": "put_rest_api_failedHook_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/failedHookWrite"
+              },
+              "example": {
+                "error_message": "probe-updated",
+                "deactivated_at": "2026-11-12 16:07:00"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Запись обновлена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record Updated"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "totalCount",
+                        "failedHook"
+                      ],
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "failedHook": {
+                          "$ref": "#/components/schemas/failedHook"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Record Updated",
+                  "data": {
+                    "totalCount": 1,
+                    "failedHook": {
+                      "id": 3,
+                      "create_date": "2026-11-12 16:06:00",
+                      "hook_data": "name=invoiceAdd",
+                      "hook_url": "https://example.invalid/openapi-probe",
+                      "error_message": "probe-updated",
+                      "hook_name": "invoiceAdd",
+                      "deactivated_at": "2026-11-12 16:07:00"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запись не найдена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "Record not found"
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      },
+      "delete": {
+        "summary": "Удалить запись ошибки доставки",
+        "tags": [
+          "FailedHook"
+        ],
+        "operationId": "delete_rest_api_failedHook_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Запись удалена. id в ответе — строка.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record Deleted"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "3"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "Record Deleted",
+                  "data": {
+                    "id": "3"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запись не найдена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "Record not found"
                 }
               }
             }
@@ -12416,6 +13494,233 @@
             "extjs"
           ],
           "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/medicalCards/laboratoryResults": {
+      "get": {
+        "summary": "Get laboratory results by client",
+        "description": "Returns active medical cards of the specified client only when a laboratory result has been recorded for the card. The HTML displayed as the laboratory result is returned in `data.medicalcards[].healing_process`.",
+        "tags": [
+          "Medical Cards"
+        ],
+        "operationId": "get_rest_api_medicalCards_laboratoryResults",
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "Identifier of the client whose laboratory-result medical cards are requested.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 123
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Laboratory-result medical cards.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "medicalcards"
+                      ],
+                      "properties": {
+                        "medicalcards": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "medical_card_id",
+                              "medical_card_status",
+                              "client_id",
+                              "pet_id",
+                              "healing_process"
+                            ],
+                            "properties": {
+                              "medical_card_id": {
+                                "type": "integer",
+                                "example": 48
+                              },
+                              "medical_card_status": {
+                                "type": "string",
+                                "enum": [
+                                  "active"
+                                ],
+                                "description": "The endpoint returns active medical cards only."
+                              },
+                              "date_edit": {
+                                "type": "string",
+                                "description": "Date and time when the medical card was last edited.",
+                                "example": "2026-10-28 15:39:32"
+                              },
+                              "diagnos": {
+                                "type": "string",
+                                "description": "JSON-encoded diagnoses from the medical card."
+                              },
+                              "diagnos_data": {
+                                "type": "array",
+                                "description": "Resolved diagnoses when the medical card contains diagnoses.",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "diagnos_id": {
+                                      "type": "integer"
+                                    },
+                                    "title": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "doctor_id": {
+                                "type": "integer"
+                              },
+                              "client_id": {
+                                "type": "integer",
+                                "example": 123
+                              },
+                              "pet_id": {
+                                "type": "integer",
+                                "example": 14
+                              },
+                              "alias": {
+                                "type": "string",
+                                "description": "Pet name."
+                              },
+                              "birthday": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Pet birth date."
+                              },
+                              "sex": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "note": {
+                                "type": "string",
+                                "description": "Pet note."
+                              },
+                              "pet_type": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "breed": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "first_name": {
+                                "type": "string",
+                                "description": "Client first name."
+                              },
+                              "last_name": {
+                                "type": "string",
+                                "description": "Client last name."
+                              },
+                              "middle_name": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Client middle name."
+                              },
+                              "phone": {
+                                "type": "string",
+                                "description": "Client contact phone selected from cell, home, or work phone."
+                              },
+                              "healing_process": {
+                                "type": "string",
+                                "description": "HTML content of the laboratory result.",
+                                "example": "<p>Laboratory result</p>"
+                              },
+                              "recomendation": {
+                                "type": "string",
+                                "description": "Medical-card recommendation. Field name is kept for API compatibility."
+                              },
+                              "weight": {
+                                "type": "number"
+                              },
+                              "temperature": {
+                                "type": "number"
+                              },
+                              "meet_result_id": {
+                                "type": "integer"
+                              },
+                              "admission_type": {
+                                "type": "integer"
+                              },
+                              "doctor_nickname": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "doctor_first_name": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "doctor_last_name": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "doctor_middle_name": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "editable": {
+                                "type": "integer",
+                                "enum": [
+                                  0,
+                                  1
+                                ],
+                                "description": "Whether the medical card can be edited."
+                              },
+                              "meet_result_title": {
+                                "type": "string",
+                                "description": "Display name for meet_result_id."
+                              },
+                              "admission_type_title": {
+                                "type": "string",
+                                "description": "Display name for admission_type."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "REST API is disabled or the API key is invalid."
+          },
+          "500": {
+            "description": "The required client_id parameter is missing or invalid."
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi"
+          ],
+          "status": "openapi_only"
         }
       }
     },
@@ -14763,6 +16068,220 @@
         }
       }
     },
+    "/rest/api/userCalls": {
+      "post": {
+        "tags": [
+          "UserCalls"
+        ],
+        "operationId": "createUserCall",
+        "summary": "Создать задачу (в разработке)",
+        "description": "Создаёт одну запись по общим с формой задач правилам. Принимает одиночный объект JSON или поля application/x-www-form-urlencoded; пакетное создание не поддерживается. Неизвестные поля и системные id, status, create_date, executed_user, exec_note, relations запрещены и возвращают 406. Сервер задаёт status=save и текущее время create_date; после сохранения вызывает FastCallingAdd и LogEntity. Журнал использует стандартный контекст аутентификации REST; creator_id является автором записи, а не подменой пользователя сессии. Требует действующий API-ключ и включённый REST API.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/userCallsCreate"
+              },
+              "examples": {
+                "taskOnUser": {
+                  "value": {
+                    "type": "task",
+                    "dt": "2028-02-29",
+                    "pet_id": 1,
+                    "creator_id": 1,
+                    "user_id": 1,
+                    "note": "Проверить результаты обследования"
+                  }
+                },
+                "callOnPosition": {
+                  "value": {
+                    "type": "call",
+                    "dt": "2028-02-29",
+                    "pet_id": 1,
+                    "creator_id": 1,
+                    "position_id": 1,
+                    "clinic_id": 0,
+                    "note": "Позвонить владельцу"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/userCallsCreate"
+              },
+              "examples": {
+                "taskOnUser": {
+                  "value": {
+                    "type": "task",
+                    "dt": "2028-02-29",
+                    "pet_id": 1,
+                    "creator_id": 1,
+                    "user_id": 1,
+                    "note": "Проверить результаты обследования"
+                  }
+                },
+                "callOnPosition": {
+                  "value": {
+                    "type": "call",
+                    "dt": "2028-02-29",
+                    "pet_id": 1,
+                    "creator_id": 1,
+                    "position_id": 1,
+                    "clinic_id": 0,
+                    "note": "Позвонить владельцу"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Создана одна запись.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Record(s) Created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalCount": {
+                          "type": "integer",
+                          "enum": [
+                            1
+                          ]
+                        },
+                        "userCalls": {
+                          "type": "array",
+                          "minItems": 1,
+                          "maxItems": 1,
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "call",
+                                  "task"
+                                ],
+                                "description": "Тип записи: звонок или задача."
+                              },
+                              "dt": {
+                                "type": "string",
+                                "example": "2028-02-29 00:00:00",
+                                "description": "Срок возвращается в формате YYYY-MM-DD HH:MM:SS; время равно 00:00:00 и не является поддержкой срока с точным временем."
+                              },
+                              "pet_id": {
+                                "type": "string",
+                                "description": "Числовое значение в формате стандартного REST-ответа."
+                              },
+                              "creator_id": {
+                                "type": "string",
+                                "description": "Числовое значение в формате стандартного REST-ответа."
+                              },
+                              "user_id": {
+                                "type": "string",
+                                "description": "Числовое значение в формате стандартного REST-ответа."
+                              },
+                              "position_id": {
+                                "type": "string",
+                                "description": "Числовое значение в формате стандартного REST-ответа."
+                              },
+                              "note": {
+                                "type": "string",
+                                "maxLength": 250,
+                                "description": "Обязательно и не состоит из пробелов, если ticket_add_required_description включён в клинике API-ключа (по умолчанию включён). При выключенной настройке может отсутствовать; сохраняется пустая строка."
+                              },
+                              "clinic_id": {
+                                "type": "string",
+                                "description": "Числовое значение в формате стандартного REST-ответа."
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "save"
+                                ]
+                              },
+                              "create_date": {
+                                "type": "string",
+                                "description": "Текущее серверное время создания в формате YYYY-MM-DD HH:MM:SS."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Неверные поля, формат, обязательность, исполнитель или несуществующие ссылочные ID. Запись не создаётся.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "error",
+                    "message"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "enum": [
+                        false
+                      ]
+                    },
+                    "error": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "dt: Укажите корректную дату без времени"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Ошибка аутентификации или доступа к REST API."
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
     "/rest/api/userPosition": {
       "get": {
         "summary": "Get All UserPositions",
@@ -15053,1034 +16572,6 @@
                         "totalCount": {
                           "type": "integer"
                         }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      }
-    },
-    "/token_auth.php": {
-      "post": {
-        "summary": "Get Token (by User Login & Password)",
-        "tags": [
-          "Auth #3 (by User Login & Password -> Token)"
-        ],
-        "operationId": "post_token_auth_php",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Успешный ответ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": true
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": true
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi"
-          ],
-          "status": "openapi_only"
-        }
-      }
-    },
-    "/rest/api/userCalls": {
-      "post": {
-        "tags": [
-          "UserCalls"
-        ],
-        "operationId": "createUserCall",
-        "summary": "Создать задачу (в разработке)",
-        "description": "Создаёт одну запись по общим с формой задач правилам. Принимает одиночный объект JSON или поля application/x-www-form-urlencoded; пакетное создание не поддерживается. Неизвестные поля и системные id, status, create_date, executed_user, exec_note, relations запрещены и возвращают 406. Сервер задаёт status=save и текущее время create_date; после сохранения вызывает FastCallingAdd и LogEntity. Журнал использует стандартный контекст аутентификации REST; creator_id является автором записи, а не подменой пользователя сессии. Требует действующий API-ключ и включённый REST API.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/userCallsCreate"
-              },
-              "examples": {
-                "taskOnUser": {
-                  "value": {
-                    "type": "task",
-                    "dt": "2028-02-29",
-                    "pet_id": 1,
-                    "creator_id": 1,
-                    "user_id": 1,
-                    "note": "Проверить результаты обследования"
-                  }
-                },
-                "callOnPosition": {
-                  "value": {
-                    "type": "call",
-                    "dt": "2028-02-29",
-                    "pet_id": 1,
-                    "creator_id": 1,
-                    "position_id": 1,
-                    "clinic_id": 0,
-                    "note": "Позвонить владельцу"
-                  }
-                }
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/userCallsCreate"
-              },
-              "examples": {
-                "taskOnUser": {
-                  "value": {
-                    "type": "task",
-                    "dt": "2028-02-29",
-                    "pet_id": 1,
-                    "creator_id": 1,
-                    "user_id": 1,
-                    "note": "Проверить результаты обследования"
-                  }
-                },
-                "callOnPosition": {
-                  "value": {
-                    "type": "call",
-                    "dt": "2028-02-29",
-                    "pet_id": 1,
-                    "creator_id": 1,
-                    "position_id": 1,
-                    "clinic_id": 0,
-                    "note": "Позвонить владельцу"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Создана одна запись.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record(s) Created"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "enum": [
-                            1
-                          ]
-                        },
-                        "userCalls": {
-                          "type": "array",
-                          "minItems": 1,
-                          "maxItems": 1,
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string",
-                                "enum": [
-                                  "call",
-                                  "task"
-                                ],
-                                "description": "Тип записи: звонок или задача."
-                              },
-                              "dt": {
-                                "type": "string",
-                                "example": "2028-02-29 00:00:00",
-                                "description": "Срок возвращается в формате YYYY-MM-DD HH:MM:SS; время равно 00:00:00 и не является поддержкой срока с точным временем."
-                              },
-                              "pet_id": {
-                                "type": "string",
-                                "description": "Числовое значение в формате стандартного REST-ответа."
-                              },
-                              "creator_id": {
-                                "type": "string",
-                                "description": "Числовое значение в формате стандартного REST-ответа."
-                              },
-                              "user_id": {
-                                "type": "string",
-                                "description": "Числовое значение в формате стандартного REST-ответа."
-                              },
-                              "position_id": {
-                                "type": "string",
-                                "description": "Числовое значение в формате стандартного REST-ответа."
-                              },
-                              "note": {
-                                "type": "string",
-                                "maxLength": 250,
-                                "description": "Обязательно и не состоит из пробелов, если ticket_add_required_description включён в клинике API-ключа (по умолчанию включён). При выключенной настройке может отсутствовать; сохраняется пустая строка."
-                              },
-                              "clinic_id": {
-                                "type": "string",
-                                "description": "Числовое значение в формате стандартного REST-ответа."
-                              },
-                              "id": {
-                                "type": "string"
-                              },
-                              "status": {
-                                "type": "string",
-                                "enum": [
-                                  "save"
-                                ]
-                              },
-                              "create_date": {
-                                "type": "string",
-                                "description": "Текущее серверное время создания в формате YYYY-MM-DD HH:MM:SS."
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Неверные поля, формат, обязательность, исполнитель или несуществующие ссылочные ID. Запись не создаётся.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "success",
-                    "error",
-                    "message"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        false
-                      ]
-                    },
-                    "error": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "dt: Укажите корректную дату без времени"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Ошибка аутентификации или доступа к REST API."
-          }
-        }
-      }
-    },
-    "/rest/api/clientDiscountCard": {
-      "get": {
-        "summary": "Список скидочных карт",
-        "description": "Возвращает карты client_discount_card. В каждой карте вложен клиент. Параметры limit, offset, sort и filter работают как у остальных списков.",
-        "tags": [
-          "ClientDiscountCard"
-        ],
-        "operationId": "get_rest_api_clientDiscountCard",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset"
-          },
-          {
-            "$ref": "#/components/parameters/sort"
-          },
-          {
-            "$ref": "#/components/parameters/filter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Список карт.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Records Retrieved Successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "clientDiscountCard"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "clientDiscountCard": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/clientDiscountCard"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Records Retrieved Successfully",
-                  "data": {
-                    "totalCount": 1,
-                    "clientDiscountCard": [
-                      {
-                        "id": 1,
-                        "number": "123456",
-                        "create_date": "2014-10-31 14:28:14",
-                        "client_id": 4,
-                        "card_type_id": 1,
-                        "is_default": 1,
-                        "end_date": null,
-                        "pet_id": 0,
-                        "start_date": null
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      },
-      "post": {
-        "summary": "Создать скидочную карту",
-        "description": "Создает карту. Обязательны number, client_id, pet_id и существующий card_type_id. Без number, client_id или pet_id ответ 406. Без card_type_id или с неизвестным типом ответ 500 из-за внешнего ключа. В ответе создания нет вложенного клиента, id приходит строкой, create_date равен null.",
-        "tags": [
-          "ClientDiscountCard"
-        ],
-        "operationId": "post_rest_api_clientDiscountCard",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/clientDiscountCardWrite"
-              },
-              "example": {
-                "number": "openapi-probe-card",
-                "client_id": 4,
-                "pet_id": 0,
-                "card_type_id": 1
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Карта создана.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record(s) Created"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "clientDiscountCard"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "clientDiscountCard": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/clientDiscountCard"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Record(s) Created",
-                  "data": {
-                    "totalCount": 1,
-                    "clientDiscountCard": [
-                      {
-                        "number": "openapi-probe-card",
-                        "is_default": 0,
-                        "pet_id": 0,
-                        "client_id": 4,
-                        "card_type_id": 1,
-                        "id": "3",
-                        "create_date": null,
-                        "end_date": null,
-                        "start_date": null
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Не переданы number, client_id или pet_id.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/restError"
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "Model could not be saved"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "card_type_id не передан или такого типа карты нет.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/restError"
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "CDbCommand не удалось исполнить SQL-запрос: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`one`.`client_discount_card`, CONSTRAINT `fk_client_discount_card_type_id` FOREIGN KEY (`card_type_id`) REFERENCES `discount_card_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)"
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      }
-    },
-    "/rest/api/clientDiscountCard/{ID}": {
-      "get": {
-        "summary": "Скидочная карта по id",
-        "description": "Возвращает одну карту объектом, с вложенным клиентом. Если записи нет, код все равно 200, totalCount равен 0, а clientDiscountCard — пустой массив.",
-        "tags": [
-          "ClientDiscountCard"
-        ],
-        "operationId": "get_rest_api_clientDiscountCard_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            },
-            "example": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Карта найдена либо список пуст.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record Retrieved Successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "clientDiscountCard"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer"
-                        },
-                        "clientDiscountCard": {
-                          "oneOf": [
-                            {
-                              "$ref": "#/components/schemas/clientDiscountCard"
-                            },
-                            {
-                              "type": "array",
-                              "maxItems": 0
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "found": {
-                    "summary": "Карта найдена",
-                    "value": {
-                      "success": true,
-                      "message": "Record Retrieved Successfully",
-                      "data": {
-                        "totalCount": 1,
-                        "clientDiscountCard": {
-                          "id": 1,
-                          "number": "123456",
-                          "create_date": "2014-10-31 14:28:14",
-                          "client_id": 4,
-                          "card_type_id": 1,
-                          "is_default": 1,
-                          "end_date": null,
-                          "pet_id": 0,
-                          "start_date": null
-                        }
-                      }
-                    }
-                  },
-                  "missing": {
-                    "summary": "Карты нет",
-                    "value": {
-                      "success": true,
-                      "message": "Record Retrieved Successfully",
-                      "data": {
-                        "totalCount": 0,
-                        "clientDiscountCard": []
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      },
-      "put": {
-        "summary": "Изменить скидочную карту",
-        "description": "Обновляет переданные поля. В ответе карта объектом и с вложенным клиентом.",
-        "tags": [
-          "ClientDiscountCard"
-        ],
-        "operationId": "put_rest_api_clientDiscountCard_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/clientDiscountCardUpdate"
-              },
-              "example": {
-                "is_default": 0,
-                "end_date": "2030-01-01"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Карта обновлена.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record Updated"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "clientDiscountCard"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "clientDiscountCard": {
-                          "$ref": "#/components/schemas/clientDiscountCard"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Record Updated",
-                  "data": {
-                    "totalCount": 1,
-                    "clientDiscountCard": {
-                      "id": 3,
-                      "number": "openapi-probe-card",
-                      "create_date": "2026-11-12 14:56:32",
-                      "client_id": 4,
-                      "card_type_id": 1,
-                      "is_default": 0,
-                      "end_date": "2030-01-01",
-                      "pet_id": 0,
-                      "start_date": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Карта не найдена.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/restError"
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "Record not found"
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      },
-      "delete": {
-        "summary": "Удалить скидочную карту",
-        "tags": [
-          "ClientDiscountCard"
-        ],
-        "operationId": "delete_rest_api_clientDiscountCard_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Карта удалена. id в ответе — строка.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record Deleted"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "id"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "example": "3"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Record Deleted",
-                  "data": {
-                    "id": "3"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Карта не найдена.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/restError"
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "Record not found"
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      }
-    },
-    "/rest/api/documentNumber": {
-      "get": {
-        "summary": "Список номеров документов",
-        "description": "Возвращает записи document_number.",
-        "tags": [
-          "DocumentNumber"
-        ],
-        "operationId": "get_rest_api_documentNumber",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset"
-          },
-          {
-            "$ref": "#/components/parameters/sort"
-          },
-          {
-            "$ref": "#/components/parameters/filter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Список номеров.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Records Retrieved Successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "documentNumber"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "documentNumber": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/documentNumber"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Records Retrieved Successfully",
-                  "data": {
-                    "totalCount": 1,
-                    "documentNumber": [
-                      {
-                        "id": 1,
-                        "document_type": "invoice",
-                        "document_id": 1,
-                        "document_number": "1",
-                        "number_mask": "{d}",
-                        "number_clear": 1,
-                        "clinic_id": 1,
-                        "unique_crutch": 1
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      }
-    },
-    "/rest/api/documentNumber/{ID}": {
-      "get": {
-        "summary": "Номер документа по id",
-        "description": "Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а documentNumber — пустой массив.",
-        "tags": [
-          "DocumentNumber"
-        ],
-        "operationId": "get_rest_api_documentNumber_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            },
-            "example": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Запись найдена либо список пуст.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record Retrieved Successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "documentNumber"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer"
-                        },
-                        "documentNumber": {
-                          "oneOf": [
-                            {
-                              "$ref": "#/components/schemas/documentNumber"
-                            },
-                            {
-                              "type": "array",
-                              "maxItems": 0
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "found": {
-                    "summary": "Запись найдена",
-                    "value": {
-                      "success": true,
-                      "message": "Record Retrieved Successfully",
-                      "data": {
-                        "totalCount": 1,
-                        "documentNumber": {
-                          "id": 1,
-                          "document_type": "invoice",
-                          "document_id": 1,
-                          "document_number": "1",
-                          "number_mask": "{d}",
-                          "number_clear": 1,
-                          "clinic_id": 1,
-                          "unique_crutch": 1
-                        }
-                      }
-                    }
-                  },
-                  "missing": {
-                    "summary": "Записи нет",
-                    "value": {
-                      "success": true,
-                      "message": "Record Retrieved Successfully",
-                      "data": {
-                        "totalCount": 0,
-                        "documentNumber": []
                       }
                     }
                   }
@@ -16662,552 +17153,68 @@
         }
       }
     },
-    "/rest/api/failedHook": {
-      "get": {
-        "summary": "Список ошибок доставки вебхуков",
-        "description": "Возвращает записи failed_hook. Параметры limit, offset, sort и filter работают как у остальных списков.",
-        "tags": [
-          "FailedHook"
-        ],
-        "operationId": "get_rest_api_failedHook",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset"
-          },
-          {
-            "$ref": "#/components/parameters/sort"
-          },
-          {
-            "$ref": "#/components/parameters/filter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Список ошибок доставки.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Records Retrieved Successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "failedHook"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "failedHook": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/failedHook"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Records Retrieved Successfully",
-                  "data": {
-                    "totalCount": 1,
-                    "failedHook": [
-                      {
-                        "id": 3,
-                        "create_date": "2026-11-12 16:06:00",
-                        "hook_data": "name=invoiceAdd",
-                        "hook_url": "https://example.invalid/openapi-probe",
-                        "error_message": "probe",
-                        "hook_name": "invoiceAdd",
-                        "deactivated_at": null
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      },
+    "/token_auth.php": {
       "post": {
-        "summary": "Создать запись ошибки доставки",
-        "description": "Создает строку failed_hook. Адрес длиннее 300 символов отвечает 406. В ответе запись массивом, id приходит строкой.",
+        "summary": "Get Token (by User Login & Password)",
         "tags": [
-          "FailedHook"
+          "Auth #3 (by User Login & Password -> Token)"
         ],
-        "operationId": "post_rest_api_failedHook",
+        "operationId": "post_token_auth_php",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/failedHookWrite"
-              },
-              "example": {
-                "hook_url": "https://example.invalid/openapi-probe",
-                "hook_name": "invoiceAdd",
-                "hook_data": "name=invoiceAdd",
-                "error_message": "probe",
-                "create_date": "2026-11-12 16:06:00"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Запись создана.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record(s) Created"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "failedHook"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "failedHook": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/failedHook"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Record(s) Created",
-                  "data": {
-                    "totalCount": 1,
-                    "failedHook": [
-                      {
-                        "hook_name": "invoiceAdd",
-                        "hook_url": "https://example.invalid/openapi-probe",
-                        "hook_data": "name=invoiceAdd",
-                        "error_message": "probe",
-                        "create_date": "2026-11-12 16:06:00",
-                        "id": "3",
-                        "deactivated_at": null
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Поле не входит в модель или не проходит проверку.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/restError"
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "Model could not be saved"
-                }
+                "type": "object",
+                "additionalProperties": true
               }
             }
           }
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi",
-            "extjs"
+            "openapi"
           ],
-          "status": "confirmed"
-        }
-      }
-    },
-    "/rest/api/failedHook/{ID}": {
-      "get": {
-        "summary": "Ошибка доставки по id",
-        "description": "Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а failedHook — пустой массив.",
-        "tags": [
-          "FailedHook"
-        ],
-        "operationId": "get_rest_api_failedHook_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            },
-            "example": 3
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Запись найдена либо список пуст.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record Retrieved Successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "failedHook"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer"
-                        },
-                        "failedHook": {
-                          "oneOf": [
-                            {
-                              "$ref": "#/components/schemas/failedHook"
-                            },
-                            {
-                              "type": "array",
-                              "maxItems": 0
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "found": {
-                    "summary": "Запись найдена",
-                    "value": {
-                      "success": true,
-                      "message": "Record Retrieved Successfully",
-                      "data": {
-                        "totalCount": 1,
-                        "failedHook": {
-                          "id": 3,
-                          "create_date": "2026-11-12 16:06:00",
-                          "hook_data": "name=invoiceAdd",
-                          "hook_url": "https://example.invalid/openapi-probe",
-                          "error_message": "probe",
-                          "hook_name": "invoiceAdd",
-                          "deactivated_at": null
-                        }
-                      }
-                    }
-                  },
-                  "missing": {
-                    "summary": "Записи нет",
-                    "value": {
-                      "success": true,
-                      "message": "Record Retrieved Successfully",
-                      "data": {
-                        "totalCount": 0,
-                        "failedHook": []
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      },
-      "put": {
-        "summary": "Изменить запись ошибки доставки",
-        "description": "Обновляет переданные поля. В ответе запись объектом.",
-        "tags": [
-          "FailedHook"
-        ],
-        "operationId": "put_rest_api_failedHook_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/failedHookWrite"
-              },
-              "example": {
-                "error_message": "probe-updated",
-                "deactivated_at": "2026-11-12 16:07:00"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Запись обновлена.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record Updated"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "totalCount",
-                        "failedHook"
-                      ],
-                      "properties": {
-                        "totalCount": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "failedHook": {
-                          "$ref": "#/components/schemas/failedHook"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Record Updated",
-                  "data": {
-                    "totalCount": 1,
-                    "failedHook": {
-                      "id": 3,
-                      "create_date": "2026-11-12 16:06:00",
-                      "hook_data": "name=invoiceAdd",
-                      "hook_url": "https://example.invalid/openapi-probe",
-                      "error_message": "probe-updated",
-                      "hook_name": "invoiceAdd",
-                      "deactivated_at": "2026-11-12 16:07:00"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Запись не найдена.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/restError"
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "Record not found"
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
-        }
-      },
-      "delete": {
-        "summary": "Удалить запись ошибки доставки",
-        "tags": [
-          "FailedHook"
-        ],
-        "operationId": "delete_rest_api_failedHook_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Запись удалена. id в ответе — строка.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "success",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "enum": [
-                        true
-                      ]
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Record Deleted"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "id"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "example": "3"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "message": "Record Deleted",
-                  "data": {
-                    "id": "3"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Запись не найдена.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/restError"
-                },
-                "example": {
-                  "success": false,
-                  "error": true,
-                  "message": "Record not found"
-                }
-              }
-            }
-          }
-        },
-        "x-reconciliation": {
-          "presentIn": [
-            "openapi",
-            "extjs"
-          ],
-          "status": "confirmed"
+          "status": "openapi_only"
         }
       }
     }
   },
   "x-reconciliation": {
-    "generatedAt": "2026-10-20T15:19:57Z",
+    "generatedAt": "2026-11-12T13:40:56Z",
     "sources": {
       "extjs": "configured",
       "dbDumpProvided": false
     },
     "counts": {
-      "openapi_only": 42,
-      "confirmed": 95,
-      "extjs_only_candidate": 333,
-      "intentionally_undocumented": 11
+      "openapi_only": 43,
+      "confirmed": 114,
+      "extjs_only_candidate": 316,
+      "intentionally_undocumented": 10
     }
   }
 }

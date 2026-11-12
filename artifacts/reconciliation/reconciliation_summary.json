@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-10-20T15:19:57Z",
+  "generated_at": "2026-11-12T13:40:56Z",
   "source_counts": {
-    "openapi_operations": 137,
-    "extjs_route_candidates": 439,
+    "openapi_operations": 157,
+    "extjs_route_candidates": 440,
     "db_nullable_tables": 0
   },
   "matrix_status_counts": {
-    "openapi_only": 42,
-    "confirmed": 95,
-    "extjs_only_candidate": 333,
-    "intentionally_undocumented": 11
+    "openapi_only": 43,
+    "confirmed": 114,
+    "extjs_only_candidate": 316,
+    "intentionally_undocumented": 10
   },
   "devtr6_counts": {
     "200": 43,
@@ -17,5 +17,5 @@
     "400": 2,
     "401": 1
   },
-  "external_checks_skipped": true
+  "external_checks": "not_run_no_api_key"
 }

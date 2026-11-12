@@ -1,19 +1,19 @@
 # Vetmanager OpenAPI reconciliation
 
-Generated: 2026-10-20T15:19:57Z
+Generated: 2026-11-12T13:40:56Z
 
 ## Source counts
 
-- openapi_operations: 137
-- extjs_route_candidates: 439
+- openapi_operations: 157
+- extjs_route_candidates: 440
 - db_nullable_tables: 0
 
 ## Matrix status
 
-- confirmed: 95
-- extjs_only_candidate: 333
-- intentionally_undocumented: 11
-- openapi_only: 42
+- confirmed: 114
+- extjs_only_candidate: 316
+- intentionally_undocumented: 10
+- openapi_only: 43
 
 ## ExtJS-only route candidates
 
@@ -24,7 +24,6 @@ Generated: 2026-10-20T15:19:57Z
 - `DELETE /rest/api/cassa/{id}`: extjs_default_rest
 - `DELETE /rest/api/cassaclose/{id}`: extjs_default_rest
 - `DELETE /rest/api/cassarashod/{id}`: extjs_default_rest
-- `DELETE /rest/api/clientDiscountCard/{id}`: extjs_default_rest
 - `DELETE /rest/api/clientPhone/{id}`: extjs_default_rest
 - `DELETE /rest/api/clinics/{id}`: extjs_default_rest
 - `DELETE /rest/api/clinicsToClients/{id}`: extjs_default_rest
@@ -38,7 +37,6 @@ Generated: 2026-10-20T15:19:57Z
 - `DELETE /rest/api/discountCardType/{id}`: extjs_default_rest
 - `DELETE /rest/api/doctorsResponsible/{id}`: extjs_default_rest
 - `DELETE /rest/api/documentNumber/{id}`: extjs_default_rest
-- `DELETE /rest/api/failedHook/{id}`: extjs_default_rest
 - `DELETE /rest/api/fiscalRegister/{id}`: extjs_default_rest
 - `DELETE /rest/api/fiscalRegisterData/{id}`: extjs_default_rest
 - `DELETE /rest/api/fiscalTaxSystems/{id}`: extjs_default_rest
@@ -77,7 +75,6 @@ Generated: 2026-10-20T15:19:57Z
 - `DELETE /rest/api/userConfig/{id}`: extjs_default_rest
 - `DELETE /rest/api/userToken/{id}`: extjs_default_rest
 - `DELETE /rest/api/vmLink/{id}`: extjs_default_rest
-- `DELETE /rest/api/webHook/{id}`: extjs_default_rest
 - `DELETE /rest/api/{controller}`: extjs_explicit_route
 - `DELETE /rest/api/{controller}/{id}`: extjs_explicit_route
 - `GET /rest/api/admissionJournal`: extjs_default_rest
@@ -86,10 +83,9 @@ Generated: 2026-10-20T15:19:57Z
 - `GET /rest/api/apiError/{id}`: extjs_default_rest
 - `GET /rest/api/cassa/casses-data`: extjs_custom_rest
 - `GET /rest/api/client/client-contacts-data`: extjs_custom_rest
+- `GET /rest/api/client/client-resolve`: extjs_custom_rest
 - `GET /rest/api/client/clients-match-data`: extjs_custom_rest
 - `GET /rest/api/client/clients-search-data`: extjs_custom_rest
-- `GET /rest/api/clientDiscountCard`: extjs_default_rest
-- `GET /rest/api/clientDiscountCard/{id}`: extjs_default_rest
 - `GET /rest/api/clientPhone`: extjs_default_rest
 - `GET /rest/api/clientPhone/{id}`: extjs_default_rest
 - `GET /rest/api/clinicsToClients`: extjs_default_rest
@@ -111,10 +107,6 @@ Generated: 2026-10-20T15:19:57Z
 - `GET /rest/api/discountCardType/{id}`: extjs_default_rest
 - `GET /rest/api/doctorsResponsible`: extjs_default_rest
 - `GET /rest/api/doctorsResponsible/{id}`: extjs_default_rest
-- `GET /rest/api/documentNumber`: extjs_default_rest
-- `GET /rest/api/documentNumber/{id}`: extjs_default_rest
-- `GET /rest/api/failedHook`: extjs_default_rest
-- `GET /rest/api/failedHook/{id}`: extjs_default_rest
 - `GET /rest/api/fiscalRegister`: extjs_default_rest
 - `GET /rest/api/fiscalRegister/evotor-fiscal-register`: extjs_custom_rest
 - `GET /rest/api/fiscalRegister/linked-fiscal-register-to-user`: extjs_custom_rest
@@ -167,7 +159,15 @@ Generated: 2026-10-20T15:19:57Z
 - `GET /rest/api/reportAiJobs`: extjs_default_rest
 - `GET /rest/api/reportAiJobs/{id}`: extjs_default_rest
 - `GET /rest/api/servicePrice`: extjs_default_rest
-- ... 183 more
+- `GET /rest/api/servicePrice/{id}`: extjs_default_rest
+- `GET /rest/api/storeDocument`: extjs_default_rest
+- `GET /rest/api/storeDocument/{id}`: extjs_default_rest
+- `GET /rest/api/storeDocumentOperation`: extjs_default_rest
+- `GET /rest/api/storeDocumentOperation/{id}`: extjs_default_rest
+- `GET /rest/api/stores`: extjs_default_rest
+- `GET /rest/api/stores/list-stores`: extjs_custom_rest
+- `GET /rest/api/stores/rest-of-good-in-warehouse`: extjs_custom_rest
+- ... 166 more
 
 ## OpenAPI-only entries
 
@@ -197,6 +197,7 @@ Generated: 2026-10-20T15:19:57Z
 - `GET /rest/api/Suppliers/{id}`
 - `GET /rest/api/VmLink/personalAccountLinkByClientId/{clientId}`
 - `GET /rest/api/VmLink/personalAccountLinkByPhone/{phone}`
+- `GET /rest/api/medicalCards/laboratoryResults`
 - `GET /rest/api/report/StartReport`
 - `GET /rest/api/report/reportFile`
 - `GET /rest/api/stores/RestOfGoodInWarehouse`

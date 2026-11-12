@@ -255,78 +255,6 @@ components:
           type: string
           description: Текст ошибки чтения списка.
           example: 'Error retrieving anonymous users: ...'
-    userCallsCreate:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      - dt
-      - pet_id
-      - creator_id
-      properties:
-        type:
-          type: string
-          enum:
-          - call
-          - task
-          description: 'Тип записи: звонок или задача.'
-        dt:
-          type: string
-          format: date
-          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
-          description: 'Срок выполнения: календарная дата YYYY-MM-DD, без времени. Невозможные даты отклоняются. Дата должна помещаться
-            в тип поля dt текущей базы. Для TIMESTAMP проверяется диапазон в часовом поясе запроса (обычно 1970–2038); выход за
-            пределы возвращает HTTP 406.'
-          example: '2028-02-29'
-        pet_id:
-          type: integer
-          minimum: 1
-          description: ID существующего питомца.
-        creator_id:
-          type: integer
-          minimum: 1
-          description: 'ID существующего сотрудника — автора. Обязателен: API-ключ не определяет пользователя-автора.'
-        user_id:
-          type: integer
-          minimum: 0
-          description: ID существующего исполнителя. Ровно одно из user_id и position_id положительно; второе отсутствует или
-            равно 0.
-        position_id:
-          type: integer
-          minimum: 0
-          description: ID существующей должности/группы. Передаётся вместо user_id.
-        note:
-          type: string
-          maxLength: 250
-          description: Обязательно и не состоит из пробелов, если ticket_add_required_description включён в клинике API-ключа
-            (по умолчанию включён). При выключенной настройке может отсутствовать; сохраняется пустая строка. Текст сохраняется
-            буквально. Невалидный UTF-8 и четырёхбайтовые Unicode-символы не поддерживаются и возвращают HTTP 406.
-        clinic_id:
-          type: integer
-          minimum: 0
-          default: 0
-          description: 0 или отсутствие — без привязки к филиалу. Положительное значение — ID существующей клиники.
-      oneOf:
-      - required:
-        - user_id
-        properties:
-          user_id:
-            type: integer
-            minimum: 1
-          position_id:
-            type: integer
-            enum:
-            - 0
-      - required:
-        - position_id
-        properties:
-          position_id:
-            type: integer
-            minimum: 1
-          user_id:
-            type: integer
-            enum:
-            - 0
     admission:
       type: object
       properties:
@@ -1252,396 +1180,6 @@ components:
           x-computed: true
       x-source: real_api_response
       x-db-table: client
-    clientDiscountCard:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          description: 'В чтении и обновлении число, в создании и удалении строка.'
-          example: 1
-          oneOf:
-          - type: integer
-          - type: string
-        number:
-          type: string
-          maxLength: 100
-          description: Номер карты. В базе колонка varchar(100).
-          example: '123456'
-        create_date:
-          type: string
-          nullable: true
-          description: 'Дата создания. Сразу после создания в ответе null, после чтения приходит из базы.'
-          example: '2014-10-31 14:28:14'
-        client_id:
-          type: integer
-          description: Клиент, которому выдана карта.
-          example: 4
-        card_type_id:
-          type: integer
-          description: Тип карты, id из discount_card_type. Без существующего типа создание отвечает кодом 500.
-          example: 1
-        is_default:
-          type: integer
-          description: '1 — карта по умолчанию для клиента и питомца, 0 — нет. Если поле не передано, сохраняется 0.'
-          enum:
-          - 0
-          - 1
-          example: 1
-        end_date:
-          type: string
-          format: date
-          nullable: true
-          description: Дата окончания действия. Пустое значение хранится как null.
-          example: '2030-01-01'
-        pet_id:
-          type: integer
-          description: Питомец, на которого действует карта. 0 — карта на всех питомцев клиента.
-          example: 0
-        start_date:
-          type: string
-          format: date
-          nullable: true
-          description: Дата начала действия. Пустое значение хранится как null.
-        client:
-          allOf:
-          - $ref: '#/components/schemas/client'
-          description: Вложенный клиент. Есть в ответах чтения и обновления, в ответе создания его нет.
-      x-db-table: client_discount_card
-    clientDiscountCardWrite:
-      type: object
-      additionalProperties: false
-      required:
-      - number
-      - client_id
-      - pet_id
-      - card_type_id
-      properties:
-        number:
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: Номер карты.
-          example: openapi-probe-card
-        client_id:
-          type: integer
-          description: Клиент, которому выдается карта.
-          example: 4
-        pet_id:
-          type: integer
-          description: Питомец. 0 — карта на всех питомцев клиента.
-          example: 0
-        card_type_id:
-          type: integer
-          minimum: 1
-          description: Существующий id типа карты.
-          example: 1
-        is_default:
-          type: integer
-          description: Карта по умолчанию.
-          enum:
-          - 0
-          - 1
-          example: 0
-        start_date:
-          type: string
-          format: date
-          nullable: true
-          description: Дата начала действия.
-        end_date:
-          type: string
-          format: date
-          nullable: true
-          description: Дата окончания действия.
-          example: '2030-01-01'
-    clientDiscountCardUpdate:
-      type: object
-      additionalProperties: false
-      description: Поля, которые нужно изменить. Можно передать только часть.
-      properties:
-        number:
-          type: string
-          minLength: 1
-          maxLength: 100
-        client_id:
-          type: integer
-        pet_id:
-          type: integer
-        card_type_id:
-          type: integer
-          minimum: 1
-        is_default:
-          type: integer
-          enum:
-          - 0
-          - 1
-        start_date:
-          type: string
-          format: date
-          nullable: true
-        end_date:
-          type: string
-          format: date
-          nullable: true
-          example: '2030-01-01'
-    failedHook:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          description: 'В чтении и обновлении число, в создании и удалении строка.'
-          example: 3
-          oneOf:
-          - type: integer
-          - type: string
-        create_date:
-          type: string
-          nullable: true
-          description: Когда зафиксирована ошибка доставки.
-          example: '2026-11-12 16:06:00'
-        hook_data:
-          type: string
-          nullable: true
-          description: Тело, которое отправлялось получателю.
-          example: name=invoiceAdd
-        hook_url:
-          type: string
-          maxLength: 300
-          nullable: true
-          description: Адрес, на который не удалось доставить уведомление.
-          example: https://example.invalid/openapi-probe
-        error_message:
-          type: string
-          nullable: true
-          description: Текст ошибки доставки.
-          example: probe
-        hook_name:
-          type: string
-          maxLength: 20
-          description: Имя события. Колонка varchar(20).
-          example: invoiceAdd
-        deactivated_at:
-          type: string
-          nullable: true
-          description: Когда сервис с этим адресом выключили. Пусто, пока это только строка ошибки.
-          example: '2026-11-12 16:07:00'
-      x-db-table: failed_hook
-    failedHookWrite:
-      type: object
-      additionalProperties: false
-      description: Поля записи. Можно передать часть.
-      properties:
-        create_date:
-          type: string
-          nullable: true
-          example: '2026-11-12 16:06:00'
-        hook_data:
-          type: string
-          nullable: true
-          example: name=invoiceAdd
-        hook_url:
-          type: string
-          maxLength: 300
-          nullable: true
-          example: https://example.invalid/openapi-probe
-        error_message:
-          type: string
-          nullable: true
-          example: probe
-        hook_name:
-          type: string
-          maxLength: 20
-          example: invoiceAdd
-        deactivated_at:
-          type: string
-          nullable: true
-          example: '2026-11-12 16:07:00'
-    webHook:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          description: 'В чтении одной записи и в обновлении число, в создании и удалении строка.'
-          example: 199
-          oneOf:
-          - type: integer
-          - type: string
-        combo_manual_id:
-          type: integer
-          description: Id справочника. Есть только в ответе чтения одной записи.
-          example: 11
-        title:
-          type: string
-          maxLength: 250
-          description: Название сервиса.
-          example: openapi-probe
-        value:
-          type: string
-          maxLength: 250
-          description: Адрес, на который уходит уведомление.
-          example: https://example.invalid/openapi-probe
-        dop_param1:
-          type: string
-          maxLength: 250
-          description: Дополнительный параметр. Уходит получателю в params. Пустая строка, если не задан.
-          example: token
-        dop_param2:
-          type: string
-          maxLength: 250
-          description: Второй дополнительный параметр. Уходит получателю в params. Пустая строка, если не задан.
-          example: ''
-        dop_param3:
-          type: string
-          maxLength: 255
-          description: 'Необязательный фильтр событий через запятую. Пробелы убираются. Пустая строка означает все разрешенные
-            события. Неизвестное имя отклоняется. Разрешены: clientAdd, clientEdit, clientDeactivate, clientActivate, clientDelete,
-            clientBalanceEdit, clientMerge, petAdd, petEdit, petDelete, petAlive, petDied, petChangeOwner, invoiceAdd, invoiceEdit,
-            startInvoiceRun, invoiceRun, invoiceDelete, invoiceRollback, invoicePaidAmountEdit, invoiceEditResponsibleDoc, admissionAdd,
-            admissionDirected, admissionInTreatment, admissionAccepted, admissionDelete, admissionEdit, admissionDelayed, admissionConfirm,
-            admissionChanged, admissionConfirmed, admissionRestored, admissionInvoicesSumChanged, goodAdd, goodDelete, goodEdit,
-            goodDeactivate, goodActivate, goodInvertStatus, userAdd, userEdit, userDelete, goodGroupAdd, goodGroupEdit, goodGroupDelete,
-            timesheetAdd, timesheetEdit, timesheetDelete, timesheetMassChanges, cassaAdd, cassaEdit, cassaDelete, cassacloseAdd,
-            cassacloseDelete, cassacloseEdit, cassacloseRollback, cassacloseExec, medicalCardsAdd, medicalCardsEdit, medicalCardsDelete,
-            paymentAdd, paymentEdit, paymentRun, paymentDelete, paymentRollback, visitAdd, visitDelete, visitEdit, visitExec, hospitalAdd,
-            hospitalEdit, hospitalDelete, linkDiscountToClient, execClientOrder, storeDocumentAdd, storeDocumentDelete, storeDocumentEdit,
-            storeDocumentExec, storeDocumentRollback, fastCallingAdd.'
-          example: invoiceAdd,invoiceEdit
-        is_active:
-          type: integer
-          description: '1 — уведомления отправляются, 0 — сервис выключен. Если поле не передано, сохраняется 1.'
-          enum:
-          - 0
-          - 1
-          example: 1
-      x-db-table: combo_manual_items
-    webHookWrite:
-      type: object
-      additionalProperties: false
-      required:
-      - title
-      - value
-      properties:
-        title:
-          type: string
-          minLength: 1
-          maxLength: 250
-          description: Название сервиса.
-          example: openapi-probe
-        value:
-          type: string
-          minLength: 1
-          maxLength: 250
-          description: Адрес, на который уходит уведомление.
-          example: https://example.invalid/openapi-probe
-        dop_param1:
-          type: string
-          maxLength: 250
-          example: token
-        dop_param2:
-          type: string
-          maxLength: 250
-        dop_param3:
-          type: string
-          maxLength: 255
-          description: Список событий через запятую. Пустая строка подписывает сервис на все разрешенные события.
-          example: invoiceAdd,invoiceEdit
-        is_active:
-          type: integer
-          enum:
-          - 0
-          - 1
-          example: 1
-    webHookUpdate:
-      type: object
-      additionalProperties: false
-      description: Поля, которые нужно изменить. Можно передать только часть.
-      properties:
-        title:
-          type: string
-          minLength: 1
-          maxLength: 250
-        value:
-          type: string
-          minLength: 1
-          maxLength: 250
-        dop_param1:
-          type: string
-          maxLength: 250
-          example: token
-        dop_param2:
-          type: string
-          maxLength: 250
-        dop_param3:
-          type: string
-          maxLength: 255
-        is_active:
-          type: integer
-          enum:
-          - 0
-          - 1
-          example: 0
-    documentNumber:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: integer
-          example: 1
-        document_type:
-          type: string
-          nullable: true
-          description: 'Тип документа: prihod, rashod, inventar, transfer или invoice.'
-          enum:
-          - prihod
-          - rashod
-          - inventar
-          - transfer
-          - invoice
-          example: invoice
-        document_id:
-          type: integer
-          description: Id документа этого типа.
-          example: 1
-        document_number:
-          type: string
-          maxLength: 32
-          description: Номер, который видит пользователь.
-          example: '1'
-        number_mask:
-          type: string
-          maxLength: 32
-          description: 'Шаблон номера. {d} заменяется числом.'
-          example: '{d}'
-        number_clear:
-          type: integer
-          description: Числовая часть номера. По ней выбирается следующий номер.
-          example: 1
-        clinic_id:
-          type: integer
-          description: Клиника, в которой выдан номер.
-          example: 1
-        unique_crutch:
-          type: integer
-          description: Служебное поле уникальности номера.
-          example: 1
-      x-db-table: document_number
-    restError:
-      type: object
-      additionalProperties: false
-      required:
-      - success
-      - error
-      - message
-      properties:
-        success:
-          type: boolean
-          enum:
-          - false
-        error:
-          type: boolean
-          enum:
-          - true
-        message:
-          type: string
     city:
       type: object
       properties:
@@ -4772,140 +4310,469 @@ components:
           default: 00:30:00
       x-source: real_api_response
       x-db-table: users_positions
+    userCallsCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - dt
+      - pet_id
+      - creator_id
+      properties:
+        type:
+          type: string
+          enum:
+          - call
+          - task
+          description: 'Тип записи: звонок или задача.'
+        dt:
+          type: string
+          format: date
+          pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+          description: 'Срок выполнения: календарная дата YYYY-MM-DD, без времени. Невозможные даты отклоняются. Дата должна
+            помещаться в тип поля dt текущей базы. Для TIMESTAMP проверяется диапазон в часовом поясе запроса (обычно 1970–2038);
+            выход за пределы возвращает HTTP 406.'
+          example: '2028-02-29'
+        pet_id:
+          type: integer
+          minimum: 1
+          description: ID существующего питомца.
+        creator_id:
+          type: integer
+          minimum: 1
+          description: 'ID существующего сотрудника — автора. Обязателен: API-ключ не определяет пользователя-автора.'
+        user_id:
+          type: integer
+          minimum: 0
+          description: ID существующего исполнителя. Ровно одно из user_id и position_id положительно; второе отсутствует
+            или равно 0.
+        position_id:
+          type: integer
+          minimum: 0
+          description: ID существующей должности/группы. Передаётся вместо user_id.
+        note:
+          type: string
+          maxLength: 250
+          description: Обязательно и не состоит из пробелов, если ticket_add_required_description включён в клинике API-ключа
+            (по умолчанию включён). При выключенной настройке может отсутствовать; сохраняется пустая строка. Текст сохраняется
+            буквально. Невалидный UTF-8 и четырёхбайтовые Unicode-символы не поддерживаются и возвращают HTTP 406.
+        clinic_id:
+          type: integer
+          minimum: 0
+          default: 0
+          description: 0 или отсутствие — без привязки к филиалу. Положительное значение — ID существующей клиники.
+      oneOf:
+      - required:
+        - user_id
+        properties:
+          user_id:
+            type: integer
+            minimum: 1
+          position_id:
+            type: integer
+            enum:
+            - 0
+      - required:
+        - position_id
+        properties:
+          position_id:
+            type: integer
+            minimum: 1
+          user_id:
+            type: integer
+            enum:
+            - 0
+    clientDiscountCard:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          description: В чтении и обновлении число, в создании и удалении строка.
+          example: 1
+          oneOf:
+          - type: integer
+          - type: string
+        number:
+          type: string
+          maxLength: 100
+          description: Номер карты. В базе колонка varchar(100).
+          example: '123456'
+        create_date:
+          type: string
+          nullable: true
+          description: Дата создания. Сразу после создания в ответе null, после чтения приходит из базы.
+          example: '2014-10-31 14:28:14'
+        client_id:
+          type: integer
+          description: Клиент, которому выдана карта.
+          example: 4
+        card_type_id:
+          type: integer
+          description: Тип карты, id из discount_card_type. Без существующего типа создание отвечает кодом 500.
+          example: 1
+        is_default:
+          type: integer
+          description: 1 — карта по умолчанию для клиента и питомца, 0 — нет. Если поле не передано, сохраняется 0.
+          enum:
+          - 0
+          - 1
+          example: 1
+        end_date:
+          type: string
+          format: date
+          nullable: true
+          description: Дата окончания действия. Пустое значение хранится как null.
+          example: '2030-01-01'
+        pet_id:
+          type: integer
+          description: Питомец, на которого действует карта. 0 — карта на всех питомцев клиента.
+          example: 0
+        start_date:
+          type: string
+          format: date
+          nullable: true
+          description: Дата начала действия. Пустое значение хранится как null.
+        client:
+          allOf:
+          - $ref: '#/components/schemas/client'
+          description: Вложенный клиент. Есть в ответах чтения и обновления, в ответе создания его нет.
+      x-db-table: client_discount_card
+    clientDiscountCardWrite:
+      type: object
+      additionalProperties: false
+      required:
+      - number
+      - client_id
+      - pet_id
+      - card_type_id
+      properties:
+        number:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Номер карты.
+          example: openapi-probe-card
+        client_id:
+          type: integer
+          description: Клиент, которому выдается карта.
+          example: 4
+        pet_id:
+          type: integer
+          description: Питомец. 0 — карта на всех питомцев клиента.
+          example: 0
+        card_type_id:
+          type: integer
+          minimum: 1
+          description: Существующий id типа карты.
+          example: 1
+        is_default:
+          type: integer
+          description: Карта по умолчанию.
+          enum:
+          - 0
+          - 1
+          example: 0
+        start_date:
+          type: string
+          format: date
+          nullable: true
+          description: Дата начала действия.
+        end_date:
+          type: string
+          format: date
+          nullable: true
+          description: Дата окончания действия.
+          example: '2030-01-01'
+    clientDiscountCardUpdate:
+      type: object
+      additionalProperties: false
+      description: Поля, которые нужно изменить. Можно передать только часть.
+      properties:
+        number:
+          type: string
+          minLength: 1
+          maxLength: 100
+        client_id:
+          type: integer
+        pet_id:
+          type: integer
+        card_type_id:
+          type: integer
+          minimum: 1
+        is_default:
+          type: integer
+          enum:
+          - 0
+          - 1
+        start_date:
+          type: string
+          format: date
+          nullable: true
+        end_date:
+          type: string
+          format: date
+          nullable: true
+          example: '2030-01-01'
+    restError:
+      type: object
+      additionalProperties: false
+      required:
+      - success
+      - error
+      - message
+      properties:
+        success:
+          type: boolean
+          enum:
+          - false
+        error:
+          type: boolean
+          enum:
+          - true
+        message:
+          type: string
+    documentNumber:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          example: 1
+        document_type:
+          type: string
+          nullable: true
+          description: 'Тип документа: prihod, rashod, inventar, transfer или invoice.'
+          enum:
+          - prihod
+          - rashod
+          - inventar
+          - transfer
+          - invoice
+          example: invoice
+        document_id:
+          type: integer
+          description: Id документа этого типа.
+          example: 1
+        document_number:
+          type: string
+          maxLength: 32
+          description: Номер, который видит пользователь.
+          example: '1'
+        number_mask:
+          type: string
+          maxLength: 32
+          description: Шаблон номера. {d} заменяется числом.
+          example: '{d}'
+        number_clear:
+          type: integer
+          description: Числовая часть номера. По ней выбирается следующий номер.
+          example: 1
+        clinic_id:
+          type: integer
+          description: Клиника, в которой выдан номер.
+          example: 1
+        unique_crutch:
+          type: integer
+          description: Служебное поле уникальности номера.
+          example: 1
+      x-db-table: document_number
+    webHook:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          description: В чтении одной записи и в обновлении число, в создании и удалении строка.
+          example: 199
+          oneOf:
+          - type: integer
+          - type: string
+        combo_manual_id:
+          type: integer
+          description: Id справочника. Есть только в ответе чтения одной записи.
+          example: 11
+        title:
+          type: string
+          maxLength: 250
+          description: Название сервиса.
+          example: openapi-probe
+        value:
+          type: string
+          maxLength: 250
+          description: Адрес, на который уходит уведомление.
+          example: https://example.invalid/openapi-probe
+        dop_param1:
+          type: string
+          maxLength: 250
+          description: Дополнительный параметр. Уходит получателю в params. Пустая строка, если не задан.
+          example: token
+        dop_param2:
+          type: string
+          maxLength: 250
+          description: Второй дополнительный параметр. Уходит получателю в params. Пустая строка, если не задан.
+          example: ''
+        dop_param3:
+          type: string
+          maxLength: 255
+          description: 'Необязательный фильтр событий через запятую. Пробелы убираются. Пустая строка означает все разрешенные
+            события. Неизвестное имя отклоняется. Разрешены: clientAdd, clientEdit, clientDeactivate, clientActivate, clientDelete,
+            clientBalanceEdit, clientMerge, petAdd, petEdit, petDelete, petAlive, petDied, petChangeOwner, invoiceAdd, invoiceEdit,
+            startInvoiceRun, invoiceRun, invoiceDelete, invoiceRollback, invoicePaidAmountEdit, invoiceEditResponsibleDoc,
+            admissionAdd, admissionDirected, admissionInTreatment, admissionAccepted, admissionDelete, admissionEdit, admissionDelayed,
+            admissionConfirm, admissionChanged, admissionConfirmed, admissionRestored, admissionInvoicesSumChanged, goodAdd,
+            goodDelete, goodEdit, goodDeactivate, goodActivate, goodInvertStatus, userAdd, userEdit, userDelete, goodGroupAdd,
+            goodGroupEdit, goodGroupDelete, timesheetAdd, timesheetEdit, timesheetDelete, timesheetMassChanges, cassaAdd,
+            cassaEdit, cassaDelete, cassacloseAdd, cassacloseDelete, cassacloseEdit, cassacloseRollback, cassacloseExec, medicalCardsAdd,
+            medicalCardsEdit, medicalCardsDelete, paymentAdd, paymentEdit, paymentRun, paymentDelete, paymentRollback, visitAdd,
+            visitDelete, visitEdit, visitExec, hospitalAdd, hospitalEdit, hospitalDelete, linkDiscountToClient, execClientOrder,
+            storeDocumentAdd, storeDocumentDelete, storeDocumentEdit, storeDocumentExec, storeDocumentRollback, fastCallingAdd.'
+          example: invoiceAdd,invoiceEdit
+        is_active:
+          type: integer
+          description: 1 — уведомления отправляются, 0 — сервис выключен. Если поле не передано, сохраняется 1.
+          enum:
+          - 0
+          - 1
+          example: 1
+      x-db-table: combo_manual_items
+    webHookWrite:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - value
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 250
+          description: Название сервиса.
+          example: openapi-probe
+        value:
+          type: string
+          minLength: 1
+          maxLength: 250
+          description: Адрес, на который уходит уведомление.
+          example: https://example.invalid/openapi-probe
+        dop_param1:
+          type: string
+          maxLength: 250
+          example: token
+        dop_param2:
+          type: string
+          maxLength: 250
+        dop_param3:
+          type: string
+          maxLength: 255
+          description: Список событий через запятую. Пустая строка подписывает сервис на все разрешенные события.
+          example: invoiceAdd,invoiceEdit
+        is_active:
+          type: integer
+          enum:
+          - 0
+          - 1
+          example: 1
+    webHookUpdate:
+      type: object
+      additionalProperties: false
+      description: Поля, которые нужно изменить. Можно передать только часть.
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 250
+        value:
+          type: string
+          minLength: 1
+          maxLength: 250
+        dop_param1:
+          type: string
+          maxLength: 250
+          example: token
+        dop_param2:
+          type: string
+          maxLength: 250
+        dop_param3:
+          type: string
+          maxLength: 255
+        is_active:
+          type: integer
+          enum:
+          - 0
+          - 1
+          example: 0
+    failedHook:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          description: В чтении и обновлении число, в создании и удалении строка.
+          example: 3
+          oneOf:
+          - type: integer
+          - type: string
+        create_date:
+          type: string
+          nullable: true
+          description: Когда зафиксирована ошибка доставки.
+          example: '2026-11-12 16:06:00'
+        hook_data:
+          type: string
+          nullable: true
+          description: Тело, которое отправлялось получателю.
+          example: name=invoiceAdd
+        hook_url:
+          type: string
+          maxLength: 300
+          nullable: true
+          description: Адрес, на который не удалось доставить уведомление.
+          example: https://example.invalid/openapi-probe
+        error_message:
+          type: string
+          nullable: true
+          description: Текст ошибки доставки.
+          example: probe
+        hook_name:
+          type: string
+          maxLength: 20
+          description: Имя события. Колонка varchar(20).
+          example: invoiceAdd
+        deactivated_at:
+          type: string
+          nullable: true
+          description: Когда сервис с этим адресом выключили. Пусто, пока это только строка ошибки.
+          example: '2026-11-12 16:07:00'
+      x-db-table: failed_hook
+    failedHookWrite:
+      type: object
+      additionalProperties: false
+      description: Поля записи. Можно передать часть.
+      properties:
+        create_date:
+          type: string
+          nullable: true
+          example: '2026-11-12 16:06:00'
+        hook_data:
+          type: string
+          nullable: true
+          example: name=invoiceAdd
+        hook_url:
+          type: string
+          maxLength: 300
+          nullable: true
+          example: https://example.invalid/openapi-probe
+        error_message:
+          type: string
+          nullable: true
+          example: probe
+        hook_name:
+          type: string
+          maxLength: 20
+          example: invoiceAdd
+        deactivated_at:
+          type: string
+          nullable: true
+          example: '2026-11-12 16:07:00'
 paths:
-  /rest/api/userCalls:
-    post:
-      tags:
-      - UserCalls
-      operationId: createUserCall
-      summary: Создать задачу (в разработке)
-      description: Создаёт одну запись по общим с формой задач правилам. Принимает одиночный объект JSON или поля application/x-www-form-urlencoded;
-        пакетное создание не поддерживается. Неизвестные поля и системные id, status, create_date, executed_user, exec_note,
-        relations запрещены и возвращают 406. Сервер задаёт status=save и текущее время create_date; после сохранения вызывает
-        FastCallingAdd и LogEntity. Журнал использует стандартный контекст аутентификации REST; creator_id является автором
-        записи, а не подменой пользователя сессии. Требует действующий API-ключ и включённый REST API.
-      requestBody:
-        required: true
-        content:
-          application/json: &id001
-            schema:
-              $ref: '#/components/schemas/userCallsCreate'
-            examples:
-              taskOnUser:
-                value:
-                  type: task
-                  dt: '2028-02-29'
-                  pet_id: 1
-                  creator_id: 1
-                  user_id: 1
-                  note: Проверить результаты обследования
-              callOnPosition:
-                value:
-                  type: call
-                  dt: '2028-02-29'
-                  pet_id: 1
-                  creator_id: 1
-                  position_id: 1
-                  clinic_id: 0
-                  note: Позвонить владельцу
-          application/x-www-form-urlencoded: *id001
-      responses:
-        '201':
-          description: Создана одна запись.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-                    example: Record(s) Created
-                  data:
-                    type: object
-                    properties:
-                      totalCount:
-                        type: integer
-                        enum:
-                        - 1
-                      userCalls:
-                        type: array
-                        minItems: 1
-                        maxItems: 1
-                        items:
-                          type: object
-                          properties:
-                            type:
-                              type: string
-                              enum:
-                              - call
-                              - task
-                              description: 'Тип записи: звонок или задача.'
-                            dt:
-                              type: string
-                              example: '2028-02-29 00:00:00'
-                              description: Срок возвращается в формате YYYY-MM-DD HH:MM:SS; время равно 00:00:00 и не является поддержкой срока с точным
-                                временем.
-                            pet_id:
-                              type: string
-                              description: Числовое значение в формате стандартного REST-ответа.
-                            creator_id:
-                              type: string
-                              description: Числовое значение в формате стандартного REST-ответа.
-                            user_id:
-                              type: string
-                              description: Числовое значение в формате стандартного REST-ответа.
-                            position_id:
-                              type: string
-                              description: Числовое значение в формате стандартного REST-ответа.
-                            note:
-                              type: string
-                              maxLength: 250
-                              description: Обязательно и не состоит из пробелов, если ticket_add_required_description включён
-                                в клинике API-ключа (по умолчанию включён). При выключенной настройке может отсутствовать; сохраняется
-                                пустая строка.
-                            clinic_id:
-                              type: string
-                              description: Числовое значение в формате стандартного REST-ответа.
-                            id:
-                              type: string
-                            status:
-                              type: string
-                              enum:
-                              - save
-                            create_date:
-                              type: string
-                              description: Текущее серверное время создания в формате YYYY-MM-DD HH:MM:SS.
-        '406':
-          description: Неверные поля, формат, обязательность, исполнитель или несуществующие ссылочные ID. Запись не создаётся.
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                - success
-                - error
-                - message
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - false
-                  error:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-              example:
-                success: false
-                error: true
-                message: 'dt: Укажите корректную дату без времени'
-        '401':
-          description: Ошибка аутентификации или доступа к REST API.
   /rest/api/ComboManualItem:
     get:
       summary: Get Combo Manual Item By Filtered by combo_manual_id
@@ -5587,169 +5454,6 @@ paths:
                           $ref: '#/components/schemas/medicalCards'
                       totalCount:
                         type: integer
-      x-reconciliation:
-        presentIn:
-        - openapi
-        status: openapi_only
-  /rest/api/medicalCards/laboratoryResults:
-    get:
-      summary: Get laboratory results by client
-      description: >-
-        Returns active medical cards of the specified client only when a laboratory result has been
-        recorded for the card. The HTML displayed as the laboratory result is returned in
-        `data.medicalcards[].healing_process`.
-      tags:
-      - Medical Cards
-      operationId: get_rest_api_medicalCards_laboratoryResults
-      parameters:
-      - name: client_id
-        in: query
-        description: Identifier of the client whose laboratory-result medical cards are requested.
-        required: true
-        schema:
-          type: integer
-          minimum: 1
-        example: 123
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      responses:
-        '200':
-          description: Laboratory-result medical cards.
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                - success
-                - data
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    required:
-                    - medicalcards
-                    properties:
-                      medicalcards:
-                        type: array
-                        items:
-                          type: object
-                          required:
-                          - medical_card_id
-                          - medical_card_status
-                          - client_id
-                          - pet_id
-                          - healing_process
-                          properties:
-                            medical_card_id:
-                              type: integer
-                              example: 48
-                            medical_card_status:
-                              type: string
-                              enum:
-                              - active
-                              description: The endpoint returns active medical cards only.
-                            date_edit:
-                              type: string
-                              description: Date and time when the medical card was last edited.
-                              example: '2026-10-28 15:39:32'
-                            diagnos:
-                              type: string
-                              description: JSON-encoded diagnoses from the medical card.
-                            diagnos_data:
-                              type: array
-                              description: Resolved diagnoses when the medical card contains diagnoses.
-                              items:
-                                type: object
-                                properties:
-                                  diagnos_id:
-                                    type: integer
-                                  title:
-                                    type: string
-                            doctor_id:
-                              type: integer
-                            client_id:
-                              type: integer
-                              example: 123
-                            pet_id:
-                              type: integer
-                              example: 14
-                            alias:
-                              type: string
-                              description: Pet name.
-                            birthday:
-                              type: string
-                              nullable: true
-                              description: Pet birth date.
-                            sex:
-                              type: string
-                              nullable: true
-                            note:
-                              type: string
-                              description: Pet note.
-                            pet_type:
-                              type: string
-                              nullable: true
-                            breed:
-                              type: string
-                              nullable: true
-                            first_name:
-                              type: string
-                              description: Client first name.
-                            last_name:
-                              type: string
-                              description: Client last name.
-                            middle_name:
-                              type: string
-                              nullable: true
-                              description: Client middle name.
-                            phone:
-                              type: string
-                              description: Client contact phone selected from cell, home, or work phone.
-                            healing_process:
-                              type: string
-                              description: HTML content of the laboratory result.
-                              example: '<p>Laboratory result</p>'
-                            recomendation:
-                              type: string
-                              description: Medical-card recommendation. Field name is kept for API compatibility.
-                            weight:
-                              type: number
-                            temperature:
-                              type: number
-                            meet_result_id:
-                              type: integer
-                            admission_type:
-                              type: integer
-                            doctor_nickname:
-                              type: string
-                              nullable: true
-                            doctor_first_name:
-                              type: string
-                              nullable: true
-                            doctor_last_name:
-                              type: string
-                              nullable: true
-                            doctor_middle_name:
-                              type: string
-                              nullable: true
-                            editable:
-                              type: integer
-                              enum:
-                              - 0
-                              - 1
-                              description: Whether the medical card can be edited.
-                            meet_result_title:
-                              type: string
-                              description: Display name for meet_result_id.
-                            admission_type_title:
-                              type: string
-                              description: Display name for admission_type.
-        '401':
-          description: REST API is disabled or the API key is invalid.
-        '500':
-          description: The required client_id parameter is missing or invalid.
       x-reconciliation:
         presentIn:
         - openapi
@@ -7368,11 +7072,211 @@ paths:
         - openapi
         - extjs
         status: confirmed
+  /rest/api/client:
+    get:
+      summary: Get All Clients
+      tags:
+      - Client
+      operationId: get_rest_api_client
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      client:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/client'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/client/{ID}:
+    post:
+      summary: Post Client
+      tags:
+      - Client
+      operationId: post_rest_api_client_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      client:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/client'
+                      totalCount:
+                        type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client'
+      x-reconciliation:
+        presentIn:
+        - openapi
+        status: openapi_only
+    put:
+      summary: Client editing
+      tags:
+      - Client
+      operationId: put_rest_api_client_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      client:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/client'
+                      totalCount:
+                        type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client'
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+    delete:
+      summary: Delete
+      tags:
+      - Client
+      operationId: delete_rest_api_client_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      client:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/client'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/client/{id}:
+    get:
+      summary: Get Client By ID
+      tags:
+      - Client
+      operationId: get_rest_api_client_116468
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      client:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/client'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
   /rest/api/clientDiscountCard:
     get:
       summary: Список скидочных карт
-      description: 'Возвращает карты client_discount_card. В каждой карте вложен клиент. Параметры limit, offset, sort и filter
-        работают как у остальных списков.'
+      description: Возвращает карты client_discount_card. В каждой карте вложен клиент. Параметры limit, offset, sort и filter
+        работают как у остальных списков.
       tags:
       - ClientDiscountCard
       operationId: get_rest_api_clientDiscountCard
@@ -7437,9 +7341,9 @@ paths:
         status: confirmed
     post:
       summary: Создать скидочную карту
-      description: 'Создает карту. Обязательны number, client_id, pet_id и существующий card_type_id. Без number, client_id
+      description: Создает карту. Обязательны number, client_id, pet_id и существующий card_type_id. Без number, client_id
         или pet_id ответ 406. Без card_type_id или с неизвестным типом ответ 500 из-за внешнего ключа. В ответе создания нет
-        вложенного клиента, id приходит строкой, create_date равен null.'
+        вложенного клиента, id приходит строкой, create_date равен null.
       tags:
       - ClientDiscountCard
       operationId: post_rest_api_clientDiscountCard
@@ -7524,8 +7428,8 @@ paths:
                 error: true
                 message: 'CDbCommand не удалось исполнить SQL-запрос: SQLSTATE[23000]: Integrity constraint violation: 1452
                   Cannot add or update a child row: a foreign key constraint fails (`one`.`client_discount_card`, CONSTRAINT
-                  `fk_client_discount_card_type_id` FOREIGN KEY (`card_type_id`) REFERENCES `discount_card_type` (`id`) ON DELETE
-                  CASCADE ON UPDATE CASCADE)'
+                  `fk_client_discount_card_type_id` FOREIGN KEY (`card_type_id`) REFERENCES `discount_card_type` (`id`) ON
+                  DELETE CASCADE ON UPDATE CASCADE)'
       x-reconciliation:
         presentIn:
         - openapi
@@ -7534,8 +7438,8 @@ paths:
   /rest/api/clientDiscountCard/{ID}:
     get:
       summary: Скидочная карта по id
-      description: 'Возвращает одну карту объектом, с вложенным клиентом. Если записи нет, код все равно 200, totalCount равен
-        0, а clientDiscountCard — пустой массив.'
+      description: Возвращает одну карту объектом, с вложенным клиентом. Если записи нет, код все равно 200, totalCount равен
+        0, а clientDiscountCard — пустой массив.
       tags:
       - ClientDiscountCard
       operationId: get_rest_api_clientDiscountCard_ID
@@ -7754,6 +7658,300 @@ paths:
         - openapi
         - extjs
         status: confirmed
+  /rest/api/clinics:
+    get:
+      summary: Get All Clinics
+      tags:
+      - Clinic
+      operationId: get_rest_api_clinics
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      clinics:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/clinics'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/clinics/{ID}:
+    get:
+      summary: Get Clinic By ID
+      tags:
+      - Clinic
+      operationId: get_rest_api_clinics_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      clinics:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/clinics'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/closingOfInvoices:
+    get:
+      summary: Get Closing Of Invoice All
+      tags:
+      - Payments
+      operationId: get_rest_api_closingOfInvoices
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      closingOfInvoices:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/closingOfInvoices'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/closingOfInvoices/{ID}:
+    get:
+      summary: Get Closing Of Invoice By Id
+      tags:
+      - Payments
+      operationId: get_rest_api_closingOfInvoices_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      closingOfInvoices:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/closingOfInvoices'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/documentNumber:
+    get:
+      summary: Список номеров документов
+      description: Возвращает записи document_number.
+      tags:
+      - DocumentNumber
+      operationId: get_rest_api_documentNumber
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Список номеров.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - success
+                - message
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+                    example: Records Retrieved Successfully
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - totalCount
+                    - documentNumber
+                    properties:
+                      totalCount:
+                        type: integer
+                        example: 1
+                      documentNumber:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/documentNumber'
+              example:
+                success: true
+                message: Records Retrieved Successfully
+                data:
+                  totalCount: 1
+                  documentNumber:
+                  - id: 1
+                    document_type: invoice
+                    document_id: 1
+                    document_number: '1'
+                    number_mask: '{d}'
+                    number_clear: 1
+                    clinic_id: 1
+                    unique_crutch: 1
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/documentNumber/{ID}:
+    get:
+      summary: Номер документа по id
+      description: Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а documentNumber
+        — пустой массив.
+      tags:
+      - DocumentNumber
+      operationId: get_rest_api_documentNumber_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 1
+      responses:
+        '200':
+          description: Запись найдена либо список пуст.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - success
+                - message
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+                    example: Record Retrieved Successfully
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - totalCount
+                    - documentNumber
+                    properties:
+                      totalCount:
+                        type: integer
+                      documentNumber:
+                        oneOf:
+                        - $ref: '#/components/schemas/documentNumber'
+                        - type: array
+                          maxItems: 0
+              examples:
+                found:
+                  summary: Запись найдена
+                  value:
+                    success: true
+                    message: Record Retrieved Successfully
+                    data:
+                      totalCount: 1
+                      documentNumber:
+                        id: 1
+                        document_type: invoice
+                        document_id: 1
+                        document_number: '1'
+                        number_mask: '{d}'
+                        number_clear: 1
+                        clinic_id: 1
+                        unique_crutch: 1
+                missing:
+                  summary: Записи нет
+                  value:
+                    success: true
+                    message: Record Retrieved Successfully
+                    data:
+                      totalCount: 0
+                      documentNumber: []
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
   /rest/api/failedHook:
     get:
       summary: Список ошибок доставки вебхуков
@@ -7820,8 +8018,8 @@ paths:
         status: confirmed
     post:
       summary: Создать запись ошибки доставки
-      description: 'Создает строку failed_hook. Адрес длиннее 300 символов отвечает 406. В ответе запись массивом, id приходит
-        строкой.'
+      description: Создает строку failed_hook. Адрес длиннее 300 символов отвечает 406. В ответе запись массивом, id приходит
+        строкой.
       tags:
       - FailedHook
       operationId: post_rest_api_failedHook
@@ -7902,8 +8100,8 @@ paths:
   /rest/api/failedHook/{ID}:
     get:
       summary: Ошибка доставки по id
-      description: 'Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а failedHook —
-        пустой массив.'
+      description: Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а failedHook —
+        пустой массив.
       tags:
       - FailedHook
       operationId: get_rest_api_failedHook_ID
@@ -8113,886 +8311,6 @@ paths:
                 success: false
                 error: true
                 message: Record not found
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/webHook:
-    get:
-      summary: Список вебхуков
-      description: 'Возвращает сервисы для хук-уведомлений. Отбор в программе зафиксирован на combo_manual_id 11. Параметры
-        limit, offset, sort и filter не применяются: такой запрос отвечает 200 и success=false. combo_manual_id в списке скрыт.'
-      tags:
-      - WebHook
-      operationId: get_rest_api_webHook
-      responses:
-        '200':
-          description: Список сервисов либо отказ из-за параметров списка.
-          content:
-            application/json:
-              schema:
-                oneOf:
-                - type: object
-                  additionalProperties: false
-                  required:
-                  - success
-                  - message
-                  - data
-                  properties:
-                    success:
-                      type: boolean
-                      enum:
-                      - true
-                    message:
-                      type: string
-                      example: Records Retrieved Successfully
-                    data:
-                      type: object
-                      additionalProperties: false
-                      required:
-                      - totalCount
-                      - webHook
-                      properties:
-                        totalCount:
-                          type: integer
-                        webHook:
-                          type: array
-                          items:
-                            $ref: '#/components/schemas/webHook'
-                - type: object
-                  additionalProperties: false
-                  required:
-                  - success
-                  - message
-                  properties:
-                    success:
-                      type: boolean
-                      enum:
-                      - false
-                    message:
-                      type: string
-              examples:
-                empty:
-                  summary: Сервисов нет
-                  value:
-                    success: true
-                    message: Records Retrieved Successfully
-                    data:
-                      totalCount: 0
-                      webHook: []
-                filtersRejected:
-                  summary: Передан limit, offset, sort или filter
-                  value:
-                    success: false
-                    message: Does not work limit, offset, sort, and filter for this model.
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-    post:
-      summary: Создать вебхук
-      description: 'Создает сервис в справочнике services_for_hooks. Обязательны title и value. dop_param3 нормализуется:
-        пробелы убираются. Неизвестное событие отвечает 422. В ответе нет combo_manual_id, id приходит строкой.'
-      tags:
-      - WebHook
-      operationId: post_rest_api_webHook
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/webHookWrite'
-            example:
-              title: openapi-probe
-              value: https://example.invalid/openapi-probe
-              dop_param3: ' invoiceAdd , invoiceEdit '
-      responses:
-        '201':
-          description: Сервис создан.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - success
-                - message
-                - data
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-                    example: Record(s) Created
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                    - totalCount
-                    - webHook
-                    properties:
-                      totalCount:
-                        type: integer
-                        example: 1
-                      webHook:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/webHook'
-              example:
-                success: true
-                message: Record(s) Created
-                data:
-                  totalCount: 1
-                  webHook:
-                  - title: openapi-probe
-                    value: https://example.invalid/openapi-probe
-                    dop_param1: ''
-                    dop_param2: ''
-                    dop_param3: invoiceAdd,invoiceEdit
-                    is_active: 1
-                    id: '199'
-        '406':
-          description: Не переданы title или value.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/restError'
-              example:
-                success: false
-                error: true
-                message: Model could not be saved
-        '422':
-          description: В dop_param3 есть неизвестное событие.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/restError'
-              example:
-                success: false
-                error: true
-                message: 'Некорректные события webhook: notAnEvent'
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/webHook/{ID}:
-    get:
-      summary: Вебхук по id
-      description: 'Читает строку combo_manual_items по id и отдает ее объектом, включая combo_manual_id. Проверки, что это
-        сервис хуков, нет. Если записи нет, код 200, totalCount равен 0, webHook — пустой массив.'
-      tags:
-      - WebHook
-      operationId: get_rest_api_webHook_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: integer
-        example: 199
-      responses:
-        '200':
-          description: Запись найдена либо список пуст.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - success
-                - message
-                - data
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-                    example: Record Retrieved Successfully
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                    - totalCount
-                    - webHook
-                    properties:
-                      totalCount:
-                        type: integer
-                      webHook:
-                        oneOf:
-                        - $ref: '#/components/schemas/webHook'
-                        - type: array
-                          maxItems: 0
-              examples:
-                found:
-                  summary: Запись найдена
-                  value:
-                    success: true
-                    message: Record Retrieved Successfully
-                    data:
-                      totalCount: 1
-                      webHook:
-                        id: 199
-                        combo_manual_id: 11
-                        title: openapi-probe
-                        value: https://example.invalid/openapi-probe
-                        dop_param1: ''
-                        dop_param2: ''
-                        dop_param3: invoiceAdd,invoiceEdit
-                        is_active: 1
-                missing:
-                  summary: Записи нет
-                  value:
-                    success: true
-                    message: Record Retrieved Successfully
-                    data:
-                      totalCount: 0
-                      webHook: []
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-    put:
-      summary: Изменить вебхук
-      description: 'Обновляет сервис, только если его combo_manual_id принадлежит справочнику services_for_hooks. Иначе 406.
-        combo_manual_id в ответе скрыт. Ответ — массив из одной записи.'
-      tags:
-      - WebHook
-      operationId: put_rest_api_webHook_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/webHookUpdate'
-            example:
-              dop_param1: token
-              is_active: 0
-      responses:
-        '201':
-          description: Сервис обновлен.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - success
-                - message
-                - data
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-                    example: Record Updated
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                    - totalCount
-                    - webHook
-                    properties:
-                      totalCount:
-                        type: integer
-                        example: 1
-                      webHook:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/webHook'
-              example:
-                success: true
-                message: Record Updated
-                data:
-                  totalCount: 1
-                  webHook:
-                  - id: 199
-                    title: openapi-probe
-                    value: https://example.invalid/openapi-probe
-                    dop_param1: token
-                    dop_param2: ''
-                    dop_param3: invoiceAdd,invoiceEdit
-                    is_active: 0
-        '406':
-          description: Запись не из справочника сервисов хуков.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/restError'
-              example:
-                success: false
-                error: true
-                message: 'Could not update model with ID: 1'
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-    delete:
-      summary: Удалить вебхук
-      description: Удаляет сервис, только если запись принадлежит справочнику services_for_hooks. Иначе, и если записи уже нет, ответ 406.
-      tags:
-      - WebHook
-      operationId: delete_rest_api_webHook_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Сервис удален. id в ответе — строка.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - success
-                - message
-                - data
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-                    example: Record Deleted
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                    - id
-                    properties:
-                      id:
-                        type: string
-                        example: '199'
-              example:
-                success: true
-                message: Record Deleted
-                data:
-                  id: '199'
-        '406':
-          description: Запись не из справочника сервисов хуков или уже удалена.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/restError'
-              example:
-                success: false
-                error: true
-                message: 'Could not delete model with ID: 199'
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/documentNumber:
-    get:
-      summary: Список номеров документов
-      description: Возвращает записи document_number.
-      tags:
-      - DocumentNumber
-      operationId: get_rest_api_documentNumber
-      parameters:
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
-      responses:
-        '200':
-          description: Список номеров.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - success
-                - message
-                - data
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-                    example: Records Retrieved Successfully
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                    - totalCount
-                    - documentNumber
-                    properties:
-                      totalCount:
-                        type: integer
-                        example: 1
-                      documentNumber:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/documentNumber'
-              example:
-                success: true
-                message: Records Retrieved Successfully
-                data:
-                  totalCount: 1
-                  documentNumber:
-                  - id: 1
-                    document_type: invoice
-                    document_id: 1
-                    document_number: '1'
-                    number_mask: '{d}'
-                    number_clear: 1
-                    clinic_id: 1
-                    unique_crutch: 1
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/documentNumber/{ID}:
-    get:
-      summary: Номер документа по id
-      description: 'Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а documentNumber —
-        пустой массив.'
-      tags:
-      - DocumentNumber
-      operationId: get_rest_api_documentNumber_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: integer
-        example: 1
-      responses:
-        '200':
-          description: Запись найдена либо список пуст.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - success
-                - message
-                - data
-                properties:
-                  success:
-                    type: boolean
-                    enum:
-                    - true
-                  message:
-                    type: string
-                    example: Record Retrieved Successfully
-                  data:
-                    type: object
-                    additionalProperties: false
-                    required:
-                    - totalCount
-                    - documentNumber
-                    properties:
-                      totalCount:
-                        type: integer
-                      documentNumber:
-                        oneOf:
-                        - $ref: '#/components/schemas/documentNumber'
-                        - type: array
-                          maxItems: 0
-              examples:
-                found:
-                  summary: Запись найдена
-                  value:
-                    success: true
-                    message: Record Retrieved Successfully
-                    data:
-                      totalCount: 1
-                      documentNumber:
-                        id: 1
-                        document_type: invoice
-                        document_id: 1
-                        document_number: '1'
-                        number_mask: '{d}'
-                        number_clear: 1
-                        clinic_id: 1
-                        unique_crutch: 1
-                missing:
-                  summary: Записи нет
-                  value:
-                    success: true
-                    message: Record Retrieved Successfully
-                    data:
-                      totalCount: 0
-                      documentNumber: []
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/client:
-    get:
-      summary: Get All Clients
-      tags:
-      - Client
-      operationId: get_rest_api_client
-      parameters:
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      client:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/client'
-                      totalCount:
-                        type: integer
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/client/{ID}:
-    post:
-      summary: Post Client
-      tags:
-      - Client
-      operationId: post_rest_api_client_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      client:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/client'
-                      totalCount:
-                        type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/client'
-      x-reconciliation:
-        presentIn:
-        - openapi
-        status: openapi_only
-    put:
-      summary: Client editing
-      tags:
-      - Client
-      operationId: put_rest_api_client_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      client:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/client'
-                      totalCount:
-                        type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/client'
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-    delete:
-      summary: Delete
-      tags:
-      - Client
-      operationId: delete_rest_api_client_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      client:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/client'
-                      totalCount:
-                        type: integer
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/client/{id}:
-    get:
-      summary: Get Client By ID
-      tags:
-      - Client
-      operationId: get_rest_api_client_116468
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      client:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/client'
-                      totalCount:
-                        type: integer
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/clinics:
-    get:
-      summary: Get All Clinics
-      tags:
-      - Clinic
-      operationId: get_rest_api_clinics
-      parameters:
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      clinics:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/clinics'
-                      totalCount:
-                        type: integer
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/clinics/{ID}:
-    get:
-      summary: Get Clinic By ID
-      tags:
-      - Clinic
-      operationId: get_rest_api_clinics_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      clinics:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/clinics'
-                      totalCount:
-                        type: integer
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/closingOfInvoices:
-    get:
-      summary: Get Closing Of Invoice All
-      tags:
-      - Payments
-      operationId: get_rest_api_closingOfInvoices
-      parameters:
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      closingOfInvoices:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/closingOfInvoices'
-                      totalCount:
-                        type: integer
-      x-reconciliation:
-        presentIn:
-        - openapi
-        - extjs
-        status: confirmed
-  /rest/api/closingOfInvoices/{ID}:
-    get:
-      summary: Get Closing Of Invoice By Id
-      tags:
-      - Payments
-      operationId: get_rest_api_closingOfInvoices_ID
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      closingOfInvoices:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/closingOfInvoices'
-                      totalCount:
-                        type: integer
       x-reconciliation:
         presentIn:
         - openapi
@@ -9826,7 +9144,28 @@ paths:
   /rest/api/invoice/createinvoice:
     post:
       summary: Создать счет
-      description: "Создает счет с товарами или услугами.\n\n`goods` — обязательная JSON-строка со списком позиций. Для обычных позиций суммы передаются в `pr` за всё количество строки; сервер не заменяет их автоматически ценами справочника. Для комбинации с отрицательным `id` сервер раскрывает состав и рассчитывает суммы компонентов.\n\n`amount` обязателен. Сохраняемая итоговая сумма пересчитывается из сумм строк с учетом округления, скидки и наценки счета.\n\n`client_note` игнорируется и не изменяет описание клиента. Для примечания счета используйте `description`.\n\nЧисловой `amount` принимается, даже если он не равен итогу строк. Итог пересчитывается из строк после раскрытия комбинаций, затем применяются скидка и наценка. Нечисловые `amount`, `cnt`, `pr`, `discount` и `increase` отклоняются, а `cnt` должен быть больше нуля.\n\nВ `data.invoice` поля `amount`, `status`, `creator_id`, `description` и `paid_amount` читаются из сохраненной записи. `amount` — пересчитанный итог, `status` нового счета — `save`, `paid_amount` — 0. `client_note` в ответ не попадает."
+      description: 'Создает счет с товарами или услугами.
+
+
+        `goods` — обязательная JSON-строка со списком позиций. Для обычных позиций суммы передаются в `pr` за всё количество
+        строки; сервер не заменяет их автоматически ценами справочника. Для комбинации с отрицательным `id` сервер раскрывает
+        состав и рассчитывает суммы компонентов.
+
+
+        `amount` обязателен. Сохраняемая итоговая сумма пересчитывается из сумм строк с учетом округления, скидки и наценки
+        счета.
+
+
+        `client_note` игнорируется и не изменяет описание клиента. Для примечания счета используйте `description`.
+
+
+        Числовой `amount` принимается, даже если он не равен итогу строк. Итог пересчитывается из строк после раскрытия комбинаций,
+        затем применяются скидка и наценка. Нечисловые `amount`, `cnt`, `pr`, `discount` и `increase` отклоняются, а `cnt`
+        должен быть больше нуля.
+
+
+        В `data.invoice` поля `amount`, `status`, `creator_id`, `description` и `paid_amount` читаются из сохраненной записи.
+        `amount` — пересчитанный итог, `status` нового счета — `save`, `paid_amount` — 0. `client_note` в ответ не попадает.'
       tags:
       - Invoice
       operationId: post_rest_api_invoice_createinvoice
@@ -9907,7 +9246,8 @@ paths:
                       example: 80
                     amount:
                       type: number
-                      description: "Передаваемая сумма счета; поле обязательно. Сохраняемый итог сервер пересчитывает из сумм строк с учетом округления, скидки и наценки счета."
+                      description: Передаваемая сумма счета; поле обязательно. Сохраняемый итог сервер пересчитывает из сумм
+                        строк с учетом округления, скидки и наценки счета.
                       example: 80
                     description:
                       type: string
@@ -9915,7 +9255,7 @@ paths:
                       example: Счет за услуги
                     client_note:
                       type: string
-                      description: "Игнорируется: метод не изменяет описание клиента. Для примечания счета используйте description."
+                      description: 'Игнорируется: метод не изменяет описание клиента. Для примечания счета используйте description.'
                     night:
                       type: integer
                       description: Признак ночного счета. Итоговое значение определяет сервер.
@@ -9932,11 +9272,19 @@ paths:
                       default: 0
                     goods:
                       type: string
-                      description: "JSON-строка с массивом позиций. Поля обычной позиции: `id` — идентификаторы товара, параметра продажи и склада в формате `good_id_sale_param_id_store_id`; `cnt` — количество; `pr` — сумма всей строки за указанное количество, сохраняемая из запроса без автоматической замены ценой справочника; `tag_id` — характеристика товара или 0; `ruid` — ответственный сотрудник; `iddfrp` — 1, чтобы использовать врача из `doctor_id`, иначе 0. Для комбинации с отрицательным `id` обязательны только `id` и `cnt`: сервер раскрывает состав и рассчитывает суммы компонентов. Дополнительные поля: `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`."
+                      description: 'JSON-строка с массивом позиций. Поля обычной позиции: `id` — идентификаторы товара, параметра
+                        продажи и склада в формате `good_id_sale_param_id_store_id`; `cnt` — количество; `pr` — сумма всей
+                        строки за указанное количество, сохраняемая из запроса без автоматической замены ценой справочника;
+                        `tag_id` — характеристика товара или 0; `ruid` — ответственный сотрудник; `iddfrp` — 1, чтобы использовать
+                        врача из `doctor_id`, иначе 0. Для комбинации с отрицательным `id` обязательны только `id` и `cnt`:
+                        сервер раскрывает состав и рассчитывает суммы компонентов. Дополнительные поля: `dsc`, `dp`, `di`,
+                        `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.'
                       example: '[{"id":"36760_337982_0","cnt":1,"pr":80,"dp":80,"tag_id":0,"pa":"","pac":0,"ruid":1,"iddfrp":0}]'
       responses:
         '201':
-          description: "Успешное создание счета определяется по success=true. data.invoice.amount, status, creator_id, description и paid_amount взяты из сохраненной записи. amount — пересчитанный итог строк, а не значение из запроса. status нового счета — save."
+          description: Успешное создание счета определяется по success=true. data.invoice.amount, status, creator_id, description
+            и paid_amount взяты из сохраненной записи. amount — пересчитанный итог строк, а не значение из запроса. status
+            нового счета — save.
           content:
             application/json:
               schema:
@@ -10000,7 +9348,8 @@ paths:
                             example: save
                           amount:
                             type: number
-                            description: Сохраненный итог после пересчета строк, скидки и наценки. Может отличаться от amount в запросе.
+                            description: Сохраненный итог после пересчета строк, скидки и наценки. Может отличаться от amount
+                              в запросе.
                             example: 80
                           paid_amount:
                             type: number
@@ -10099,11 +9448,11 @@ paths:
     post:
       summary: Оплатить счет (в разработке)
       description: 'Выполняет проведение и оплату счета от имени проверенного сотрудника user_id. Касса выбирается сервером
-        с учетом текущего доступа сотрудника; для кассы СБП оплата безналичная. amount — новое поступление денег: возможны частичная
-        оплата и зачисление превышения в аванс клиента. При amount=0 используется аванс, а при его отсутствии счет может быть
-        проведен в долг. success=true означает успешную операцию, а не обязательно полную оплату; проверяйте payment_status.
-        Повтор частичного платежа учитывается как новое поступление: ключ идемпотентности пока не поддерживается. Для уже полностью
-        оплаченного счета запрос возвращает 409 без нового платежа.'
+        с учетом текущего доступа сотрудника; для кассы СБП оплата безналичная. amount — новое поступление денег: возможны
+        частичная оплата и зачисление превышения в аванс клиента. При amount=0 используется аванс, а при его отсутствии счет
+        может быть проведен в долг. success=true означает успешную операцию, а не обязательно полную оплату; проверяйте payment_status.
+        Повтор частичного платежа учитывается как новое поступление: ключ идемпотентности пока не поддерживается. Для уже
+        полностью оплаченного счета запрос возвращает 409 без нового платежа.'
       tags:
       - Invoice
       operationId: post_rest_api_invoice_payinvoice
@@ -10344,12 +9693,173 @@ paths:
         - openapi
         - extjs
         status: confirmed
+  /rest/api/medicalCards/laboratoryResults:
+    get:
+      summary: Get laboratory results by client
+      description: Returns active medical cards of the specified client only when a laboratory result has been recorded for
+        the card. The HTML displayed as the laboratory result is returned in `data.medicalcards[].healing_process`.
+      tags:
+      - Medical Cards
+      operationId: get_rest_api_medicalCards_laboratoryResults
+      parameters:
+      - name: client_id
+        in: query
+        description: Identifier of the client whose laboratory-result medical cards are requested.
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+        example: 123
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: Laboratory-result medical cards.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    required:
+                    - medicalcards
+                    properties:
+                      medicalcards:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - medical_card_id
+                          - medical_card_status
+                          - client_id
+                          - pet_id
+                          - healing_process
+                          properties:
+                            medical_card_id:
+                              type: integer
+                              example: 48
+                            medical_card_status:
+                              type: string
+                              enum:
+                              - active
+                              description: The endpoint returns active medical cards only.
+                            date_edit:
+                              type: string
+                              description: Date and time when the medical card was last edited.
+                              example: '2026-10-28 15:39:32'
+                            diagnos:
+                              type: string
+                              description: JSON-encoded diagnoses from the medical card.
+                            diagnos_data:
+                              type: array
+                              description: Resolved diagnoses when the medical card contains diagnoses.
+                              items:
+                                type: object
+                                properties:
+                                  diagnos_id:
+                                    type: integer
+                                  title:
+                                    type: string
+                            doctor_id:
+                              type: integer
+                            client_id:
+                              type: integer
+                              example: 123
+                            pet_id:
+                              type: integer
+                              example: 14
+                            alias:
+                              type: string
+                              description: Pet name.
+                            birthday:
+                              type: string
+                              nullable: true
+                              description: Pet birth date.
+                            sex:
+                              type: string
+                              nullable: true
+                            note:
+                              type: string
+                              description: Pet note.
+                            pet_type:
+                              type: string
+                              nullable: true
+                            breed:
+                              type: string
+                              nullable: true
+                            first_name:
+                              type: string
+                              description: Client first name.
+                            last_name:
+                              type: string
+                              description: Client last name.
+                            middle_name:
+                              type: string
+                              nullable: true
+                              description: Client middle name.
+                            phone:
+                              type: string
+                              description: Client contact phone selected from cell, home, or work phone.
+                            healing_process:
+                              type: string
+                              description: HTML content of the laboratory result.
+                              example: <p>Laboratory result</p>
+                            recomendation:
+                              type: string
+                              description: Medical-card recommendation. Field name is kept for API compatibility.
+                            weight:
+                              type: number
+                            temperature:
+                              type: number
+                            meet_result_id:
+                              type: integer
+                            admission_type:
+                              type: integer
+                            doctor_nickname:
+                              type: string
+                              nullable: true
+                            doctor_first_name:
+                              type: string
+                              nullable: true
+                            doctor_last_name:
+                              type: string
+                              nullable: true
+                            doctor_middle_name:
+                              type: string
+                              nullable: true
+                            editable:
+                              type: integer
+                              enum:
+                              - 0
+                              - 1
+                              description: Whether the medical card can be edited.
+                            meet_result_title:
+                              type: string
+                              description: Display name for meet_result_id.
+                            admission_type_title:
+                              type: string
+                              description: Display name for admission_type.
+        '401':
+          description: REST API is disabled or the API key is invalid.
+        '500':
+          description: The required client_id parameter is missing or invalid.
+      x-reconciliation:
+        presentIn:
+        - openapi
+        status: openapi_only
   /rest/api/messages/all:
     post:
       summary: Сообщение всем активным пользователям
-      description: 'Создает запись global_messages_message со статусом pending для каждого активного пользователя. clinic_id в
-        записи пустой. Тело принимается как JSON или как form-urlencoded с теми же полями. Ответ, включая ошибку проверки, приходит
-        с кодом 201.'
+      description: Создает запись global_messages_message со статусом pending для каждого активного пользователя. clinic_id
+        в записи пустой. Тело принимается как JSON или как form-urlencoded с теми же полями. Ответ, включая ошибку проверки,
+        приходит с кодом 201.
       tags:
       - Global Messages
       operationId: post_rest_api_messages_all
@@ -10389,9 +9899,9 @@ paths:
   /rest/api/messages/reports:
     get:
       summary: Отчет по кампании
-      description: 'Считает сообщения одной кампании. total — все записи кампании. sent и pending — записи со статусами sent
+      description: Считает сообщения одной кампании. total — все записи кампании. sent и pending — записи со статусами sent
         и pending. Статус failed входит в total и не входит в sent и pending. Неизвестная кампания возвращает нули, а не ошибку.
-        Параметры limit, offset, sort и filter не применяются.'
+        Параметры limit, offset, sort и filter не применяются.
       tags:
       - Global Messages
       operationId: get_rest_api_messages_reports
@@ -10447,9 +9957,9 @@ paths:
   /rest/api/messages/roles:
     post:
       summary: Сообщение пользователям ролей
-      description: 'Создает запись global_messages_message со статусом pending для каждого активного пользователя, чья роль
-        названа в roles. Сравнение идет по roles.name, не по id роли. clinic_id в записи пустой. Тело принимается как JSON или
-        как form-urlencoded с теми же полями. Ответ, включая ошибку проверки, приходит с кодом 201.'
+      description: Создает запись global_messages_message со статусом pending для каждого активного пользователя, чья роль
+        названа в roles. Сравнение идет по roles.name, не по id роли. clinic_id в записи пустой. Тело принимается как JSON
+        или как form-urlencoded с теми же полями. Ответ, включая ошибку проверки, приходит с кодом 201.
       tags:
       - Global Messages
       operationId: post_rest_api_messages_roles
@@ -10509,10 +10019,10 @@ paths:
   /rest/api/messages/users:
     post:
       summary: Сообщение выбранным пользователям
-      description: 'Создает запись global_messages_message со статусом pending для каждого id из user_ids, который есть в user.
+      description: Создает запись global_messages_message со статусом pending для каждого id из user_ids, который есть в user.
         Несуществующие id пропускаются. Если не осталось ни одного существующего id, сообщения не создаются. clinic_id в записи
-        пустой. Тело принимается как JSON или как form-urlencoded с теми же полями. Ответ, включая ошибку проверки, приходит с
-        кодом 201.'
+        пустой. Тело принимается как JSON или как form-urlencoded с теми же полями. Ответ, включая ошибку проверки, приходит
+        с кодом 201.
       tags:
       - Global Messages
       operationId: post_rest_api_messages_users
@@ -11690,9 +11200,9 @@ paths:
   /rest/api/user/anonymousList:
     get:
       summary: Активные пользователи без персональных данных
-      description: 'Возвращает активных пользователей: id, id роли и название роли. Логин, почта и другие персональные поля не
-        отдаются. Список не листается: limit, offset, sort и filter не применяются. data — сам массив, без вложенного users и
-        без totalCount.'
+      description: 'Возвращает активных пользователей: id, id роли и название роли. Логин, почта и другие персональные поля
+        не отдаются. Список не листается: limit, offset, sort и filter не применяются. data — сам массив, без вложенного users
+        и без totalCount.'
       tags:
       - User
       operationId: get_rest_api_user_anonymousList
@@ -11799,6 +11309,164 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/user'
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/userCalls:
+    post:
+      tags:
+      - UserCalls
+      operationId: createUserCall
+      summary: Создать задачу (в разработке)
+      description: Создаёт одну запись по общим с формой задач правилам. Принимает одиночный объект JSON или поля application/x-www-form-urlencoded;
+        пакетное создание не поддерживается. Неизвестные поля и системные id, status, create_date, executed_user, exec_note,
+        relations запрещены и возвращают 406. Сервер задаёт status=save и текущее время create_date; после сохранения вызывает
+        FastCallingAdd и LogEntity. Журнал использует стандартный контекст аутентификации REST; creator_id является автором
+        записи, а не подменой пользователя сессии. Требует действующий API-ключ и включённый REST API.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userCallsCreate'
+            examples:
+              taskOnUser:
+                value:
+                  type: task
+                  dt: '2028-02-29'
+                  pet_id: 1
+                  creator_id: 1
+                  user_id: 1
+                  note: Проверить результаты обследования
+              callOnPosition:
+                value:
+                  type: call
+                  dt: '2028-02-29'
+                  pet_id: 1
+                  creator_id: 1
+                  position_id: 1
+                  clinic_id: 0
+                  note: Позвонить владельцу
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/userCallsCreate'
+            examples:
+              taskOnUser:
+                value:
+                  type: task
+                  dt: '2028-02-29'
+                  pet_id: 1
+                  creator_id: 1
+                  user_id: 1
+                  note: Проверить результаты обследования
+              callOnPosition:
+                value:
+                  type: call
+                  dt: '2028-02-29'
+                  pet_id: 1
+                  creator_id: 1
+                  position_id: 1
+                  clinic_id: 0
+                  note: Позвонить владельцу
+      responses:
+        '201':
+          description: Создана одна запись.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+                    example: Record(s) Created
+                  data:
+                    type: object
+                    properties:
+                      totalCount:
+                        type: integer
+                        enum:
+                        - 1
+                      userCalls:
+                        type: array
+                        minItems: 1
+                        maxItems: 1
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                              - call
+                              - task
+                              description: 'Тип записи: звонок или задача.'
+                            dt:
+                              type: string
+                              example: '2028-02-29 00:00:00'
+                              description: Срок возвращается в формате YYYY-MM-DD HH:MM:SS; время равно 00:00:00 и не является
+                                поддержкой срока с точным временем.
+                            pet_id:
+                              type: string
+                              description: Числовое значение в формате стандартного REST-ответа.
+                            creator_id:
+                              type: string
+                              description: Числовое значение в формате стандартного REST-ответа.
+                            user_id:
+                              type: string
+                              description: Числовое значение в формате стандартного REST-ответа.
+                            position_id:
+                              type: string
+                              description: Числовое значение в формате стандартного REST-ответа.
+                            note:
+                              type: string
+                              maxLength: 250
+                              description: Обязательно и не состоит из пробелов, если ticket_add_required_description включён
+                                в клинике API-ключа (по умолчанию включён). При выключенной настройке может отсутствовать;
+                                сохраняется пустая строка.
+                            clinic_id:
+                              type: string
+                              description: Числовое значение в формате стандартного REST-ответа.
+                            id:
+                              type: string
+                            status:
+                              type: string
+                              enum:
+                              - save
+                            create_date:
+                              type: string
+                              description: Текущее серверное время создания в формате YYYY-MM-DD HH:MM:SS.
+        '406':
+          description: Неверные поля, формат, обязательность, исполнитель или несуществующие ссылочные ID. Запись не создаётся.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error
+                - message
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - false
+                  error:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+              example:
+                success: false
+                error: true
+                message: 'dt: Укажите корректную дату без времени'
+        '401':
+          description: Ошибка аутентификации или доступа к REST API.
       x-reconciliation:
         presentIn:
         - openapi
@@ -11995,6 +11663,393 @@ paths:
         - openapi
         - extjs
         status: confirmed
+  /rest/api/webHook:
+    get:
+      summary: Список вебхуков
+      description: 'Возвращает сервисы для хук-уведомлений. Отбор в программе зафиксирован на combo_manual_id 11. Параметры
+        limit, offset, sort и filter не применяются: такой запрос отвечает 200 и success=false. combo_manual_id в списке скрыт.'
+      tags:
+      - WebHook
+      operationId: get_rest_api_webHook
+      responses:
+        '200':
+          description: Список сервисов либо отказ из-за параметров списка.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - type: object
+                  additionalProperties: false
+                  required:
+                  - success
+                  - message
+                  - data
+                  properties:
+                    success:
+                      type: boolean
+                      enum:
+                      - true
+                    message:
+                      type: string
+                      example: Records Retrieved Successfully
+                    data:
+                      type: object
+                      additionalProperties: false
+                      required:
+                      - totalCount
+                      - webHook
+                      properties:
+                        totalCount:
+                          type: integer
+                        webHook:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/webHook'
+                - type: object
+                  additionalProperties: false
+                  required:
+                  - success
+                  - message
+                  properties:
+                    success:
+                      type: boolean
+                      enum:
+                      - false
+                    message:
+                      type: string
+              examples:
+                empty:
+                  summary: Сервисов нет
+                  value:
+                    success: true
+                    message: Records Retrieved Successfully
+                    data:
+                      totalCount: 0
+                      webHook: []
+                filtersRejected:
+                  summary: Передан limit, offset, sort или filter
+                  value:
+                    success: false
+                    message: Does not work limit, offset, sort, and filter for this model.
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+    post:
+      summary: Создать вебхук
+      description: 'Создает сервис в справочнике services_for_hooks. Обязательны title и value. dop_param3 нормализуется:
+        пробелы убираются. Неизвестное событие отвечает 422. В ответе нет combo_manual_id, id приходит строкой.'
+      tags:
+      - WebHook
+      operationId: post_rest_api_webHook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webHookWrite'
+            example:
+              title: openapi-probe
+              value: https://example.invalid/openapi-probe
+              dop_param3: ' invoiceAdd , invoiceEdit '
+      responses:
+        '201':
+          description: Сервис создан.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - success
+                - message
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+                    example: Record(s) Created
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - totalCount
+                    - webHook
+                    properties:
+                      totalCount:
+                        type: integer
+                        example: 1
+                      webHook:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/webHook'
+              example:
+                success: true
+                message: Record(s) Created
+                data:
+                  totalCount: 1
+                  webHook:
+                  - title: openapi-probe
+                    value: https://example.invalid/openapi-probe
+                    dop_param1: ''
+                    dop_param2: ''
+                    dop_param3: invoiceAdd,invoiceEdit
+                    is_active: 1
+                    id: '199'
+        '406':
+          description: Не переданы title или value.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+              example:
+                success: false
+                error: true
+                message: Model could not be saved
+        '422':
+          description: В dop_param3 есть неизвестное событие.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+              example:
+                success: false
+                error: true
+                message: 'Некорректные события webhook: notAnEvent'
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/webHook/{ID}:
+    get:
+      summary: Вебхук по id
+      description: Читает строку combo_manual_items по id и отдает ее объектом, включая combo_manual_id. Проверки, что это
+        сервис хуков, нет. Если записи нет, код 200, totalCount равен 0, webHook — пустой массив.
+      tags:
+      - WebHook
+      operationId: get_rest_api_webHook_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 199
+      responses:
+        '200':
+          description: Запись найдена либо список пуст.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - success
+                - message
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+                    example: Record Retrieved Successfully
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - totalCount
+                    - webHook
+                    properties:
+                      totalCount:
+                        type: integer
+                      webHook:
+                        oneOf:
+                        - $ref: '#/components/schemas/webHook'
+                        - type: array
+                          maxItems: 0
+              examples:
+                found:
+                  summary: Запись найдена
+                  value:
+                    success: true
+                    message: Record Retrieved Successfully
+                    data:
+                      totalCount: 1
+                      webHook:
+                        id: 199
+                        combo_manual_id: 11
+                        title: openapi-probe
+                        value: https://example.invalid/openapi-probe
+                        dop_param1: ''
+                        dop_param2: ''
+                        dop_param3: invoiceAdd,invoiceEdit
+                        is_active: 1
+                missing:
+                  summary: Записи нет
+                  value:
+                    success: true
+                    message: Record Retrieved Successfully
+                    data:
+                      totalCount: 0
+                      webHook: []
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+    put:
+      summary: Изменить вебхук
+      description: Обновляет сервис, только если его combo_manual_id принадлежит справочнику services_for_hooks. Иначе 406.
+        combo_manual_id в ответе скрыт. Ответ — массив из одной записи.
+      tags:
+      - WebHook
+      operationId: put_rest_api_webHook_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webHookUpdate'
+            example:
+              dop_param1: token
+              is_active: 0
+      responses:
+        '201':
+          description: Сервис обновлен.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - success
+                - message
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+                    example: Record Updated
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - totalCount
+                    - webHook
+                    properties:
+                      totalCount:
+                        type: integer
+                        example: 1
+                      webHook:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/webHook'
+              example:
+                success: true
+                message: Record Updated
+                data:
+                  totalCount: 1
+                  webHook:
+                  - id: 199
+                    title: openapi-probe
+                    value: https://example.invalid/openapi-probe
+                    dop_param1: token
+                    dop_param2: ''
+                    dop_param3: invoiceAdd,invoiceEdit
+                    is_active: 0
+        '406':
+          description: Запись не из справочника сервисов хуков.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+              example:
+                success: false
+                error: true
+                message: 'Could not update model with ID: 1'
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+    delete:
+      summary: Удалить вебхук
+      description: Удаляет сервис, только если запись принадлежит справочнику services_for_hooks. Иначе, и если записи уже
+        нет, ответ 406.
+      tags:
+      - WebHook
+      operationId: delete_rest_api_webHook_ID
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Сервис удален. id в ответе — строка.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - success
+                - message
+                - data
+                properties:
+                  success:
+                    type: boolean
+                    enum:
+                    - true
+                  message:
+                    type: string
+                    example: Record Deleted
+                  data:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - id
+                    properties:
+                      id:
+                        type: string
+                        example: '199'
+              example:
+                success: true
+                message: Record Deleted
+                data:
+                  id: '199'
+        '406':
+          description: Запись не из справочника сервисов хуков или уже удалена.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restError'
+              example:
+                success: false
+                error: true
+                message: 'Could not delete model with ID: 199'
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
   /token_auth.php:
     post:
       summary: Get Token (by User Login & Password)
@@ -12028,12 +12083,12 @@ paths:
         - openapi
         status: openapi_only
 x-reconciliation:
-  generatedAt: '2026-10-20T15:19:57Z'
+  generatedAt: '2026-11-12T13:40:56Z'
   sources:
     extjs: configured
     dbDumpProvided: false
   counts:
-    openapi_only: 42
-    confirmed: 95
-    extjs_only_candidate: 333
-    intentionally_undocumented: 11
+    openapi_only: 43
+    confirmed: 114
+    extjs_only_candidate: 316
+    intentionally_undocumented: 10
