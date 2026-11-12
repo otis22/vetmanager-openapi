@@ -22,6 +22,7 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
+    tagsSorter: "alpha",
     operationsSorter: function(a, b) {
       const methodA = a.get("method").toLowerCase();
       const methodB = b.get("method").toLowerCase();

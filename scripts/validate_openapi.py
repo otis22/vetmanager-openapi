@@ -148,6 +148,8 @@ def validate_swagger_ui(root: Path, errors: list[str]) -> None:
             fail(errors, "dist/swagger-initializer.js must reference vetmanager_openapi_v6.yaml")
         if "operationsSorter" not in text:
             fail(errors, "dist/swagger-initializer.js must define operationsSorter")
+        if 'tagsSorter: "alpha"' not in text:
+            fail(errors, "dist/swagger-initializer.js must sort tags alphabetically")
     if initializer.exists() and initializer_template.exists():
         if initializer.read_bytes() != initializer_template.read_bytes():
             fail(errors, "dist/swagger-initializer.js must match scripts/swagger-initializer.js")

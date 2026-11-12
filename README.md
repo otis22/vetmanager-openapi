@@ -27,7 +27,7 @@ python3 -m http.server 8080
 
 Then open http://localhost:8080.
 
-This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as GET → POST → PUT → DELETE operation sorting. If port 8080 is occupied by a previously started Docker container, stop it first or use another port, for example `python3 -m http.server 8081`.
+This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as alphabetical tag order and GET → POST → PUT → DELETE operation sorting. If port 8080 is occupied by a previously started Docker container, stop it first or use another port, for example `python3 -m http.server 8081`.
 
 ## Validate
 
@@ -136,4 +136,4 @@ Raw API responses are intentionally not stored.
 url: "vetmanager_openapi_v6.yaml"
 ```
 
-The template also owns GET → POST → PUT → DELETE operation sorting. Validation checks the URL, the presence of `operationsSorter`, and exact equality between the template and the generated `dist` file, so an automated Swagger UI update cannot silently remove project settings.
+The template also owns alphabetical tag order and GET → POST → PUT → DELETE operation sorting. Validation checks the URL, the presence of `operationsSorter` and `tagsSorter`, and exact equality between the template and the generated `dist` file, so an automated Swagger UI update cannot silently remove project settings.
