@@ -1251,6 +1251,7 @@
             "type": "string",
             "example": "Общая касса",
             "nullable": true,
+            "maxLength": 255,
             "x-db-type": "varchar(255)",
             "default": "NULL,"
           },
@@ -1271,6 +1272,7 @@
           },
           "client_cass": {
             "type": "integer",
+            "description": "1 — в эту кассу можно принимать оплаты от клиентов, 0 — нельзя.",
             "example": 1,
             "nullable": true,
             "x-db-type": "tinyint(1)",
@@ -1347,20 +1349,29 @@
           },
           "type": {
             "type": "string",
-            "description": "Тип кассы:\n\n- `bank` — банковская касса;\n- `safe` — сейф;\n- `operating` — операционная касса.\n",
+            "description": "Тип кассы:\n\n- `bank` — банковская касса;\n- `safe` — сейф;\n- `operating` — операционная касса;\n- `sbp` — касса СБП.\n",
             "example": "operating",
             "nullable": false,
-            "x-db-type": "enum('bank','safe','operating')",
+            "x-db-type": "enum('bank','safe','operating','sbp')",
             "enum": [
               "bank",
               "safe",
-              "operating"
+              "operating",
+              "sbp"
             ],
             "default": "safe"
           },
           "cashless_to_cassa_id": {
             "type": "integer",
             "example": 2,
+            "nullable": false,
+            "x-db-type": "int",
+            "default": "0"
+          },
+          "operating_cassa_id": {
+            "type": "integer",
+            "description": "Id связанной операционной кассы. 0, если связи нет.",
+            "example": 0,
             "nullable": false,
             "x-db-type": "int",
             "default": "0"
@@ -1429,248 +1440,346 @@
           },
           "closedUser": {
             "type": "object",
-            "example": {
-              "id": 2,
-              "last_name": "Романичев",
-              "first_name": "Admin1",
-              "middle_name": "",
-              "login": "demo_user",
-              "position_id": 8,
-              "email": "user@example.test",
-              "phone": "",
-              "cell_phone": "",
-              "address": "",
-              "role_id": 7,
-              "is_active": 1,
-              "calc_percents": 1,
-              "nickname": "royalConnected",
-              "last_change_pwd_date": "0000-00-00",
-              "is_limited": 0,
-              "sip_number": "",
-              "user_inn": ""
-            },
+            "description": "Сотрудник, закрывший кассу. Пароля, должности и роли в этой карточке нет. Ключа нет, если сотрудник не задан.",
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "middle_name": {
+                "type": "string"
+              },
+              "login": {
+                "type": "string"
+              },
+              "position_id": {
+                "type": "integer"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "cell_phone": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "role_id": {
+                "type": "integer"
+              },
+              "is_active": {
+                "type": "integer"
+              },
+              "calc_percents": {
+                "type": "integer"
+              },
+              "nickname": {
+                "type": "string"
+              },
+              "last_change_pwd_date": {
+                "type": "string"
+              },
+              "is_limited": {
+                "type": "integer"
+              },
+              "sip_number": {
+                "type": "string"
+              },
+              "user_inn": {
+                "type": "string"
+              }
+            }
           },
           "idCassa": {
-            "type": "object",
-            "example": {
-              "id": 8,
-              "title": "gg",
-              "assigned_user_id": 2,
-              "inventarization_date": "2024-10-31 17:21:36",
-              "client_cass": 1,
-              "main_cassa": 1,
-              "is_blocked": 0,
-              "has_unfinished_docs": 0,
-              "status": "active",
-              "clinic_id": 1,
-              "summa_cash": "337498.2000000000",
-              "summa_cashless": "0.0000000000",
-              "is_system": 0,
-              "show_in_cashflow": 1,
-              "type": "operating",
-              "cashless_to_cassa_id": 2
-            },
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/cassa"
+              }
+            ],
+            "description": "Касса, которую закрыли.",
             "nullable": true,
             "x-computed": true
           },
           "payments": {
             "type": "array",
-            "example": [
-              {
-                "id": 210,
-                "amount": "200.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2021-08-03 11:51:06",
-                "payed_user": 2,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 0,
-                "parent_id": 0
-              },
-              {
-                "id": 212,
-                "amount": "100.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2021-08-03 11:51:28",
-                "payed_user": 2,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 0,
-                "parent_id": 0
-              },
-              {
-                "id": 214,
-                "amount": "100.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2021-08-03 11:52:02",
-                "payed_user": 2,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 0,
-                "parent_id": 0
-              },
-              {
-                "id": 216,
-                "amount": "50.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2021-08-03 11:52:24",
-                "payed_user": 2,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 0,
-                "parent_id": 0
-              },
-              {
-                "id": 218,
-                "amount": "228228.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2021-10-04 17:51:55",
-                "payed_user": 4,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 144,
-                "parent_id": 0
-              },
-              {
-                "id": 222,
-                "amount": "200.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2022-01-26 22:02:39",
-                "payed_user": 2,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 140,
-                "parent_id": 0
-              },
-              {
-                "id": 226,
-                "amount": "200.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2022-01-26 22:09:36",
-                "payed_user": 2,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 0,
-                "parent_id": 0
-              },
-              {
-                "id": 232,
-                "amount": "100.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2023-02-09 14:03:46",
-                "payed_user": 6,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 130,
-                "parent_id": 0
-              },
-              {
-                "id": 234,
-                "amount": "305.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2023-02-09 14:03:46",
-                "payed_user": 6,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 148,
-                "parent_id": 0
-              },
-              {
-                "id": 236,
-                "amount": "280.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2023-05-23 12:03:36",
-                "payed_user": 6,
-                "description": "",
-                "payment_type": "cashless",
-                "invoice_id": 154,
-                "parent_id": 0
-              },
-              {
-                "id": 238,
-                "amount": "210.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2023-05-23 12:03:50",
-                "payed_user": 6,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 156,
-                "parent_id": 0
-              },
-              {
-                "id": 244,
-                "amount": "850.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2024-02-07 10:56:11",
-                "payed_user": 38,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 182,
-                "parent_id": 0
-              },
-              {
-                "id": 250,
-                "amount": "1956.2000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2024-08-08 09:37:28",
-                "payed_user": 2,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 208,
-                "parent_id": 0
-              },
-              {
-                "id": 254,
-                "amount": "99999.0000000000",
-                "status": "exec",
-                "cassa_id": 8,
-                "cassaclose_id": 2,
-                "create_date": "2024-10-23 17:50:19",
-                "payed_user": 1,
-                "description": "",
-                "payment_type": "cash",
-                "invoice_id": 0,
-                "parent_id": 0
-              }
-            ],
-            "nullable": true,
+            "description": "Оплаты этого закрытия. Кассы внутри оплаты нет. Если оплат нет, ключа нет.",
             "x-computed": true,
             "items": {
               "type": "object",
-              "additionalProperties": true
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "amount": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "cassa_id": {
+                  "type": "integer"
+                },
+                "cassaclose_id": {
+                  "type": "integer",
+                  "nullable": true
+                },
+                "create_date": {
+                  "type": "string"
+                },
+                "payed_user": {
+                  "type": "integer"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "payment_type": {
+                  "type": "string"
+                },
+                "invoice_id": {
+                  "type": "integer"
+                },
+                "parent_id": {
+                  "type": "integer"
+                }
+              }
             }
           }
         },
         "x-source": "real_api_response",
         "x-db-table": "cassaclose"
+      },
+      "cassarashod": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "date": {
+            "type": "string"
+          },
+          "invoice": {
+            "type": "string",
+            "description": "Номер входящего счета, не длиннее 255 символов.",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "id_user": {
+            "type": "integer",
+            "description": "Id владельца кассы."
+          },
+          "summa": {
+            "type": "string",
+            "nullable": true
+          },
+          "descr": {
+            "type": "string",
+            "description": "Описание, не длиннее 255 символов.",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "id_cassa": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "description": "exec — выполнен, save — сохранен, deleted — удален.",
+            "enum": [
+              "exec",
+              "save",
+              "deleted"
+            ]
+          },
+          "prihod_id": {
+            "type": "integer",
+            "description": "Id приходной накладной. 0, если расход создан не по ней."
+          },
+          "recipient_of_funds": {
+            "type": "integer",
+            "description": "Id контрагента. 0, если контрагент не выбран."
+          },
+          "operation_type_id": {
+            "type": "integer",
+            "description": "Id вида операции расхода. 0, если вид не выбран."
+          },
+          "document_type_id": {
+            "type": "integer",
+            "description": "Id вида входящего документа.",
+            "nullable": true
+          },
+          "document_date": {
+            "type": "string"
+          },
+          "summa_cashless": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsible_user_id": {
+            "type": "integer"
+          },
+          "create_date": {
+            "type": "string"
+          },
+          "RecipientOfFunds": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/suppliers"
+              }
+            ],
+            "description": "Контрагент. Ключа нет, если он не выбран.",
+            "nullable": true,
+            "x-computed": true
+          },
+          "operation_type": {
+            "type": "object",
+            "description": "Пункт справочника видов операций. Ключа нет, если пункт не найден. Группы справочника в пункте нет.",
+            "nullable": true,
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "combo_manual_id": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "dop_param1": {
+                "type": "string"
+              },
+              "dop_param2": {
+                "type": "string"
+              },
+              "dop_param3": {
+                "type": "string"
+              },
+              "is_active": {
+                "type": "integer"
+              }
+            }
+          },
+          "document_type": {
+            "type": "object",
+            "description": "Пункт справочника видов входящих документов. Ключа нет, если пункт не найден. Группы справочника в пункте нет.",
+            "nullable": true,
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "combo_manual_id": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "dop_param1": {
+                "type": "string"
+              },
+              "dop_param2": {
+                "type": "string"
+              },
+              "dop_param3": {
+                "type": "string"
+              },
+              "is_active": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "x-source": "real_api_response",
+        "x-db-table": "cassarashod"
+      },
+      "departments": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 250
+          },
+          "tax_type_number_title": {
+            "type": "string",
+            "description": "Название ставки НДС, не длиннее 250 символов.",
+            "maxLength": 250
+          },
+          "tax_type_number": {
+            "type": "integer",
+            "description": "Код ставки НДС."
+          },
+          "number": {
+            "type": "integer",
+            "description": "Порядковый номер отдела."
+          },
+          "tax_system": {
+            "type": "integer",
+            "description": "Номер системы налогообложения."
+          },
+          "tax_system_title": {
+            "type": "string",
+            "description": "Название системы налогообложения, не длиннее 250 символов.",
+            "maxLength": 250
+          },
+          "print_type": {
+            "type": "string",
+            "description": "Тип печати. normal, combination_header_as_good, combination_header_as_service, service_detail или ask_user.",
+            "maxLength": 50
+          },
+          "clinic_id": {
+            "type": "integer"
+          }
+        },
+        "x-source": "real_api_response",
+        "x-db-table": "departments"
+      },
+      "departmentToDocument": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "clinic_id": {
+            "type": "integer"
+          },
+          "department_id": {
+            "type": "integer"
+          },
+          "document_type": {
+            "type": "string",
+            "description": "good — товар, good_group — группа, good_tag — комбинация, service_tag — метка услуги.",
+            "enum": [
+              "good",
+              "good_group",
+              "good_tag",
+              "service_tag"
+            ]
+          },
+          "document_id": {
+            "type": "integer",
+            "description": "Id товара, группы, комбинации или метки. Какой справочник, задает document_type."
+          }
+        },
+        "x-source": "real_api_response",
+        "x-db-table": "department_to_document"
       },
       "client": {
         "type": "object",
@@ -11840,6 +11949,7 @@
           "Cassa"
         ],
         "operationId": "get_rest_api_cassa",
+        "description": "У кассы есть operating_cassa_id. type может быть bank, safe, operating или sbp.",
         "parameters": [
           {
             "$ref": "#/components/parameters/limit"
@@ -11904,19 +12014,20 @@
           "Cassa"
         ],
         "operationId": "get_rest_api_cassa_ID",
+        "description": "Одна касса.",
         "parameters": [
           {
             "name": "ID",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Одна касса.",
             "content": {
               "application/json": {
                 "schema": {
@@ -11932,10 +12043,7 @@
                       "type": "object",
                       "properties": {
                         "cassa": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/cassa"
-                          }
+                          "$ref": "#/components/schemas/cassa"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -12028,19 +12136,20 @@
           "Cassa / Cassa Close"
         ],
         "operationId": "get_rest_api_cassaclose_ID",
+        "description": "Одно закрытие кассы вместе с сотрудником, кассой и оплатами.",
         "parameters": [
           {
             "name": "ID",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Одно закрытие кассы.",
             "content": {
               "application/json": {
                 "schema": {
@@ -12056,10 +12165,7 @@
                       "type": "object",
                       "properties": {
                         "cassaclose": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/cassaclose"
-                          }
+                          "$ref": "#/components/schemas/cassaclose"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -12088,6 +12194,7 @@
           "Cassa / Cassa Rasshod"
         ],
         "operationId": "get_rest_api_cassarashod",
+        "description": "Список расходных ордеров. У ордера есть контрагент, если он выбран.",
         "parameters": [
           {
             "$ref": "#/components/parameters/limit"
@@ -12104,7 +12211,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Список расходных ордеров.",
             "content": {
               "application/json": {
                 "schema": {
@@ -12118,7 +12225,17 @@
                     },
                     "data": {
                       "type": "object",
-                      "additionalProperties": true
+                      "properties": {
+                        "cassarashod": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/cassarashod"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }
@@ -12142,19 +12259,20 @@
           "Cassa / Cassa Rasshod"
         ],
         "operationId": "get_rest_api_cassarashod_ID",
+        "description": "Один расходный ордер.",
         "parameters": [
           {
             "name": "ID",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Один расходный ордер.",
             "content": {
               "application/json": {
                 "schema": {
@@ -12168,7 +12286,14 @@
                     },
                     "data": {
                       "type": "object",
-                      "additionalProperties": true
+                      "properties": {
+                        "cassarashod": {
+                          "$ref": "#/components/schemas/cassarashod"
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }
@@ -12182,6 +12307,122 @@
             "extjs"
           ],
           "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/Departments": {
+      "get": {
+        "summary": "Список отделов",
+        "tags": [
+          "Departments"
+        ],
+        "operationId": "get_rest_api_Departments",
+        "description": "data.departments — массив отделов.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список отделов.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "departments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/departments"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/DepartmentToDocument": {
+      "get": {
+        "summary": "Список привязок отделов",
+        "tags": [
+          "Department To Document"
+        ],
+        "operationId": "get_rest_api_DepartmentToDocument",
+        "description": "data.departmentToDocument — массив привязок отдела к товару, группе, комбинации или метке услуги.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список привязок.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "departmentToDocument": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/departmentToDocument"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -16712,7 +16953,7 @@
     "/rest/api/invoice/payinvoice": {
       "post": {
         "summary": "Оплатить счет",
-        "description": "Выполняет проведение и оплату счета от имени проверенного сотрудника user_id. Касса выбирается сервером с учетом текущего доступа сотрудника; для кассы СБП оплата безналичная. amount — новое поступление денег: возможны частичная оплата и зачисление превышения в аванс клиента. При amount=0 используется аванс, а при его отсутствии счет может быть проведен в долг. success=true означает успешную операцию, а не обязательно полную оплату; проверяйте payment_status. Повтор частичного платежа учитывается как новое поступление: ключ идемпотентности пока не поддерживается. Для уже полностью оплаченного счета запрос возвращает 409 без нового платежа. Выбранная касса в ответ не входит: в data.invoice остаются сохраненные invoice_id, status, amount, paid_amount и payment_status.",
+        "description": "Выполняет проведение и оплату счета от имени проверенного сотрудника user_id. Касса выбирается сервером с учетом текущего доступа сотрудника. Сохраненная касса используется, только если она ему сейчас доступна. Для кассы СБП оплата безналичная. amount — новое поступление денег: возможны частичная оплата и зачисление превышения в аванс клиента. При amount=0 используется аванс, а при его отсутствии счет может быть проведен в долг. success=true означает успешную операцию, а не обязательно полную оплату; проверяйте payment_status. Повтор частичного платежа учитывается как новое поступление: ключ идемпотентности пока не поддерживается. Для уже полностью оплаченного счета запрос возвращает 409 без нового платежа. Выбранная касса в ответ не входит: в data.invoice остаются сохраненные invoice_id, status, amount, paid_amount и payment_status.",
         "tags": [
           "Invoice"
         ],
