@@ -425,6 +425,29 @@ components:
             $ref: '#/components/schemas/invoice'
       x-source: real_api_response
       x-db-table: admission
+    admissionJournal:
+      type: object
+      properties:
+        id:
+          type: integer
+        admission_id:
+          type: integer
+        action:
+          type: string
+        dt_start:
+          type: string
+          description: 'Format: YYYY-MM-DD HH:MM:SS'
+        dt_end:
+          type: string
+          description: 'Format: YYYY-MM-DD HH:MM:SS'
+        length:
+          type: integer
+          description: Длительность в минутах.
+        admission:
+          allOf:
+          - $ref: '#/components/schemas/admission'
+          nullable: true
+      x-db-table: admission_journal
     breed:
       type: object
       properties:
@@ -3496,6 +3519,7 @@ components:
             apartment: ''
             unsubscribe: 0
             in_blacklist: 0
+            has_contract: 0
             last_visit_date: '2023-09-29 20:41:04'
             number_of_journal: ''
             phone_prefix: '7'
@@ -6617,6 +6641,8 @@ paths:
         status: confirmed
     post:
       summary: Создать приём
+      description: Обязательны client_id и clinic_id. patient_id можно не передавать или передать 0.
+        data.admission — массив из одной записи.
       tags:
       - Admission
       operationId: post_rest_api_admission
@@ -6658,6 +6684,7 @@ paths:
       tags:
       - Admission
       operationId: get_rest_api_admission_ID
+      description: data.admission — один объект.
       parameters:
       - name: ID
         in: path
@@ -6680,9 +6707,7 @@ paths:
                     type: object
                     properties:
                       admission:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/admission'
+                        $ref: '#/components/schemas/admission'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -6695,6 +6720,8 @@ paths:
       tags:
       - Admission
       operationId: put_rest_api_admission_ID
+      description: Обязательны clinic_id, start и end. start и end — дата и время начала и конца приема.
+        data.admission — id измененного приема.
       parameters:
       - name: ID
         in: path
@@ -6703,7 +6730,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Прием изменен.
           content:
             application/json:
               schema:
@@ -6711,17 +6738,12 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  message:
-                    type: string
                   data:
                     type: object
                     properties:
                       admission:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/admission'
-                      totalCount:
                         type: integer
+                        description: Id измененного приема.
       requestBody:
         content:
           application/json:
@@ -6737,6 +6759,7 @@ paths:
       tags:
       - Admission
       operationId: delete_rest_api_admission_ID
+      description: В data возвращается id удаленного приема.
       parameters:
       - name: ID
         in: path
@@ -6745,7 +6768,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Прием удален.
           content:
             application/json:
               schema:
@@ -6758,10 +6781,191 @@ paths:
                   data:
                     type: object
                     properties:
-                      admission:
+                      id:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/admission/confirmAdmission:
+    post:
+      summary: Подтвердить прием
+      description: Обязательны id, user_id, client_id, patient_id, admission_date, admission_type и clinic_id.
+        description можно не передавать, тогда сохранится пустая строка. Ответ приходит с кодом 201.
+      tags:
+      - Admission
+      operationId: post_rest_api_admission_confirmAdmission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              - user_id
+              - client_id
+              - patient_id
+              - admission_date
+              - admission_type
+              - clinic_id
+              properties:
+                id:
+                  type: integer
+                user_id:
+                  type: integer
+                client_id:
+                  type: integer
+                patient_id:
+                  type: integer
+                admission_date:
+                  type: string
+                  description: 'Format: YYYY-MM-DD HH:MM:SS'
+                admission_type:
+                  type: integer
+                  description: Id цели обращения.
+                description:
+                  type: string
+                clinic_id:
+                  type: integer
+      responses:
+        '201':
+          description: Прием подтвержден либо запрос отклонен проверкой.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  messages:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      confirmadmission:
+                        type: object
+                        properties:
+                          admission_id:
+                            type: integer
+                            nullable: true
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/admission/cancelAdmission:
+    post:
+      summary: Отменить прием
+      description: Обязателен id приема. Статус приема становится deleted. Ответ приходит с кодом 201.
+      tags:
+      - Admission
+      operationId: post_rest_api_admission_cancelAdmission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: integer
+      responses:
+        '201':
+          description: Прием отменен либо запрос отклонен проверкой.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  messages:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      canceladmission:
+                        type: object
+                        properties:
+                          admission_id:
+                            type: integer
+                            nullable: true
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/admissionJournal:
+    get:
+      summary: Журнал приемов
+      tags:
+      - Admission
+      operationId: get_rest_api_admissionJournal
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Список записей журнала.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      admissionJournal:
                         type: array
                         items:
-                          $ref: '#/components/schemas/admission'
+                          $ref: '#/components/schemas/admissionJournal'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/admissionJournal/{id}:
+    get:
+      summary: Запись журнала приема по id
+      description: data.admissionJournal — один объект.
+      tags:
+      - Admission
+      operationId: get_rest_api_admissionJournal_id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Одна запись журнала.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      admissionJournal:
+                        $ref: '#/components/schemas/admissionJournal'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -10755,6 +10959,8 @@ paths:
         status: confirmed
     post:
       summary: Создать питомца
+      description: Обязательны owner_id и alias. breed_id и type_id обязательны, пока не передан skip_checking.
+        type_id — id вида животного. data.pet — массив из одной записи.
       tags:
       - Pet
       operationId: post_rest_api_pet
@@ -10796,6 +11002,7 @@ paths:
       tags:
       - Pet
       operationId: put_rest_api_pet_ID
+      description: data.pet — объект измененного питомца.
       parameters:
       - name: ID
         in: path
@@ -10818,9 +11025,7 @@ paths:
                     type: object
                     properties:
                       pet:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/pet'
+                        $ref: '#/components/schemas/pet'
                       totalCount:
                         type: integer
       requestBody:
@@ -10839,6 +11044,7 @@ paths:
       tags:
       - Pet
       operationId: delete_rest_api_pet_122
+      description: В data возвращается id удаленного питомца.
       parameters:
       - name: id
         in: path
@@ -10860,11 +11066,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      pet:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/pet'
-                      totalCount:
+                      id:
                         type: integer
       x-reconciliation:
         presentIn:
@@ -10876,6 +11078,7 @@ paths:
       tags:
       - Pet
       operationId: get_rest_api_pet_74
+      description: data.pet — один объект.
       parameters:
       - name: id
         in: path
@@ -10902,9 +11105,7 @@ paths:
                     type: object
                     properties:
                       pet:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/pet'
+                        $ref: '#/components/schemas/pet'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -10955,6 +11156,7 @@ paths:
       tags:
       - PetType
       operationId: get_rest_api_petType_ID
+      description: data.petType — один объект.
       parameters:
       - name: ID
         in: path
@@ -10977,9 +11179,7 @@ paths:
                     type: object
                     properties:
                       petType:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/petType'
+                        $ref: '#/components/schemas/petType'
                       totalCount:
                         type: integer
       x-reconciliation:
