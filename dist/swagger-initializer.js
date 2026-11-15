@@ -20,7 +20,28 @@ window.onload = function() {
       SwaggerUIStandalonePreset
     ],
     plugins: [
-      SwaggerUIBundle.plugins.DownloadUrl
+      SwaggerUIBundle.plugins.DownloadUrl,
+      function alphabeticalSchemas() {
+        return {
+          statePlugins: {
+            spec: {
+              wrapSelectors: {
+                definitions: function(originalSelector) {
+                  return function(state) {
+                    const defs = originalSelector(state);
+                    if (!defs || typeof defs.sortBy !== "function") {
+                      return defs;
+                    }
+                    return defs.sortBy(function(_value, key) {
+                      return String(key).toLowerCase();
+                    });
+                  };
+                }
+              }
+            }
+          }
+        };
+      }
     ],
     tagsSorter: "alpha",
     operationsSorter: function(a, b) {
