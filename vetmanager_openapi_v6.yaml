@@ -1168,19 +1168,20 @@ components:
           x-db-type: varchar(5)
           default: NULL,
         city_data:
-          type: object
-          example:
-            id: 251
-            title: Ваш город
-            type_id: 1
           nullable: true
+          description: Город клиента. Поле отсутствует, если город не задан.
+          allOf:
+          - $ref: '#/components/schemas/city'
           x-computed: true
         client_type_data:
           type: object
-          example:
-            id: 3
-            title: Временный
+          description: Тип клиента. Поле отсутствует, если тип не задан.
           nullable: true
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
           x-computed: true
         street_data:
           nullable: true
@@ -1382,10 +1383,13 @@ components:
           default: '0'
         city_data:
           type: object
-          example:
-            id: 251
-            name: Ваш город
+          description: Город анонимного клиента. name — название города.
           nullable: true
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
           x-computed: true
       x-source: real_api_response
       x-db-table: client
@@ -3086,6 +3090,53 @@ components:
           default: '0'
         patient:
           type: object
+          description: Питомец медкарты, без владельца и без вида, породы и окраса.
+          nullable: true
+          properties:
+            id:
+              type: integer
+            owner_id:
+              type: integer
+            type_id:
+              type: integer
+            alias:
+              type: string
+            sex:
+              type: string
+            date_register:
+              type: string
+            birthday:
+              type: string
+              nullable: true
+            note:
+              type: string
+            breed_id:
+              type: integer
+            old_id:
+              type: integer
+              nullable: true
+            color_id:
+              type: integer
+            deathnote:
+              type: string
+              nullable: true
+            deathdate:
+              type: string
+              nullable: true
+            chip_number:
+              type: string
+            lab_number:
+              type: string
+            status:
+              type: string
+            picture:
+              type: string
+              nullable: true
+            weight:
+              type: string
+            edit_date:
+              type: string
+          x-computed: true
           example:
             id: 4
             owner_id: 6
@@ -3106,10 +3157,89 @@ components:
             picture: null
             weight: '0.0000000000'
             edit_date: '2022-11-23 09:47:03'
-          nullable: true
-          x-computed: true
       x-source: real_api_response
       x-db-table: medical_cards
+    medicalCardClientView:
+      type: object
+      properties:
+        medical_card_id:
+          type: integer
+        date_edit:
+          type: string
+        diagnos:
+          type: string
+        doctor_id:
+          type: integer
+        medical_card_status:
+          type: string
+        healing_process:
+          type: string
+          description: Текст лечения, поле medical_cards.description.
+        recomendation:
+          type: string
+        weight:
+          type: string
+        temperature:
+          type: string
+        meet_result_id:
+          type: integer
+        admission_type:
+          type: integer
+        pet_id:
+          type: integer
+        alias:
+          type: string
+        birthday:
+          type: string
+          nullable: true
+        sex:
+          type: string
+        note:
+          type: string
+        pet_type:
+          type: string
+          nullable: true
+        breed:
+          type: string
+          nullable: true
+        client_id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        middle_name:
+          type: string
+        phone:
+          type: string
+        doctor_nickname:
+          type: string
+          nullable: true
+        doctor_first_name:
+          type: string
+          nullable: true
+        doctor_last_name:
+          type: string
+          nullable: true
+        doctor_middle_name:
+          type: string
+          nullable: true
+        editable:
+          type: integer
+          description: 1 — медкарту можно редактировать. 0 — к ней привязаны специальные исследования.
+        meet_result_title:
+          type: string
+        admission_type_title:
+          type: string
+        diagnos_data:
+          type: array
+          items:
+            type: object
+            properties:
+              diagnos_id:
+                type: integer
+              title:
+                type: string
     medicalcards:
       type: object
       properties:
@@ -3522,69 +3652,123 @@ components:
           x-db-default: CURRENT_TIMESTAMP,
         owner:
           type: object
-          example:
-            id: 1
-            address: ''
-            home_phone: +7 (000) 000-00-00
-            work_phone: +7 (000) 000-00-00
-            note: ''
-            type_id: 3
-            how_find: 15
-            balance: '0.0000000000'
-            email: user@example.test
-            city: ''
-            city_id: 251
-            date_register: '2012-09-29 09:14:34'
-            cell_phone: +7 (000) 000-00-00
-            zip: ''
-            registration_index: null
-            vip: 0
-            last_name: Иванов
-            first_name: Иван
-            middle_name: Иванович
-            status: DELETED
-            discount: 3
-            passport_series: ''
-            lab_number: ''
-            street_id: 0
-            apartment: ''
-            unsubscribe: 0
-            in_blacklist: 0
-            has_contract: 0
-            last_visit_date: '2023-09-29 20:41:04'
-            number_of_journal: ''
-            phone_prefix: '7'
+          description: >-
+            Владелец. Это не полная карточка клиента, без city_data, street_data и client_type_data.
           nullable: true
+          properties:
+            id:
+              type: integer
+            address:
+              type: string
+            apartment:
+              type: string
+            balance:
+              type: string
+            cell_phone:
+              type: string
+            city:
+              type: string
+            city_id:
+              type: integer
+            date_register:
+              type: string
+            discount:
+              type: integer
+            email:
+              type: string
+            first_name:
+              type: string
+            has_contract:
+              type: integer
+            home_phone:
+              type: string
+            how_find:
+              type: integer
+            in_blacklist:
+              type: integer
+            lab_number:
+              type: string
+            last_name:
+              type: string
+            last_visit_date:
+              type: string
+            middle_name:
+              type: string
+            note:
+              type: string
+            number_of_journal:
+              type: string
+            passport_series:
+              type: string
+            phone_prefix:
+              type: string
+              nullable: true
+            registration_index:
+              type: string
+              nullable: true
+            status:
+              type: string
+            street_id:
+              type: integer
+            type_id:
+              type: integer
+            unsubscribe:
+              type: integer
+            vip:
+              type: integer
+            work_phone:
+              type: string
+            zip:
+              type: string
+              nullable: true
           x-computed: true
         type:
           type: object
-          example:
-            id: 1
-            title: Кошки
-            picture: cat
-            type: cat
+          description: Вид питомца. Поле отсутствует, если вид не задан.
           nullable: true
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            picture:
+              type: string
+            type:
+              type: string
           x-computed: true
         breed:
           type: object
-          example:
-            id: 2
-            title: Австралийская дымчатая
-            pet_type_id: 1
+          description: Порода. Поле отсутствует, если порода не задана.
           nullable: true
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            pet_type_id:
+              type: integer
           x-computed: true
         color:
           type: object
-          example:
-            id: 98
-            combo_manual_id: 10
-            title: Простая
-            value: '1'
-            dop_param1: ''
-            dop_param2: ''
-            dop_param3: ''
-            is_active: 1
+          description: Окрас из справочника. Поле отсутствует, если окрас не задан.
           nullable: true
+          properties:
+            id:
+              type: integer
+            combo_manual_id:
+              type: integer
+            title:
+              type: string
+            value:
+              type: string
+            dop_param1:
+              type: string
+            dop_param2:
+              type: string
+            dop_param3:
+              type: string
+            is_active:
+              type: integer
           x-computed: true
       x-source: real_api_response
       x-db-table: pet
@@ -3615,348 +3799,18 @@ components:
           default: NULL,
         breeds:
           type: array
-          example:
-          - id: 1
-            title: 'Абиссинская '
-            pet_type_id: 1
-          - id: 2
-            title: Австралийская дымчатая
-            pet_type_id: 1
-          - id: 3
-            title: Азиатская кошка
-            pet_type_id: 1
-          - id: 4
-            title: Азиатская тикинг-табби
-            pet_type_id: 1
-          - id: 5
-            title: 'Аляскинская снежная '
-            pet_type_id: 1
-          - id: 6
-            title: Американская бурма
-            pet_type_id: 1
-          - id: 7
-            title: 'Американская жесткошерстная '
-            pet_type_id: 1
-          - id: 8
-            title: 'Американская короткошерстная '
-            pet_type_id: 1
-          - id: 9
-            title: 'Американский бобтейл '
-            pet_type_id: 1
-          - id: 10
-            title: Американский керл
-            pet_type_id: 1
-          - id: 11
-            title: 'Анатолийская '
-            pet_type_id: 1
-          - id: 12
-            title: Английская голубая
-            pet_type_id: 1
-          - id: 13
-            title: Английская короткошерстная
-            pet_type_id: 1
-          - id: 14
-            title: Ангорская
-            pet_type_id: 1
-          - id: 15
-            title: 'Аравийский мау '
-            pet_type_id: 1
-          - id: 16
-            title: б/п
-            pet_type_id: 1
-          - id: 17
-            title: Балийская
-            pet_type_id: 1
-          - id: 18
-            title: Балинезийская
-            pet_type_id: 1
-          - id: 19
-            title: Бармина
-            pet_type_id: 1
-          - id: 20
-            title: Бельгийская мраморная
-            pet_type_id: 1
-          - id: 21
-            title: Бенгальская
-            pet_type_id: 1
-          - id: 22
-            title: Бирманская
-            pet_type_id: 1
-          - id: 23
-            title: Бирманский колорпоинт
-            pet_type_id: 1
-          - id: 24
-            title: Бобтейл
-            pet_type_id: 1
-          - id: 25
-            title: Бобтейл меконгский
-            pet_type_id: 1
-          - id: 26
-            title: Бомбейская
-            pet_type_id: 1
-          - id: 27
-            title: Бразильская короткошерстная
-            pet_type_id: 1
-          - id: 28
-            title: Британская
-            pet_type_id: 1
-          - id: 29
-            title: Британская вислоухая
-            pet_type_id: 1
-          - id: 30
-            title: Британская голубая
-            pet_type_id: 1
-          - id: 31
-            title: Британская короткошерстная
-            pet_type_id: 1
-          - id: 32
-            title: Британская лиловая
-            pet_type_id: 1
-          - id: 33
-            title: Британская табби пятнистая
-            pet_type_id: 1
-          - id: 34
-            title: Британская черепаховая
-            pet_type_id: 1
-          - id: 35
-            title: Британский рыжий
-            pet_type_id: 1
-          - id: 36
-            title: Бритиш-Керш
-            pet_type_id: 1
-          - id: 37
-            title: Восточно-европейская короткошерстная
-            pet_type_id: 1
-          - id: 38
-            title: Гималайская
-            pet_type_id: 1
-          - id: 39
-            title: Дальневосточный бобтейл
-            pet_type_id: 1
-          - id: 40
-            title: Девон-рекс
-            pet_type_id: 1
-          - id: 41
-            title: Донской сфинкс
-            pet_type_id: 1
-          - id: 42
-            title: Европейская
-            pet_type_id: 1
-          - id: 43
-            title: Европейская короткошерстная
-            pet_type_id: 1
-          - id: 44
-            title: Египетский мау
-            pet_type_id: 1
-          - id: 45
-            title: Кавказский крысолов
-            pet_type_id: 1
-          - id: 46
-            title: Калифорнийская
-            pet_type_id: 1
-          - id: 47
-            title: Камышовый
-            pet_type_id: 1
-          - id: 48
-            title: 'Канадский сфинкс '
-            pet_type_id: 1
-          - id: 49
-            title: Карельский бобтейл
-            pet_type_id: 1
-          - id: 50
-            title: Колорпойнт
-            pet_type_id: 1
-          - id: 51
-            title: Корниш-рекс
-            pet_type_id: 1
-          - id: 52
-            title: Крысолов короткошерстный
-            pet_type_id: 1
-          - id: 53
-            title: Крысолов кубанский
-            pet_type_id: 1
-          - id: 54
-            title: Курильский бобтейл
-            pet_type_id: 1
-          - id: 55
-            title: 'Ламбкин '
-            pet_type_id: 1
-          - id: 56
-            title: Лиловый яванез
-            pet_type_id: 1
-          - id: 57
-            title: Мальтийская болонка
-            pet_type_id: 1
-          - id: 58
-            title: Манчкин
-            pet_type_id: 1
-          - id: 59
-            title: Меконгский бобтейл
-            pet_type_id: 1
-          - id: 60
-            title: Мейн Кун
-            pet_type_id: 1
-          - id: 61
-            title: Меконгский бобтейл
-            pet_type_id: 1
-          - id: 62
-            title: Мексиканский вислоухий
-            pet_type_id: 1
-          - id: 63
-            title: Метис
-            pet_type_id: 1
-          - id: 64
-            title: Невская маскарадная
-            pet_type_id: 1
-          - id: 65
-            title: 'Новозеландская короткошёрстная '
-            pet_type_id: 1
-          - id: 66
-            title: Норвежская лесная
-            pet_type_id: 1
-          - id: 67
-            title: 'Ориентальная (восточная короткошерстная) '
-            pet_type_id: 1
-          - id: 68
-            title: 'Ориентальная биколор '
-            pet_type_id: 1
-          - id: 69
-            title: Персидская
-            pet_type_id: 1
-          - id: 70
-            title: Персидская шиншилла
-            pet_type_id: 1
-          - id: 71
-            title: Петерболд (петербургский сфинкс)
-            pet_type_id: 1
-          - id: 72
-            title: Полуперс
-            pet_type_id: 1
-          - id: 73
-            title: Регдол
-            pet_type_id: 1
-          - id: 74
-            title: Русская бесшерстная
-            pet_type_id: 1
-          - id: 75
-            title: Русская голубая
-            pet_type_id: 1
-          - id: 76
-            title: Русский короткошерстный
-            pet_type_id: 1
-          - id: 77
-            title: Сомалийский
-            pet_type_id: 1
-          - id: 78
-            title: Сиамская
-            pet_type_id: 1
-          - id: 79
-            title: Сибирская
-            pet_type_id: 1
-          - id: 80
-            title: Сибирская шиншилла
-            pet_type_id: 1
-          - id: 81
-            title: Силпойнт
-            pet_type_id: 1
-          - id: 82
-            title: 'Сингапурская '
-            pet_type_id: 1
-          - id: 83
-            title: Скайленд-страйт
-            pet_type_id: 1
-          - id: 84
-            title: Скотиш-Страйт
-            pet_type_id: 1
-          - id: 85
-            title: Скоттиш -Фолд
-            pet_type_id: 1
-          - id: 86
-            title: Страйт
-            pet_type_id: 1
-          - id: 87
-            title: Сфинкс
-            pet_type_id: 1
-          - id: 88
-            title: Сфинкс Канадский
-            pet_type_id: 1
-          - id: 89
-            title: Сфинкс Питерболд
-            pet_type_id: 1
-          - id: 90
-            title: Тайская
-            pet_type_id: 1
-          - id: 91
-            title: Тайская вислоухая
-            pet_type_id: 1
-          - id: 92
-            title: Турецкая ангора
-            pet_type_id: 1
-          - id: 93
-            title: Турецкий ван
-            pet_type_id: 1
-          - id: 94
-            title: Украинский левкой
-            pet_type_id: 1
-          - id: 95
-            title: Уральский рекс
-            pet_type_id: 1
-          - id: 96
-            title: 'Уссурийская '
-            pet_type_id: 1
-          - id: 97
-            title: Хайландер
-            pet_type_id: 1
-          - id: 98
-            title: Хайленд страйт
-            pet_type_id: 1
-          - id: 99
-            title: Хайленд фолд
-            pet_type_id: 1
-          - id: 100
-            title: Шартрез
-            pet_type_id: 1
-          - id: 101
-            title: Шиншилла
-            pet_type_id: 1
-          - id: 102
-            title: Шиншилла золотая
-            pet_type_id: 1
-          - id: 103
-            title: Шотландская
-            pet_type_id: 1
-          - id: 104
-            title: Шотландская вислоухая
-            pet_type_id: 1
-          - id: 105
-            title: Шотландская голубая
-            pet_type_id: 1
-          - id: 106
-            title: Шотландская длинношерстная
-            pet_type_id: 1
-          - id: 107
-            title: Шотландская короткошёрстная
-            pet_type_id: 1
-          - id: 108
-            title: Шотландский гладкошёрстный
-            pet_type_id: 1
-          - id: 109
-            title: Экзотическая короткошерстная
-            pet_type_id: 1
-          - id: 110
-            title: Экстремал
-            pet_type_id: 1
-          - id: 111
-            title: 'Яванская '
-            pet_type_id: 1
-          - id: 112
-            title: Японский бобтейл
-            pet_type_id: 1
+          description: Породы этого вида.
           nullable: true
           x-computed: true
           items:
             type: object
-            additionalProperties: true
+            properties:
+              id:
+                type: integer
+              title:
+                type: string
+              pet_type_id:
+                type: integer
       x-source: real_api_response
       x-db-table: pet_type
     properties:
@@ -5775,6 +5629,9 @@ paths:
       tags:
       - Medical Card
       operationId: post_rest_api_MedicalCards
+      description: Обязательны patient_id, doctor_id, clinic_id, description и meet_result_id.
+        date_create можно не передавать, тогда ставятся текущие дата и время.
+        data.medicalCards — массив из одной записи.
       parameters: []
       responses:
         '200':
@@ -5927,20 +5784,34 @@ paths:
       tags:
       - Medical Cards
       operationId: get_rest_api_MedicalCards_MedicalcardsDataByClient
+      description: Обязателен client_id. pet_id ограничивает список одним питомцем.
+        В data.medicalcards — массив карточек клиента. Поля message и totalCount в этом ответе нет.
       parameters:
       - name: client_id
         in: query
+        required: true
+        schema:
+          type: integer
+      - name: pet_id
+        in: query
         required: false
         schema:
-          type: string
-        example: '{{ID}}'
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
       responses:
         '200':
-          description: Успешный ответ
+          description: Медкарты клиента.
           content:
             application/json:
               schema:
@@ -5948,17 +5819,62 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  message:
-                    type: string
                   data:
                     type: object
                     properties:
-                      medicalCards:
+                      medicalcards:
                         type: array
                         items:
-                          $ref: '#/components/schemas/medicalCards'
-                      totalCount:
-                        type: integer
+                          $ref: '#/components/schemas/medicalCardClientView'
+      x-reconciliation:
+        presentIn:
+        - openapi
+        status: openapi_only
+  /rest/api/MedicalCards/MedicalcardItemByClient:
+    get:
+      summary: Одна медкарта клиента
+      tags:
+      - Medical Card
+      operationId: get_rest_api_MedicalCards_MedicalcardItemByClient
+      description: Обязательны client_id и medcard_id.
+        data.medicalcards — одна карточка. Если пара не найдена, medicalcards — пустой массив.
+      parameters:
+      - name: client_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: medcard_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Карточка клиента.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      medicalcards:
+                        allOf:
+                        - $ref: '#/components/schemas/medicalCardClientView'
+                        - type: object
+                          properties:
+                            admission_id:
+                              type: integer
+                              nullable: true
+                            basis_for_admission:
+                              type: string
+                            admission_data:
+                              type: object
+                              description: Строка приема и wait_time. Пустой массив, если приема нет.
       x-reconciliation:
         presentIn:
         - openapi
@@ -6005,12 +5921,84 @@ paths:
         presentIn:
         - openapi
         status: openapi_only
+  /rest/api/MedicalCards/UploadFiles:
+    post:
+      summary: Загрузить файлы к медкарте
+      tags:
+      - Medical Card
+      operationId: post_rest_api_MedicalCards_UploadFiles
+      description: Файл передается полем формы request_files.
+        client_id, pet_id и medcard_id привязывают файл к клиенту, питомцу и медкарте.
+        Если эти три поля пустые, файл загружается, но в файлы клиента не записывается.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                request_files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                client_id:
+                  type: integer
+                pet_id:
+                  type: integer
+                medcard_id:
+                  type: integer
+      responses:
+        '200':
+          description: Файл загружен.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      upload_data:
+                        type: object
+                        properties:
+                          msg:
+                            type: string
+                          params:
+                            type: object
+                            properties:
+                              url:
+                                type: string
+                              filename:
+                                type: string
+                              filetype:
+                                type: string
+                              filesize:
+                                type: integer
+                              filetitle:
+                                type: string
+                              image_resolution:
+                                type: object
+                                properties:
+                                  width:
+                                    type: number
+                                  height:
+                                    type: number
+                              msg:
+                                type: string
+      x-reconciliation:
+        presentIn:
+        - openapi
+        status: openapi_only
   /rest/api/MedicalCards/{ID}:
     get:
       summary: Медкарта по id
       tags:
       - Medical Card
       operationId: get_rest_api_MedicalCards_ID
+      description: data.medicalCards — один объект.
       parameters:
       - name: ID
         in: path
@@ -6033,9 +6021,7 @@ paths:
                     type: object
                     properties:
                       medicalCards:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/medicalCards'
+                        $ref: '#/components/schemas/medicalCards'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -6047,6 +6033,9 @@ paths:
       tags:
       - Medical Card
       operationId: put_rest_api_MedicalCards_ID
+      description: Обязательны patient_id, doctor_id и clinic_id.
+        date_create, если передан, заменяет дату создания медкарты.
+        data.medicalcards — переданные поля и client_id владельца питомца.
       parameters:
       - name: ID
         in: path
@@ -6055,7 +6044,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Медкарта изменена.
           content:
             application/json:
               schema:
@@ -6063,17 +6052,11 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  message:
-                    type: string
                   data:
                     type: object
                     properties:
-                      medicalCards:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/medicalCards'
-                      totalCount:
-                        type: integer
+                      medicalcards:
+                        type: object
       requestBody:
         content:
           application/json:
