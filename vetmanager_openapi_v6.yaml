@@ -4448,146 +4448,110 @@ components:
           default: '0.0000000000'
         store:
           type: object
-          example:
-            id: 1
-            title: Склад клиники
-            assigned_user_id: 2
-            type: sale
-            inventarization_date: '2020-06-18 10:26:34'
-            status: active
-            clinic_id: 1
+          description: Склад документа.
           nullable: true
           x-computed: true
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+              maxLength: 255
+            assigned_user_id:
+              type: integer
+            type:
+              type: string
+              description: storage — склад хранения, sale — склад продажи.
+              enum:
+              - storage
+              - sale
+            inventarization_date:
+              type: string
+            status:
+              type: string
+              description: active — действующий склад, deleted — удалённый.
+              enum:
+              - active
+              - deleted
+            clinic_id:
+              type: integer
         storeDocumentOperations:
           type: array
-          example:
-          - id: 2
-            document_id: 2
-            status: add
-            good_id: 2
-            characteristic_id: 0
-            quantity: '750.0000000000'
-            price: '0.2688000000'
-            quantity_fakt: '0.0000000000'
-            history_num: 1
-            add_dt: '2020-05-14 14:44:21'
-            party_account_id: 2
-            party_account_id_by_transfer: 0
-            invoice_document_id: 0
-            inventar_quantity_fakt: '0.0000000000'
-            inventar_quantity_before: '0.0000000000'
-            price_no_nds: '0.2688000000'
-            cost_no_nds: '201.6000000000'
-            stavka_nds_percent: -1
-            sum_nds: '0.0000000000'
-            cost: '201.6000000000'
-            total_quantity_before_operation: '0.0000000000'
-            good_quantity_before: '0.0000000000'
-            good_quantity_after: '0.0000000000'
-            total_good_cost_after: '0.0000000000'
-          - id: 82
-            document_id: 2
-            status: edit
-            good_id: 2
-            characteristic_id: 0
-            quantity: '750.0000000000'
-            price: '0.2688000000'
-            quantity_fakt: '0.0000000000'
-            history_num: 2
-            add_dt: '2024-06-04 14:44:34'
-            party_account_id: 2
-            party_account_id_by_transfer: 0
-            invoice_document_id: 0
-            inventar_quantity_fakt: '0.0000000000'
-            inventar_quantity_before: '0.0000000000'
-            price_no_nds: '0.2688000000'
-            cost_no_nds: '201.6000000000'
-            stavka_nds_percent: -1
-            sum_nds: '0.0000000000'
-            cost: '201.6000000000'
-            total_quantity_before_operation: '0.0000000000'
-            good_quantity_before: '0.0000000000'
-            good_quantity_after: '0.0000000000'
-            total_good_cost_after: '0.0000000000'
-          - id: 84
-            document_id: 2
-            status: edit
-            good_id: 2
-            characteristic_id: 0
-            quantity: '750.0000000000'
-            price: '0.2688000000'
-            quantity_fakt: '0.0000000000'
-            history_num: 3
-            add_dt: '2024-06-04 14:44:37'
-            party_account_id: 2
-            party_account_id_by_transfer: 0
-            invoice_document_id: 0
-            inventar_quantity_fakt: '0.0000000000'
-            inventar_quantity_before: '0.0000000000'
-            price_no_nds: '0.2688000000'
-            cost_no_nds: '201.6000000000'
-            stavka_nds_percent: -1
-            sum_nds: '0.0000000000'
-            cost: '201.6000000000'
-            total_quantity_before_operation: '0.0000000000'
-            good_quantity_before: '0.0000000000'
-            good_quantity_after: '0.0000000000'
-            total_good_cost_after: '0.0000000000'
-          - id: 86
-            document_id: 2
-            status: exec
-            good_id: 2
-            characteristic_id: 0
-            quantity: '750.0000000000'
-            price: '0.2688000000'
-            quantity_fakt: '0.0000000000'
-            history_num: 4
-            add_dt: '2024-06-04 14:46:34'
-            party_account_id: 2
-            party_account_id_by_transfer: 0
-            invoice_document_id: 0
-            inventar_quantity_fakt: '0.0000000000'
-            inventar_quantity_before: '0.0000000000'
-            price_no_nds: '0.2688000000'
-            cost_no_nds: '201.6000000000'
-            stavka_nds_percent: -1
-            sum_nds: '0.0000000000'
-            cost: '201.6000000000'
-            total_quantity_before_operation: '0.0000000000'
-            good_quantity_before: '0.0000000000'
-            good_quantity_after: '750.0000000000'
-            total_good_cost_after: '201.6000000000'
-          - id: 88
-            document_id: 2
-            status: edit_exec
-            good_id: 2
-            characteristic_id: 0
-            quantity: '750.0000000000'
-            price: '0.2688000000'
-            quantity_fakt: '0.0000000000'
-            history_num: 5
-            add_dt: '2024-06-04 14:49:53'
-            party_account_id: 2
-            party_account_id_by_transfer: 0
-            invoice_document_id: 0
-            inventar_quantity_fakt: '0.0000000000'
-            inventar_quantity_before: '0.0000000000'
-            price_no_nds: '0.2688000000'
-            cost_no_nds: '201.6000000000'
-            stavka_nds_percent: 9
-            sum_nds: '18.1440000000'
-            cost: '219.7440000000'
-            total_quantity_before_operation: '750.0000000000'
-            good_quantity_before: '750.0000000000'
-            good_quantity_after: '750.0000000000'
-            total_good_cost_after: '219.7440000000'
+          description: Строки товаров документа. Вложенных товара и заголовка документа в этих строках нет.
           nullable: true
           x-computed: true
           items:
-            type: object
-            additionalProperties: true
+            $ref: '#/components/schemas/storeDocumentOperation'
       x-source: real_api_response
       x-db-table: store_document
+    storeDocumentOperation:
+      type: object
+      properties:
+        id:
+          type: integer
+        document_id:
+          type: integer
+        status:
+          type: string
+          description: >
+            Действие со строкой: add — добавление, edit — правка, exec — выполнение,
+            rollback — откат, deleted — удаление, disabled — отключение,
+            edit_exec — правка уже выполненного документа.
+          enum:
+          - add
+          - edit
+          - exec
+          - rollback
+          - deleted
+          - disabled
+          - edit_exec
+        good_id:
+          type: integer
+        characteristic_id:
+          type: integer
+        quantity:
+          type: string
+        price:
+          type: string
+        quantity_fakt:
+          type: string
+          description: Фактическое количество. Используется в инвентаризации.
+        history_num:
+          type: integer
+          description: Порядковый номер действия внутри одного документа.
+        add_dt:
+          type: string
+        party_account_id:
+          type: integer
+        party_account_id_by_transfer:
+          type: integer
+          description: Партия, созданная при передаче между складами.
+        invoice_document_id:
+          type: integer
+        inventar_quantity_fakt:
+          type: string
+        inventar_quantity_before:
+          type: string
+        price_no_nds:
+          type: string
+        cost_no_nds:
+          type: string
+        stavka_nds_percent:
+          type: integer
+          description: Ставка НДС в процентах. Значение -1 означает «Без НДС».
+        sum_nds:
+          type: string
+        cost:
+          type: string
+        total_quantity_before_operation:
+          type: string
+        good_quantity_before:
+          type: string
+        good_quantity_after:
+          type: string
+        total_good_cost_after:
+          type: string
+      x-db-table: store_document_operation
     street:
       type: object
       properties:
@@ -6841,6 +6805,7 @@ paths:
       tags:
       - Store
       operationId: get_rest_api_StoreDocument
+      description: Каждый документ в списке содержит склад и строки товаров.
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
@@ -6877,15 +6842,16 @@ paths:
       tags:
       - Store
       operationId: get_rest_api_StoreDocument_ID
+      description: Возвращает один документ вместе со складом и строками товаров.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Один складской документ.
           content:
             application/json:
               schema:
@@ -6899,30 +6865,28 @@ paths:
                     type: object
                     properties:
                       storeDocument:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/storeDocument'
+                        $ref: '#/components/schemas/storeDocument'
                       totalCount:
                         type: integer
       x-reconciliation:
         presentIn:
         - openapi
         status: openapi_only
-  /rest/api/StoreDocumentOperation/{ID}:
+  /rest/api/StoreDocumentOperation:
     get:
-      summary: Операция складского документа по id
+      summary: Строки складских документов
       tags:
       - Store
-      operationId: get_rest_api_StoreDocumentOperation_ID
+      operationId: get_rest_api_StoreDocumentOperation
+      description: Список строк документов. У каждой строки есть товар и заголовок документа без склада и без других строк.
       parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: string
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
       responses:
         '200':
-          description: Успешный ответ
+          description: Список строк.
           content:
             application/json:
               schema:
@@ -6934,7 +6898,219 @@ paths:
                     type: string
                   data:
                     type: object
-                    additionalProperties: true
+                    properties:
+                      storeDocumentOperation:
+                        type: array
+                        items:
+                          allOf:
+                          - $ref: '#/components/schemas/storeDocumentOperation'
+                          - type: object
+                            properties:
+                              good:
+                                type: object
+                                description: Карточка товара без группы, единицы хранения и параметров продажи.
+                                properties:
+                                  id:
+                                    type: integer
+                                  group_id:
+                                    type: integer
+                                    nullable: true
+                                  title:
+                                    type: string
+                                  unit_storage_id:
+                                    type: integer
+                                    nullable: true
+                                  is_warehouse_account:
+                                    type: integer
+                                  is_active:
+                                    type: integer
+                                  code:
+                                    type: string
+                                    nullable: true
+                                  is_call:
+                                    type: integer
+                                  is_for_sale:
+                                    type: integer
+                                  barcode:
+                                    type: string
+                                    nullable: true
+                                  create_date:
+                                    type: string
+                                    nullable: true
+                                  description:
+                                    type: string
+                                  prime_cost:
+                                    type: string
+                                  is_marking:
+                                    type: integer
+                                  is_recipe:
+                                    type: integer
+                                  category_id:
+                                    type: integer
+                                    nullable: true
+                                  for_combination:
+                                    type: integer
+                              document:
+                                type: object
+                                description: Заголовок документа без склада и без строк товаров.
+                                properties:
+                                  id:
+                                    type: integer
+                                  document_type:
+                                    type: string
+                                  status:
+                                    type: string
+                                  store_id:
+                                    type: integer
+                                  receiver_store_id:
+                                    type: integer
+                                  supplier_id:
+                                    type: integer
+                                  add_dt:
+                                    type: string
+                                  edit_dt:
+                                    type: string
+                                  exec_dt:
+                                    type: string
+                                  receiver_id:
+                                    type: integer
+                                  prihod_number:
+                                    type: string
+                                  prihod_date:
+                                    type: string
+                                  creator_id:
+                                    type: integer
+                                  executor_id:
+                                    type: integer
+                                  sender_user_id:
+                                    type: integer
+                                  receiver_user_id:
+                                    type: integer
+                                  transfer_sender_store_doc_id:
+                                    type: integer
+                                  total:
+                                    type: string
+                      totalCount:
+                        type: integer
+  /rest/api/StoreDocumentOperation/{ID}:
+    get:
+      summary: Строка складского документа по id
+      tags:
+      - Store
+      operationId: get_rest_api_StoreDocumentOperation_ID
+      description: Возвращает одну строку вместе с товаром и заголовком документа.
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Одна строка документа.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      storeDocumentOperation:
+                        allOf:
+                        - $ref: '#/components/schemas/storeDocumentOperation'
+                        - type: object
+                          properties:
+                            good:
+                              type: object
+                              description: Карточка товара без группы, единицы хранения и параметров продажи.
+                              properties:
+                                id:
+                                  type: integer
+                                group_id:
+                                  type: integer
+                                  nullable: true
+                                title:
+                                  type: string
+                                unit_storage_id:
+                                  type: integer
+                                  nullable: true
+                                is_warehouse_account:
+                                  type: integer
+                                is_active:
+                                  type: integer
+                                code:
+                                  type: string
+                                  nullable: true
+                                is_call:
+                                  type: integer
+                                is_for_sale:
+                                  type: integer
+                                barcode:
+                                  type: string
+                                  nullable: true
+                                create_date:
+                                  type: string
+                                  nullable: true
+                                description:
+                                  type: string
+                                prime_cost:
+                                  type: string
+                                is_marking:
+                                  type: integer
+                                is_recipe:
+                                  type: integer
+                                category_id:
+                                  type: integer
+                                  nullable: true
+                                for_combination:
+                                  type: integer
+                            document:
+                              type: object
+                              description: Заголовок документа без склада и без строк товаров.
+                              properties:
+                                id:
+                                  type: integer
+                                document_type:
+                                  type: string
+                                status:
+                                  type: string
+                                store_id:
+                                  type: integer
+                                receiver_store_id:
+                                  type: integer
+                                supplier_id:
+                                  type: integer
+                                add_dt:
+                                  type: string
+                                edit_dt:
+                                  type: string
+                                exec_dt:
+                                  type: string
+                                receiver_id:
+                                  type: integer
+                                prihod_number:
+                                  type: string
+                                prihod_date:
+                                  type: string
+                                creator_id:
+                                  type: integer
+                                executor_id:
+                                  type: integer
+                                sender_user_id:
+                                  type: integer
+                                receiver_user_id:
+                                  type: integer
+                                transfer_sender_store_doc_id:
+                                  type: integer
+                                total:
+                                  type: string
+                      totalCount:
+                        type: integer
       x-reconciliation:
         presentIn:
         - openapi
@@ -12557,32 +12733,82 @@ paths:
         - openapi
         - extjs
         status: confirmed
-  /rest/api/stores/RestOfGoodInWarehouse:
+  /rest/api/Good/StockBalancesForProduct:
     get:
-      summary: Остаток товара на складе
+      summary: Остатки товара по складам
       tags:
       - Store
-      operationId: get_rest_api_stores_RestOfGoodInWarehouse
+      operationId: get_rest_api_Good_StockBalancesForProduct
+      description: Остатки товара по складам, доступным пользователю. Список лежит в data.stock_balances.
+        Поля message в ответе нет.
       parameters:
       - name: clinic_id
         in: query
-        required: false
+        required: true
         schema:
-          type: string
-        example: '1'
+          type: integer
       - name: good_id
         in: query
-        required: false
+        required: true
         schema:
-          type: string
-        example: '{{ID}}'
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
+          type: integer
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Остатки по складам.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      stock_balances:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            good_id:
+                              type: integer
+                            good_title:
+                              type: string
+                            store_id:
+                              type: integer
+                            store_title:
+                              type: string
+                            qty:
+                              type: string
+                            unit_title:
+                              type: string
+  /rest/api/stores/RestOfGoodInWarehouse:
+    get:
+      summary: Суммарный остаток товара на складах продажи
+      tags:
+      - Store
+      operationId: get_rest_api_stores_RestOfGoodInWarehouse
+      description: Суммарный остаток товара на складах продажи выбранной клиники.
+        Количество лежит в data.rest_good_in_warehouse.quantity.
+      parameters:
+      - name: clinic_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: good_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Суммарный остаток.
           content:
             application/json:
               schema:
@@ -12594,7 +12820,14 @@ paths:
                     type: string
                   data:
                     type: object
-                    additionalProperties: true
+                    properties:
+                      totalCount:
+                        type: integer
+                      rest_good_in_warehouse:
+                        type: object
+                        properties:
+                          quantity:
+                            type: string
       x-reconciliation:
         presentIn:
         - openapi
