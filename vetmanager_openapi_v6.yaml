@@ -556,6 +556,37 @@ components:
           default: '0'
       x-source: real_api_response
       x-db-table: timesheet
+    timesheetTypes:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        title:
+          type: string
+        b:
+          type: integer
+          description: 1 — жирный шрифт.
+        i:
+          type: integer
+          description: 1 — курсив.
+        u:
+          type: integer
+          description: 1 — подчеркнутый шрифт.
+        is_working_hours:
+          type: integer
+          description: 1 — рабочее время.
+        color:
+          type: string
+          description: Цвет записи в графике.
+        is_show_in_timesheet:
+          type: integer
+          description: 1 — показывать тип в графике.
+        is_active:
+          type: integer
+          description: 1 — тип активен.
+      x-db-table: timesheet_types
     cassa:
       type: object
       properties:
@@ -11828,6 +11859,9 @@ paths:
                           $ref: '#/components/schemas/timesheet'
                       totalCount:
                         type: integer
+                      is_empty_shedules:
+                        type: integer
+                        description: 1 — график пуст. Без user_id, clinic_id и parameters.end_datetime_iterval равен 1.
       x-reconciliation:
         presentIn:
         - openapi
@@ -11839,6 +11873,7 @@ paths:
       tags:
       - Calendar
       operationId: get_rest_api_timesheet_ID
+      description: data.timesheet — один объект.
       parameters:
       - name: ID
         in: path
@@ -11861,9 +11896,81 @@ paths:
                     type: object
                     properties:
                       timesheet:
+                        $ref: '#/components/schemas/timesheet'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/timesheetTypes:
+    get:
+      summary: Типы записей расписания
+      tags:
+      - Calendar
+      operationId: get_rest_api_timesheetTypes
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Список типов.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      timesheetTypes:
                         type: array
                         items:
-                          $ref: '#/components/schemas/timesheet'
+                          $ref: '#/components/schemas/timesheetTypes'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
+  /rest/api/timesheetTypes/{id}:
+    get:
+      summary: Тип записи расписания по id
+      description: data.timesheetTypes — один объект.
+      tags:
+      - Calendar
+      operationId: get_rest_api_timesheetTypes_id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Один тип.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      timesheetTypes:
+                        $ref: '#/components/schemas/timesheetTypes'
                       totalCount:
                         type: integer
       x-reconciliation:
