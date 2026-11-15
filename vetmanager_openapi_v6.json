@@ -7306,7 +7306,7 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "description": "В чтении одной записи и в обновлении число, в создании и удалении строка.",
+            "description": "Id вебхука. В списке, в карточке одного вебхука и в ответе на изменение id приходит числом. В ответе на создание и в ответе на удаление id приходит строкой.",
             "example": 199,
             "oneOf": [
               {
@@ -21368,7 +21368,7 @@
             }
           },
           "406": {
-            "description": "Не переданы title или value.",
+            "description": "Не переданы title или value: сообщение Model could not be saved. Пустое тело отвечает Parameter '{}' is not allowed for model.",
             "content": {
               "application/json": {
                 "schema": {
