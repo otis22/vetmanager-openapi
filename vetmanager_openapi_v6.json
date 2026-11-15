@@ -6253,6 +6253,221 @@
         }
       }
     },
+    "/rest/api/good/ProductsDataForInvoice": {
+      "get": {
+        "summary": "Получить товары и услуги для добавления в счёт",
+        "description": "Возвращает список товаров и услуг, доступных для добавления в счёт выбранной клиники.\n\n- `clinic_id` обязателен. Если он не передан или меньше `1`, метод возвращает ошибку `500` с сообщением `No Clinic selected`.\n- `search_query` позволяет искать товары и услуги по названию.\n- `category_id` ограничивает результат выбранной категорией.\n- `limit` задаёт количество записей, а `offset` — смещение. Если `limit` не передан, метод возвращает все найденные записи.\n- Параметры `page`, `sort` и `filter` не поддерживаются.\n\nРезультат находится в `data.good`. Поля `message` и `totalCount` в ответе отсутствуют.\n`party_accounts` содержит `null`, если партия не выбрана, либо JSON-строку с данными выбранной партии.\n",
+        "tags": [
+          "Good"
+        ],
+        "operationId": "get_rest_api_good_ProductsDataForInvoice",
+        "parameters": [
+          {
+            "name": "clinic_id",
+            "in": "query",
+            "required": true,
+            "description": "Id клиники. Значение меньше 1 даёт ответ 500.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Сколько записей вернуть. Пустое значение означает выборку без LIMIT.",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "С какой записи начать. Применяется только вместе с limit.",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 0
+          },
+          {
+            "name": "search_query",
+            "in": "query",
+            "required": false,
+            "description": "Поиск по названию. Знаки пунктуации отбрасываются.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Байкокс"
+          },
+          {
+            "name": "category_id",
+            "in": "query",
+            "required": false,
+            "description": "Id категории. 0 или пустое значение не фильтрует список.",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 31
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "success"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "good"
+                      ],
+                      "properties": {
+                        "good": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "good_group": {
+                                "type": "string"
+                              },
+                              "group_id": {
+                                "type": "integer"
+                              },
+                              "quantity": {
+                                "type": "number"
+                              },
+                              "price": {
+                                "type": "string"
+                              },
+                              "tag_id": {
+                                "type": "integer"
+                              },
+                              "default_price": {
+                                "type": "string"
+                              },
+                              "party_accounts": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "party_accounts_count": {
+                                "type": "integer"
+                              },
+                              "barcode": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "is_service": {
+                                "type": "integer"
+                              },
+                              "category_id": {
+                                "type": "integer"
+                              },
+                              "category": {
+                                "type": "string"
+                              },
+                              "min_price_percent": {
+                                "type": "string"
+                              },
+                              "max_price_percent": {
+                                "type": "string"
+                              },
+                              "min_price": {
+                                "type": "string"
+                              },
+                              "max_price": {
+                                "type": "string"
+                              },
+                              "editable": {
+                                "type": "integer"
+                              },
+                              "unit_sale_param_title": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "good": [
+                      {
+                        "id": 46055690,
+                        "title": "1Байкокс 1 мл",
+                        "good_group": "Капли, мази",
+                        "group_id": 56,
+                        "quantity": 1,
+                        "price": "17.0",
+                        "tag_id": 0,
+                        "default_price": "17.0",
+                        "party_accounts": null,
+                        "party_accounts_count": 0,
+                        "barcode": null,
+                        "is_service": 0,
+                        "category_id": 31,
+                        "category": "Препараты",
+                        "min_price_percent": "0.0000000000",
+                        "max_price_percent": "0.0000000000",
+                        "min_price": "17.0",
+                        "max_price": "17.0",
+                        "editable": 1,
+                        "unit_sale_param_title": "единица"
+                      }
+                    ]
+                  },
+                  "success": true
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Не передан clinic_id или clinic_id меньше 1.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/restError"
+                },
+                "example": {
+                  "success": false,
+                  "error": true,
+                  "message": "No Clinic selected"
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi"
+          ],
+          "status": "openapi_only"
+        }
+      }
+    },
     "/rest/api/GoodGroup": {
       "get": {
         "summary": "Список групп товаров",
@@ -17161,7 +17376,7 @@
       "dbDumpProvided": false
     },
     "counts": {
-      "openapi_only": 42,
+      "openapi_only": 43,
       "confirmed": 114,
       "extjs_only_candidate": 316,
       "intentionally_undocumented": 10
