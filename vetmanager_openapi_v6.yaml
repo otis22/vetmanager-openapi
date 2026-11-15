@@ -2268,33 +2268,40 @@ components:
           default: '0'
         store:
           type: object
-          example:
-            id: 1
-            title: Склад клиники
-            assigned_user_id: 2
-            type: sale
-            inventarization_date: '2020-06-18 10:26:34'
-            status: active
-            clinic_id: 1
+          description: Склад партии.
           nullable: true
           x-computed: true
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+              maxLength: 255
+            assigned_user_id:
+              type: integer
+            type:
+              type: string
+              description: storage — склад хранения, sale — склад продажи.
+              enum:
+              - storage
+              - sale
+            inventarization_date:
+              type: string
+            status:
+              type: string
+              description: active — действующий склад, deleted — удалённый.
+              enum:
+              - active
+              - deleted
+            clinic_id:
+              type: integer
         partyAccountDocs:
           type: array
-          example:
-          - id: 60
-            document_id: 2
-            good_id: 2
-            characteristic_id: 0
-            quantity: '750.0000000000'
-            price: '0.2930000000'
-            written_of_quantity: '0.0000000000'
-            status: active
-            stavka_nds_percent: 9
+          description: Строки товаров партии. Вложенных товара и заголовка партии в этих строках нет.
           nullable: true
           x-computed: true
           items:
-            type: object
-            additionalProperties: true
+            $ref: '#/components/schemas/partyAccountDoc'
       x-source: real_api_response
       x-db-table: party_account
     partyAccountDoc:
@@ -2359,43 +2366,11 @@ components:
           default: NULL,
         stavka_nds_percent:
           type: integer
+          description: Ставка НДС в процентах. Значение -1 означает «Без НДС».
           example: -1
           nullable: false
           x-db-type: int
           default: '-1'
-        document:
-          type: object
-          example:
-            id: 4
-            store_id: 1
-            status: save
-            add_dt: '2020-06-18 10:17:27'
-            edit_dt: '2020-06-18 10:17:27'
-            exec_dt: '0000-00-00 00:00:00'
-            supplier_id: 4
-          nullable: true
-          x-computed: true
-        good:
-          type: object
-          example:
-            id: 262
-            group_id: 45
-            title: Дюрамун
-            unit_storage_id: 5
-            is_warehouse_account: 1
-            is_active: 1
-            code: null
-            is_call: 0
-            is_for_sale: 1
-            barcode: ''
-            create_date: '2020-06-15 10:08:27'
-            description: ''
-            prime_cost: '0.0000000000'
-            is_marking: 0
-            is_recipe: 0
-            category_id: null
-          nullable: true
-          x-computed: true
       x-source: real_api_response
       x-db-table: party_account_doc
     goodSaleParam:
@@ -6673,6 +6648,7 @@ paths:
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccount
+      description: Каждая партия содержит склад и строки товаров. В строках нет карточки товара и заголовка партии.
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
@@ -6709,15 +6685,16 @@ paths:
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccount_ID
+      description: Возвращает одну партию вместе со складом и строками товаров.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Одна партия.
           content:
             application/json:
               schema:
@@ -6731,9 +6708,7 @@ paths:
                     type: object
                     properties:
                       partyAccount:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/partyAccount'
+                        $ref: '#/components/schemas/partyAccount'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -6746,6 +6721,9 @@ paths:
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccountDoc
+      description: >
+        Список строк партий. У каждой строки есть карточка товара и заголовок партии.
+        Заголовок не содержит склад и другие строки.
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
@@ -6769,7 +6747,72 @@ paths:
                       partyAccountDoc:
                         type: array
                         items:
-                          $ref: '#/components/schemas/partyAccountDoc'
+                          allOf:
+                          - $ref: '#/components/schemas/partyAccountDoc'
+                          - type: object
+                            properties:
+                              good:
+                                type: object
+                                description: Карточка товара без группы, единицы хранения и параметров продажи.
+                                properties:
+                                  id:
+                                    type: integer
+                                  group_id:
+                                    type: integer
+                                    nullable: true
+                                  title:
+                                    type: string
+                                  unit_storage_id:
+                                    type: integer
+                                    nullable: true
+                                  is_warehouse_account:
+                                    type: integer
+                                  is_active:
+                                    type: integer
+                                  code:
+                                    type: string
+                                    nullable: true
+                                  is_call:
+                                    type: integer
+                                  is_for_sale:
+                                    type: integer
+                                  barcode:
+                                    type: string
+                                    nullable: true
+                                  create_date:
+                                    type: string
+                                    nullable: true
+                                  description:
+                                    type: string
+                                  prime_cost:
+                                    type: string
+                                  is_marking:
+                                    type: integer
+                                  is_recipe:
+                                    type: integer
+                                  category_id:
+                                    type: integer
+                                    nullable: true
+                                  for_combination:
+                                    type: integer
+                              document:
+                                type: object
+                                description: Заголовок партии без склада и без строк товаров.
+                                properties:
+                                  id:
+                                    type: integer
+                                  store_id:
+                                    type: integer
+                                  status:
+                                    type: string
+                                  add_dt:
+                                    type: string
+                                  edit_dt:
+                                    type: string
+                                  exec_dt:
+                                    type: string
+                                  supplier_id:
+                                    type: integer
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -6782,15 +6825,16 @@ paths:
       tags:
       - Good Parties in Store
       operationId: get_rest_api_PartyAccountDoc_ID
+      description: Возвращает одну строку партии вместе с карточкой товара и заголовком партии.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Одна строка партии.
           content:
             application/json:
               schema:
@@ -6804,9 +6848,72 @@ paths:
                     type: object
                     properties:
                       partyAccountDoc:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/partyAccountDoc'
+                        allOf:
+                        - $ref: '#/components/schemas/partyAccountDoc'
+                        - type: object
+                          properties:
+                            good:
+                              type: object
+                              description: Карточка товара без группы, единицы хранения и параметров продажи.
+                              properties:
+                                id:
+                                  type: integer
+                                group_id:
+                                  type: integer
+                                  nullable: true
+                                title:
+                                  type: string
+                                unit_storage_id:
+                                  type: integer
+                                  nullable: true
+                                is_warehouse_account:
+                                  type: integer
+                                is_active:
+                                  type: integer
+                                code:
+                                  type: string
+                                  nullable: true
+                                is_call:
+                                  type: integer
+                                is_for_sale:
+                                  type: integer
+                                barcode:
+                                  type: string
+                                  nullable: true
+                                create_date:
+                                  type: string
+                                  nullable: true
+                                description:
+                                  type: string
+                                prime_cost:
+                                  type: string
+                                is_marking:
+                                  type: integer
+                                is_recipe:
+                                  type: integer
+                                category_id:
+                                  type: integer
+                                  nullable: true
+                                for_combination:
+                                  type: integer
+                            document:
+                              type: object
+                              description: Заголовок партии без склада и без строк товаров.
+                              properties:
+                                id:
+                                  type: integer
+                                store_id:
+                                  type: integer
+                                status:
+                                  type: string
+                                add_dt:
+                                  type: string
+                                edit_dt:
+                                  type: string
+                                exec_dt:
+                                  type: string
+                                supplier_id:
+                                  type: integer
                       totalCount:
                         type: integer
       x-reconciliation:
