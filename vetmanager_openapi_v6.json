@@ -5926,12 +5926,15 @@
           },
           "title": {
             "type": "string",
+            "description": "Название должности, не длиннее 255 символов.",
             "example": "Врач-лаборант",
             "nullable": false,
+            "maxLength": 255,
             "x-db-type": "varchar(255)"
           },
           "admission_length": {
             "type": "string",
+            "description": "Длительность приёма. Если не передана, сохраняется 00:30:00.",
             "example": "00:30:00",
             "nullable": false,
             "x-db-type": "time",
@@ -18555,10 +18558,11 @@
           "User Positons"
         ],
         "operationId": "post_rest_api_userPosition",
+        "description": "Обязателен title. data.userPosition — массив из одной записи. Код ответа 201. id в этом ответе приходит строкой. admission_length по умолчанию 00:30:00.",
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Должность создана.",
             "content": {
               "application/json": {
                 "schema": {
@@ -18615,6 +18619,7 @@
           "User Positons"
         ],
         "operationId": "get_rest_api_userPosition_ID",
+        "description": "data.userPosition — один объект.",
         "parameters": [
           {
             "name": "ID",
@@ -18643,10 +18648,7 @@
                       "type": "object",
                       "properties": {
                         "userPosition": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/userPosition"
-                          }
+                          "$ref": "#/components/schemas/userPosition"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -18673,6 +18675,7 @@
           "User Positons"
         ],
         "operationId": "put_rest_api_userPosition_ID",
+        "description": "data.userPosition — один объект. Код ответа 201.",
         "parameters": [
           {
             "name": "ID",
@@ -18684,8 +18687,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Должность изменена.",
             "content": {
               "application/json": {
                 "schema": {
@@ -18701,10 +18704,7 @@
                       "type": "object",
                       "properties": {
                         "userPosition": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/userPosition"
-                          }
+                          "$ref": "#/components/schemas/userPosition"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -18740,6 +18740,7 @@
           "User Positons"
         ],
         "operationId": "delete_rest_api_userPosition_ID",
+        "description": "В data возвращается id. Должность, которая назначена пользователю, удалить нельзя.",
         "parameters": [
           {
             "name": "ID",
@@ -18752,7 +18753,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Должность удалена.",
             "content": {
               "application/json": {
                 "schema": {
@@ -18767,13 +18768,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "userPosition": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/userPosition"
-                          }
-                        },
-                        "totalCount": {
+                        "id": {
                           "type": "integer"
                         }
                       }
