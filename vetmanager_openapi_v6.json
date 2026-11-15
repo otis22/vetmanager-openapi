@@ -6033,6 +6033,79 @@
         "x-source": "real_api_response",
         "x-db-table": "properties"
       },
+      "startedReport": {
+        "type": "object",
+        "properties": {
+          "report_file_id": {
+            "type": "integer",
+            "description": "Id файла. По нему запрашивают ссылки на результат."
+          }
+        },
+        "x-source": "real_api_response"
+      },
+      "reportFile": {
+        "type": "object",
+        "properties": {
+          "html_file": {
+            "type": "string",
+            "nullable": true,
+            "description": "Ссылка на HTML. null, если файл не создан."
+          },
+          "csv_file": {
+            "type": "string",
+            "nullable": true,
+            "description": "Ссылка на CSV. null, если файл не создан."
+          },
+          "csv_semicolon_file": {
+            "type": "string",
+            "nullable": true,
+            "description": "Ссылка на CSV с разделителем «точка с запятой». null, если файл не создан."
+          },
+          "xlsx_file": {
+            "type": "string",
+            "nullable": true,
+            "description": "Ссылка на XLSX. null, если файл не создан."
+          }
+        },
+        "x-source": "real_api_response"
+      },
+      "reportRestError": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "error_code": {
+                "type": "string",
+                "enum": [
+                  "VALIDATION_ERROR",
+                  "NOT_FOUND",
+                  "REPORT_NOT_ALLOWED_FOR_REST",
+                  "CONSTRUCTOR_BUSY",
+                  "RUN_RATE_LIMITED",
+                  "FILE_NOT_READY",
+                  "FILE_BUILD_NOT_STARTED",
+                  "FILE_BUILD_FAILED"
+                ]
+              },
+              "retry_after_seconds": {
+                "type": "integer",
+                "description": "Сколько секунд подождать перед повтором. Есть, когда конструктор занят, не прошли 10 минут с прошлого запуска или файл еще не готов."
+              }
+            }
+          }
+        },
+        "x-source": "real_api_response"
+      },
       "role": {
         "type": "object",
         "properties": {
@@ -19050,46 +19123,36 @@
     },
     "/rest/api/report/StartReport": {
       "get": {
-        "summary": "Запустить отчёт",
+        "summary": "Запустить отчет",
         "tags": [
           "Reports"
         ],
         "operationId": "get_rest_api_report_StartReport",
+        "description": "Запускает отчет, у которого включен доступ через REST API. В data.report поле report_file_id. totalCount здесь равен 1. Пока предыдущая сборка не закончена, новый запуск получает 403. Следующий запуск возможен через 10 минут после предыдущего.",
         "parameters": [
           {
             "name": "report_id",
             "in": "query",
-            "required": false,
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "example": "{{ID}}"
+            "description": "Id отчета."
           },
           {
-            "name": " filter",
+            "name": "filter",
             "in": "query",
             "required": false,
             "schema": {
               "type": "string"
             },
-            "example": "{\"1\":\"2020-01-01\",\"2\":\"2020-07-01\"}"
-          },
-          {
-            "$ref": "#/components/parameters/limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset"
-          },
-          {
-            "$ref": "#/components/parameters/sort"
-          },
-          {
-            "$ref": "#/components/parameters/filter"
+            "description": "JSON-строка фильтра. Ключ — порядковый номер поля фильтра, значение — условие.",
+            "example": "{\"2\":\"2018-01-01\",\"3\":\"2018-04-13\"}"
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Отчет поставлен в сборку.",
             "content": {
               "application/json": {
                 "schema": {
@@ -19103,9 +19166,47 @@
                     },
                     "data": {
                       "type": "object",
-                      "additionalProperties": true
+                      "properties": {
+                        "report": {
+                          "$ref": "#/components/schemas/startedReport"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "description": "Число полей в report. Для запуска это 1."
+                        }
+                      }
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не передан report_id. error_code равен VALIDATION_ERROR.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportRestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Отчет закрыт для REST, конструктор занят или не прошли 10 минут. error_code равен REPORT_NOT_ALLOWED_FOR_REST, CONSTRUCTOR_BUSY или RUN_RATE_LIMITED.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportRestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Отчет не найден. error_code равен NOT_FOUND.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportRestError"
                 }
               }
             }
@@ -19121,37 +19222,26 @@
     },
     "/rest/api/report/reportFile": {
       "get": {
-        "summary": "Ссылка на файл отчёта",
+        "summary": "Ссылки на файлы отчета",
         "tags": [
           "Reports"
         ],
         "operationId": "get_rest_api_report_reportFile",
+        "description": "Возвращает ссылки на готовые файлы. Обязателен file_id из запуска. totalCount равен числу полей в report, сейчас это 4, даже если ссылка равна null.",
         "parameters": [
           {
             "name": "file_id",
             "in": "query",
-            "required": false,
+            "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "example": "{{ID}}"
-          },
-          {
-            "$ref": "#/components/parameters/limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset"
-          },
-          {
-            "$ref": "#/components/parameters/sort"
-          },
-          {
-            "$ref": "#/components/parameters/filter"
+            "description": "Id файла из report_file_id."
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Ссылки на HTML, CSV и XLSX.",
             "content": {
               "application/json": {
                 "schema": {
@@ -19165,9 +19255,57 @@
                     },
                     "data": {
                       "type": "object",
-                      "additionalProperties": true
+                      "properties": {
+                        "report": {
+                          "$ref": "#/components/schemas/reportFile"
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "description": "Число полей в report. Для файлов это 4."
+                        }
+                      }
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не передан file_id. error_code равен VALIDATION_ERROR.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportRestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Файл не найден. error_code равен NOT_FOUND.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportRestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Сборка еще идет или не началась. error_code равен FILE_NOT_READY или FILE_BUILD_NOT_STARTED. В data есть retry_after_seconds.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportRestError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Сборка завершилась ошибкой. error_code равен FILE_BUILD_FAILED.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportRestError"
                 }
               }
             }
