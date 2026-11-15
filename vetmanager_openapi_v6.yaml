@@ -4199,8 +4199,10 @@ components:
           x-db-type: int
         title:
           type: string
+          description: Название улицы, не длиннее 250 символов.
           example: моя улица
           nullable: false
+          maxLength: 250
           x-db-type: varchar(250)
           default: ''
         city_id:
@@ -4240,12 +4242,10 @@ components:
           - microdistrict
           default: street
         city:
-          type: object
-          example:
-            id: 256
-            title: Киев
-            type_id: 1
           nullable: true
+          description: Город улицы. Есть в списке и в ответе изменения. В ответе создания поля нет.
+          allOf:
+          - $ref: '#/components/schemas/city'
           x-computed: true
       x-source: real_api_response
       x-db-table: street
@@ -11974,6 +11974,7 @@ paths:
       tags:
       - Streets
       operationId: get_rest_api_street
+      description: data.street — массив. У каждой улицы есть city.
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
@@ -12010,10 +12011,12 @@ paths:
       tags:
       - Streets
       operationId: post_rest_api_street
+      description: title не длиннее 250 символов. type по умолчанию street.
+        data.street — массив из одной записи, без city. Код ответа 201.
       parameters: []
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Улица создана.
           content:
             application/json:
               schema:
@@ -12048,6 +12051,7 @@ paths:
       tags:
       - Streets
       operationId: put_rest_api_street_ID
+      description: data.street — один объект, включая city. Код ответа 201.
       parameters:
       - name: ID
         in: path
@@ -12055,8 +12059,8 @@ paths:
         schema:
           type: string
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Улица изменена.
           content:
             application/json:
               schema:
@@ -12070,9 +12074,7 @@ paths:
                     type: object
                     properties:
                       street:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/street'
+                        $ref: '#/components/schemas/street'
                       totalCount:
                         type: integer
       requestBody:
@@ -12090,6 +12092,7 @@ paths:
       tags:
       - Streets
       operationId: delete_rest_api_street_ID
+      description: В data возвращается id удалённой улицы.
       parameters:
       - name: ID
         in: path
@@ -12098,7 +12101,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Улица удалена.
           content:
             application/json:
               schema:
@@ -12111,17 +12114,55 @@ paths:
                   data:
                     type: object
                     properties:
-                      street:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/street'
-                      totalCount:
+                      id:
                         type: integer
       x-reconciliation:
         presentIn:
         - openapi
         - extjs
         status: confirmed
+  /rest/api/street/TypesStreets:
+    get:
+      summary: Типы улиц
+      tags:
+      - Streets
+      operationId: get_rest_api_street_TypesStreets
+      description: data.types_streets — массив кодов и названий. id совпадает со значением type у улицы.
+      responses:
+        '200':
+          description: Список типов улиц.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      types_streets:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: Код типа.
+                              enum:
+                              - street
+                              - bulvar
+                              - pereulok
+                              - prospect
+                              - proezd
+                              - dead_end
+                              - highway
+                              - embankment
+                              - square
+                              - microdistrict
+                            title:
+                              type: string
+                              description: Название типа.
   /rest/api/timesheet:
     get:
       summary: Список графиков
