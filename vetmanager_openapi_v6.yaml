@@ -3927,12 +3927,15 @@ components:
           type: string
           example: ''
           nullable: false
+          maxLength: 255
           x-db-type: varchar(255)
           default: ''
         payment_type:
           type: string
+          description: cash — наличные, cashless — безналичные.
           example: cash
           nullable: false
+          maxLength: 50
           x-db-type: varchar(50)
           default: cash
         invoice_id:
@@ -3949,25 +3952,57 @@ components:
           default: '0'
         cassa:
           type: object
-          example:
-            id: 1
-            title: Общая касса
-            assigned_user_id: 1
-            inventarization_date: '2018-03-21 15:28:48'
-            client_cass: 1
-            main_cassa: 0
-            is_blocked: 0
-            has_unfinished_docs: 1
-            status: active
-            clinic_id: 1
-            summa_cash: '0.0000000000'
-            summa_cashless: '0.0000000000'
-            is_system: 0
-            show_in_cashflow: 0
-            type: operating
-            cashless_to_cassa_id: 2
+          description: Касса оплаты.
           nullable: true
           x-computed: true
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            assigned_user_id:
+              type: integer
+            inventarization_date:
+              type: string
+            client_cass:
+              type: integer
+            main_cassa:
+              type: integer
+            is_blocked:
+              type: integer
+            has_unfinished_docs:
+              type: integer
+            status:
+              type: string
+              description: active — действующая, deactivated — отключена, deleted — удалена.
+              enum:
+              - active
+              - deactivated
+              - deleted
+            clinic_id:
+              type: integer
+            summa_cash:
+              type: string
+            summa_cashless:
+              type: string
+            is_system:
+              type: integer
+            show_in_cashflow:
+              type: integer
+            type:
+              type: string
+              description: bank — банк, safe — сейф, operating — операционная, sbp — СБП.
+              enum:
+              - bank
+              - safe
+              - operating
+              - sbp
+            cashless_to_cassa_id:
+              type: integer
+              nullable: true
+            operating_cassa_id:
+              type: integer
+              nullable: true
       x-source: real_api_response
       x-db-table: payment
     closingOfInvoices:
@@ -3993,8 +4028,15 @@ components:
           x-db-default: '0000-00-00 00:00:00'
         plus_type_document:
           type: string
+          description: payment, add_balance, return_good, start_balance или invoice.
           example: payment
           nullable: true
+          enum:
+          - payment
+          - add_balance
+          - return_good
+          - start_balance
+          - invoice
           x-computed: true
         plus_document_id:
           type: integer
@@ -4008,8 +4050,13 @@ components:
           x-computed: true
         minus_type_document:
           type: string
+          description: invoice, payment или start_balance.
           example: invoice
           nullable: true
+          enum:
+          - invoice
+          - payment
+          - start_balance
           x-computed: true
         minus_document_id:
           type: integer
@@ -4023,82 +4070,191 @@ components:
           x-computed: true
         client:
           type: object
-          example:
-            id: 12
-            address: ''
-            home_phone: ''
-            work_phone: ''
-            note: ''
-            type_id: null
-            how_find: null
-            balance: '0.0000000000'
-            email: user@example.test
-            city: ''
-            city_id: 252
-            date_register: '2020-05-15 18:49:05'
-            cell_phone: ''
-            zip: '53221'
-            registration_index: null
-            vip: 0
-            last_name: Егоров
-            first_name: Егор
-            middle_name: Егорович
-            status: ACTIVE
-            discount: 0
-            passport_series: ''
-            lab_number: ''
-            street_id: 0
-            apartment: ''
-            unsubscribe: 0
-            in_blacklist: 0
-            last_visit_date: '2025-03-21 16:26:30'
-            number_of_journal: ''
-            phone_prefix: ''
+          description: Карточка клиента без города, улицы и типа клиента.
           nullable: true
           x-computed: true
+          properties:
+            id:
+              type: integer
+            last_name:
+              type: string
+            first_name:
+              type: string
+            middle_name:
+              type: string
+            address:
+              type: string
+            home_phone:
+              type: string
+            work_phone:
+              type: string
+            cell_phone:
+              type: string
+            phone_prefix:
+              type: string
+            email:
+              type: string
+            city:
+              type: string
+            city_id:
+              type: integer
+            street_id:
+              type: integer
+            apartment:
+              type: string
+            zip:
+              type: string
+            registration_index:
+              type: string
+              nullable: true
+            status:
+              type: string
+            type_id:
+              type: integer
+              nullable: true
+            discount:
+              type: integer
+            balance:
+              type: string
+            vip:
+              type: integer
+            in_blacklist:
+              type: integer
+            unsubscribe:
+              type: integer
+            has_contract:
+              type: integer
+            note:
+              type: string
+            how_find:
+              type: string
+              nullable: true
+            lab_number:
+              type: string
+            passport_series:
+              type: string
+            number_of_journal:
+              type: string
+            date_register:
+              type: string
+            last_visit_date:
+              type: string
+              nullable: true
         invoice:
           type: object
-          example:
-            id: 2
-            doctor_id: 26
-            client_id: 12
-            pet_id: 10
-            description: ''
-            percent: '0.0000000000'
-            amount: '200.0000000000'
-            status: deleted
-            invoice_date: '2021-02-08 06:54:55'
-            old_id: null
-            night: 0
-            increase: '0.0000000000'
-            discount: '0.0000000000'
-            call: 0
-            paid_amount: '200.0000000000'
-            create_date: '2020-09-11 11:26:05'
-            payment_status: full
-            clinic_id: 1
-            creator_id: 1
-            fiscal_section_id: 0
+          description: Счет, если minus_type_document равен invoice и такой счет есть. Клиента, питомца и строк в нем нет.
           nullable: true
           x-computed: true
+          properties:
+            id:
+              type: integer
+            doctor_id:
+              type: integer
+              nullable: true
+            client_id:
+              type: integer
+            pet_id:
+              type: integer
+            description:
+              type: string
+            percent:
+              type: string
+              nullable: true
+            amount:
+              type: string
+            status:
+              type: string
+            invoice_date:
+              type: string
+            old_id:
+              type: integer
+              nullable: true
+            night:
+              type: integer
+            increase:
+              type: string
+              nullable: true
+            discount:
+              type: string
+              nullable: true
+            call:
+              type: integer
+            paid_amount:
+              type: string
+            create_date:
+              type: string
+            payment_status:
+              type: string
+            clinic_id:
+              type: integer
+            creator_id:
+              type: integer
+              nullable: true
+            fiscal_section_id:
+              type: integer
+            client_order_id:
+              type: integer
+              nullable: true
         plus_payment:
           type: object
-          example:
-            id: 2
-            amount: '200.0000000000'
-            status: exec
-            cassa_id: 1
-            cassaclose_id: null
-            create_date: '2020-09-11 11:26:12'
-            payed_user: 1
-            description: ''
-            payment_type: cash
-            invoice_id: 2
-            parent_id: 0
+          description: Оплата, если plus_type_document равен payment. Кассы в этой оплате нет.
           nullable: true
           x-computed: true
+          properties:
+            id:
+              type: integer
+            amount:
+              type: string
+            status:
+              type: string
+            cassa_id:
+              type: integer
+            cassaclose_id:
+              type: integer
+              nullable: true
+            create_date:
+              type: string
+            payed_user:
+              type: integer
+            description:
+              type: string
+            payment_type:
+              type: string
+            invoice_id:
+              type: integer
+            parent_id:
+              type: integer
+        minus_payment:
+          type: object
+          description: Оплата, если minus_type_document равен payment. Кассы в этой оплате нет.
+          nullable: true
+          x-computed: true
+          properties:
+            id:
+              type: integer
+            amount:
+              type: string
+            status:
+              type: string
+            cassa_id:
+              type: integer
+            cassaclose_id:
+              type: integer
+              nullable: true
+            create_date:
+              type: string
+            payed_user:
+              type: integer
+            description:
+              type: string
+            payment_type:
+              type: string
+            invoice_id:
+              type: integer
+            parent_id:
+              type: integer
       x-source: real_api_response
-      x-db-table: invoice
+      x-db-table: closing_of_invoices
     pet:
       type: object
       properties:
@@ -9848,15 +10004,16 @@ paths:
       tags:
       - Payments
       operationId: get_rest_api_closingOfInvoices_ID
+      description: Возвращает одну связь счета и оплаты.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Одна связь.
           content:
             application/json:
               schema:
@@ -9870,9 +10027,7 @@ paths:
                     type: object
                     properties:
                       closingOfInvoices:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/closingOfInvoices'
+                        $ref: '#/components/schemas/closingOfInvoices'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -11612,13 +11767,14 @@ paths:
         status: confirmed
   /rest/api/invoice/payinvoice:
     post:
-      summary: Оплатить счет (в разработке)
+      summary: Оплатить счет
       description: 'Выполняет проведение и оплату счета от имени проверенного сотрудника user_id. Касса выбирается сервером
         с учетом текущего доступа сотрудника; для кассы СБП оплата безналичная. amount — новое поступление денег: возможны
         частичная оплата и зачисление превышения в аванс клиента. При amount=0 используется аванс, а при его отсутствии счет
         может быть проведен в долг. success=true означает успешную операцию, а не обязательно полную оплату; проверяйте payment_status.
         Повтор частичного платежа учитывается как новое поступление: ключ идемпотентности пока не поддерживается. Для уже
-        полностью оплаченного счета запрос возвращает 409 без нового платежа.'
+        полностью оплаченного счета запрос возвращает 409 без нового платежа. Выбранная касса в ответ не входит: в data.invoice
+        остаются сохраненные invoice_id, status, amount, paid_amount и payment_status.'
       tags:
       - Invoice
       operationId: post_rest_api_invoice_payinvoice
@@ -12401,6 +12557,7 @@ paths:
       tags:
       - Payments
       operationId: get_rest_api_payment
+      description: Каждая оплата содержит кассу. Документ закрытия кассы в оплату не вложен.
       parameters:
       - name: filter
         in: query
@@ -12443,15 +12600,16 @@ paths:
       tags:
       - Payments
       operationId: get_rest_api_payment_ID
+      description: Возвращает одну оплату вместе с кассой.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Одна оплата.
           content:
             application/json:
               schema:
@@ -12465,9 +12623,7 @@ paths:
                     type: object
                     properties:
                       payment:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/payment'
+                        $ref: '#/components/schemas/payment'
                       totalCount:
                         type: integer
       x-reconciliation:
