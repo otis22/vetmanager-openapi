@@ -1974,13 +1974,22 @@
           },
           "comboManualName": {
             "type": "object",
-            "example": {
-              "id": 1,
-              "title": "Тип приема",
-              "is_readonly": 0,
-              "name": "admission_type"
-            },
+            "description": "Группа справочника. Поля id, title, is_readonly и name.",
             "nullable": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "is_readonly": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
             "x-computed": true
           }
         },
@@ -2002,171 +2011,47 @@
           },
           "is_readonly": {
             "type": "integer",
+            "description": "1 — справочник только для чтения. 0 — записи можно менять.",
             "example": 0,
             "nullable": false
           },
           "name": {
             "type": "string",
+            "description": "Системное имя справочника.",
             "example": "admission_type",
             "nullable": false
           },
           "comboManualItems": {
             "type": "array",
-            "example": [
-              {
-                "id": 246,
-                "combo_manual_id": 1,
-                "title": "�����������(POST.REST)",
-                "value": "",
-                "dop_param1": "",
-                "dop_param2": "",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 1,
-                "combo_manual_id": 1,
-                "title": "�����������(UPD.REST)",
-                "value": "1",
-                "dop_param1": "00:15:00",
-                "dop_param2": "09:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 141,
-                "combo_manual_id": 1,
-                "title": "Стационар",
-                "value": "10",
-                "dop_param1": "00:30:00",
-                "dop_param2": "",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 154,
-                "combo_manual_id": 1,
-                "title": "Сканирование документа",
-                "value": "11",
-                "dop_param1": "00:00:00",
-                "dop_param2": "00:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 198,
-                "combo_manual_id": 1,
-                "title": "Взятие анализа",
-                "value": "12",
-                "dop_param1": "00:15:00",
-                "dop_param2": "",
-                "dop_param3": "#C0C0C0",
-                "is_active": 1
-              },
-              {
-                "id": 224,
-                "combo_manual_id": 1,
-                "title": "Звонок",
-                "value": "13",
-                "dop_param1": "00:00:00",
-                "dop_param2": "",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 226,
-                "combo_manual_id": 1,
-                "title": "Задача",
-                "value": "14",
-                "dop_param1": "00:00:00",
-                "dop_param2": "",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 242,
-                "combo_manual_id": 1,
-                "title": "Рецепт",
-                "value": "15",
-                "dop_param1": "00:15:00",
-                "dop_param2": "",
-                "dop_param3": "#FFFFFF",
-                "is_active": 1
-              },
-              {
-                "id": 2,
-                "combo_manual_id": 1,
-                "title": "Хирургия",
-                "value": "2",
-                "dop_param1": "00:30:00",
-                "dop_param2": "12:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 3,
-                "combo_manual_id": 1,
-                "title": "Первичный",
-                "value": "3",
-                "dop_param1": "00:00:00",
-                "dop_param2": "00:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 4,
-                "combo_manual_id": 1,
-                "title": "Вторичный",
-                "value": "4",
-                "dop_param1": "00:00:00",
-                "dop_param2": "00:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 5,
-                "combo_manual_id": 1,
-                "title": "Экстренный",
-                "value": "5",
-                "dop_param1": "00:00:00",
-                "dop_param2": "00:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 6,
-                "combo_manual_id": 1,
-                "title": "Реферальный",
-                "value": "6",
-                "dop_param1": "00:00:00",
-                "dop_param2": "00:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 7,
-                "combo_manual_id": 1,
-                "title": "Грумминг",
-                "value": "7",
-                "dop_param1": "00:00:00",
-                "dop_param2": "00:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              },
-              {
-                "id": 8,
-                "combo_manual_id": 1,
-                "title": "Рентген",
-                "value": "8",
-                "dop_param1": "00:00:00",
-                "dop_param2": "00:00:00",
-                "dop_param3": "",
-                "is_active": 1
-              }
-            ],
+            "description": "Элементы справочника. Вложенной группы comboManualName в них нет.",
             "items": {
               "type": "object",
-              "additionalProperties": true
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "combo_manual_id": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "dop_param1": {
+                  "type": "string"
+                },
+                "dop_param2": {
+                  "type": "string"
+                },
+                "dop_param3": {
+                  "type": "string"
+                },
+                "is_active": {
+                  "type": "integer"
+                }
+              }
             }
           }
         },
@@ -6219,9 +6104,10 @@
           "Combo Manual Item"
         ],
         "operationId": "post_rest_api_ComboManualItem",
+        "description": "Обязательны combo_manual_id и title. Название внутри одного справочника не повторяется. data.comboManualItem — массив из одной записи. Вложенной группы comboManualName в этом ответе нет. Код ответа 201.",
         "parameters": [],
         "responses": {
-          "200": {
+          "201": {
             "description": "Успешный ответ",
             "content": {
               "application/json": {
@@ -6278,6 +6164,7 @@
           "Combo Manual Item"
         ],
         "operationId": "get_rest_api_ComboManualItem_ID",
+        "description": "data.comboManualItem — один объект.",
         "parameters": [
           {
             "name": "ID",
@@ -6306,10 +6193,7 @@
                       "type": "object",
                       "properties": {
                         "comboManualItem": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/comboManualItem"
-                          }
+                          "$ref": "#/components/schemas/comboManualItem"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -6335,6 +6219,7 @@
           "Combo Manual Item"
         ],
         "operationId": "put_rest_api_ComboManualItem_ID",
+        "description": "data.comboManualItem — один объект. Код ответа 201.",
         "parameters": [
           {
             "name": "ID",
@@ -6346,8 +6231,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Элемент изменён.",
             "content": {
               "application/json": {
                 "schema": {
@@ -6363,10 +6248,7 @@
                       "type": "object",
                       "properties": {
                         "comboManualItem": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/comboManualItem"
-                          }
+                          "$ref": "#/components/schemas/comboManualItem"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -6463,28 +6345,43 @@
           ],
           "status": "openapi_only"
         }
-      }
-    },
-    "/rest/api/ComboManualName/{ID}": {
-      "get": {
-        "summary": "Справочник по id",
+      },
+      "post": {
+        "summary": "Создать справочник",
         "tags": [
           "Combo Manual Name"
         ],
-        "operationId": "get_rest_api_ComboManualName_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
+        "operationId": "post_rest_api_ComboManualName",
+        "description": "title — название группы. is_readonly равен 1, если справочник только для чтения. data.comboManualName — массив из одной записи. comboManualItems в этом ответе нет. Код ответа 201.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  "is_readonly": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Системное имя. Можно не передавать."
+                  }
+                }
+              }
             }
           }
-        ],
+        },
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Справочник создан.",
             "content": {
               "application/json": {
                 "schema": {
@@ -6515,12 +6412,177 @@
               }
             }
           }
+        }
+      }
+    },
+    "/rest/api/ComboManualName/{ID}": {
+      "get": {
+        "summary": "Справочник по id",
+        "tags": [
+          "Combo Manual Name"
+        ],
+        "operationId": "get_rest_api_ComboManualName_ID",
+        "description": "data.comboManualName — один объект. В нём есть comboManualItems.",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Один справочник.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comboManualName": {
+                          "$ref": "#/components/schemas/comboManualName"
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         },
         "x-reconciliation": {
           "presentIn": [
             "openapi"
           ],
           "status": "openapi_only"
+        }
+      },
+      "put": {
+        "summary": "Изменить справочник",
+        "tags": [
+          "Combo Manual Name"
+        ],
+        "operationId": "put_rest_api_ComboManualName_ID",
+        "description": "data.comboManualName — один объект. comboManualItems в этом ответе нет. Код ответа 201.",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Справочник изменён.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comboManualName": {
+                          "$ref": "#/components/schemas/comboManualName"
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  "is_readonly": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Удалить справочник",
+        "tags": [
+          "Combo Manual Name"
+        ],
+        "operationId": "delete_rest_api_ComboManualName_ID",
+        "description": "В data возвращается id удалённого справочника.",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Справочник удалён.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
