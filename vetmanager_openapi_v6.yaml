@@ -2011,8 +2011,10 @@ components:
           default: NULL,
         title:
           type: string
+          description: Название товара или услуги, не длиннее 160 символов.
           example: Байтрил
           nullable: false
+          maxLength: 160
           x-db-type: varchar(160)
         unit_storage_id:
           type: integer
@@ -2050,6 +2052,13 @@ components:
           nullable: false
           x-db-type: tinyint(1)
           default: '1'
+        for_combination:
+          type: integer
+          description: 1 — товар или услуга входит в комбинацию. 0 — обычная карточка.
+          example: 0
+          nullable: false
+          x-db-type: tinyint(1)
+          default: '0'
         barcode:
           type: string
           example: ''
@@ -2092,60 +2101,63 @@ components:
           x-db-type: int
           default: NULL,
         group:
-          type: object
-          example:
-            id: 66
-            title: Препараты
-            is_service: 0
-            markup: null
-            is_show_in_vaccines: 0
-            price_id: 1
+          allOf:
+          - $ref: '#/components/schemas/goodGroup'
+          description: Группа товара. Есть в списке и в карточке. В ответе создания ключа нет.
           nullable: true
           x-computed: true
         unitStorage:
-          type: object
-          example:
-            id: 4
-            title: мл
-            status: active
+          allOf:
+          - $ref: '#/components/schemas/unit'
+          description: Единица хранения. Есть в списке и в карточке. В ответе создания ключа нет.
           nullable: true
           x-computed: true
         goodSaleParams:
           type: array
-          example:
-          - id: 2
-            good_id: 2
-            price: '100.0000000000'
-            coefficient: 1
-            unit_sale_id: 4
-            min_price: '0.0000000000'
-            max_price: '0.0000000000'
-            barcode: ''
-            status: active
-            clinic_id: 1
-            markup: '0.0000000000'
-            price_formation: fixed
-            is_partial_sale: 0
-            is_skip_marking: 0
-          - id: 344
-            good_id: 2
-            price: '100.0000000000'
-            coefficient: 1
-            unit_sale_id: 4
-            min_price: '0.0000000000'
-            max_price: '0.0000000000'
-            barcode: ''
-            status: active
-            clinic_id: 2
-            markup: '0.0000000000'
-            price_formation: fixed
-            is_partial_sale: 0
-            is_skip_marking: 0
+          description: Параметры продажи. Есть в списке и в карточке. В ответе создания ключа нет. Вложенный товар и единица продажи здесь не приходят.
           nullable: true
           x-computed: true
           items:
             type: object
-            additionalProperties: true
+            properties:
+              id:
+                type: integer
+              good_id:
+                type: integer
+              price:
+                type: string
+              coefficient:
+                type: integer
+              unit_sale_id:
+                type: integer
+              min_price:
+                type: string
+              max_price:
+                type: string
+              barcode:
+                type: string
+                nullable: true
+              status:
+                type: string
+                enum:
+                - active
+                - disabled
+              clinic_id:
+                type: integer
+              markup:
+                type: string
+              price_formation:
+                type: string
+                enum:
+                - fixed
+                - increase
+              is_partial_sale:
+                type: integer
+              is_skip_marking:
+                type: integer
+              is_last:
+                type: integer
+                description: 1 — последний параметр продажи этого товара.
       x-source: real_api_response
       x-db-table: good
     goodGroup:
@@ -2158,11 +2170,14 @@ components:
           x-db-type: int
         title:
           type: string
+          description: Название группы, не длиннее 255 символов.
           example: Услуги
           nullable: false
+          maxLength: 255
           x-db-type: varchar(255)
         is_service:
           type: integer
+          description: 0 — группа товаров. 1 — группа услуг.
           example: 1
           nullable: false
           x-db-type: tinyint(1)
@@ -2175,13 +2190,15 @@ components:
           default: NULL,
         is_show_in_vaccines:
           type: integer
+          description: 1 — товары группы показываются в списке вакцин. 0 — не показываются.
           example: 0
           nullable: false
           x-db-type: int
           default: '0'
         price_id:
-          type: string
-          example: null
+          type: integer
+          description: Идентификатор категории. Поле справочное, для новых записей его лучше не передавать.
+          example: 1
           nullable: true
           x-db-type: int
           default: NULL,
@@ -2483,35 +2500,65 @@ components:
           nullable: false
           x-db-type: tinyint(1)
           default: '0'
+        is_last:
+          type: integer
+          description: 1 — последний параметр продажи этого товара.
+          example: 0
+          nullable: false
+          x-db-type: tinyint(1)
+          default: '0'
         unitSale:
-          type: object
-          example:
-            id: 4
-            title: мл
-            status: active
+          allOf:
+          - $ref: '#/components/schemas/unit'
+          description: Единица продажи. Есть в списке и в карточке параметра продажи.
           nullable: true
           x-computed: true
         good:
           type: object
-          example:
-            id: 2
-            group_id: 66
-            title: Байтрил
-            unit_storage_id: 4
-            is_warehouse_account: 1
-            is_active: 1
-            code: ''
-            is_call: 0
-            is_for_sale: 1
-            barcode: ''
-            create_date: null
-            description: ''
-            prime_cost: '0.0000000000'
-            is_marking: 0
-            is_recipe: 0
-            category_id: null
+          description: Карточка товара без группы, единицы хранения и параметров продажи.
           nullable: true
           x-computed: true
+          properties:
+            id:
+              type: integer
+            group_id:
+              type: integer
+              nullable: true
+            title:
+              type: string
+            unit_storage_id:
+              type: integer
+              nullable: true
+            is_warehouse_account:
+              type: integer
+            is_active:
+              type: integer
+            code:
+              type: string
+              nullable: true
+            is_call:
+              type: integer
+            is_for_sale:
+              type: integer
+            barcode:
+              type: string
+              nullable: true
+            create_date:
+              type: string
+              nullable: true
+            description:
+              type: string
+            prime_cost:
+              type: string
+            is_marking:
+              type: integer
+            is_recipe:
+              type: integer
+            category_id:
+              type: integer
+              nullable: true
+            for_combination:
+              type: integer
       x-source: real_api_response
       x-db-table: good_sale_param
     hospital:
@@ -4233,11 +4280,14 @@ components:
           x-db-type: int
         name:
           type: string
+          description: Название роли, не длиннее 45 символов.
           example: Врач
           nullable: false
+          maxLength: 45
           x-db-type: varchar(45)
         super:
           type: integer
+          description: 1 — неограниченный доступ. 0 — обычная роль. Если не передано, сохраняется 0.
           example: 0
           nullable: false
           x-db-type: tinyint
@@ -10008,10 +10058,12 @@ paths:
       tags:
       - Good
       operationId: post_rest_api_good
+      description: Обязателен title. data.good — массив из одной записи. Код ответа 201.
+        id в этом ответе приходит строкой. Группы, единицы хранения и параметров продажи в ответе нет.
       parameters: []
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Товар или услуга созданы.
           content:
             application/json:
               schema:
@@ -10046,15 +10098,16 @@ paths:
       tags:
       - Good
       operationId: get_rest_api_good_ID
+      description: data.good — один объект. В нём есть группа, единица хранения и параметры продажи.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Один товар или услуга.
           content:
             application/json:
               schema:
@@ -10068,9 +10121,7 @@ paths:
                     type: object
                     properties:
                       good:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/good'
+                        $ref: '#/components/schemas/good'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -10083,15 +10134,16 @@ paths:
       tags:
       - Good
       operationId: put_rest_api_good_ID
+      description: data.good — один объект. Код ответа 201.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Товар или услуга изменены.
           content:
             application/json:
               schema:
@@ -10105,9 +10157,7 @@ paths:
                     type: object
                     properties:
                       good:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/good'
+                        $ref: '#/components/schemas/good'
                       totalCount:
                         type: integer
       requestBody:
@@ -10125,15 +10175,16 @@ paths:
       tags:
       - Good
       operationId: delete_rest_api_good_ID
+      description: data.id — идентификатор удалённой записи, строка.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Товар или услуга удалены.
           content:
             application/json:
               schema:
@@ -10146,36 +10197,27 @@ paths:
                   data:
                     type: object
                     properties:
-                      good:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/good'
-                      totalCount:
-                        type: integer
+                      id:
+                        type: string
       x-reconciliation:
         presentIn:
         - openapi
         - extjs
         status: confirmed
-  /rest/api/goodGroup/{id}:
+  /rest/api/goodGroup:
     get:
-      summary: Группа товаров по id
+      summary: Список групп товаров и услуг
       tags:
       - GoodGroup
-      operationId: get_rest_api_goodGroup_9
+      operationId: get_rest_api_goodGroup
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/filter'
       responses:
         '200':
-          description: Успешный ответ
+          description: Список групп.
           content:
             application/json:
               schema:
@@ -10192,6 +10234,84 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/goodGroup'
+                      totalCount:
+                        type: integer
+    post:
+      summary: Создать группу товаров или услуг
+      tags:
+      - GoodGroup
+      operationId: post_rest_api_goodGroup
+      description: Обязателен title, не длиннее 255 символов. data.goodGroup — массив из одной записи.
+        Код ответа 201. id в этом ответе приходит строкой.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - title
+              properties:
+                title:
+                  type: string
+                  maxLength: 255
+                is_service:
+                  type: integer
+                  description: 0 — товары, 1 — услуги.
+                is_show_in_vaccines:
+                  type: integer
+                  description: 1 — показывать товары группы в списке вакцин.
+      responses:
+        '201':
+          description: Группа создана.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      totalCount:
+                        type: integer
+                      goodGroup:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/goodGroup'
+  /rest/api/goodGroup/{id}:
+    get:
+      summary: Группа товаров по id
+      tags:
+      - GoodGroup
+      operationId: get_rest_api_goodGroup_9
+      description: data.goodGroup — один объект.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Одна группа.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      goodGroup:
+                        $ref: '#/components/schemas/goodGroup'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -10237,20 +10357,21 @@ paths:
         - extjs
         status: confirmed
   /rest/api/goodSaleParam/{ID}:
-    put:
-      summary: Изменить параметр продажи
+    get:
+      summary: Параметр продажи по id
       tags:
       - GoodSaleParam
-      operationId: put_rest_api_goodSaleParam_ID
+      operationId: get_rest_api_goodSaleParam_ID
+      description: data.goodSaleParam — один объект. В нём есть товар и единица продажи.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Один параметр продажи.
           content:
             application/json:
               schema:
@@ -10264,9 +10385,38 @@ paths:
                     type: object
                     properties:
                       goodSaleParam:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/goodSaleParam'
+                        $ref: '#/components/schemas/goodSaleParam'
+                      totalCount:
+                        type: integer
+    put:
+      summary: Изменить параметр продажи
+      tags:
+      - GoodSaleParam
+      operationId: put_rest_api_goodSaleParam_ID
+      description: Возвращает изменённый параметр продажи в data.goodSaleParam вместе с карточкой товара и единицей продажи.
+      parameters:
+      - name: ID
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: Параметр продажи изменён.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      goodSaleParam:
+                        $ref: '#/components/schemas/goodSaleParam'
                       totalCount:
                         type: integer
       requestBody:
@@ -12323,25 +12473,69 @@ paths:
         - openapi
         - extjs
         status: confirmed
+    post:
+      summary: Создать роль
+      tags:
+      - Role
+      operationId: post_rest_api_role
+      description: Обязателен name. data.role — массив из одной записи. Код ответа 201.
+        id в этом ответе приходит строкой. super по умолчанию 0.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  maxLength: 45
+                  description: Название роли.
+                super:
+                  type: integer
+                  description: 1 — неограниченный доступ. 0 — обычная роль.
+                  enum:
+                  - 0
+                  - 1
+      responses:
+        '201':
+          description: Роль создана.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      totalCount:
+                        type: integer
+                      role:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/role'
   /rest/api/role/{id}:
     get:
       summary: Роль по id
       tags:
       - Role
       operationId: get_rest_api_role_2
+      description: data.role — один объект.
       parameters:
       - name: id
         in: path
         required: true
         schema:
           type: integer
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
       responses:
         '200':
-          description: Успешный ответ
+          description: Одна роль.
           content:
             application/json:
               schema:
@@ -12355,9 +12549,7 @@ paths:
                     type: object
                     properties:
                       role:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/role'
+                        $ref: '#/components/schemas/role'
                       totalCount:
                         type: integer
       x-reconciliation:
