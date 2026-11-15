@@ -5875,23 +5875,40 @@
             "default": ""
           },
           "position": {
-            "type": "object",
-            "example": {
-              "id": 8,
-              "title": "администратор",
-              "admission_length": "00:30:00"
-            },
             "nullable": true,
+            "description": "Должность пользователя. Поле отсутствует, если должность не задана.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/userPosition"
+              }
+            ],
             "x-computed": true
           },
           "role": {
-            "type": "object",
-            "example": {
-              "id": 7,
-              "name": "Админы",
-              "super": 1
-            },
             "nullable": true,
+            "description": "Роль пользователя. Поле отсутствует, если роль не задана.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/role"
+              }
+            ],
+            "x-computed": true
+          },
+          "cell_phone_data": {
+            "type": "object",
+            "nullable": true,
+            "description": "Есть в карточке, если в parameters переданы attached_cell_phone_data = 1 и clinic_id.",
+            "properties": {
+              "cell_phone": {
+                "type": "string"
+              },
+              "phone_prefix": {
+                "type": "string"
+              },
+              "clinic_phone_prefix": {
+                "type": "string"
+              }
+            },
             "x-computed": true
           }
         },
@@ -18075,6 +18092,54 @@
         }
       }
     },
+    "/rest/api/user/allowedClinicsByUserId": {
+      "get": {
+        "summary": "Клиники пользователя",
+        "tags": [
+          "User"
+        ],
+        "operationId": "get_rest_api_user_allowedClinicsByUserId",
+        "description": "data.clinics — активные клиники, доступные пользователю.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список клиник.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "clinics": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/clinics"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/api/user/{ID}": {
       "get": {
         "summary": "Пользователь по id",
@@ -18082,6 +18147,7 @@
           "User"
         ],
         "operationId": "get_rest_api_user_ID",
+        "description": "data.user — один объект.",
         "parameters": [
           {
             "name": "ID",
@@ -18090,11 +18156,20 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "required": false,
+            "description": "JSON. attached_cell_phone_data = 1 и clinic_id добавляют cell_phone_data.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Один пользователь.",
             "content": {
               "application/json": {
                 "schema": {
@@ -18110,10 +18185,7 @@
                       "type": "object",
                       "properties": {
                         "user": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/user"
-                          }
+                          "$ref": "#/components/schemas/user"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -18140,6 +18212,7 @@
           "User"
         ],
         "operationId": "put_rest_api_user_ID",
+        "description": "data.user — один объект. Код ответа 201.",
         "parameters": [
           {
             "name": "ID",
@@ -18151,8 +18224,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Пользователь изменён.",
             "content": {
               "application/json": {
                 "schema": {
@@ -18168,10 +18241,7 @@
                       "type": "object",
                       "properties": {
                         "user": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/user"
-                          }
+                          "$ref": "#/components/schemas/user"
                         },
                         "totalCount": {
                           "type": "integer"

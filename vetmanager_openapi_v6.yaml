@@ -4848,20 +4848,29 @@ components:
           x-db-type: varchar(50)
           default: ''
         position:
-          type: object
-          example:
-            id: 8
-            title: администратор
-            admission_length: 00:30:00
           nullable: true
+          description: Должность пользователя. Поле отсутствует, если должность не задана.
+          allOf:
+          - $ref: '#/components/schemas/userPosition'
           x-computed: true
         role:
-          type: object
-          example:
-            id: 7
-            name: Админы
-            super: 1
           nullable: true
+          description: Роль пользователя. Поле отсутствует, если роль не задана.
+          allOf:
+          - $ref: '#/components/schemas/role'
+          x-computed: true
+        cell_phone_data:
+          type: object
+          nullable: true
+          description: >-
+            Есть в карточке, если в parameters переданы attached_cell_phone_data = 1 и clinic_id.
+          properties:
+            cell_phone:
+              type: string
+            phone_prefix:
+              type: string
+            clinic_phone_prefix:
+              type: string
           x-computed: true
       x-source: real_api_response
       x-db-table: user
@@ -12826,21 +12835,58 @@ paths:
         presentIn:
         - openapi
         status: openapi_only
+  /rest/api/user/allowedClinicsByUserId:
+    get:
+      summary: Клиники пользователя
+      tags:
+      - User
+      operationId: get_rest_api_user_allowedClinicsByUserId
+      description: data.clinics — активные клиники, доступные пользователю.
+      parameters:
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Список клиник.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      clinics:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/clinics'
   /rest/api/user/{ID}:
     get:
       summary: Пользователь по id
       tags:
       - User
       operationId: get_rest_api_user_ID
+      description: data.user — один объект.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
           type: string
+      - name: parameters
+        in: query
+        required: false
+        description: JSON. attached_cell_phone_data = 1 и clinic_id добавляют cell_phone_data.
+        schema:
+          type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Один пользователь.
           content:
             application/json:
               schema:
@@ -12854,9 +12900,7 @@ paths:
                     type: object
                     properties:
                       user:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/user'
+                        $ref: '#/components/schemas/user'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -12869,6 +12913,7 @@ paths:
       tags:
       - User
       operationId: put_rest_api_user_ID
+      description: data.user — один объект. Код ответа 201.
       parameters:
       - name: ID
         in: path
@@ -12876,8 +12921,8 @@ paths:
         schema:
           type: string
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Пользователь изменён.
           content:
             application/json:
               schema:
@@ -12891,9 +12936,7 @@ paths:
                     type: object
                     properties:
                       user:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/user'
+                        $ref: '#/components/schemas/user'
                       totalCount:
                         type: integer
       requestBody:
