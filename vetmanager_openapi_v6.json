@@ -3830,104 +3830,309 @@
             "x-db-type": "int",
             "default": "0"
           },
+          "client_order_id": {
+            "type": "integer",
+            "description": "Id связанного заказа клиента. null, если заказ не связан.",
+            "nullable": true,
+            "x-db-type": "int"
+          },
           "client": {
             "type": "object",
-            "example": {
-              "id": 12,
-              "address": "",
-              "home_phone": "",
-              "work_phone": "",
-              "note": "",
-              "type_id": null,
-              "how_find": null,
-              "balance": "0.0000000000",
-              "email": "user@example.test",
-              "city": "",
-              "city_id": 252,
-              "date_register": "2020-05-15 18:49:05",
-              "cell_phone": "",
-              "zip": "53221",
-              "registration_index": null,
-              "vip": 0,
-              "last_name": "Егоров",
-              "first_name": "Егор",
-              "middle_name": "Егорович",
-              "status": "ACTIVE",
-              "discount": 0,
-              "passport_series": "",
-              "lab_number": "",
-              "street_id": 0,
-              "apartment": "",
-              "unsubscribe": 0,
-              "in_blacklist": 0,
-              "last_visit_date": "2025-03-21 16:26:30",
-              "number_of_journal": "",
-              "phone_prefix": ""
-            },
+            "description": "Карточка клиента без города, улицы и типа клиента.",
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "middle_name": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "home_phone": {
+                "type": "string"
+              },
+              "work_phone": {
+                "type": "string"
+              },
+              "cell_phone": {
+                "type": "string"
+              },
+              "phone_prefix": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "city_id": {
+                "type": "integer"
+              },
+              "street_id": {
+                "type": "integer"
+              },
+              "apartment": {
+                "type": "string"
+              },
+              "zip": {
+                "type": "string"
+              },
+              "registration_index": {
+                "type": "string",
+                "nullable": true
+              },
+              "status": {
+                "type": "string"
+              },
+              "type_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "discount": {
+                "type": "integer"
+              },
+              "balance": {
+                "type": "string"
+              },
+              "vip": {
+                "type": "integer"
+              },
+              "in_blacklist": {
+                "type": "integer"
+              },
+              "unsubscribe": {
+                "type": "integer"
+              },
+              "has_contract": {
+                "type": "integer"
+              },
+              "note": {
+                "type": "string"
+              },
+              "how_find": {
+                "type": "string",
+                "nullable": true
+              },
+              "lab_number": {
+                "type": "string"
+              },
+              "passport_series": {
+                "type": "string"
+              },
+              "number_of_journal": {
+                "type": "string"
+              },
+              "date_register": {
+                "type": "string"
+              },
+              "last_visit_date": {
+                "type": "string",
+                "nullable": true
+              }
+            }
           },
           "pet": {
             "type": "object",
-            "example": {
-              "id": 10,
-              "owner_id": 12,
-              "type_id": 3,
-              "alias": "Это не кличка",
-              "sex": "male",
-              "date_register": "2020-05-15 18:50:30",
-              "birthday": "2020-01-15",
-              "note": "asdsad",
-              "breed_id": 346,
-              "old_id": null,
-              "color_id": 1,
-              "deathnote": null,
-              "deathdate": null,
-              "chip_number": "123",
-              "lab_number": "123234345",
-              "status": "alive",
-              "picture": null,
-              "weight": "0.0000000000",
-              "edit_date": "2023-12-15 20:51:31",
+            "description": "Карточка питомца. pet_type_data и breed_data — пустой массив, если вид или порода не заданы.",
+            "nullable": true,
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "owner_id": {
+                "type": "integer"
+              },
+              "type_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "alias": {
+                "type": "string"
+              },
+              "sex": {
+                "type": "string",
+                "nullable": true
+              },
+              "date_register": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "string",
+                "nullable": true
+              },
+              "note": {
+                "type": "string"
+              },
+              "breed_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "old_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "color_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "deathnote": {
+                "type": "string",
+                "nullable": true
+              },
+              "deathdate": {
+                "type": "string",
+                "nullable": true
+              },
+              "chip_number": {
+                "type": "string"
+              },
+              "lab_number": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "picture": {
+                "type": "string",
+                "nullable": true
+              },
+              "weight": {
+                "type": "string"
+              },
+              "edit_date": {
+                "type": "string"
+              },
               "pet_type_data": {
-                "id": 3,
-                "title": "Грызуны",
-                "picture": "",
-                "type": ""
+                "description": "Пустой массив, если вид не задан.",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "picture": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                ]
               },
               "breed_data": {
-                "id": 346,
-                "title": "Бурундук",
-                "pet_type_id": 3
+                "description": "Пустой массив, если порода не задана.",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "pet_type_id": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                ]
               }
-            },
-            "nullable": true,
-            "x-computed": true
+            }
           },
           "doctor": {
             "type": "object",
-            "example": {
-              "id": 26,
-              "last_name": "Романичев",
-              "first_name": "Владимир",
-              "middle_name": "",
-              "login": "demo_user",
-              "position_id": 8,
-              "email": "user@example.test",
-              "phone": "",
-              "cell_phone": "",
-              "address": "",
-              "role_id": 7,
-              "is_active": 1,
-              "calc_percents": 1,
-              "nickname": "demo_user",
-              "last_change_pwd_date": "0000-00-00",
-              "is_limited": 0,
-              "sip_number": "",
-              "user_inn": ""
-            },
+            "description": "Врач счета. Пароль в ответ не попадает.",
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "middle_name": {
+                "type": "string"
+              },
+              "login": {
+                "type": "string"
+              },
+              "nickname": {
+                "type": "string"
+              },
+              "position_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "cell_phone": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "role_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "is_active": {
+                "type": "integer"
+              },
+              "calc_percents": {
+                "type": "integer"
+              },
+              "last_change_pwd_date": {
+                "type": "string"
+              },
+              "is_limited": {
+                "type": "integer"
+              },
+              "sip_number": {
+                "type": "string"
+              },
+              "user_inn": {
+                "type": "string"
+              }
+            }
           }
         },
         "x-source": "real_api_response",
@@ -4082,74 +4287,209 @@
           },
           "document": {
             "type": "object",
-            "example": {
-              "id": 2,
-              "doctor_id": 26,
-              "client_id": 12,
-              "pet_id": 10,
-              "description": "",
-              "percent": "0.0000000000",
-              "amount": "200.0000000000",
-              "status": "deleted",
-              "invoice_date": "2021-02-08 06:54:55",
-              "old_id": null,
-              "night": 0,
-              "increase": "0.0000000000",
-              "discount": "0.0000000000",
-              "call": 0,
-              "paid_amount": "200.0000000000",
-              "create_date": "2020-09-11 11:26:05",
-              "payment_status": "full",
-              "clinic_id": 1,
-              "creator_id": 1,
-              "fiscal_section_id": 0
-            },
+            "description": "Заголовок счета без клиента, питомца, врача и строк.",
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "doctor_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "client_id": {
+                "type": "integer"
+              },
+              "pet_id": {
+                "type": "integer"
+              },
+              "description": {
+                "type": "string"
+              },
+              "percent": {
+                "type": "string",
+                "nullable": true
+              },
+              "amount": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "invoice_date": {
+                "type": "string"
+              },
+              "old_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "night": {
+                "type": "integer"
+              },
+              "increase": {
+                "type": "string",
+                "nullable": true
+              },
+              "discount": {
+                "type": "string",
+                "nullable": true
+              },
+              "call": {
+                "type": "integer"
+              },
+              "paid_amount": {
+                "type": "string"
+              },
+              "create_date": {
+                "type": "string"
+              },
+              "payment_status": {
+                "type": "string"
+              },
+              "clinic_id": {
+                "type": "integer"
+              },
+              "creator_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "fiscal_section_id": {
+                "type": "integer"
+              },
+              "client_order_id": {
+                "type": "integer",
+                "nullable": true
+              }
+            }
           },
           "good": {
             "type": "object",
-            "example": {
-              "id": 308,
-              "group_id": 80,
-              "title": "ОАК для Лаборатории",
-              "unit_storage_id": null,
-              "is_warehouse_account": 0,
-              "is_active": 1,
-              "code": "",
-              "is_call": 0,
-              "is_for_sale": 1,
-              "barcode": "",
-              "create_date": "2020-09-11 11:13:36",
-              "description": "",
-              "prime_cost": "0.0000000000",
-              "is_marking": 0,
-              "is_recipe": 0,
-              "category_id": null
-            },
+            "description": "Карточка товара без группы, единицы хранения и параметров продажи.",
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "group_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "title": {
+                "type": "string"
+              },
+              "unit_storage_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "is_warehouse_account": {
+                "type": "integer"
+              },
+              "is_active": {
+                "type": "integer"
+              },
+              "code": {
+                "type": "string",
+                "nullable": true
+              },
+              "is_call": {
+                "type": "integer"
+              },
+              "is_for_sale": {
+                "type": "integer"
+              },
+              "barcode": {
+                "type": "string",
+                "nullable": true
+              },
+              "create_date": {
+                "type": "string",
+                "nullable": true
+              },
+              "description": {
+                "type": "string"
+              },
+              "prime_cost": {
+                "type": "string"
+              },
+              "is_marking": {
+                "type": "integer"
+              },
+              "is_recipe": {
+                "type": "integer"
+              },
+              "category_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "for_combination": {
+                "type": "integer"
+              }
+            }
           },
           "goodSaleParam": {
             "type": "object",
-            "example": {
-              "id": 312,
-              "good_id": 308,
-              "price": "100.0000000000",
-              "coefficient": 1,
-              "unit_sale_id": 0,
-              "min_price": "0.0000000000",
-              "max_price": "0.0000000000",
-              "barcode": "",
-              "status": "active",
-              "clinic_id": 1,
-              "markup": "0.0000000000",
-              "price_formation": "fixed",
-              "is_partial_sale": 0,
-              "is_skip_marking": 0
-            },
+            "description": "Параметр продажи строки. Единица продажи есть в карточке строки и в строках внутри карточки счета. В списке строк её нет.",
             "nullable": true,
-            "x-computed": true
+            "x-computed": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "good_id": {
+                "type": "integer"
+              },
+              "price": {
+                "type": "string"
+              },
+              "coefficient": {
+                "type": "integer"
+              },
+              "unit_sale_id": {
+                "type": "integer"
+              },
+              "min_price": {
+                "type": "string"
+              },
+              "max_price": {
+                "type": "string"
+              },
+              "barcode": {
+                "type": "string",
+                "nullable": true
+              },
+              "status": {
+                "type": "string"
+              },
+              "clinic_id": {
+                "type": "integer"
+              },
+              "markup": {
+                "type": "string"
+              },
+              "price_formation": {
+                "type": "string"
+              },
+              "is_partial_sale": {
+                "type": "integer"
+              },
+              "is_skip_marking": {
+                "type": "integer"
+              },
+              "is_last": {
+                "type": "integer"
+              },
+              "unitSale": {
+                "description": "Единица продажи. В списке строк этого поля нет.",
+                "nullable": true,
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/unit"
+                  }
+                ]
+              }
+            }
           }
         },
         "x-source": "real_api_response",
@@ -15494,6 +15834,7 @@
           "Invoice"
         ],
         "operationId": "get_rest_api_invoice",
+        "description": "Каждый счет в списке содержит клиента, питомца и врача. Строк счета в списке нет.",
         "parameters": [
           {
             "$ref": "#/components/parameters/limit"
@@ -16075,19 +16416,20 @@
           "Invoice"
         ],
         "operationId": "get_rest_api_invoice_ID",
+        "description": "Возвращает один счет вместе с клиентом, питомцем, врачом и строками. В строках нет карточки товара и заголовка счета. party_info пуст, пока счет не выполнен.\n",
         "parameters": [
           {
             "name": "ID",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Один счет.",
             "content": {
               "application/json": {
                 "schema": {
@@ -16103,10 +16445,179 @@
                       "type": "object",
                       "properties": {
                         "invoice": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/invoice"
-                          }
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/invoice"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "invoiceDocuments": {
+                                  "type": "array",
+                                  "description": "Строки счета. Карточки товара и заголовка счета в них нет.",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "integer"
+                                      },
+                                      "document_id": {
+                                        "type": "integer"
+                                      },
+                                      "good_id": {
+                                        "type": "integer"
+                                      },
+                                      "quantity": {
+                                        "type": "string"
+                                      },
+                                      "price": {
+                                        "type": "string"
+                                      },
+                                      "responsible_user_id": {
+                                        "type": "integer"
+                                      },
+                                      "is_default_responsible": {
+                                        "type": "integer"
+                                      },
+                                      "sale_param_id": {
+                                        "type": "integer"
+                                      },
+                                      "tag_id": {
+                                        "type": "integer"
+                                      },
+                                      "discount_type": {
+                                        "type": "string",
+                                        "nullable": true
+                                      },
+                                      "discount_document_id": {
+                                        "type": "string",
+                                        "nullable": true
+                                      },
+                                      "discount_percent": {
+                                        "type": "string",
+                                        "nullable": true
+                                      },
+                                      "default_price": {
+                                        "type": "string",
+                                        "nullable": true
+                                      },
+                                      "create_date": {
+                                        "type": "string"
+                                      },
+                                      "discount_cause": {
+                                        "type": "string",
+                                        "nullable": true
+                                      },
+                                      "fixed_discount_id": {
+                                        "type": "integer"
+                                      },
+                                      "fixed_discount_percent": {
+                                        "type": "integer"
+                                      },
+                                      "fixed_increase_id": {
+                                        "type": "integer"
+                                      },
+                                      "fixed_increase_percent": {
+                                        "type": "integer"
+                                      },
+                                      "prime_cost": {
+                                        "type": "string"
+                                      },
+                                      "party_info": {
+                                        "type": "array",
+                                        "description": "Списанные партии. Пустой массив, пока по счету нет выполненного складского документа. Поля строки не были заполнены на локальной записи со статусом save.\n",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "party_id": {
+                                              "type": "integer"
+                                            },
+                                            "party_exec_date": {
+                                              "type": "string"
+                                            },
+                                            "store_id": {
+                                              "type": "integer"
+                                            },
+                                            "good_id": {
+                                              "type": "integer"
+                                            },
+                                            "characteristic_id": {
+                                              "type": "integer"
+                                            },
+                                            "quantity": {
+                                              "type": "string"
+                                            },
+                                            "price": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "goodSaleParam": {
+                                        "type": "object",
+                                        "description": "Параметр продажи строки, включая единицу продажи.",
+                                        "properties": {
+                                          "id": {
+                                            "type": "integer"
+                                          },
+                                          "good_id": {
+                                            "type": "integer"
+                                          },
+                                          "price": {
+                                            "type": "string"
+                                          },
+                                          "coefficient": {
+                                            "type": "integer"
+                                          },
+                                          "unit_sale_id": {
+                                            "type": "integer"
+                                          },
+                                          "min_price": {
+                                            "type": "string"
+                                          },
+                                          "max_price": {
+                                            "type": "string"
+                                          },
+                                          "barcode": {
+                                            "type": "string",
+                                            "nullable": true
+                                          },
+                                          "status": {
+                                            "type": "string"
+                                          },
+                                          "clinic_id": {
+                                            "type": "integer"
+                                          },
+                                          "markup": {
+                                            "type": "string"
+                                          },
+                                          "price_formation": {
+                                            "type": "string"
+                                          },
+                                          "is_partial_sale": {
+                                            "type": "integer"
+                                          },
+                                          "is_skip_marking": {
+                                            "type": "integer"
+                                          },
+                                          "is_last": {
+                                            "type": "integer"
+                                          },
+                                          "unitSale": {
+                                            "allOf": [
+                                              {
+                                                "$ref": "#/components/schemas/unit"
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
                         },
                         "totalCount": {
                           "type": "integer"
@@ -16135,6 +16646,7 @@
           "InvoiceDocument"
         ],
         "operationId": "get_rest_api_invoiceDocument",
+        "description": "Строка содержит товар, заголовок счета и параметр продажи. Допустимые цены и party_info есть только в карточке строки.",
         "parameters": [
           {
             "name": "filter",
@@ -16205,19 +16717,20 @@
           "InvoiceDocument"
         ],
         "operationId": "get_rest_api_invoiceDocument_ID",
+        "description": "Возвращает одну строку счета вместе с товаром, заголовком счета и параметром продажи. Дополнительно считает допустимые цены и добавляет party_info.\n",
         "parameters": [
           {
             "name": "ID",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Одна строка счета.",
             "content": {
               "application/json": {
                 "schema": {
@@ -16233,10 +16746,62 @@
                       "type": "object",
                       "properties": {
                         "invoiceDocument": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/invoiceDocument"
-                          }
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/invoiceDocument"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "party_info": {
+                                  "type": "array",
+                                  "description": "Списанные партии. Пустой массив, пока строка не списана выполненным документом склада.",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "party_id": {
+                                        "type": "integer"
+                                      },
+                                      "party_exec_date": {
+                                        "type": "string"
+                                      },
+                                      "store_id": {
+                                        "type": "integer"
+                                      },
+                                      "good_id": {
+                                        "type": "integer"
+                                      },
+                                      "characteristic_id": {
+                                        "type": "integer"
+                                      },
+                                      "quantity": {
+                                        "type": "string"
+                                      },
+                                      "price": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "min_price": {
+                                  "type": "string",
+                                  "description": "Нижняя допустимая сумма строки с учетом процента параметра продажи."
+                                },
+                                "max_price": {
+                                  "type": "string",
+                                  "description": "Верхняя допустимая сумма строки с учетом процента параметра продажи."
+                                },
+                                "min_price_percent": {
+                                  "type": "string",
+                                  "description": "Процент минимальной цены из параметра продажи."
+                                },
+                                "max_price_percent": {
+                                  "type": "string",
+                                  "description": "Процент максимальной цены из параметра продажи."
+                                }
+                              }
+                            }
+                          ]
                         },
                         "totalCount": {
                           "type": "integer"
