@@ -32,16 +32,40 @@
       "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы клиента (`status`)\n\n- `ACTIVE` — активен;\n- `TEMPORARY` — временный;\n- `DISABLED` — отключён;\n- `DELETED` — удалён.\n\n</details>\n"
     },
     {
+      "name": "Cassa",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы кассы (`status`)\n\n- `active` — активна;\n- `deactivated` — деактивирована;\n- `deleted` — удалена.\n\n#### Типы кассы (`type`)\n\n- `bank` — банковская касса;\n- `safe` — сейф;\n- `operating` — операционная касса.\n\n</details>\n"
+    },
+    {
+      "name": "Cassa / Cassa Close",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы закрытия кассы (`status`)\n\n- `exec` — выполнено;\n- `save` — сохранено;\n- `deleted` — удалено.\n\n</details>\n"
+    },
+    {
+      "name": "Clinic",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы клиники (`status`)\n\n- `ACTIVE` — активна;\n- `DELETED` — удалена.\n\n</details>\n"
+    },
+    {
+      "name": "Good Parties in Store",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы партии (`partyAccount.status`)\n\n- `save` — сохранена;\n- `exec` — выполнена;\n- `deleted` — удалена;\n- `temporary` — временная.\n\n#### Статусы позиции партии (`partyAccountDoc.status`)\n\n- `active` — активна;\n- `disabled_by_inventar` — отключена инвентаризацией;\n- `disabled` — отключена.\n\n</details>\n"
+    },
+    {
+      "name": "GoodSaleParam",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы параметра продажи (`status`)\n\n- `active` — активен;\n- `disabled` — отключён.\n\n#### Способы формирования цены (`price_formation`)\n\n- `fixed` — фиксированная цена;\n- `increase` — цена рассчитывается по наценке.\n\n</details>\n"
+    },
+    {
       "name": "Invoice",
       "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы счёта (`status`)\n\n- `exec` — выполнен;\n- `save` — сохранён;\n- `deleted` — удалён;\n- `closed` — закрыт;\n- `archived` — архивирован.\n\n#### Статусы оплаты (`payment_status`)\n\n- `none` — не оплачен;\n- `partial` — оплачен частично;\n- `full` — оплачен полностью.\n\n</details>\n"
     },
     {
       "name": "Hospital",
-      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы госпитализации (`status`)\n\n- `planned` — госпитализация запланирована;\n- `in_hospital` — пациент находится в стационаре;\n- `discharged` — пациент выписан;\n- `delayed` — госпитализация просрочена;\n- `deleted` — госпитализация удалена.\n\n</details>\n"
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы госпитализации (`status`)\n\n- `planned` — госпитализация запланирована;\n- `in_hospital` — пациент находится в стационаре;\n- `discharged` — пациент выписан;\n- `delayed` — госпитализация просрочена;\n- `deleted` — госпитализация удалена.\n\n#### Статусы блока стационара (`hospitalBlock.status`)\n\n- `active` — активен;\n- `disabled` — отключён;\n- `deleted` — удалён.\n\n</details>\n"
     },
     {
       "name": "Medical Card",
       "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы медицинской карты (`status`)\n\n- `active` — активна;\n- `deleted` — удалена;\n- `archived` — архивирована.\n\n</details>\n"
+    },
+    {
+      "name": "InvoiceDocument",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Источники скидки (`discount_type`)\n\n- `card` — дисконтная карта;\n- `promotion` — акция;\n- `coupon` — купон.\n\n</details>\n"
     },
     {
       "name": "Payments",
@@ -54,6 +78,10 @@
     {
       "name": "Streets",
       "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Типы улиц (`type`)\n\n- `street` — улица;\n- `bulvar` — бульвар;\n- `pereulok` — переулок;\n- `prospect` — проспект;\n- `proezd` — проезд;\n- `dead_end` — тупик;\n- `highway` — шоссе;\n- `embankment` — набережная;\n- `square` — площадь;\n- `microdistrict` — микрорайон.\n\n</details>\n"
+    },
+    {
+      "name": "Store",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Типы складских документов (`document_type`)\n\n- `prihod` — приход;\n- `rashod` — расход;\n- `inventar` — инвентаризация;\n- `transfer` — передача между складами;\n- `invoice` — списание по счёту;\n- `return_good` — возврат товара;\n- `transfer_receiver` — приём передачи на складе-получателе.\n\n#### Статусы складского документа (`status`)\n\n- `save` — сохранён;\n- `exec` — выполнен;\n- `deleted` — удалён;\n- `disabled` — отключён;\n- `archived` — архивирован;\n- `executing` — выполняется.\n\n</details>\n"
     },
     {
       "name": "Suppliers",
@@ -807,6 +835,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус кассы.",
             "example": "active",
             "nullable": false,
             "x-db-type": "enum('active','deactivated','deleted')",
@@ -854,6 +883,7 @@
           },
           "type": {
             "type": "string",
+            "description": "Тип кассы.",
             "example": "operating",
             "nullable": false,
             "x-db-type": "enum('bank','safe','operating')",
@@ -901,6 +931,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус закрытия кассы.",
             "example": "exec",
             "nullable": false,
             "x-db-type": "enum('exec','save','deleted')",
@@ -1604,6 +1635,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус клиники.",
             "example": "ACTIVE",
             "nullable": true,
             "x-db-type": "enum('ACTIVE','DELETED')",
@@ -2143,6 +2175,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус партии товара.",
             "example": "exec",
             "nullable": true,
             "x-db-type": "enum('save','exec','deleted','temporary')",
@@ -2281,6 +2314,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус позиции партии товара.",
             "example": "active",
             "nullable": true,
             "x-db-type": "enum('active','disabled_by_inventar','disabled')",
@@ -2399,6 +2433,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус параметра продажи.",
             "example": "active",
             "nullable": false,
             "x-db-type": "enum('active','disabled')",
@@ -2424,6 +2459,7 @@
           },
           "price_formation": {
             "type": "string",
+            "description": "Способ формирования цены продажи.",
             "example": "fixed",
             "nullable": false,
             "x-db-type": "enum('fixed','increase')",
@@ -2743,6 +2779,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус блока стационара.",
             "example": "active",
             "nullable": false,
             "x-db-type": "enum('active','disabled','deleted')",
@@ -3087,6 +3124,7 @@
           },
           "discount_type": {
             "type": "string",
+            "description": "Источник скидки.",
             "example": null,
             "nullable": true,
             "x-db-type": "enum('card','promotion','coupon')",
@@ -4642,6 +4680,7 @@
           },
           "document_type": {
             "type": "string",
+            "description": "Тип складского документа.",
             "example": "prihod",
             "nullable": false,
             "x-db-type": "enum('prihod','rashod','inventar','transfer','invoice','return_good','transfer_receiver')",
@@ -4658,6 +4697,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус складского документа.",
             "example": "exec",
             "nullable": false,
             "x-db-type": "enum('save','exec','deleted','disabled','archived','executing')",

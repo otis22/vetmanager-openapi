@@ -45,6 +45,82 @@ tags:
     - `DELETED` — удалён.
 
     </details>
+- name: Cassa
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы кассы (`status`)
+
+    - `active` — активна;
+    - `deactivated` — деактивирована;
+    - `deleted` — удалена.
+
+    #### Типы кассы (`type`)
+
+    - `bank` — банковская касса;
+    - `safe` — сейф;
+    - `operating` — операционная касса.
+
+    </details>
+- name: Cassa / Cassa Close
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы закрытия кассы (`status`)
+
+    - `exec` — выполнено;
+    - `save` — сохранено;
+    - `deleted` — удалено.
+
+    </details>
+- name: Clinic
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы клиники (`status`)
+
+    - `ACTIVE` — активна;
+    - `DELETED` — удалена.
+
+    </details>
+- name: Good Parties in Store
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы партии (`partyAccount.status`)
+
+    - `save` — сохранена;
+    - `exec` — выполнена;
+    - `deleted` — удалена;
+    - `temporary` — временная.
+
+    #### Статусы позиции партии (`partyAccountDoc.status`)
+
+    - `active` — активна;
+    - `disabled_by_inventar` — отключена инвентаризацией;
+    - `disabled` — отключена.
+
+    </details>
+- name: GoodSaleParam
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы параметра продажи (`status`)
+
+    - `active` — активен;
+    - `disabled` — отключён.
+
+    #### Способы формирования цены (`price_formation`)
+
+    - `fixed` — фиксированная цена;
+    - `increase` — цена рассчитывается по наценке.
+
+    </details>
 - name: Invoice
   description: |
     <details>
@@ -78,6 +154,12 @@ tags:
     - `delayed` — госпитализация просрочена;
     - `deleted` — госпитализация удалена.
 
+    #### Статусы блока стационара (`hospitalBlock.status`)
+
+    - `active` — активен;
+    - `disabled` — отключён;
+    - `deleted` — удалён.
+
     </details>
 - name: Medical Card
   description: |
@@ -89,6 +171,18 @@ tags:
     - `active` — активна;
     - `deleted` — удалена;
     - `archived` — архивирована.
+
+    </details>
+- name: InvoiceDocument
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Источники скидки (`discount_type`)
+
+    - `card` — дисконтная карта;
+    - `promotion` — акция;
+    - `coupon` — купон.
 
     </details>
 - name: Payments
@@ -140,6 +234,31 @@ tags:
     - `embankment` — набережная;
     - `square` — площадь;
     - `microdistrict` — микрорайон.
+
+    </details>
+- name: Store
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Типы складских документов (`document_type`)
+
+    - `prihod` — приход;
+    - `rashod` — расход;
+    - `inventar` — инвентаризация;
+    - `transfer` — передача между складами;
+    - `invoice` — списание по счёту;
+    - `return_good` — возврат товара;
+    - `transfer_receiver` — приём передачи на складе-получателе.
+
+    #### Статусы складского документа (`status`)
+
+    - `save` — сохранён;
+    - `exec` — выполнен;
+    - `deleted` — удалён;
+    - `disabled` — отключён;
+    - `archived` — архивирован;
+    - `executing` — выполняется.
 
     </details>
 - name: Suppliers
@@ -771,6 +890,7 @@ components:
           default: '0'
         status:
           type: string
+          description: Статус кассы.
           example: active
           nullable: false
           x-db-type: enum('active','deactivated','deleted')
@@ -811,6 +931,7 @@ components:
           default: '1'
         type:
           type: string
+          description: Тип кассы.
           example: operating
           nullable: false
           x-db-type: enum('bank','safe','operating')
@@ -850,6 +971,7 @@ components:
           x-db-type: int
         status:
           type: string
+          description: Статус закрытия кассы.
           example: exec
           nullable: false
           x-db-type: enum('exec','save','deleted')
@@ -1443,6 +1565,7 @@ components:
           default: ''
         status:
           type: string
+          description: Статус клиники.
           example: ACTIVE
           nullable: true
           x-db-type: enum('ACTIVE','DELETED')
@@ -1885,6 +2008,7 @@ components:
           default: '0'
         status:
           type: string
+          description: Статус партии товара.
           example: exec
           nullable: true
           x-db-type: enum('save','exec','deleted','temporary')
@@ -2001,6 +2125,7 @@ components:
           default: NULL,
         status:
           type: string
+          description: Статус позиции партии товара.
           example: active
           nullable: true
           x-db-type: enum('active','disabled_by_inventar','disabled')
@@ -2102,6 +2227,7 @@ components:
           default: NULL,
         status:
           type: string
+          description: Статус параметра продажи.
           example: active
           nullable: false
           x-db-type: enum('active','disabled')
@@ -2123,6 +2249,7 @@ components:
           default: NULL,
         price_formation:
           type: string
+          description: Способ формирования цены продажи.
           example: fixed
           nullable: false
           x-db-type: enum('fixed','increase')
@@ -2401,6 +2528,7 @@ components:
           default: '0'
         status:
           type: string
+          description: Статус блока стационара.
           example: active
           nullable: false
           x-db-type: enum('active','disabled','deleted')
@@ -2699,6 +2827,7 @@ components:
           default: '0'
         discount_type:
           type: string
+          description: Источник скидки.
           example: null
           nullable: true
           x-db-type: enum('card','promotion','coupon')
@@ -3888,6 +4017,7 @@ components:
           x-db-type: int
         document_type:
           type: string
+          description: Тип складского документа.
           example: prihod
           nullable: false
           x-db-type: enum('prihod','rashod','inventar','transfer','invoice','return_good','transfer_receiver')
@@ -3902,6 +4032,7 @@ components:
           default: prihod
         status:
           type: string
+          description: Статус складского документа.
           example: exec
           nullable: false
           x-db-type: enum('save','exec','deleted','disabled','archived','executing')
