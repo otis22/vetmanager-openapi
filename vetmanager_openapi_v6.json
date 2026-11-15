@@ -2520,6 +2520,81 @@
         },
         "x-source": "real_api_response"
       },
+      "fiscalRegisterData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "register_id": {
+            "type": "integer",
+            "description": "Id фискального регистратора."
+          },
+          "status": {
+            "type": "string",
+            "description": "save — записан, sended — отправлен, error — ошибка, exec — выполнен, canceled — отменен, double — повтор, in_queue — в очереди.",
+            "enum": [
+              "save",
+              "sended",
+              "error",
+              "exec",
+              "canceled",
+              "double",
+              "in_queue"
+            ]
+          },
+          "event_name": {
+            "type": "string",
+            "description": "Операция. balance — баланс, paymentRun — оплата, paymentRollback — возврат оплаты, smenaStart — открытие смены, smenaEnd — закрытие смены, customReport — X-отчет, cashIncome — внесение, cashOutcome — изъятие, correction — коррекция.",
+            "enum": [
+              "balance",
+              "paymentRun",
+              "paymentRollback",
+              "smenaStart",
+              "smenaEnd",
+              "customReport",
+              "cashIncome",
+              "cashOutcome",
+              "correction"
+            ]
+          },
+          "data": {
+            "type": "string",
+            "description": "JSON-строка с данными операции. Для оплаты внутри есть taxSystem (номер системы налогообложения), taxTypeNumber (код ставки НДС) и goods (строки чека)."
+          },
+          "invoice_id_real": {
+            "type": "integer",
+            "description": "Id счета в программе."
+          },
+          "error_message": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "create_date": {
+            "type": "string"
+          },
+          "send_date": {
+            "type": "string"
+          },
+          "response_date": {
+            "type": "string"
+          },
+          "fiscal_sign": {
+            "type": "string",
+            "description": "Фискальный признак, не длиннее 100 символов.",
+            "maxLength": 100
+          },
+          "payment_id": {
+            "type": "integer"
+          },
+          "check_html": {
+            "type": "string",
+            "description": "HTML чека для Checkbox."
+          }
+        },
+        "x-source": "real_api_response",
+        "x-db-table": "fiscal_register_data"
+      },
       "fiscalTaxSystems": {
         "type": "object",
         "properties": {
@@ -14768,6 +14843,7 @@
           "Fiscal Register Data"
         ],
         "operationId": "get_rest_api_fiscalRegisterData",
+        "description": "data.fiscalRegisterData — массив. У каждой записи есть hash, invoice_id и карточка регистратора.",
         "parameters": [
           {
             "$ref": "#/components/parameters/limit"
@@ -14784,7 +14860,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Список записей для фискального регистратора.",
             "content": {
               "application/json": {
                 "schema": {
@@ -14798,7 +14874,144 @@
                     },
                     "data": {
                       "type": "object",
-                      "additionalProperties": true
+                      "properties": {
+                        "fiscalRegisterData": {
+                          "type": "array",
+                          "items": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/fiscalRegisterData"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "invoice_id": {
+                                    "type": "integer",
+                                    "description": "Id счета в этой записи. В карточке одной записи поля нет."
+                                  },
+                                  "hash": {
+                                    "type": "string",
+                                    "description": "Служебный признак операции, не длиннее 50 символов. В карточке одной записи поля нет.",
+                                    "maxLength": 50
+                                  },
+                                  "register": {
+                                    "type": "object",
+                                    "description": "Карточка фискального регистратора. В карточке одной записи ее нет.",
+                                    "properties": {
+                                      "id": {
+                                        "type": "integer"
+                                      },
+                                      "title": {
+                                        "type": "string",
+                                        "maxLength": 250
+                                      },
+                                      "api_key": {
+                                        "type": "string",
+                                        "description": "Ключ фискального регистратора, не длиннее 35 символов.",
+                                        "maxLength": 35
+                                      },
+                                      "cassa_ids": {
+                                        "type": "string",
+                                        "description": "Id связанных касс через запятую."
+                                      },
+                                      "status": {
+                                        "type": "string",
+                                        "description": "active — действующий, deleted — удален.",
+                                        "enum": [
+                                          "active",
+                                          "deleted"
+                                        ]
+                                      },
+                                      "register_type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "atol",
+                                          "evotor",
+                                          "checkbox",
+                                          "ikassa"
+                                        ]
+                                      },
+                                      "tax_system": {
+                                        "type": "integer",
+                                        "description": "Номер системы налогообложения."
+                                      },
+                                      "tax_type_number": {
+                                        "type": "integer"
+                                      },
+                                      "allow_to_change_tax_system": {
+                                        "type": "integer"
+                                      },
+                                      "clinic_id": {
+                                        "type": "integer"
+                                      },
+                                      "org_name": {
+                                        "type": "string",
+                                        "maxLength": 250
+                                      },
+                                      "org_inn": {
+                                        "type": "string",
+                                        "maxLength": 50
+                                      },
+                                      "org_address": {
+                                        "type": "string",
+                                        "maxLength": 500
+                                      },
+                                      "org_post_index": {
+                                        "type": "string",
+                                        "maxLength": 15
+                                      },
+                                      "print_type": {
+                                        "type": "string",
+                                        "maxLength": 50
+                                      },
+                                      "is_show_clients_last_name": {
+                                        "type": "integer"
+                                      },
+                                      "client_version": {
+                                        "type": "string",
+                                        "maxLength": 10
+                                      },
+                                      "is_show_invoice_number": {
+                                        "type": "integer"
+                                      },
+                                      "tax_type_number_ten": {
+                                        "type": "integer"
+                                      },
+                                      "check_header": {
+                                        "type": "string",
+                                        "maxLength": 250
+                                      },
+                                      "check_footer": {
+                                        "type": "string",
+                                        "maxLength": 250
+                                      },
+                                      "data_operator_id": {
+                                        "type": "integer"
+                                      },
+                                      "receipt_format": {
+                                        "type": "string",
+                                        "maxLength": 10
+                                      },
+                                      "is_marking_code": {
+                                        "type": "integer"
+                                      },
+                                      "is_default_register": {
+                                        "type": "integer"
+                                      },
+                                      "is_skip_mc_for_combinations": {
+                                        "type": "integer"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }
@@ -14822,19 +15035,20 @@
           "Fiscal Register Data"
         ],
         "operationId": "get_rest_api_fiscalRegisterData_ID",
+        "description": "Одна запись в data.FiscalRegisterData. В ней нет hash, invoice_id и регистратора. message и totalCount в этом ответе нет. Если записи нет, ответ 404.",
         "parameters": [
           {
             "name": "ID",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Одна запись для фискального регистратора.",
             "content": {
               "application/json": {
                 "schema": {
@@ -14843,12 +15057,13 @@
                     "success": {
                       "type": "boolean"
                     },
-                    "message": {
-                      "type": "string"
-                    },
                     "data": {
                       "type": "object",
-                      "additionalProperties": true
+                      "properties": {
+                        "FiscalRegisterData": {
+                          "$ref": "#/components/schemas/fiscalRegisterData"
+                        }
+                      }
                     }
                   }
                 }
