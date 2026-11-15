@@ -1763,8 +1763,10 @@
           },
           "title": {
             "type": "string",
+            "description": "Название города, не длиннее 255 символов. Вместе с type_id не повторяется.",
             "example": "djjd",
             "nullable": false,
+            "maxLength": 255,
             "x-db-type": "varchar(255)"
           },
           "type_id": {
@@ -1789,8 +1791,10 @@
           },
           "title": {
             "type": "string",
+            "description": "Название типа населённого пункта, не длиннее 32 символов.",
             "example": "Деревня",
             "nullable": true,
+            "maxLength": 32,
             "x-db-type": "varchar(32)",
             "default": "NULL,"
           }
@@ -10385,10 +10389,11 @@
           "City"
         ],
         "operationId": "post_rest_api_city",
+        "description": "Обязателен title, не длиннее 255 символов. Пара title и type_id уникальна. data.city — массив из одной записи. Код ответа 201.",
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Город создан.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10445,6 +10450,7 @@
           "City"
         ],
         "operationId": "put_rest_api_city_ID",
+        "description": "data.city — один объект. Код ответа 201. Повтор той же пары title и type_id отвечает 422, проверка учитывает и текущую запись.",
         "parameters": [
           {
             "name": "ID",
@@ -10456,8 +10462,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Город изменён.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10473,10 +10479,7 @@
                       "type": "object",
                       "properties": {
                         "city": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/city"
-                          }
+                          "$ref": "#/components/schemas/city"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -10512,6 +10515,7 @@
           "City"
         ],
         "operationId": "delete_rest_api_city_ID",
+        "description": "В data возвращается id удалённого города. Если город указан у клиента, удаление отклоняется.",
         "parameters": [
           {
             "name": "ID",
@@ -10524,7 +10528,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Город удалён.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10539,13 +10543,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "city": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/city"
-                          }
-                        },
-                        "totalCount": {
+                        "id": {
                           "type": "integer"
                         }
                       }
@@ -10572,6 +10570,7 @@
           "City"
         ],
         "operationId": "get_rest_api_city_255",
+        "description": "data.city — один объект.",
         "parameters": [
           {
             "name": "id",
@@ -10612,10 +10611,7 @@
                       "type": "object",
                       "properties": {
                         "city": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/city"
-                          }
+                          "$ref": "#/components/schemas/city"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -10706,10 +10702,11 @@
           "CityType"
         ],
         "operationId": "post_rest_api_cityType",
+        "description": "title — название типа, не длиннее 32 символов. data.cityType — массив из одной записи. Код ответа 201.",
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Тип города создан.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10766,6 +10763,7 @@
           "CityType"
         ],
         "operationId": "get_rest_api_cityType_ID",
+        "description": "data.cityType — один объект.",
         "parameters": [
           {
             "name": "ID",
@@ -10778,7 +10776,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Один тип города.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10794,10 +10792,7 @@
                       "type": "object",
                       "properties": {
                         "cityType": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/cityType"
-                          }
+                          "$ref": "#/components/schemas/cityType"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -10824,6 +10819,7 @@
           "CityType"
         ],
         "operationId": "put_rest_api_cityType_ID",
+        "description": "data.cityType — один объект. Код ответа 201.",
         "parameters": [
           {
             "name": "ID",
@@ -10835,8 +10831,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Тип города изменён.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10852,10 +10848,7 @@
                       "type": "object",
                       "properties": {
                         "cityType": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/cityType"
-                          }
+                          "$ref": "#/components/schemas/cityType"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -10891,6 +10884,7 @@
           "CityType"
         ],
         "operationId": "delete_rest_api_cityType_ID",
+        "description": "В data возвращается id удалённого типа.",
         "parameters": [
           {
             "name": "ID",
@@ -10903,7 +10897,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Тип города удалён.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10918,13 +10912,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "cityType": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/cityType"
-                          }
-                        },
-                        "totalCount": {
+                        "id": {
                           "type": "integer"
                         }
                       }

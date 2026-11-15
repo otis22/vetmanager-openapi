@@ -1403,8 +1403,10 @@ components:
           x-db-type: int
         title:
           type: string
+          description: Название города, не длиннее 255 символов. Вместе с type_id не повторяется.
           example: djjd
           nullable: false
+          maxLength: 255
           x-db-type: varchar(255)
         type_id:
           type: integer
@@ -1424,8 +1426,10 @@ components:
           x-db-type: int
         title:
           type: string
+          description: Название типа населённого пункта, не длиннее 32 символов.
           example: Деревня
           nullable: true
+          maxLength: 32
           x-db-type: varchar(32)
           default: NULL,
       x-source: real_api_response
@@ -7709,10 +7713,12 @@ paths:
       tags:
       - City
       operationId: post_rest_api_city
+      description: Обязателен title, не длиннее 255 символов. Пара title и type_id уникальна.
+        data.city — массив из одной записи. Код ответа 201.
       parameters: []
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Город создан.
           content:
             application/json:
               schema:
@@ -7747,6 +7753,8 @@ paths:
       tags:
       - City
       operationId: put_rest_api_city_ID
+      description: data.city — один объект. Код ответа 201.
+        Повтор той же пары title и type_id отвечает 422, проверка учитывает и текущую запись.
       parameters:
       - name: ID
         in: path
@@ -7754,8 +7762,8 @@ paths:
         schema:
           type: string
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Город изменён.
           content:
             application/json:
               schema:
@@ -7769,9 +7777,7 @@ paths:
                     type: object
                     properties:
                       city:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/city'
+                        $ref: '#/components/schemas/city'
                       totalCount:
                         type: integer
       requestBody:
@@ -7789,6 +7795,7 @@ paths:
       tags:
       - City
       operationId: delete_rest_api_city_ID
+      description: В data возвращается id удалённого города. Если город указан у клиента, удаление отклоняется.
       parameters:
       - name: ID
         in: path
@@ -7797,7 +7804,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Город удалён.
           content:
             application/json:
               schema:
@@ -7810,11 +7817,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      city:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/city'
-                      totalCount:
+                      id:
                         type: integer
       x-reconciliation:
         presentIn:
@@ -7827,6 +7830,7 @@ paths:
       tags:
       - City
       operationId: get_rest_api_city_255
+      description: data.city — один объект.
       parameters:
       - name: id
         in: path
@@ -7853,9 +7857,7 @@ paths:
                     type: object
                     properties:
                       city:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/city'
+                        $ref: '#/components/schemas/city'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -7905,10 +7907,12 @@ paths:
       tags:
       - CityType
       operationId: post_rest_api_cityType
+      description: title — название типа, не длиннее 32 символов.
+        data.cityType — массив из одной записи. Код ответа 201.
       parameters: []
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Тип города создан.
           content:
             application/json:
               schema:
@@ -7943,6 +7947,7 @@ paths:
       tags:
       - CityType
       operationId: get_rest_api_cityType_ID
+      description: data.cityType — один объект.
       parameters:
       - name: ID
         in: path
@@ -7951,7 +7956,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Один тип города.
           content:
             application/json:
               schema:
@@ -7965,9 +7970,7 @@ paths:
                     type: object
                     properties:
                       cityType:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/cityType'
+                        $ref: '#/components/schemas/cityType'
                       totalCount:
                         type: integer
       x-reconciliation:
@@ -7980,6 +7983,7 @@ paths:
       tags:
       - CityType
       operationId: put_rest_api_cityType_ID
+      description: data.cityType — один объект. Код ответа 201.
       parameters:
       - name: ID
         in: path
@@ -7987,8 +7991,8 @@ paths:
         schema:
           type: string
       responses:
-        '200':
-          description: Успешный ответ
+        '201':
+          description: Тип города изменён.
           content:
             application/json:
               schema:
@@ -8002,9 +8006,7 @@ paths:
                     type: object
                     properties:
                       cityType:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/cityType'
+                        $ref: '#/components/schemas/cityType'
                       totalCount:
                         type: integer
       requestBody:
@@ -8022,6 +8024,7 @@ paths:
       tags:
       - CityType
       operationId: delete_rest_api_cityType_ID
+      description: В data возвращается id удалённого типа.
       parameters:
       - name: ID
         in: path
@@ -8030,7 +8033,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Тип города удалён.
           content:
             application/json:
               schema:
@@ -8043,11 +8046,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      cityType:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/cityType'
-                      totalCount:
+                      id:
                         type: integer
       x-reconciliation:
         presentIn:
