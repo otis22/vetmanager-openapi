@@ -5013,7 +5013,7 @@ components:
           example: '2030-01-01'
         pet_id:
           type: integer
-          description: Питомец, на которого действует карта. 0 — карта на всех питомцев клиента.
+          description: Питомец, на которого действует карта. 0 — карта на всех питомцев клиента. Если поле не передано, сохраняется 0.
           example: 0
         start_date:
           type: string
@@ -5021,9 +5021,78 @@ components:
           nullable: true
           description: Дата начала действия. Пустое значение хранится как null.
         client:
-          allOf:
-          - $ref: '#/components/schemas/client'
-          description: Вложенный клиент. Есть в ответах чтения и обновления, в ответе создания его нет.
+          type: object
+          nullable: true
+          description: >-
+            Карточка клиента без города, улицы и типа.
+            Есть в списке, карточке и ответе изменения. В ответе создания поля нет.
+          properties:
+            id:
+              type: integer
+            address:
+              type: string
+            home_phone:
+              type: string
+            work_phone:
+              type: string
+            note:
+              type: string
+            type_id:
+              type: integer
+              nullable: true
+            how_find:
+              type: integer
+              nullable: true
+            balance:
+              type: string
+            email:
+              type: string
+            city:
+              type: string
+            city_id:
+              type: integer
+            date_register:
+              type: string
+            cell_phone:
+              type: string
+            zip:
+              type: string
+            registration_index:
+              type: string
+              nullable: true
+            vip:
+              type: integer
+            last_name:
+              type: string
+            first_name:
+              type: string
+            middle_name:
+              type: string
+            status:
+              type: string
+            discount:
+              type: integer
+            passport_series:
+              type: string
+            lab_number:
+              type: string
+            street_id:
+              type: integer
+            apartment:
+              type: string
+            unsubscribe:
+              type: integer
+            in_blacklist:
+              type: integer
+            has_contract:
+              type: integer
+            last_visit_date:
+              type: string
+            number_of_journal:
+              type: string
+            phone_prefix:
+              type: string
+          x-computed: true
       x-db-table: client_discount_card
     clientDiscountCardWrite:
       type: object
@@ -5031,7 +5100,6 @@ components:
       required:
       - number
       - client_id
-      - pet_id
       - card_type_id
       properties:
         number:
@@ -5046,7 +5114,7 @@ components:
           example: 4
         pet_id:
           type: integer
-          description: Питомец. 0 — карта на всех питомцев клиента.
+          description: Питомец. Можно не передавать, тогда сохранится 0 — карта на всех питомцев клиента.
           example: 0
         card_type_id:
           type: integer
@@ -8801,9 +8869,9 @@ paths:
         status: confirmed
     post:
       summary: Создать скидочную карту
-      description: Создает карту. Обязательны number, client_id, pet_id и существующий card_type_id. Без number, client_id
-        или pet_id ответ 406. Без card_type_id или с неизвестным типом ответ 500 из-за внешнего ключа. В ответе создания нет
-        вложенного клиента, id приходит строкой, create_date равен null.
+      description: Создает карту. Обязательны number, client_id и существующий card_type_id. pet_id можно не передавать, тогда сохранится 0.
+        Без number или client_id ответ 406. Без card_type_id или с неизвестным типом ответ 500.
+        В ответе создания нет вложенного клиента, id приходит строкой, create_date равен null.
       tags:
       - ClientDiscountCard
       operationId: post_rest_api_clientDiscountCard
@@ -8868,7 +8936,7 @@ paths:
                     end_date: null
                     start_date: null
         '406':
-          description: Не переданы number, client_id или pet_id.
+          description: Не переданы number или client_id.
           content:
             application/json:
               schema:
