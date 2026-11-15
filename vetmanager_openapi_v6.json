@@ -1323,6 +1323,18 @@
             "x-db-type": "int",
             "default": "0"
           },
+          "has_contract": {
+            "type": "integer",
+            "description": "1, если для клиента хотя бы раз сохраняли договор. 0, если договора не было.",
+            "example": 0,
+            "nullable": false,
+            "enum": [
+              0,
+              1
+            ],
+            "x-db-type": "tinyint(1)",
+            "default": "0"
+          },
           "last_visit_date": {
             "type": "string",
             "example": "2023-09-29 20:41:04",
@@ -1364,10 +1376,227 @@
             },
             "nullable": true,
             "x-computed": true
+          },
+          "street_data": {
+            "nullable": true,
+            "description": "Улица клиента. Поле отсутствует, если улица не задана.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/street"
+              }
+            ],
+            "x-computed": true
           }
         },
         "x-source": "real_api_response",
         "x-db-table": "client"
+      },
+      "clientMergeHistory": {
+        "type": "object",
+        "description": "Запись журнала объединений. Есть только в ответе клиента по id.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "source_client_id": {
+            "type": "integer",
+            "description": "Временный клиент, которого объединили."
+          },
+          "target_client_id": {
+            "type": "integer",
+            "description": "Постоянный клиент, в которого объединили."
+          },
+          "merged_at": {
+            "type": "string",
+            "description": "Format: YYYY-MM-DD HH:MM:SS"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "clinic_id": {
+            "type": "integer"
+          },
+          "pet_actions": {
+            "description": "Ключ — id питомца-источника. Если действий нет, приходит пустой массив.",
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string"
+                    },
+                    "target_pet_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "clientSearchPet": {
+        "type": "object",
+        "properties": {
+          "pet_id": {
+            "type": "integer"
+          },
+          "alias": {
+            "type": "string"
+          },
+          "sex": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner_id": {
+            "type": "integer"
+          },
+          "pet_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "breed": {
+            "type": "string",
+            "nullable": true
+          },
+          "pet_type_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "pet_type_id": {
+            "type": "integer",
+            "nullable": true
+          }
+        }
+      },
+      "clientSearchClient": {
+        "type": "object",
+        "description": "Краткая карточка поиска. Это не полная схема client.",
+        "properties": {
+          "client_id": {
+            "type": "integer"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "middle_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "in_blacklist": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string",
+            "description": "Текст примечания client.note."
+          },
+          "balance": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true,
+            "description": "Название типа клиента."
+          },
+          "cell_phone": {
+            "type": "string",
+            "description": "Мобильный телефон, иначе домашний, иначе рабочий."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "TEMPORARY"
+            ]
+          },
+          "apartment": {
+            "type": "string"
+          },
+          "phone_prefix": {
+            "type": "string",
+            "nullable": true
+          },
+          "city_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "city_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "city_type_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "street_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "street_title": {
+            "type": "string",
+            "nullable": true
+          },
+          "street_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "clinic_phone_prefix": {
+            "type": "string",
+            "nullable": true,
+            "description": "Префикс телефона клиники."
+          },
+          "pets": {
+            "type": "array",
+            "description": "Живые питомцы найденного клиента. Поля нет, если питомцев нет.",
+            "items": {
+              "$ref": "#/components/schemas/clientSearchPet"
+            }
+          }
+        }
+      },
+      "clientPhone": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "home",
+              "work",
+              "cell"
+            ]
+          },
+          "original_phone": {
+            "type": "string",
+            "description": "Телефон в том виде, в котором его сохранили."
+          },
+          "clean_phone": {
+            "type": "string",
+            "description": "Телефон только из цифр."
+          }
+        },
+        "x-db-table": "clients_phones"
       },
       "anonymousClient": {
         "type": "object",
@@ -8762,10 +8991,7 @@
                       "type": "object",
                       "properties": {
                         "anonymousClient": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/anonymousClient"
-                          }
+                          "$ref": "#/components/schemas/anonymousClient"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -9960,28 +10186,26 @@
           ],
           "status": "confirmed"
         }
-      }
-    },
-    "/rest/api/client/{ID}": {
+      },
       "post": {
         "summary": "Создать клиента",
+        "description": "Создает клиента. status TEMPORARY сохраняет временного клиента. data.client — массив из одной записи.",
         "tags": [
           "Client"
         ],
-        "operationId": "post_rest_api_client_ID",
-        "parameters": [
-          {
-            "name": "ID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
+        "operationId": "post_rest_api_client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/client"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Клиент создан либо создание не удалось.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10013,28 +10237,108 @@
             }
           }
         },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/client"
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/client/clientsSearchData": {
+      "get": {
+        "summary": "Поиск клиентов",
+        "description": "Ищет активных и временных клиентов по имени, почте, номеру журнала, кличке, породе, виду, номеру скидочной карты и телефону. Смещение задает offset. Параметр start не используется. limit по умолчанию 10. Пустой search_query не отклоняется.",
+        "tags": [
+          "Client"
+        ],
+        "operationId": "get_rest_api_client_clientsSearchData",
+        "parameters": [
+          {
+            "name": "search_query",
+            "in": "query",
+            "required": false,
+            "description": "Строка поиска.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Сколько клиентов вернуть. По умолчанию 10.",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "С какой записи начать. По умолчанию 0.",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "clinic_id",
+            "in": "query",
+            "required": false,
+            "description": "Клиника для префикса телефона и фильтра скидочных карт. Если не передана, берется первая активная.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найденные клиенты. totalCount и message в этом ответе нет.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "client": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/clientSearchClient"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
         },
         "x-reconciliation": {
           "presentIn": [
-            "openapi"
+            "openapi",
+            "extjs"
           ],
-          "status": "openapi_only"
+          "status": "confirmed"
         }
-      },
+      }
+    },
+    "/rest/api/client/{ID}": {
       "put": {
         "summary": "Изменить клиента",
         "tags": [
           "Client"
         ],
         "operationId": "put_rest_api_client_ID",
+        "description": "data.client — объект измененного клиента, не массив.",
         "parameters": [
           {
             "name": "ID",
@@ -10063,10 +10367,7 @@
                       "type": "object",
                       "properties": {
                         "client": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/client"
-                          }
+                          "$ref": "#/components/schemas/client"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -10102,6 +10403,7 @@
           "Client"
         ],
         "operationId": "delete_rest_api_client_ID",
+        "description": "Удаление разрешено. В data возвращается id удаленного клиента.",
         "parameters": [
           {
             "name": "ID",
@@ -10114,7 +10416,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Клиент удален.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10129,13 +10431,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "client": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/client"
-                          }
-                        },
-                        "totalCount": {
+                        "id": {
                           "type": "integer"
                         }
                       }
@@ -10162,6 +10458,7 @@
           "Client"
         ],
         "operationId": "get_rest_api_client_116468",
+        "description": "data.client — объект. Дополнительно содержит merge_history. В списке этого поля нет.",
         "parameters": [
           {
             "name": "id",
@@ -10202,9 +10499,87 @@
                       "type": "object",
                       "properties": {
                         "client": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/client"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "merge_history": {
+                                  "type": "array",
+                                  "description": "Журнал объединений. Пустой, если клиент ни с кем не объединяли.",
+                                  "items": {
+                                    "$ref": "#/components/schemas/clientMergeHistory"
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-reconciliation": {
+          "presentIn": [
+            "openapi",
+            "extjs"
+          ],
+          "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/clientPhone": {
+      "get": {
+        "summary": "Телефоны клиентов",
+        "description": "Список clients_phones. Просмотр, создание, изменение и удаление одной записи запрещены.",
+        "tags": [
+          "Client"
+        ],
+        "operationId": "get_rest_api_clientPhone",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список телефонов.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "clientPhone": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/client"
+                            "$ref": "#/components/schemas/clientPhone"
                           }
                         },
                         "totalCount": {
