@@ -10771,6 +10771,42 @@ paths:
         - openapi
         - extjs
         status: confirmed
+  /rest/api/properties/{id}:
+    get:
+      summary: Настройка по id
+      tags:
+      - Properties
+      operationId: get_rest_api_properties_id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      properties:
+                        $ref: '#/components/schemas/properties'
+                      totalCount:
+                        type: integer
+      x-reconciliation:
+        presentIn:
+        - openapi
+        - extjs
+        status: confirmed
   /rest/api/report-ai-job:
     post:
       summary: Создать задачу отчёта
