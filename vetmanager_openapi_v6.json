@@ -3927,16 +3927,24 @@
           },
           "title": {
             "type": "string",
+            "description": "Название диагноза, не длиннее 250 символов.",
             "example": "A1",
-            "nullable": false
+            "nullable": false,
+            "maxLength": 250
           },
           "status": {
             "type": "string",
+            "description": "Статус диагноза:\n\n- `ACTIVE` — активен;\n- `DISABLED` — отключён.\n",
             "example": "ACTIVE",
-            "nullable": false
+            "nullable": false,
+            "enum": [
+              "ACTIVE",
+              "DISABLED"
+            ]
           }
         },
-        "x-source": "real_api_response"
+        "x-source": "real_api_response",
+        "x-db-table": "diagnoses"
       },
       "payment": {
         "type": "object",
@@ -8569,6 +8577,287 @@
             "openapi"
           ],
           "status": "openapi_only"
+        }
+      }
+    },
+    "/rest/api/Diagnoses": {
+      "get": {
+        "summary": "Список диагнозов",
+        "tags": [
+          "Diagnoses"
+        ],
+        "operationId": "get_rest_api_Diagnoses",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список диагнозов.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "diagnoses": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/diagnoses"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Создать диагноз",
+        "tags": [
+          "Diagnoses"
+        ],
+        "operationId": "post_rest_api_Diagnoses",
+        "description": "Обязателен title, не длиннее 250 символов. status — ACTIVE или DISABLED. Если status не передан, ставится ACTIVE. data.diagnoses — массив из одной записи.",
+        "responses": {
+          "201": {
+            "description": "Диагноз создан.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "diagnoses": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/diagnoses"
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ACTIVE",
+                      "DISABLED"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/Diagnoses/{id}": {
+      "get": {
+        "summary": "Диагноз по id",
+        "tags": [
+          "Diagnoses"
+        ],
+        "operationId": "get_rest_api_Diagnoses_id",
+        "description": "data.diagnoses — один объект.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Один диагноз.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "diagnoses": {
+                          "$ref": "#/components/schemas/diagnoses"
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Изменить диагноз",
+        "tags": [
+          "Diagnoses"
+        ],
+        "operationId": "put_rest_api_Diagnoses_id",
+        "description": "data.diagnoses — один объект. status — ACTIVE или DISABLED.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Диагноз изменён.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "diagnoses": {
+                          "$ref": "#/components/schemas/diagnoses"
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/diagnoses"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Удалить диагноз",
+        "tags": [
+          "Diagnoses"
+        ],
+        "operationId": "delete_rest_api_Diagnoses_id",
+        "description": "В data возвращается id удалённого диагноза.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Диагноз удалён.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
