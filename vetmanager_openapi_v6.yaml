@@ -1646,6 +1646,25 @@ components:
               is_active:
                 type: integer
       x-source: real_api_response
+    fiscalTaxSystems:
+      type: object
+      properties:
+        id:
+          type: integer
+        number:
+          type: integer
+          description: >-
+            Номер системы налогообложения. 1 — ОСН, 2 — УСН доход,
+            4 — УСН доход-расход, 8 — ЕНВД, 16 — ЕСН, 32 — ПСН.
+        title:
+          type: string
+          description: Название системы налогообложения, не длиннее 250 символов.
+          maxLength: 250
+        is_show:
+          type: integer
+          description: 1 — система видна в списке. Список возвращает только такие записи.
+      x-source: real_api_response
+      x-db-table: fiscal_tax_systems
     good:
       type: object
       properties:
@@ -9470,14 +9489,10 @@ paths:
       tags:
       - Fiscal Tax Systems
       operationId: get_rest_api_fiscalTaxSystems
-      parameters:
-      - $ref: '#/components/parameters/limit'
-      - $ref: '#/components/parameters/offset'
-      - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
+      description: data — массив видимых систем. limit, offset, sort и filter не применяются.
       responses:
         '200':
-          description: Успешный ответ
+          description: Список систем налогообложения.
           content:
             application/json:
               schema:
@@ -9485,11 +9500,10 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  message:
-                    type: string
                   data:
-                    type: object
-                    additionalProperties: true
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/fiscalTaxSystems'
       x-reconciliation:
         presentIn:
         - openapi
@@ -9501,15 +9515,16 @@ paths:
       tags:
       - Fiscal Tax Systems
       operationId: get_rest_api_fiscalTaxSystems_ID
+      description: data — один объект.
       parameters:
       - name: ID
         in: path
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
-          description: Успешный ответ
+          description: Одна система налогообложения.
           content:
             application/json:
               schema:
@@ -9517,11 +9532,8 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  message:
-                    type: string
                   data:
-                    type: object
-                    additionalProperties: true
+                    $ref: '#/components/schemas/fiscalTaxSystems'
       x-reconciliation:
         presentIn:
         - openapi
