@@ -138,8 +138,10 @@ def validate_swagger_ui(root: Path, errors: list[str]) -> None:
     index = root / "index.html"
     initializer = root / "dist" / "swagger-initializer.js"
     initializer_template = root / "scripts" / "swagger-initializer.js"
+    custom_css = root / "dist" / "swagger-custom.css"
+    custom_css_template = root / "scripts" / "swagger-custom.css"
     spec = root / "vetmanager_openapi_v6.yaml"
-    for path in (index, initializer, initializer_template, spec):
+    for path in (index, initializer, initializer_template, custom_css, custom_css_template, spec):
         if not path.exists():
             fail(errors, f"required Swagger UI file is missing: {path.relative_to(root)}")
     if initializer.exists():
@@ -153,9 +155,12 @@ def validate_swagger_ui(root: Path, errors: list[str]) -> None:
     if initializer.exists() and initializer_template.exists():
         if initializer.read_bytes() != initializer_template.read_bytes():
             fail(errors, "dist/swagger-initializer.js must match scripts/swagger-initializer.js")
+    if custom_css.exists() and custom_css_template.exists():
+        if custom_css.read_bytes() != custom_css_template.read_bytes():
+            fail(errors, "dist/swagger-custom.css must match scripts/swagger-custom.css")
     if index.exists():
         text = index.read_text(encoding="utf-8", errors="ignore")
-        for asset in ("dist/swagger-ui.css", "dist/swagger-ui-bundle.js", "dist/swagger-ui-standalone-preset.js", "dist/swagger-initializer.js"):
+        for asset in ("dist/swagger-ui.css", "dist/swagger-custom.css", "dist/swagger-ui-bundle.js", "dist/swagger-ui-standalone-preset.js", "dist/swagger-initializer.js"):
             if asset not in text:
                 fail(errors, f"index.html does not reference {asset}")
 

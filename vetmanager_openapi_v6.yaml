@@ -16,278 +16,22 @@ security:
 - ApiKeyAuth: []
 tags:
 - name: Admission
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы приёма (`status`)
-
-    - `save` — приём запланирован;
-    - `directed` — клиент направлен на приём;
-    - `in_treatment` — приём начат;
-    - `accepted` — приём завершён;
-    - `delayed` — приём просрочен;
-    - `not_approved` — приём не одобрен;
-    - `not_confirmed` — приём не подтверждён;
-    - `deleted` — приём удалён.
-
-    </details>
 - name: Client
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы клиента (`status`)
-
-    - `ACTIVE` — активен;
-    - `TEMPORARY` — временный;
-    - `DISABLED` — отключён;
-    - `DELETED` — удалён.
-
-    </details>
 - name: Cassa
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы кассы (`status`)
-
-    - `active` — активна;
-    - `deactivated` — деактивирована;
-    - `deleted` — удалена.
-
-    #### Типы кассы (`type`)
-
-    - `bank` — банковская касса;
-    - `safe` — сейф;
-    - `operating` — операционная касса.
-
-    </details>
 - name: Cassa / Cassa Close
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы закрытия кассы (`status`)
-
-    - `exec` — выполнено;
-    - `save` — сохранено;
-    - `deleted` — удалено.
-
-    </details>
 - name: Clinic
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы клиники (`status`)
-
-    - `ACTIVE` — активна;
-    - `DELETED` — удалена.
-
-    </details>
 - name: Good Parties in Store
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы партии (`partyAccount.status`)
-
-    - `save` — сохранена;
-    - `exec` — выполнена;
-    - `deleted` — удалена;
-    - `temporary` — временная.
-
-    #### Статусы позиции партии (`partyAccountDoc.status`)
-
-    - `active` — активна;
-    - `disabled_by_inventar` — отключена инвентаризацией;
-    - `disabled` — отключена.
-
-    </details>
 - name: GoodSaleParam
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы параметра продажи (`status`)
-
-    - `active` — активен;
-    - `disabled` — отключён.
-
-    #### Способы формирования цены (`price_formation`)
-
-    - `fixed` — фиксированная цена;
-    - `increase` — цена рассчитывается по наценке.
-
-    </details>
 - name: Invoice
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы счёта (`status`)
-
-    - `exec` — выполнен;
-    - `save` — сохранён;
-    - `deleted` — удалён;
-    - `closed` — закрыт;
-    - `archived` — архивирован.
-
-    #### Статусы оплаты (`payment_status`)
-
-    - `none` — не оплачен;
-    - `partial` — оплачен частично;
-    - `full` — оплачен полностью.
-
-    </details>
 - name: Hospital
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы госпитализации (`status`)
-
-    - `planned` — госпитализация запланирована;
-    - `in_hospital` — пациент находится в стационаре;
-    - `discharged` — пациент выписан;
-    - `delayed` — госпитализация просрочена;
-    - `deleted` — госпитализация удалена.
-
-    #### Статусы блока стационара (`hospitalBlock.status`)
-
-    - `active` — активен;
-    - `disabled` — отключён;
-    - `deleted` — удалён.
-
-    </details>
 - name: Medical Card
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы медицинской карты (`status`)
-
-    - `active` — активна;
-    - `deleted` — удалена;
-    - `archived` — архивирована.
-
-    </details>
 - name: InvoiceDocument
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Источники скидки (`discount_type`)
-
-    - `card` — дисконтная карта;
-    - `promotion` — акция;
-    - `coupon` — купон.
-
-    </details>
 - name: Payments
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы платежа (`status`)
-
-    - `exec` — выполнен;
-    - `save` — сохранён;
-    - `deleted` — удалён.
-
-    </details>
 - name: Pet
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Пол питомца (`sex`)
-
-    - `male` — самец;
-    - `female` — самка;
-    - `castrated` — кастрирован;
-    - `sterilized` — стерилизована;
-    - `unknown` — пол не указан.
-
-    #### Статусы питомца (`status`)
-
-    - `alive` — жив;
-    - `dead` — умер;
-    - `deleted` — удалён.
-
-    </details>
 - name: Streets
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Типы улиц (`type`)
-
-    - `street` — улица;
-    - `bulvar` — бульвар;
-    - `pereulok` — переулок;
-    - `prospect` — проспект;
-    - `proezd` — проезд;
-    - `dead_end` — тупик;
-    - `highway` — шоссе;
-    - `embankment` — набережная;
-    - `square` — площадь;
-    - `microdistrict` — микрорайон.
-
-    </details>
 - name: Store
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Типы складских документов (`document_type`)
-
-    - `prihod` — приход;
-    - `rashod` — расход;
-    - `inventar` — инвентаризация;
-    - `transfer` — передача между складами;
-    - `invoice` — списание по счёту;
-    - `return_good` — возврат товара;
-    - `transfer_receiver` — приём передачи на складе-получателе.
-
-    #### Статусы складского документа (`status`)
-
-    - `save` — сохранён;
-    - `exec` — выполнен;
-    - `deleted` — удалён;
-    - `disabled` — отключён;
-    - `archived` — архивирован;
-    - `executing` — выполняется.
-
-    </details>
 - name: Suppliers
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Типы поставщиков (`person_type`)
-
-    - `legal_person` — юридическое лицо;
-    - `individual_person` — физическое лицо.
-
-    #### Статусы поставщика (`status`)
-
-    - `ACTIVE` — активен;
-    - `DISABLED` — отключён.
-
-    </details>
 - name: Unit
-  description: |
-    <details>
-    <summary><strong>Допустимые значения полей</strong></summary>
-
-    #### Статусы единицы измерения (`status`)
-
-    - `active` — активна;
-    - `disabled` — отключена.
-
-    </details>
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -576,7 +320,17 @@ components:
           default: 00:00:00
         status:
           type: string
-          description: 'Статус приёма. Допустимые значения: `save`, `directed`, `accepted`, `deleted`, `delayed`, `not_approved`, `in_treatment`, `not_confirmed`.'
+          description: |
+            Статус приёма:
+
+            - `save` — приём запланирован;
+            - `directed` — клиент направлен на приём;
+            - `accepted` — приём завершён;
+            - `deleted` — приём удалён;
+            - `delayed` — приём просрочен;
+            - `not_approved` — приём не одобрен;
+            - `in_treatment` — приём начат;
+            - `not_confirmed` — приём не подтверждён.
           example: accepted
           nullable: true
           x-db-type: enum('save','directed','accepted','deleted','delayed','not_approved','in_treatment','not_confirmed')
@@ -648,70 +402,14 @@ components:
           default: NULL,
         pet:
           type: object
-          example:
-            id: 4
-            owner_id: 6
-            type_id: 2
-            alias: Мона
-            sex: female
-            date_register: '2020-05-13 12:21:43'
-            birthday: '2018-05-13'
-            note: ''
-            breed_id: 331
-            old_id: null
-            color_id: 0
-            deathnote: null
-            deathdate: null
-            chip_number: ''
-            lab_number: ''
-            status: alive
-            picture: null
-            weight: '0.0000000000'
-            edit_date: '2022-11-23 09:47:03'
-            pet_type_data:
-              id: 2
-              title: Собаки
-              picture: dog
-              type: dog
-            breed_data:
-              id: 331
-              title: Шпиц немецкий
-              pet_type_id: 2
+          allOf:
+          - $ref: '#/components/schemas/pet'
           nullable: true
           x-computed: true
         client:
           type: object
-          example:
-            id: 6
-            address: ''
-            home_phone: ''
-            work_phone: ''
-            note: ''
-            type_id: null
-            how_find: null
-            balance: '0.0000000000'
-            email: user@example.test
-            city: ''
-            city_id: 252
-            date_register: '2020-05-13 12:21:25'
-            cell_phone: +7 (000) 000-00-00
-            zip: '53221'
-            registration_index: null
-            vip: 0
-            last_name: Гаврюшин
-            first_name: Семен
-            middle_name: Семенович
-            status: ACTIVE
-            discount: 0
-            passport_series: ''
-            lab_number: ''
-            street_id: 0
-            apartment: ''
-            unsubscribe: 0
-            in_blacklist: 0
-            last_visit_date: '2025-05-22 16:12:09'
-            number_of_journal: ''
-            phone_prefix: '7'
+          allOf:
+          - $ref: '#/components/schemas/client'
           nullable: true
           x-computed: true
         wait_time:
@@ -721,12 +419,10 @@ components:
           x-computed: true
         invoices:
           type: array
-          example: []
           nullable: true
           x-computed: true
           items:
-            type: object
-            additionalProperties: true
+            $ref: '#/components/schemas/invoice'
       x-source: real_api_response
       x-db-table: admission
     breed:
@@ -890,7 +586,12 @@ components:
           default: '0'
         status:
           type: string
-          description: Статус кассы.
+          description: |
+            Статус кассы:
+
+            - `active` — активна;
+            - `deactivated` — деактивирована;
+            - `deleted` — удалена.
           example: active
           nullable: false
           x-db-type: enum('active','deactivated','deleted')
@@ -931,7 +632,12 @@ components:
           default: '1'
         type:
           type: string
-          description: Тип кассы.
+          description: |
+            Тип кассы:
+
+            - `bank` — банковская касса;
+            - `safe` — сейф;
+            - `operating` — операционная касса.
           example: operating
           nullable: false
           x-db-type: enum('bank','safe','operating')
@@ -971,7 +677,12 @@ components:
           x-db-type: int
         status:
           type: string
-          description: Статус закрытия кассы.
+          description: |
+            Статус закрытия кассы:
+
+            - `exec` — выполнено;
+            - `save` — сохранено;
+            - `deleted` — удалено.
           example: exec
           nullable: false
           x-db-type: enum('exec','save','deleted')
@@ -1316,7 +1027,13 @@ components:
           x-db-type: varchar(50)
         status:
           type: string
-          description: 'Статус клиента. Допустимые значения: `ACTIVE` — активен, `DELETED` — удалён, `DISABLED` — отключён, `TEMPORARY` — временный.'
+          description: |
+            Статус клиента:
+
+            - `ACTIVE` — активен;
+            - `DELETED` — удалён;
+            - `DISABLED` — отключён;
+            - `TEMPORARY` — временный.
           example: DELETED
           nullable: false
           x-db-type: enum('ACTIVE','DELETED','DISABLED','TEMPORARY')
@@ -1565,7 +1282,11 @@ components:
           default: ''
         status:
           type: string
-          description: Статус клиники.
+          description: |
+            Статус клиники:
+
+            - `ACTIVE` — активна;
+            - `DELETED` — удалена.
           example: ACTIVE
           nullable: true
           x-db-type: enum('ACTIVE','DELETED')
@@ -2008,7 +1729,13 @@ components:
           default: '0'
         status:
           type: string
-          description: Статус партии товара.
+          description: |
+            Статус партии товара:
+
+            - `save` — сохранена;
+            - `exec` — выполнена;
+            - `deleted` — удалена;
+            - `temporary` — временная.
           example: exec
           nullable: true
           x-db-type: enum('save','exec','deleted','temporary')
@@ -2125,7 +1852,12 @@ components:
           default: NULL,
         status:
           type: string
-          description: Статус позиции партии товара.
+          description: |
+            Статус позиции партии товара:
+
+            - `active` — активна;
+            - `disabled_by_inventar` — отключена инвентаризацией;
+            - `disabled` — отключена.
           example: active
           nullable: true
           x-db-type: enum('active','disabled_by_inventar','disabled')
@@ -2227,7 +1959,11 @@ components:
           default: NULL,
         status:
           type: string
-          description: Статус параметра продажи.
+          description: |
+            Статус параметра продажи:
+
+            - `active` — активен;
+            - `disabled` — отключён.
           example: active
           nullable: false
           x-db-type: enum('active','disabled')
@@ -2249,7 +1985,11 @@ components:
           default: NULL,
         price_formation:
           type: string
-          description: Способ формирования цены продажи.
+          description: |
+            Способ формирования цены продажи:
+
+            - `fixed` — фиксированная цена;
+            - `increase` — цена рассчитывается по наценке.
           example: fixed
           nullable: false
           x-db-type: enum('fixed','increase')
@@ -2379,7 +2119,14 @@ components:
           default: '0'
         status:
           type: string
-          description: Статус госпитализации.
+          description: |
+            Статус госпитализации:
+
+            - `planned` — госпитализация запланирована;
+            - `in_hospital` — пациент находится в стационаре;
+            - `discharged` — пациент выписан;
+            - `delayed` — госпитализация просрочена;
+            - `deleted` — госпитализация удалена.
           example: delayed
           nullable: false
           x-db-type: enum('planned','in_hospital','discharged','delayed','deleted')
@@ -2528,7 +2275,12 @@ components:
           default: '0'
         status:
           type: string
-          description: Статус блока стационара.
+          description: |
+            Статус блока стационара:
+
+            - `active` — активен;
+            - `disabled` — отключён;
+            - `deleted` — удалён.
           example: active
           nullable: false
           x-db-type: enum('active','disabled','deleted')
@@ -2588,7 +2340,14 @@ components:
           default: NULL,
         status:
           type: string
-          description: Статус счёта.
+          description: |
+            Статус счёта:
+
+            - `exec` — выполнен;
+            - `save` — сохранён;
+            - `deleted` — удалён;
+            - `closed` — закрыт;
+            - `archived` — архивирован.
           example: deleted
           nullable: false
           x-db-type: enum('exec','save','deleted','closed','archived')
@@ -2652,7 +2411,12 @@ components:
           x-db-default: '0000-00-00 00:00:00'
         payment_status:
           type: string
-          description: Статус оплаты счёта.
+          description: |
+            Статус оплаты счёта:
+
+            - `none` — не оплачен;
+            - `partial` — оплачен частично;
+            - `full` — оплачен полностью.
           example: full
           nullable: false
           x-db-type: enum('none','partial','full')
@@ -2827,7 +2591,12 @@ components:
           default: '0'
         discount_type:
           type: string
-          description: Источник скидки.
+          description: |
+            Источник скидки:
+
+            - `card` — дисконтная карта;
+            - `promotion` — акция;
+            - `coupon` — купон.
           example: null
           nullable: true
           x-db-type: enum('card','promotion','coupon')
@@ -3059,7 +2828,12 @@ components:
           default: '0'
         status:
           type: string
-          description: Статус медицинской карты.
+          description: |
+            Статус медицинской карты:
+
+            - `active` — активна;
+            - `deleted` — удалена;
+            - `archived` — архивирована.
           example: active
           nullable: false
           x-db-type: enum('active','deleted','archived')
@@ -3174,7 +2948,12 @@ components:
           default: NULL,
         status:
           type: string
-          description: Статус платежа.
+          description: |
+            Статус платежа:
+
+            - `exec` — выполнен;
+            - `save` — сохранён;
+            - `deleted` — удалён.
           example: exec
           nullable: true
           x-db-type: enum('exec','save','deleted')
@@ -3411,7 +3190,14 @@ components:
           x-db-type: varchar(255)
         sex:
           type: string
-          description: 'Пол питомца. Допустимые значения: `male` — самец, `female` — самка, `castrated` — кастрирован, `sterilized` — стерилизована, `unknown` — пол не указан.'
+          description: |
+            Пол питомца:
+
+            - `male` — самец;
+            - `female` — самка;
+            - `castrated` — кастрирован;
+            - `sterilized` — стерилизована;
+            - `unknown` — пол не указан.
           example: male
           nullable: true
           x-db-type: enum('male','female','castrated','sterilized','unknown')
@@ -3487,7 +3273,12 @@ components:
           default: ''
         status:
           type: string
-          description: Статус питомца.
+          description: |
+            Статус питомца:
+
+            - `alive` — жив;
+            - `dead` — умер;
+            - `deleted` — удалён.
           example: alive
           nullable: false
           x-db-type: enum('alive','dead','deleted')
@@ -4017,7 +3808,16 @@ components:
           x-db-type: int
         document_type:
           type: string
-          description: Тип складского документа.
+          description: |
+            Тип складского документа:
+
+            - `prihod` — приход;
+            - `rashod` — расход;
+            - `inventar` — инвентаризация;
+            - `transfer` — передача между складами;
+            - `invoice` — списание по счёту;
+            - `return_good` — возврат товара;
+            - `transfer_receiver` — приём передачи на складе-получателе.
           example: prihod
           nullable: false
           x-db-type: enum('prihod','rashod','inventar','transfer','invoice','return_good','transfer_receiver')
@@ -4032,7 +3832,15 @@ components:
           default: prihod
         status:
           type: string
-          description: Статус складского документа.
+          description: |
+            Статус складского документа:
+
+            - `save` — сохранён;
+            - `exec` — выполнен;
+            - `deleted` — удалён;
+            - `disabled` — отключён;
+            - `archived` — архивирован;
+            - `executing` — выполняется.
           example: exec
           nullable: false
           x-db-type: enum('save','exec','deleted','disabled','archived','executing')
@@ -4306,7 +4114,19 @@ components:
           default: '0'
         type:
           type: string
-          description: Тип улицы.
+          description: |
+            Тип улицы:
+
+            - `street` — улица;
+            - `bulvar` — бульвар;
+            - `pereulok` — переулок;
+            - `prospect` — проспект;
+            - `proezd` — проезд;
+            - `dead_end` — тупик;
+            - `highway` — шоссе;
+            - `embankment` — набережная;
+            - `square` — площадь;
+            - `microdistrict` — микрорайон.
           example: street
           nullable: false
           x-db-type: enum('street','bulvar','pereulok','prospect','proezd','dead_end','highway','embankment','square','microdistrict')
@@ -4408,7 +4228,11 @@ components:
           default: NULL,
         person_type:
           type: string
-          description: Тип поставщика.
+          description: |
+            Тип поставщика:
+
+            - `legal_person` — юридическое лицо;
+            - `individual_person` — физическое лицо.
           example: legal_person
           nullable: false
           x-db-type: enum('legal_person','individual_person')
@@ -4424,7 +4248,11 @@ components:
           default: ''
         status:
           type: string
-          description: Статус поставщика.
+          description: |
+            Статус поставщика:
+
+            - `ACTIVE` — активен;
+            - `DISABLED` — отключён.
           example: ACTIVE
           nullable: false
           x-db-type: enum('ACTIVE','DISABLED')
@@ -4454,7 +4282,11 @@ components:
           x-db-type: varchar(16)
         status:
           type: string
-          description: Статус единицы измерения.
+          description: |
+            Статус единицы измерения:
+
+            - `active` — активна;
+            - `disabled` — отключена.
           example: active
           nullable: false
           x-db-type: enum('active','disabled')

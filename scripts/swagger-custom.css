@@ -1,0 +1,5 @@
+/* Keep property toggles aligned in every schema, including future schemas. */
+.swagger-ui table.model tr.property-row .model-toggle {
+    top: 0;
+    vertical-align: middle;
+}
