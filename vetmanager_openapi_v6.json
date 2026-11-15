@@ -32,11 +32,36 @@
       "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы клиента (`status`)\n\n- `ACTIVE` — активен;\n- `TEMPORARY` — временный;\n- `DISABLED` — отключён;\n- `DELETED` — удалён.\n\n</details>\n"
     },
     {
-      "name": "Invoice"
+      "name": "Invoice",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы счёта (`status`)\n\n- `exec` — выполнен;\n- `save` — сохранён;\n- `deleted` — удалён;\n- `closed` — закрыт;\n- `archived` — архивирован.\n\n#### Статусы оплаты (`payment_status`)\n\n- `none` — не оплачен;\n- `partial` — оплачен частично;\n- `full` — оплачен полностью.\n\n</details>\n"
+    },
+    {
+      "name": "Hospital",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы госпитализации (`status`)\n\n- `planned` — госпитализация запланирована;\n- `in_hospital` — пациент находится в стационаре;\n- `discharged` — пациент выписан;\n- `delayed` — госпитализация просрочена;\n- `deleted` — госпитализация удалена.\n\n</details>\n"
+    },
+    {
+      "name": "Medical Card",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы медицинской карты (`status`)\n\n- `active` — активна;\n- `deleted` — удалена;\n- `archived` — архивирована.\n\n</details>\n"
+    },
+    {
+      "name": "Payments",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы платежа (`status`)\n\n- `exec` — выполнен;\n- `save` — сохранён;\n- `deleted` — удалён.\n\n</details>\n"
     },
     {
       "name": "Pet",
       "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Пол питомца (`sex`)\n\n- `male` — самец;\n- `female` — самка;\n- `castrated` — кастрирован;\n- `sterilized` — стерилизована;\n- `unknown` — пол не указан.\n\n#### Статусы питомца (`status`)\n\n- `alive` — жив;\n- `dead` — умер;\n- `deleted` — удалён.\n\n</details>\n"
+    },
+    {
+      "name": "Streets",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Типы улиц (`type`)\n\n- `street` — улица;\n- `bulvar` — бульвар;\n- `pereulok` — переулок;\n- `prospect` — проспект;\n- `proezd` — проезд;\n- `dead_end` — тупик;\n- `highway` — шоссе;\n- `embankment` — набережная;\n- `square` — площадь;\n- `microdistrict` — микрорайон.\n\n</details>\n"
+    },
+    {
+      "name": "Suppliers",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Типы поставщиков (`person_type`)\n\n- `legal_person` — юридическое лицо;\n- `individual_person` — физическое лицо.\n\n#### Статусы поставщика (`status`)\n\n- `ACTIVE` — активен;\n- `DISABLED` — отключён.\n\n</details>\n"
+    },
+    {
+      "name": "Unit",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы единицы измерения (`status`)\n\n- `active` — активна;\n- `disabled` — отключена.\n\n</details>\n"
     }
   ],
   "components": {
@@ -2550,6 +2575,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус госпитализации.",
             "example": "delayed",
             "nullable": false,
             "x-db-type": "enum('planned','in_hospital','discharged','delayed','deleted')",
@@ -2788,6 +2814,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус счёта.",
             "example": "deleted",
             "nullable": false,
             "x-db-type": "enum('exec','save','deleted','closed','archived')",
@@ -2861,6 +2888,7 @@
           },
           "payment_status": {
             "type": "string",
+            "description": "Статус оплаты счёта.",
             "example": "full",
             "nullable": false,
             "x-db-type": "enum('none','partial','full')",
@@ -3325,6 +3353,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус медицинской карты.",
             "example": "active",
             "nullable": false,
             "x-db-type": "enum('active','deleted','archived')",
@@ -3462,6 +3491,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус платежа.",
             "example": "exec",
             "nullable": true,
             "x-db-type": "enum('exec','save','deleted')",
@@ -3821,6 +3851,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус питомца.",
             "example": "alive",
             "nullable": false,
             "x-db-type": "enum('alive','dead','deleted')",
@@ -4937,6 +4968,7 @@
           },
           "type": {
             "type": "string",
+            "description": "Тип улицы.",
             "example": "street",
             "nullable": false,
             "x-db-type": "enum('street','bulvar','pereulok','prospect','proezd','dead_end','highway','embankment','square','microdistrict')",
@@ -5056,6 +5088,7 @@
           },
           "person_type": {
             "type": "string",
+            "description": "Тип поставщика.",
             "example": "legal_person",
             "nullable": false,
             "x-db-type": "enum('legal_person','individual_person')",
@@ -5074,6 +5107,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус поставщика.",
             "example": "ACTIVE",
             "nullable": false,
             "x-db-type": "enum('ACTIVE','DISABLED')",
@@ -5110,6 +5144,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус единицы измерения.",
             "example": "active",
             "nullable": false,
             "x-db-type": "enum('active','disabled')",

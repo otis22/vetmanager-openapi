@@ -46,6 +46,63 @@ tags:
 
     </details>
 - name: Invoice
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы счёта (`status`)
+
+    - `exec` — выполнен;
+    - `save` — сохранён;
+    - `deleted` — удалён;
+    - `closed` — закрыт;
+    - `archived` — архивирован.
+
+    #### Статусы оплаты (`payment_status`)
+
+    - `none` — не оплачен;
+    - `partial` — оплачен частично;
+    - `full` — оплачен полностью.
+
+    </details>
+- name: Hospital
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы госпитализации (`status`)
+
+    - `planned` — госпитализация запланирована;
+    - `in_hospital` — пациент находится в стационаре;
+    - `discharged` — пациент выписан;
+    - `delayed` — госпитализация просрочена;
+    - `deleted` — госпитализация удалена.
+
+    </details>
+- name: Medical Card
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы медицинской карты (`status`)
+
+    - `active` — активна;
+    - `deleted` — удалена;
+    - `archived` — архивирована.
+
+    </details>
+- name: Payments
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы платежа (`status`)
+
+    - `exec` — выполнен;
+    - `save` — сохранён;
+    - `deleted` — удалён.
+
+    </details>
 - name: Pet
   description: |
     <details>
@@ -64,6 +121,52 @@ tags:
     - `alive` — жив;
     - `dead` — умер;
     - `deleted` — удалён.
+
+    </details>
+- name: Streets
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Типы улиц (`type`)
+
+    - `street` — улица;
+    - `bulvar` — бульвар;
+    - `pereulok` — переулок;
+    - `prospect` — проспект;
+    - `proezd` — проезд;
+    - `dead_end` — тупик;
+    - `highway` — шоссе;
+    - `embankment` — набережная;
+    - `square` — площадь;
+    - `microdistrict` — микрорайон.
+
+    </details>
+- name: Suppliers
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Типы поставщиков (`person_type`)
+
+    - `legal_person` — юридическое лицо;
+    - `individual_person` — физическое лицо.
+
+    #### Статусы поставщика (`status`)
+
+    - `ACTIVE` — активен;
+    - `DISABLED` — отключён.
+
+    </details>
+- name: Unit
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы единицы измерения (`status`)
+
+    - `active` — активна;
+    - `disabled` — отключена.
 
     </details>
 components:
@@ -2149,6 +2252,7 @@ components:
           default: '0'
         status:
           type: string
+          description: Статус госпитализации.
           example: delayed
           nullable: false
           x-db-type: enum('planned','in_hospital','discharged','delayed','deleted')
@@ -2356,6 +2460,7 @@ components:
           default: NULL,
         status:
           type: string
+          description: Статус счёта.
           example: deleted
           nullable: false
           x-db-type: enum('exec','save','deleted','closed','archived')
@@ -2419,6 +2524,7 @@ components:
           x-db-default: '0000-00-00 00:00:00'
         payment_status:
           type: string
+          description: Статус оплаты счёта.
           example: full
           nullable: false
           x-db-type: enum('none','partial','full')
@@ -2824,6 +2930,7 @@ components:
           default: '0'
         status:
           type: string
+          description: Статус медицинской карты.
           example: active
           nullable: false
           x-db-type: enum('active','deleted','archived')
@@ -2938,6 +3045,7 @@ components:
           default: NULL,
         status:
           type: string
+          description: Статус платежа.
           example: exec
           nullable: true
           x-db-type: enum('exec','save','deleted')
@@ -3250,6 +3358,7 @@ components:
           default: ''
         status:
           type: string
+          description: Статус питомца.
           example: alive
           nullable: false
           x-db-type: enum('alive','dead','deleted')
@@ -4066,6 +4175,7 @@ components:
           default: '0'
         type:
           type: string
+          description: Тип улицы.
           example: street
           nullable: false
           x-db-type: enum('street','bulvar','pereulok','prospect','proezd','dead_end','highway','embankment','square','microdistrict')
@@ -4167,6 +4277,7 @@ components:
           default: NULL,
         person_type:
           type: string
+          description: Тип поставщика.
           example: legal_person
           nullable: false
           x-db-type: enum('legal_person','individual_person')
@@ -4182,6 +4293,7 @@ components:
           default: ''
         status:
           type: string
+          description: Статус поставщика.
           example: ACTIVE
           nullable: false
           x-db-type: enum('ACTIVE','DISABLED')
@@ -4211,6 +4323,7 @@ components:
           x-db-type: varchar(16)
         status:
           type: string
+          description: Статус единицы измерения.
           example: active
           nullable: false
           x-db-type: enum('active','disabled')
