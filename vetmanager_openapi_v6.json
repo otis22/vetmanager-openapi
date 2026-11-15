@@ -5678,20 +5678,25 @@
           },
           "contact_person": {
             "type": "string",
+            "description": "Контактное лицо, не длиннее 250 символов.",
             "example": "inventarization",
             "nullable": false,
+            "maxLength": 250,
             "x-db-type": "varchar(250)",
             "default": ""
           },
           "company_name": {
             "type": "string",
+            "description": "Название компании, не длиннее 250 символов. Повтор названия не сохраняется.",
             "example": "inventarization",
             "nullable": false,
+            "maxLength": 250,
             "x-db-type": "varchar(250)",
             "default": ""
           },
           "city_id": {
             "type": "integer",
+            "description": "Id существующего города.",
             "example": 251,
             "nullable": false,
             "x-db-type": "int",
@@ -5701,6 +5706,7 @@
             "type": "string",
             "example": "",
             "nullable": false,
+            "maxLength": 250,
             "x-db-type": "varchar(250)",
             "default": ""
           },
@@ -5708,6 +5714,7 @@
             "type": "string",
             "example": "",
             "nullable": false,
+            "maxLength": 250,
             "x-db-type": "varchar(250)",
             "default": ""
           },
@@ -5715,13 +5722,16 @@
             "type": "string",
             "example": "",
             "nullable": false,
+            "maxLength": 250,
             "x-db-type": "varchar(250)",
             "default": ""
           },
           "inn": {
             "type": "string",
+            "description": "ИНН, не длиннее 256 символов.",
             "example": null,
             "nullable": true,
+            "maxLength": 256,
             "x-db-type": "varchar(256)",
             "default": "NULL,"
           },
@@ -5767,8 +5777,10 @@
           },
           "view_in_modules": {
             "type": "string",
+            "description": "Где показывать контрагента. Значения prihod, rashod и cassarashod через запятую. Пустая строка, если нигде не показывать.\n",
             "example": "prihod,rashod,cassarashod",
             "nullable": false,
+            "maxLength": 250,
             "x-db-type": "varchar(250)",
             "default": ""
           },
@@ -9364,6 +9376,7 @@
           "Suppliers"
         ],
         "operationId": "get_rest_api_Suppliers",
+        "description": "Список контрагентов. data.suppliers — массив.",
         "parameters": [
           {
             "$ref": "#/components/parameters/limit"
@@ -9425,10 +9438,11 @@
           "Suppliers"
         ],
         "operationId": "post_rest_api_Suppliers",
+        "description": "Создаёт контрагента. Обязательны company_name, contact_person, city_id и person_type. city_id — id существующего города. Созданная запись возвращается одной строкой в data.suppliers.\n",
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Контрагент создан.",
             "content": {
               "application/json": {
                 "schema": {
@@ -9484,19 +9498,20 @@
           "Suppliers"
         ],
         "operationId": "get_rest_api_Suppliers_ID",
+        "description": "Возвращает одного контрагента в data.suppliers.",
         "parameters": [
           {
             "name": "ID",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Один контрагент.",
             "content": {
               "application/json": {
                 "schema": {
@@ -9512,10 +9527,7 @@
                       "type": "object",
                       "properties": {
                         "suppliers": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/suppliers"
-                          }
+                          "$ref": "#/components/schemas/suppliers"
                         },
                         "totalCount": {
                           "type": "integer"
