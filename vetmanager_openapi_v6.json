@@ -536,36 +536,440 @@
           },
           "pet": {
             "type": "object",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/pet"
-              }
-            ],
             "nullable": true,
+            "description": "Карточка питомца без владельца, вида, породы и окраса. pet_type_data и breed_data есть в списке и в карточке. Если вид или порода не заданы, соответствующее поле — пустой массив. В ответе создания этих двух полей нет.",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "owner_id": {
+                "type": "integer"
+              },
+              "type_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "alias": {
+                "type": "string"
+              },
+              "sex": {
+                "type": "string",
+                "nullable": true
+              },
+              "date_register": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "string",
+                "nullable": true
+              },
+              "note": {
+                "type": "string"
+              },
+              "breed_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "old_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "color_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "deathnote": {
+                "type": "string",
+                "nullable": true
+              },
+              "deathdate": {
+                "type": "string",
+                "nullable": true
+              },
+              "chip_number": {
+                "type": "string",
+                "nullable": true
+              },
+              "lab_number": {
+                "type": "string",
+                "nullable": true
+              },
+              "status": {
+                "type": "string"
+              },
+              "picture": {
+                "type": "string",
+                "nullable": true
+              },
+              "weight": {
+                "type": "string"
+              },
+              "edit_date": {
+                "type": "string"
+              },
+              "pet_type_data": {
+                "description": "Вид питомца. Пустой массив, если вид не задан.",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "picture": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                ]
+              },
+              "breed_data": {
+                "description": "Порода. Пустой массив, если порода не задана.",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "pet_type_id": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                ]
+              }
+            },
             "x-computed": true
           },
           "client": {
             "type": "object",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/client"
-              }
-            ],
             "nullable": true,
+            "description": "Карточка клиента без города, улицы и вложенного типа. merge_history есть в списке и в карточке. unisender_phone_pristavka есть в карточке, а в списке — когда в parameters передан clinic_id.",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "address": {
+                "type": "string"
+              },
+              "home_phone": {
+                "type": "string"
+              },
+              "work_phone": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              },
+              "type_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "how_find": {
+                "type": "integer",
+                "nullable": true
+              },
+              "balance": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "city_id": {
+                "type": "integer"
+              },
+              "date_register": {
+                "type": "string"
+              },
+              "cell_phone": {
+                "type": "string"
+              },
+              "zip": {
+                "type": "string"
+              },
+              "registration_index": {
+                "type": "string",
+                "nullable": true
+              },
+              "vip": {
+                "type": "integer"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "middle_name": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "discount": {
+                "type": "integer"
+              },
+              "passport_series": {
+                "type": "string"
+              },
+              "lab_number": {
+                "type": "string"
+              },
+              "street_id": {
+                "type": "integer"
+              },
+              "apartment": {
+                "type": "string"
+              },
+              "unsubscribe": {
+                "type": "integer"
+              },
+              "in_blacklist": {
+                "type": "integer"
+              },
+              "has_contract": {
+                "type": "integer"
+              },
+              "last_visit_date": {
+                "type": "string"
+              },
+              "number_of_journal": {
+                "type": "string"
+              },
+              "phone_prefix": {
+                "type": "string"
+              },
+              "unisender_phone_pristavka": {
+                "type": "string",
+                "nullable": true
+              },
+              "merge_history": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/clientMergeHistory"
+                }
+              },
+              "client_type_data": {
+                "type": "object",
+                "nullable": true,
+                "description": "Есть в списке, если в parameters передан attached_client_type_data = 1 и у клиента задан тип.",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "x-computed": true
+          },
+          "doctor_data": {
+            "type": "object",
+            "nullable": true,
+            "description": "Врач. Есть в карточке, если у приёма задан user_id. В списке есть, если в parameters передан attached_doctor_data = 1.",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "middle_name": {
+                "type": "string"
+              },
+              "login": {
+                "type": "string"
+              },
+              "position_id": {
+                "type": "integer"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "cell_phone": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "role_id": {
+                "type": "integer"
+              },
+              "is_active": {
+                "type": "integer"
+              },
+              "calc_percents": {
+                "type": "integer"
+              },
+              "nickname": {
+                "type": "string"
+              },
+              "last_change_pwd_date": {
+                "type": "string"
+              },
+              "is_limited": {
+                "type": "integer"
+              },
+              "sip_number": {
+                "type": "string"
+              },
+              "user_inn": {
+                "type": "string"
+              }
+            },
+            "x-computed": true
+          },
+          "admission_type_data": {
+            "type": "object",
+            "nullable": true,
+            "description": "Тип приёма. Есть в карточке, если type_id указывает на элемент справочника. В списке есть, если в parameters передан attached_admission_type_data = 1.",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "combo_manual_id": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "dop_param1": {
+                "type": "string"
+              },
+              "dop_param2": {
+                "type": "string"
+              },
+              "dop_param3": {
+                "type": "string"
+              },
+              "is_active": {
+                "type": "integer"
+              }
+            },
             "x-computed": true
           },
           "wait_time": {
             "type": "string",
             "example": "",
             "nullable": true,
+            "description": "Есть в списке и в карточке. Пустая строка, если статус не in_treatment и не directed.",
             "x-computed": true
           },
           "invoices": {
             "type": "array",
             "nullable": true,
+            "description": "Есть только при статусе accepted. Если счетов нет, массив пустой. Элемент — строка счёта без вложенных client, pet и doctor.",
             "x-computed": true,
             "items": {
-              "$ref": "#/components/schemas/invoice"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "doctor_id": {
+                  "type": "integer",
+                  "nullable": true
+                },
+                "client_id": {
+                  "type": "integer"
+                },
+                "pet_id": {
+                  "type": "integer"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "percent": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "amount": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "status": {
+                  "type": "string"
+                },
+                "invoice_date": {
+                  "type": "string"
+                },
+                "old_id": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "night": {
+                  "type": "integer"
+                },
+                "increase": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "discount": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "call": {
+                  "type": "integer"
+                },
+                "paid_amount": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "create_date": {
+                  "type": "string"
+                },
+                "payment_status": {
+                  "type": "string"
+                },
+                "clinic_id": {
+                  "type": "integer"
+                },
+                "creator_id": {
+                  "type": "integer",
+                  "nullable": true
+                },
+                "fiscal_section_id": {
+                  "type": "integer"
+                }
+              }
             }
           }
         },
@@ -597,12 +1001,67 @@
             "description": "Длительность в минутах."
           },
           "admission": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/admission"
+            "type": "object",
+            "nullable": true,
+            "description": "Приём без питомца, клиента, врача и wait_time.",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "admission_date": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "client_id": {
+                "type": "integer"
+              },
+              "patient_id": {
+                "type": "integer"
+              },
+              "user_id": {
+                "type": "integer"
+              },
+              "type_id": {
+                "type": "integer"
+              },
+              "admission_length": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "clinic_id": {
+                "type": "integer"
+              },
+              "direct_direction": {
+                "type": "integer"
+              },
+              "creator_id": {
+                "type": "integer"
+              },
+              "create_date": {
+                "type": "string"
+              },
+              "escorter_id": {
+                "type": "integer"
+              },
+              "reception_write_channel": {
+                "type": "string",
+                "nullable": true
+              },
+              "is_auto_create": {
+                "type": "integer"
+              },
+              "invoices_sum": {
+                "type": "string"
+              },
+              "confirmation": {
+                "type": "string",
+                "nullable": true
               }
-            ],
-            "nullable": true
+            }
           }
         },
         "x-db-table": "admission_journal"
@@ -1476,7 +1935,7 @@
       },
       "clientMergeHistory": {
         "type": "object",
-        "description": "Запись журнала объединений. Есть только в ответе клиента по id.",
+        "description": "Запись журнала объединений. Есть в ответе клиента по id и в client у приёма.",
         "properties": {
           "id": {
             "type": "integer"
@@ -9153,7 +9612,17 @@
           "Admission"
         ],
         "operationId": "get_rest_api_admission",
+        "description": "parameters — JSON. clinic_id добавляет клиенту unisender_phone_pristavka. attached_doctor_data = 1 добавляет doctor_data. attached_admission_type_data = 1 добавляет admission_type_data. attached_client_type_data = 1 добавляет client.client_type_data, если у клиента задан тип.",
         "parameters": [
+          {
+            "name": "parameters",
+            "in": "query",
+            "required": false,
+            "description": "JSON с clinic_id и флагами вложенных объектов.",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "filter",
             "in": "query",
@@ -9218,15 +9687,15 @@
       },
       "post": {
         "summary": "Создать приём",
-        "description": "Обязательны client_id и clinic_id. patient_id можно не передавать или передать 0. data.admission — массив из одной записи.",
+        "description": "Обязательны client_id и clinic_id. patient_id можно не передавать или передать 0. data.admission — массив из одной записи. Код ответа 201. В этой записи нет wait_time, а у питомца нет pet_type_data и breed_data.",
         "tags": [
           "Admission"
         ],
         "operationId": "post_rest_api_admission",
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Приём создан.",
             "content": {
               "application/json": {
                 "schema": {
@@ -9283,7 +9752,7 @@
           "Admission"
         ],
         "operationId": "get_rest_api_admission_ID",
-        "description": "data.admission — один объект.",
+        "description": "data.admission — один объект. В нём есть pet, client, wait_time, doctor_data при заданном user_id и admission_type_data при заданном типе. invoices есть только при статусе accepted.",
         "parameters": [
           {
             "name": "ID",
@@ -9399,7 +9868,7 @@
           "Admission"
         ],
         "operationId": "delete_rest_api_admission_ID",
-        "description": "В data возвращается id удаленного приема.",
+        "description": "Создание приёма добавляет запись журнала. Пока такие записи есть, удаление не выполняется. Если записей журнала нет, в data возвращается id.",
         "parameters": [
           {
             "name": "ID",
