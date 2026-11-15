@@ -2870,106 +2870,302 @@
           },
           "pet_data": {
             "type": "object",
-            "example": {
-              "id": 6,
-              "owner_id": 8,
-              "type_id": 1,
-              "alias": "Люська",
-              "sex": "unknown",
-              "date_register": "2020-05-13 12:44:13",
-              "birthday": "2019-05-13",
-              "note": "",
-              "breed_id": 24,
-              "old_id": null,
-              "color_id": 0,
-              "deathnote": null,
-              "deathdate": null,
-              "chip_number": "",
-              "lab_number": "",
-              "status": "alive",
-              "picture": null,
-              "weight": "0.0000000000",
-              "edit_date": "2022-11-23 09:47:03",
+            "description": "Питомец. pet_type_data и breed_data — пустой массив, если вид или порода не заданы.",
+            "nullable": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "owner_id": {
+                "type": "integer"
+              },
+              "type_id": {
+                "type": "integer"
+              },
+              "alias": {
+                "type": "string"
+              },
+              "sex": {
+                "type": "string"
+              },
+              "date_register": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "string",
+                "nullable": true
+              },
+              "note": {
+                "type": "string"
+              },
+              "breed_id": {
+                "type": "integer"
+              },
+              "old_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "color_id": {
+                "type": "integer"
+              },
+              "deathnote": {
+                "type": "string",
+                "nullable": true
+              },
+              "deathdate": {
+                "type": "string",
+                "nullable": true
+              },
+              "chip_number": {
+                "type": "string"
+              },
+              "lab_number": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "picture": {
+                "type": "string",
+                "nullable": true
+              },
+              "weight": {
+                "type": "string"
+              },
+              "edit_date": {
+                "type": "string"
+              },
               "pet_type_data": {
-                "id": 1,
-                "title": "Кошки",
-                "picture": "cat",
-                "type": "cat"
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "picture": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                ]
               },
               "breed_data": {
-                "id": 24,
-                "title": "Бобтейл",
-                "pet_type_id": 1
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "pet_type_id": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                ]
               }
             },
-            "nullable": true,
             "x-computed": true
           },
           "client_data": {
             "type": "object",
-            "example": {
-              "id": 12,
-              "address": "",
-              "home_phone": "",
-              "work_phone": "",
-              "note": "",
-              "type_id": null,
-              "how_find": null,
-              "balance": "0.0000000000",
-              "email": "user@example.test",
-              "city": "",
-              "city_id": 252,
-              "date_register": "2020-05-15 18:49:05",
-              "cell_phone": "",
-              "zip": "53221",
-              "registration_index": null,
-              "vip": 0,
-              "last_name": "Егоров",
-              "first_name": "Егор",
-              "middle_name": "Егорович",
-              "status": "ACTIVE",
-              "discount": 0,
-              "passport_series": "",
-              "lab_number": "",
-              "street_id": 0,
-              "apartment": "",
-              "unsubscribe": 0,
-              "in_blacklist": 0,
-              "last_visit_date": "2025-03-21 16:26:30",
-              "number_of_journal": "",
-              "phone_prefix": ""
-            },
+            "description": "Клиент без города, улицы и типа объектами. unisender_phone_pristavka есть только если в parameters передан clinic_id.",
             "nullable": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "address": {
+                "type": "string"
+              },
+              "apartment": {
+                "type": "string"
+              },
+              "balance": {
+                "type": "string"
+              },
+              "cell_phone": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "city_id": {
+                "type": "integer"
+              },
+              "date_register": {
+                "type": "string"
+              },
+              "discount": {
+                "type": "integer"
+              },
+              "email": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "has_contract": {
+                "type": "integer"
+              },
+              "home_phone": {
+                "type": "string"
+              },
+              "how_find": {
+                "type": "integer",
+                "nullable": true
+              },
+              "in_blacklist": {
+                "type": "integer"
+              },
+              "lab_number": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "last_visit_date": {
+                "type": "string"
+              },
+              "middle_name": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              },
+              "number_of_journal": {
+                "type": "string"
+              },
+              "passport_series": {
+                "type": "string"
+              },
+              "phone_prefix": {
+                "type": "string",
+                "nullable": true
+              },
+              "registration_index": {
+                "type": "string",
+                "nullable": true
+              },
+              "status": {
+                "type": "string"
+              },
+              "street_id": {
+                "type": "integer"
+              },
+              "type_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "unsubscribe": {
+                "type": "integer"
+              },
+              "vip": {
+                "type": "integer"
+              },
+              "work_phone": {
+                "type": "string"
+              },
+              "zip": {
+                "type": "string",
+                "nullable": true
+              },
+              "unisender_phone_pristavka": {
+                "type": "string"
+              }
+            },
             "x-computed": true
           },
           "doctor_data": {
             "type": "object",
-            "example": {
-              "id": 1,
-              "last_name": "Rest UPD",
-              "first_name": "Владимир",
-              "middle_name": "aad",
-              "login": "demo_user",
-              "position_id": 8,
-              "email": "user@example.test",
-              "phone": "",
-              "cell_phone": "+7 (000) 000-00-00",
-              "address": "",
-              "role_id": 7,
-              "is_active": 1,
-              "calc_percents": 1,
-              "nickname": "demo_user",
-              "last_change_pwd_date": "2024-01-09",
-              "is_limited": 0,
-              "sip_number": "",
-              "user_inn": ""
-            },
+            "description": "Врач стационара.",
             "nullable": true,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "middle_name": {
+                "type": "string"
+              },
+              "login": {
+                "type": "string"
+              },
+              "position_id": {
+                "type": "integer"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "cell_phone": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "role_id": {
+                "type": "integer"
+              },
+              "is_active": {
+                "type": "integer"
+              },
+              "calc_percents": {
+                "type": "integer"
+              },
+              "nickname": {
+                "type": "string"
+              },
+              "last_change_pwd_date": {
+                "type": "string",
+                "nullable": true
+              },
+              "is_limited": {
+                "type": "integer"
+              },
+              "sip_number": {
+                "type": "string"
+              },
+              "user_inn": {
+                "type": "string"
+              }
+            },
             "x-computed": true
           },
           "in_hospital_time": {
             "type": "string",
-            "example": "",
+            "description": "Срок пребывания. Пустая строка, если статус не in_hospital и не discharged с датой выписки. В ответе изменения поля нет.",
             "nullable": true,
             "x-computed": true
           }
@@ -6858,6 +7054,7 @@
           "Hospital"
         ],
         "operationId": "get_rest_api_HospitalBlock_ID",
+        "description": "data.hospitalBlock — один объект.",
         "parameters": [
           {
             "name": "ID",
@@ -6870,7 +7067,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Один блок стационара.",
             "content": {
               "application/json": {
                 "schema": {
@@ -6886,10 +7083,7 @@
                       "type": "object",
                       "properties": {
                         "hospitalBlock": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/hospitalBlock"
-                          }
+                          "$ref": "#/components/schemas/hospitalBlock"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -13796,6 +13990,7 @@
           "Hospital"
         ],
         "operationId": "get_rest_api_hospital_ID",
+        "description": "data.hospital — один объект. in_hospital_time есть в этом ответе.",
         "parameters": [
           {
             "name": "ID",
@@ -13808,7 +14003,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
+            "description": "Одна госпитализация.",
             "content": {
               "application/json": {
                 "schema": {
@@ -13824,10 +14019,7 @@
                       "type": "object",
                       "properties": {
                         "hospital": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/hospital"
-                          }
+                          "$ref": "#/components/schemas/hospital"
                         },
                         "totalCount": {
                           "type": "integer"
@@ -13854,6 +14046,7 @@
           "Hospital"
         ],
         "operationId": "put_rest_api_hospital_ID",
+        "description": "data.hospital — один объект. in_hospital_time в этом ответе нет. Код ответа 201.",
         "parameters": [
           {
             "name": "ID",
@@ -13865,8 +14058,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Успешный ответ",
+          "201": {
+            "description": "Госпитализация изменена.",
             "content": {
               "application/json": {
                 "schema": {
@@ -13882,10 +14075,7 @@
                       "type": "object",
                       "properties": {
                         "hospital": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/hospital"
-                          }
+                          "$ref": "#/components/schemas/hospital"
                         },
                         "totalCount": {
                           "type": "integer"
