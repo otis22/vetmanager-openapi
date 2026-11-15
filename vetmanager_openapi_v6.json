@@ -24,7 +24,19 @@
   ],
   "tags": [
     {
+      "name": "Admission",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы приёма (`status`)\n\n- `save` — приём запланирован;\n- `directed` — клиент направлен на приём;\n- `in_treatment` — приём начат;\n- `accepted` — приём завершён;\n- `delayed` — приём просрочен;\n- `not_approved` — приём не одобрен;\n- `not_confirmed` — приём не подтверждён;\n- `deleted` — приём удалён.\n\n</details>\n"
+    },
+    {
+      "name": "Client",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Статусы клиента (`status`)\n\n- `ACTIVE` — активен;\n- `TEMPORARY` — временный;\n- `DISABLED` — отключён;\n- `DELETED` — удалён.\n\n</details>\n"
+    },
+    {
       "name": "Invoice"
+    },
+    {
+      "name": "Pet",
+      "description": "<details>\n<summary><strong>Допустимые значения полей</strong></summary>\n\n#### Пол питомца (`sex`)\n\n- `male` — самец;\n- `female` — самка;\n- `castrated` — кастрирован;\n- `sterilized` — стерилизована;\n- `unknown` — пол не указан.\n\n#### Статусы питомца (`status`)\n\n- `alive` — жив;\n- `dead` — умер;\n- `deleted` — удалён.\n\n</details>\n"
     }
   ],
   "components": {
@@ -405,6 +417,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус приёма. Допустимые значения: `save`, `directed`, `accepted`, `deleted`, `delayed`, `not_approved`, `in_treatment`, `not_confirmed`.",
             "example": "accepted",
             "nullable": true,
             "x-db-type": "enum('save','directed','accepted','deleted','delayed','not_approved','in_treatment','not_confirmed')",
@@ -1268,6 +1281,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус клиента. Допустимые значения: `ACTIVE` — активен, `DELETED` — удалён, `DISABLED` — отключён, `TEMPORARY` — временный.",
             "example": "DELETED",
             "nullable": false,
             "x-db-type": "enum('ACTIVE','DELETED','DISABLED','TEMPORARY')",
@@ -1406,6 +1420,7 @@
           },
           "status": {
             "type": "string",
+            "description": "Статус клиента. Допустимые значения: `ACTIVE` — активен, `DELETED` — удалён, `DISABLED` — отключён, `TEMPORARY` — временный.",
             "example": "DELETED",
             "nullable": false,
             "x-db-type": "enum('ACTIVE','DELETED','DISABLED','TEMPORARY')",
@@ -3718,6 +3733,7 @@
           },
           "sex": {
             "type": "string",
+            "description": "Пол питомца. Допустимые значения: `male` — самец, `female` — самка, `castrated` — кастрирован, `sterilized` — стерилизована, `unknown` — пол не указан.",
             "example": "male",
             "nullable": true,
             "x-db-type": "enum('male','female','castrated','sterilized','unknown')",
@@ -8331,6 +8347,7 @@
             "name": "filter",
             "in": "query",
             "required": false,
+            "description": "Фильтрация приёмов (JSON-массив условий).",
             "schema": {
               "type": "string"
             },
@@ -9890,7 +9907,14 @@
             "$ref": "#/components/parameters/sort"
           },
           {
-            "$ref": "#/components/parameters/filter"
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "description": "Фильтрация клиентов (JSON-массив условий).",
+            "schema": {
+              "type": "string"
+            },
+            "example": "[{'property':'status', 'value':'ACTIVE'}]"
           }
         ],
         "responses": {
@@ -10494,7 +10518,8 @@
                             },
                             {
                               "type": "array",
-                              "maxItems": 0
+                              "maxItems": 0,
+                              "items": {}
                             }
                           ]
                         }
@@ -11166,7 +11191,8 @@
                             },
                             {
                               "type": "array",
-                              "maxItems": 0
+                              "maxItems": 0,
+                              "items": {}
                             }
                           ]
                         }
@@ -11495,7 +11521,8 @@
                             },
                             {
                               "type": "array",
-                              "maxItems": 0
+                              "maxItems": 0,
+                              "items": {}
                             }
                           ]
                         }
@@ -14404,6 +14431,7 @@
             "name": "filter",
             "in": "query",
             "required": false,
+            "description": "Фильтрация питомцев (JSON-массив условий).",
             "schema": {
               "type": "string"
             },
@@ -17102,7 +17130,8 @@
                             },
                             {
                               "type": "array",
-                              "maxItems": 0
+                              "maxItems": 0,
+                              "items": {}
                             }
                           ]
                         }

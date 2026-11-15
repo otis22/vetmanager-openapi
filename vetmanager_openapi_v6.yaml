@@ -15,7 +15,57 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
+- name: Admission
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы приёма (`status`)
+
+    - `save` — приём запланирован;
+    - `directed` — клиент направлен на приём;
+    - `in_treatment` — приём начат;
+    - `accepted` — приём завершён;
+    - `delayed` — приём просрочен;
+    - `not_approved` — приём не одобрен;
+    - `not_confirmed` — приём не подтверждён;
+    - `deleted` — приём удалён.
+
+    </details>
+- name: Client
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Статусы клиента (`status`)
+
+    - `ACTIVE` — активен;
+    - `TEMPORARY` — временный;
+    - `DISABLED` — отключён;
+    - `DELETED` — удалён.
+
+    </details>
 - name: Invoice
+- name: Pet
+  description: |
+    <details>
+    <summary><strong>Допустимые значения полей</strong></summary>
+
+    #### Пол питомца (`sex`)
+
+    - `male` — самец;
+    - `female` — самка;
+    - `castrated` — кастрирован;
+    - `sterilized` — стерилизована;
+    - `unknown` — пол не указан.
+
+    #### Статусы питомца (`status`)
+
+    - `alive` — жив;
+    - `dead` — умер;
+    - `deleted` — удалён.
+
+    </details>
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -304,6 +354,7 @@ components:
           default: 00:00:00
         status:
           type: string
+          description: 'Статус приёма. Допустимые значения: `save`, `directed`, `accepted`, `deleted`, `delayed`, `not_approved`, `in_treatment`, `not_confirmed`.'
           example: accepted
           nullable: true
           x-db-type: enum('save','directed','accepted','deleted','delayed','not_approved','in_treatment','not_confirmed')
@@ -1040,6 +1091,7 @@ components:
           x-db-type: varchar(50)
         status:
           type: string
+          description: 'Статус клиента. Допустимые значения: `ACTIVE` — активен, `DELETED` — удалён, `DISABLED` — отключён, `TEMPORARY` — временный.'
           example: DELETED
           nullable: false
           x-db-type: enum('ACTIVE','DELETED','DISABLED','TEMPORARY')
@@ -1156,6 +1208,7 @@ components:
           default: NULL,
         status:
           type: string
+          description: 'Статус клиента. Допустимые значения: `ACTIVE` — активен, `DELETED` — удалён, `DISABLED` — отключён, `TEMPORARY` — временный.'
           example: DELETED
           nullable: false
           x-db-type: enum('ACTIVE','DELETED','DISABLED','TEMPORARY')
@@ -3121,6 +3174,7 @@ components:
           x-db-type: varchar(255)
         sex:
           type: string
+          description: 'Пол питомца. Допустимые значения: `male` — самец, `female` — самка, `castrated` — кастрирован, `sterilized` — стерилизована, `unknown` — пол не указан.'
           example: male
           nullable: true
           x-db-type: enum('male','female','castrated','sterilized','unknown')
@@ -6292,6 +6346,7 @@ paths:
       - name: filter
         in: query
         required: false
+        description: Фильтрация приёмов (JSON-массив условий).
         schema:
           type: string
         example: '[{''property'':''client_id'', ''value'':''{{ID}}''},{''property'':''status'', ''value'':''deleted'', ''operator'':''!=''}]'
@@ -7242,7 +7297,13 @@ paths:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
       - $ref: '#/components/parameters/sort'
-      - $ref: '#/components/parameters/filter'
+      - name: filter
+        in: query
+        required: false
+        description: Фильтрация клиентов (JSON-массив условий).
+        schema:
+          type: string
+        example: '[{''property'':''status'', ''value'':''ACTIVE''}]'
       responses:
         '200':
           description: Успешный ответ
@@ -7644,6 +7705,7 @@ paths:
                         - $ref: '#/components/schemas/clientDiscountCard'
                         - type: array
                           maxItems: 0
+                          items: {}
               examples:
                 found:
                   summary: Карта найдена
@@ -8082,6 +8144,7 @@ paths:
                         - $ref: '#/components/schemas/documentNumber'
                         - type: array
                           maxItems: 0
+                          items: {}
               examples:
                 found:
                   summary: Запись найдена
@@ -8306,6 +8369,7 @@ paths:
                         - $ref: '#/components/schemas/failedHook'
                         - type: array
                           maxItems: 0
+                          items: {}
               examples:
                 found:
                   summary: Запись найдена
@@ -10327,6 +10391,7 @@ paths:
       - name: filter
         in: query
         required: false
+        description: Фильтрация питомцев (JSON-массив условий).
         schema:
           type: string
         example: '[{''property'':''owner_id'', ''value'':''{{ID}}''},{''property'':''status'', ''value'':''deleted'', ''operator'':''!=''}]'
@@ -12034,6 +12099,7 @@ paths:
                         - $ref: '#/components/schemas/webHook'
                         - type: array
                           maxItems: 0
+                          items: {}
               examples:
                 found:
                   summary: Запись найдена

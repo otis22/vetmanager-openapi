@@ -10,6 +10,14 @@ window.onload = function() {
     trace: 7
   };
 
+  const keepTagDetailsIndependent = function() {
+    document.querySelectorAll(".opblock-tag details").forEach(function(details) {
+      details.addEventListener("click", function(event) {
+        event.stopPropagation();
+      });
+    });
+  };
+
   window.ui = SwaggerUIBundle({
     url: "vetmanager_openapi_v6.yaml",
     dom_id: '#swagger-ui',
@@ -35,6 +43,7 @@ window.onload = function() {
 
       return a.get("path").localeCompare(b.get("path"));
     },
+    onComplete: keepTagDetailsIndependent,
     layout: "StandaloneLayout"
   });
 };

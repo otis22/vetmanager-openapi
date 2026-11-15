@@ -92,7 +92,7 @@ def validate_structure(spec: dict[str, Any], errors: list[str]) -> None:
     if not isinstance(spec.get("paths"), dict) or not spec["paths"]:
         fail(errors, "paths must be a non-empty object")
 
-    validate_schema_nodes(spec.get("components", {}).get("schemas", {}), errors, "components.schemas")
+    validate_schema_nodes(spec, errors)
 
     operation_ids: set[str] = set()
     for path, path_item in spec.get("paths", {}).items():
