@@ -22,10 +22,21 @@ Useful links:
 Run the repository's bundled Swagger UI from the project root:
 
 ```bash
-python3 -m http.server 8081
+python3 scripts/serve_docs.py
 ```
 
 Then open http://localhost:8081.
+
+Use `scripts/serve_docs.py` for local Docker API calls. It proxies `/__local_api/` only to
+loopback clinic hosts (`localhost`, `*.localhost`, `127.0.0.1`, `::1`), avoiding backend CORS changes.
+The key entered in Authorize is forwarded to the local API. API URLs, headers and response bodies
+are not logged. The preview server binds to `127.0.0.1` only.
+If the port is busy, run `python3 scripts/serve_docs.py --port 8091` and open http://localhost:8091/.
+A plain `python3 -m http.server` serves documentation but cannot proxy local API requests.
+
+The clinic address field sets the host for Try it out. It starts empty. Enter a clinic hostname or a local URL such as `http://one.localhost:8080/`. The value is not persisted across page reloads.
+
+The “FAQ по API” button below the specification file description opens the `faq.html` preview, with a link back to Swagger.
 
 This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as alphabetical tag order and GET → POST → PUT → DELETE operation sorting. Port 8081 is used because Vetmanager already listens on 8080.
 

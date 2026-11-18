@@ -509,11 +509,6 @@ def apply_reconciliation_to_spec(
     updated = deepcopy(spec)
     info = updated.setdefault("info", {})
     info["version"] = "1.3.1"
-    info["description"] = (
-        "OpenAPI 3.0 specification for the VetManager REST API. "
-        "Reconciled against vetmanager-extjs routes/controllers and devtr6 GET probes. "
-        "Schemas are preserved from prior real API response inference; nullable flags are refreshed from vm_devtr6.sql.gz where table mappings are known."
-    )
     updated["x-reconciliation"] = {
         "generatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "sources": {
