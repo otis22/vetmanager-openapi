@@ -81,32 +81,34 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-REST-API-KEY",
-        "description": "API ключ для аутентификации"
+        "description": "API ключ для аутентификации\n\nКлюч клиники; интеграция REST API должна быть включена. Не определяет автоматически автора задачи. Сервисный доступ и Provider API имеют отдельный порядок подключения и ограничения, описанные во введении."
       }
     },
     "parameters": {
       "limit": {
         "name": "limit",
         "in": "query",
-        "description": "Количество записей",
+        "description": "Размер страницы стандартного списка. По умолчанию 100; для обхода используйте страницы до 100 записей. В проверенном ERestController верхняя граница не применяется (validateLimit возвращает true), поэтому 100 здесь не объявляется жёстким максимумом. Пользовательские методы могут иметь собственные правила.",
         "schema": {
           "type": "integer",
-          "example": 10
+          "example": 10,
+          "default": 100
         }
       },
       "offset": {
         "name": "offset",
         "in": "query",
-        "description": "Смещение для пагинации",
+        "description": "Смещение от начала стандартного списка; по умолчанию 0. Для следующей страницы увеличивайте offset на размер страницы, сохраняя фильтр и стабильную сортировку. Сравнивайте с data.totalCount; при изменении данных обход не является снимком.",
         "schema": {
           "type": "integer",
-          "example": 0
+          "example": 0,
+          "default": 0
         }
       },
       "sort": {
         "name": "sort",
         "in": "query",
-        "description": "Сортировка (JSON массив)",
+        "description": "Сортировка стандартного списка: JSON-массив [{\"property\":\"id\",\"direction\":\"ASC\"}]. Направления ASC/DESC; без направления ASC. Допустимо простое имя столбца. Для пагинации выбирайте стабильный порядок, например id. В GET передавайте JSON через --data-urlencode.",
         "schema": {
           "type": "string",
           "example": "[{\"property\":\"id\",\"direction\":\"ASC\"}]"
@@ -115,7 +117,7 @@
       "filter": {
         "name": "filter",
         "in": "query",
-        "description": "Фильтрация (JSON массив)",
+        "description": "JSON-массив условий по столбцам самой модели; условия объединяются AND. Формат: [{\"property\":\"id\",\"value\":[1,2],\"operator\":\"in\"}]. Для in/not in передавайте массив value. Поддерживаются =, !=, <>, <, <=, >, >=, in, not in, like. Вложенные пути связей не поддерживаются. В GET кодируйте JSON через curl --get --data-urlencode, не вставляйте сырой JSON в URL.\n\nДля длинных фильтров стандартного списка используйте POST /rest/api/{controller}/list с application/x-www-form-urlencoded и теми же filter/sort/limit/offset в полях формы; filter остаётся JSON-строкой. Это не создание записи. Не передавайте тело JSON, файлы или одинаковые параметры одновременно в query и body. Пользовательские методы могут иметь другой контракт.",
         "schema": {
           "type": "string",
           "example": "[{\"property\":\"id\",\"value\":1,\"operator\":\">=\"}]"
@@ -532,7 +534,8 @@
             "example": null,
             "nullable": true,
             "x-db-type": "varchar(20)",
-            "default": "NULL,"
+            "default": "NULL,",
+            "description": "Отдельный от status результат ответа клиента: интерфейс распознаёт confirmed (подтвердил), cancelled (отменил), postponed (перенёс); также возможны пустое значение и null. Это не статус жизненного цикла приёма и не эквивалент действия confirmAdmission."
           },
           "pet": {
             "type": "object",
@@ -553,8 +556,7 @@
                 "type": "string"
               },
               "sex": {
-                "type": "string",
-                "nullable": true
+                "$ref": "#/components/schemas/petSex"
               },
               "date_register": {
                 "type": "string"
@@ -2104,7 +2106,7 @@
             "type": "string"
           },
           "sex": {
-            "type": "string"
+            "$ref": "#/components/schemas/petSex"
           },
           "birthday": {
             "type": "string",
@@ -3205,7 +3207,8 @@
             "example": "100.0000000000",
             "nullable": true,
             "x-db-type": "decimal(25,10)",
-            "default": "NULL,"
+            "default": "NULL,",
+            "description": "Цена параметра продажи. Учитывайте price_formation, единицу продажи и coefficient; это не сумма исторической строки счёта."
           },
           "coefficient": {
             "type": "integer",
@@ -3259,7 +3262,8 @@
             "example": 1,
             "nullable": false,
             "x-db-type": "int",
-            "default": "0"
+            "default": "0",
+            "description": "Филиал параметра продажи; фильтруйте вместе с good_id для получения цены в нужной клинике."
           },
           "markup": {
             "type": "string",
@@ -3503,7 +3507,7 @@
                 "type": "string"
               },
               "sex": {
-                "type": "string"
+                "$ref": "#/components/schemas/petSex"
               },
               "date_register": {
                 "type": "string"
@@ -4145,8 +4149,7 @@
                 "type": "string"
               },
               "sex": {
-                "type": "string",
-                "nullable": true
+                "$ref": "#/components/schemas/petSex"
               },
               "date_register": {
                 "type": "string"
@@ -4335,7 +4338,8 @@
             "type": "integer",
             "example": 2,
             "nullable": false,
-            "x-db-type": "int"
+            "x-db-type": "int",
+            "description": "ID счёта invoice; не ID записи document_number и не отображаемый номер счёта."
           },
           "good_id": {
             "type": "integer",
@@ -4355,7 +4359,8 @@
             "example": "200.0000000000",
             "nullable": true,
             "x-db-type": "decimal(25,10)",
-            "default": "NULL,"
+            "default": "NULL,",
+            "description": "Сумма всей строки за указанное quantity; не цена одной единицы."
           },
           "responsible_user_id": {
             "type": "integer",
@@ -4382,7 +4387,8 @@
             "example": 0,
             "nullable": false,
             "x-db-type": "int",
-            "default": "0"
+            "default": "0",
+            "description": "ID обычной нешаблонной комбинации (good_tag), к которой относится строка. При раскрытии шаблонной комбинации сохраняется 0; поэтому tag_id=0 не доказывает, что позиция никогда не добавлялась из комбинации. Не путайте с good.for_combination — это ограничение каталога, а не связь конкретной строки счёта."
           },
           "discount_type": {
             "type": "string",
@@ -4763,7 +4769,8 @@
             "type": "string",
             "example": "<div></div>",
             "nullable": true,
-            "x-db-type": "longtext"
+            "x-db-type": "longtext",
+            "description": "HTML содержимого медкарты. Может содержать ссылки на вложения; не является отдельным структурированным списком файлов клиента или питомца."
           },
           "next_meet_id": {
             "type": "integer",
@@ -4850,7 +4857,7 @@
                 "type": "string"
               },
               "sex": {
-                "type": "string"
+                "$ref": "#/components/schemas/petSex"
               },
               "date_register": {
                 "type": "string"
@@ -4975,7 +4982,7 @@
             "nullable": true
           },
           "sex": {
-            "type": "string"
+            "$ref": "#/components/schemas/petSex"
           },
           "note": {
             "type": "string"
@@ -5611,6 +5618,20 @@
         "x-source": "real_api_response",
         "x-db-table": "closing_of_invoices"
       },
+      "petSex": {
+        "type": "string",
+        "description": "Пол питомца:\n\n- `male` — самец;\n- `female` — самка;\n- `castrated` — кастрирован;\n- `sterilized` — стерилизована;\n- `unknown` — пол не указан.\n- `null` — значение пола не заполнено в записи. Это отдельное значение, не строка \"null\" и не автоматическая замена на `unknown`.\n",
+        "enum": [
+          "male",
+          "female",
+          "castrated",
+          "sterilized",
+          "unknown",
+          null
+        ],
+        "example": "male",
+        "nullable": true
+      },
       "pet": {
         "type": "object",
         "properties": {
@@ -5641,19 +5662,12 @@
             "x-db-type": "varchar(255)"
           },
           "sex": {
-            "type": "string",
-            "description": "Пол питомца:\n\n- `male` — самец;\n- `female` — самка;\n- `castrated` — кастрирован;\n- `sterilized` — стерилизована;\n- `unknown` — пол не указан.\n",
-            "example": "male",
-            "nullable": true,
-            "x-db-type": "enum('male','female','castrated','sterilized','unknown')",
-            "enum": [
-              "male",
-              "female",
-              "castrated",
-              "sterilized",
-              "unknown"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/petSex"
+              }
             ],
-            "default": "NULL,"
+            "x-db-type": "enum('male','female','castrated','sterilized','unknown')"
           },
           "date_register": {
             "type": "string",
@@ -6870,10 +6884,9 @@
           "type": {
             "type": "string",
             "enum": [
-              "call",
               "task"
             ],
-            "description": "Тип записи: звонок или задача."
+            "description": "Тип создаваемой записи: только task. Название ресурса userCalls историческое; создание звонков не входит в публикуемый контракт."
           },
           "dt": {
             "type": "string",
@@ -7251,7 +7264,8 @@
         "properties": {
           "id": {
             "type": "integer",
-            "example": 1
+            "example": 1,
+            "description": "ID записи нумерации в document_number. Не ID счёта или складского документа."
           },
           "document_type": {
             "type": "string",
@@ -7268,13 +7282,13 @@
           },
           "document_id": {
             "type": "integer",
-            "description": "Id документа этого типа.",
+            "description": "ID исходного документа, тип которого указан в document_type. Для invoice это ID счёта, а не строки invoiceDocument.",
             "example": 1
           },
           "document_number": {
             "type": "string",
             "maxLength": 32,
-            "description": "Номер, который видит пользователь.",
+            "description": "Полный отображаемый номер документа с учётом маски. Строка; не заменяйте её числовой частью number_clear.",
             "example": "1"
           },
           "number_mask": {
@@ -7290,7 +7304,7 @@
           },
           "clinic_id": {
             "type": "integer",
-            "description": "Клиника, в которой выдан номер.",
+            "description": "Область нумерации: ID клиники при нумерации по филиалам; 0 при общей нумерации. Не обязательно совпадает с филиалом исходного документа.",
             "example": 1
           },
           "unique_crutch": {
@@ -7349,7 +7363,7 @@
           "dop_param3": {
             "type": "string",
             "maxLength": 255,
-            "description": "Необязательный фильтр событий через запятую. Пробелы убираются. Пустая строка означает все разрешенные события. Неизвестное имя отклоняется. Разрешены: clientAdd, clientEdit, clientDeactivate, clientActivate, clientDelete, clientBalanceEdit, clientMerge, petAdd, petEdit, petDelete, petAlive, petDied, petChangeOwner, invoiceAdd, invoiceEdit, startInvoiceRun, invoiceRun, invoiceDelete, invoiceRollback, invoicePaidAmountEdit, invoiceEditResponsibleDoc, admissionAdd, admissionDirected, admissionInTreatment, admissionAccepted, admissionDelete, admissionEdit, admissionDelayed, admissionConfirm, admissionChanged, admissionConfirmed, admissionRestored, admissionInvoicesSumChanged, goodAdd, goodDelete, goodEdit, goodDeactivate, goodActivate, goodInvertStatus, userAdd, userEdit, userDelete, goodGroupAdd, goodGroupEdit, goodGroupDelete, timesheetAdd, timesheetEdit, timesheetDelete, timesheetMassChanges, cassaAdd, cassaEdit, cassaDelete, cassacloseAdd, cassacloseDelete, cassacloseEdit, cassacloseRollback, cassacloseExec, medicalCardsAdd, medicalCardsEdit, medicalCardsDelete, paymentAdd, paymentEdit, paymentRun, paymentDelete, paymentRollback, visitAdd, visitDelete, visitEdit, visitExec, hospitalAdd, hospitalEdit, hospitalDelete, linkDiscountToClient, execClientOrder, storeDocumentAdd, storeDocumentDelete, storeDocumentEdit, storeDocumentExec, storeDocumentRollback, fastCallingAdd.",
+            "description": "Необязательный фильтр событий: передайте имена через запятую. Пробелы убираются. Пустая строка означает все разрешённые события. Неизвестное имя при создании или изменении отклоняется. Максимум 255 символов относится ко всей строке фильтра.\n\nКаждый пункт ниже — отдельное разрешённое имя события. Тело data зависит от источника события.\n\n**Клиенты**\n\n- `clientAdd` — Создание клиента.\n- `clientEdit` — Изменение клиента.\n- `clientDeactivate` — Деактивация клиента.\n- `clientActivate` — Активация клиента.\n- `clientDelete` — Удаление клиента.\n- `clientBalanceEdit` — Изменение баланса клиента.\n- `clientMerge` — Объединение карточек клиентов.\n\n**Питомцы**\n\n- `petAdd` — Создание питомца.\n- `petEdit` — Изменение питомца.\n- `petDelete` — Удаление питомца.\n- `petAlive` — Установка питомцу признака «жив».\n- `petDied` — Установка питомцу признака «умер».\n- `petChangeOwner` — Смена владельца питомца.\n\n**Счета**\n\n- `invoiceAdd` — Создание счёта.\n- `invoiceEdit` — Изменение счёта.\n- `startInvoiceRun` — Сигнал интерфейса о начале проведения счёта; ещё не означает успешное проведение или оплату.\n- `invoiceRun` — Проведение счёта; не означает, что счёт полностью оплачен.\n- `invoiceDelete` — Удаление счёта.\n- `invoiceRollback` — Откат проведения счёта.\n- `invoicePaidAmountEdit` — Изменение оплаченной суммы счёта.\n- `invoiceEditResponsibleDoc` — Изменение ответственного врача в счёте.\n\n**Приёмы**\n\n- `admissionAdd` — Создание приёма.\n- `admissionDirected` — Перевод приёма в состояние «направлен».\n- `admissionInTreatment` — Начало приёма, переход в состояние «на лечении».\n- `admissionAccepted` — Завершение приёма.\n- `admissionDelete` — Удаление приёма.\n- `admissionEdit` — Изменение приёма.\n- `admissionDelayed` — Перевод приёма в состояние «просрочен».\n- `admissionConfirm` — Событие подтверждения записи в расписании. В setConfirmed отправляется вместе с admissionConfirmed; не означает установку поля confirmation=confirmed.\n- `admissionChanged` — Изменение даты, клиента, питомца, типа, статуса или врача приёма, когда итоговый статус не not_approved и не not_confirmed.\n- `admissionConfirmed` — Событие после подтверждения записи в расписании, если итоговый статус не not_approved и не not_confirmed. Не является отдельным ответом клиента в поле confirmation.\n- `admissionRestored` — Восстановление удалённого приёма.\n- `admissionInvoicesSumChanged` — Уведомление об изменении сумм счетов, связанных с приёмами клиента.\n\n**Товары и услуги**\n\n- `goodAdd` — Создание товара или услуги.\n- `goodDelete` — Удаление товара или услуги.\n- `goodEdit` — Изменение товара или услуги.\n- `goodDeactivate` — Деактивация товара или услуги.\n- `goodActivate` — Активация товара или услуги.\n- `goodInvertStatus` — Переключение активности товара или услуги.\n\n**Сотрудники**\n\n- `userAdd` — Создание сотрудника.\n- `userEdit` — Изменение сотрудника.\n- `userDelete` — Удаление сотрудника.\n\n**Группы товаров и услуг**\n\n- `goodGroupAdd` — Создание группы товаров или услуг.\n- `goodGroupEdit` — Изменение группы товаров или услуг.\n- `goodGroupDelete` — Удаление группы товаров или услуг.\n\n**График работы**\n\n- `timesheetAdd` — Создание записи графика работы сотрудника.\n- `timesheetEdit` — Изменение записи графика работы сотрудника.\n- `timesheetDelete` — Удаление записи графика работы сотрудника.\n- `timesheetMassChanges` — Массовое изменение записей графика работы сотрудников.\n\n**Кассы**\n\n- `cassaAdd` — Создание кассы.\n- `cassaEdit` — Изменение кассы.\n- `cassaDelete` — Удаление кассы.\n\n**Закрытие кассы**\n\n- `cassacloseAdd` — Создание документа закрытия кассы.\n- `cassacloseDelete` — Удаление документа закрытия кассы.\n- `cassacloseEdit` — Изменение документа закрытия кассы.\n- `cassacloseRollback` — Откат проведения документа закрытия кассы.\n- `cassacloseExec` — Проведение документа закрытия кассы.\n\n**Медицинские карты**\n\n- `medicalCardsAdd` — Создание медицинской карты.\n- `medicalCardsEdit` — Изменение медицинской карты.\n- `medicalCardsDelete` — Удаление медицинской карты.\n\n**Платежи**\n\n- `paymentAdd` — Создание платежа.\n- `paymentEdit` — Изменение платежа.\n- `paymentRun` — Проведение платежа.\n- `paymentDelete` — Удаление платежа.\n- `paymentRollback` — Откат проведения платежа.\n\n**Осмотры в стационаре**\n\n- `visitAdd` — Создание осмотра в стационаре.\n- `visitDelete` — Удаление осмотра в стационаре.\n- `visitEdit` — Изменение осмотра в стационаре.\n- `visitExec` — Выполнение осмотра в стационаре: status=exec, фиксация даты выполнения.\n\n**Стационар**\n\n- `hospitalAdd` — Создание записи о госпитализации или перевод пациента в состояние «в стационаре».\n- `hospitalEdit` — Изменение записи о госпитализации, в том числе при выписке.\n- `hospitalDelete` — Удаление записи о госпитализации.\n\n**Складские документы**\n\n- `storeDocumentAdd` — Создание складского документа.\n- `storeDocumentDelete` — Удаление складского документа.\n- `storeDocumentEdit` — Изменение складского документа.\n- `storeDocumentExec` — Проведение складского документа.\n- `storeDocumentRollback` — Откат проведения складского документа.\n\n**Другие события**\n\n- `linkDiscountToClient` — Привязка скидки к клиенту.\n- `execClientOrder` — Выполнение заказа клиента; обработчик проведения связанного счёта переводит ожидающий заказ в done.\n- `fastCallingAdd` — Создание задачи. Название события историческое; публичный userCalls предназначен для создания задач.",
             "example": "invoiceAdd,invoiceEdit"
           },
           "is_active": {
@@ -7398,7 +7412,7 @@
           "dop_param3": {
             "type": "string",
             "maxLength": 255,
-            "description": "Список событий через запятую. Пустая строка подписывает сервис на все разрешенные события.",
+            "description": "Необязательный фильтр событий: передайте имена через запятую. Пробелы убираются. Пустая строка означает все разрешённые события. Неизвестное имя при создании или изменении отклоняется. Максимум 255 символов относится ко всей строке фильтра.\n\nКаждый пункт ниже — отдельное разрешённое имя события. Тело data зависит от источника события.\n\n**Клиенты**\n\n- `clientAdd` — Создание клиента.\n- `clientEdit` — Изменение клиента.\n- `clientDeactivate` — Деактивация клиента.\n- `clientActivate` — Активация клиента.\n- `clientDelete` — Удаление клиента.\n- `clientBalanceEdit` — Изменение баланса клиента.\n- `clientMerge` — Объединение карточек клиентов.\n\n**Питомцы**\n\n- `petAdd` — Создание питомца.\n- `petEdit` — Изменение питомца.\n- `petDelete` — Удаление питомца.\n- `petAlive` — Установка питомцу признака «жив».\n- `petDied` — Установка питомцу признака «умер».\n- `petChangeOwner` — Смена владельца питомца.\n\n**Счета**\n\n- `invoiceAdd` — Создание счёта.\n- `invoiceEdit` — Изменение счёта.\n- `startInvoiceRun` — Сигнал интерфейса о начале проведения счёта; ещё не означает успешное проведение или оплату.\n- `invoiceRun` — Проведение счёта; не означает, что счёт полностью оплачен.\n- `invoiceDelete` — Удаление счёта.\n- `invoiceRollback` — Откат проведения счёта.\n- `invoicePaidAmountEdit` — Изменение оплаченной суммы счёта.\n- `invoiceEditResponsibleDoc` — Изменение ответственного врача в счёте.\n\n**Приёмы**\n\n- `admissionAdd` — Создание приёма.\n- `admissionDirected` — Перевод приёма в состояние «направлен».\n- `admissionInTreatment` — Начало приёма, переход в состояние «на лечении».\n- `admissionAccepted` — Завершение приёма.\n- `admissionDelete` — Удаление приёма.\n- `admissionEdit` — Изменение приёма.\n- `admissionDelayed` — Перевод приёма в состояние «просрочен».\n- `admissionConfirm` — Событие подтверждения записи в расписании. В setConfirmed отправляется вместе с admissionConfirmed; не означает установку поля confirmation=confirmed.\n- `admissionChanged` — Изменение даты, клиента, питомца, типа, статуса или врача приёма, когда итоговый статус не not_approved и не not_confirmed.\n- `admissionConfirmed` — Событие после подтверждения записи в расписании, если итоговый статус не not_approved и не not_confirmed. Не является отдельным ответом клиента в поле confirmation.\n- `admissionRestored` — Восстановление удалённого приёма.\n- `admissionInvoicesSumChanged` — Уведомление об изменении сумм счетов, связанных с приёмами клиента.\n\n**Товары и услуги**\n\n- `goodAdd` — Создание товара или услуги.\n- `goodDelete` — Удаление товара или услуги.\n- `goodEdit` — Изменение товара или услуги.\n- `goodDeactivate` — Деактивация товара или услуги.\n- `goodActivate` — Активация товара или услуги.\n- `goodInvertStatus` — Переключение активности товара или услуги.\n\n**Сотрудники**\n\n- `userAdd` — Создание сотрудника.\n- `userEdit` — Изменение сотрудника.\n- `userDelete` — Удаление сотрудника.\n\n**Группы товаров и услуг**\n\n- `goodGroupAdd` — Создание группы товаров или услуг.\n- `goodGroupEdit` — Изменение группы товаров или услуг.\n- `goodGroupDelete` — Удаление группы товаров или услуг.\n\n**График работы**\n\n- `timesheetAdd` — Создание записи графика работы сотрудника.\n- `timesheetEdit` — Изменение записи графика работы сотрудника.\n- `timesheetDelete` — Удаление записи графика работы сотрудника.\n- `timesheetMassChanges` — Массовое изменение записей графика работы сотрудников.\n\n**Кассы**\n\n- `cassaAdd` — Создание кассы.\n- `cassaEdit` — Изменение кассы.\n- `cassaDelete` — Удаление кассы.\n\n**Закрытие кассы**\n\n- `cassacloseAdd` — Создание документа закрытия кассы.\n- `cassacloseDelete` — Удаление документа закрытия кассы.\n- `cassacloseEdit` — Изменение документа закрытия кассы.\n- `cassacloseRollback` — Откат проведения документа закрытия кассы.\n- `cassacloseExec` — Проведение документа закрытия кассы.\n\n**Медицинские карты**\n\n- `medicalCardsAdd` — Создание медицинской карты.\n- `medicalCardsEdit` — Изменение медицинской карты.\n- `medicalCardsDelete` — Удаление медицинской карты.\n\n**Платежи**\n\n- `paymentAdd` — Создание платежа.\n- `paymentEdit` — Изменение платежа.\n- `paymentRun` — Проведение платежа.\n- `paymentDelete` — Удаление платежа.\n- `paymentRollback` — Откат проведения платежа.\n\n**Осмотры в стационаре**\n\n- `visitAdd` — Создание осмотра в стационаре.\n- `visitDelete` — Удаление осмотра в стационаре.\n- `visitEdit` — Изменение осмотра в стационаре.\n- `visitExec` — Выполнение осмотра в стационаре: status=exec, фиксация даты выполнения.\n\n**Стационар**\n\n- `hospitalAdd` — Создание записи о госпитализации или перевод пациента в состояние «в стационаре».\n- `hospitalEdit` — Изменение записи о госпитализации, в том числе при выписке.\n- `hospitalDelete` — Удаление записи о госпитализации.\n\n**Складские документы**\n\n- `storeDocumentAdd` — Создание складского документа.\n- `storeDocumentDelete` — Удаление складского документа.\n- `storeDocumentEdit` — Изменение складского документа.\n- `storeDocumentExec` — Проведение складского документа.\n- `storeDocumentRollback` — Откат проведения складского документа.\n\n**Другие события**\n\n- `linkDiscountToClient` — Привязка скидки к клиенту.\n- `execClientOrder` — Выполнение заказа клиента; обработчик проведения связанного счёта переводит ожидающий заказ в done.\n- `fastCallingAdd` — Создание задачи. Название события историческое; публичный userCalls предназначен для создания задач.",
             "example": "invoiceAdd,invoiceEdit"
           },
           "is_active": {
@@ -7437,7 +7451,8 @@
           },
           "dop_param3": {
             "type": "string",
-            "maxLength": 255
+            "maxLength": 255,
+            "description": "Необязательный фильтр событий: передайте имена через запятую. Пробелы убираются. Пустая строка означает все разрешённые события. Неизвестное имя при создании или изменении отклоняется. Максимум 255 символов относится ко всей строке фильтра.\n\nКаждый пункт ниже — отдельное разрешённое имя события. Тело data зависит от источника события.\n\n**Клиенты**\n\n- `clientAdd` — Создание клиента.\n- `clientEdit` — Изменение клиента.\n- `clientDeactivate` — Деактивация клиента.\n- `clientActivate` — Активация клиента.\n- `clientDelete` — Удаление клиента.\n- `clientBalanceEdit` — Изменение баланса клиента.\n- `clientMerge` — Объединение карточек клиентов.\n\n**Питомцы**\n\n- `petAdd` — Создание питомца.\n- `petEdit` — Изменение питомца.\n- `petDelete` — Удаление питомца.\n- `petAlive` — Установка питомцу признака «жив».\n- `petDied` — Установка питомцу признака «умер».\n- `petChangeOwner` — Смена владельца питомца.\n\n**Счета**\n\n- `invoiceAdd` — Создание счёта.\n- `invoiceEdit` — Изменение счёта.\n- `startInvoiceRun` — Сигнал интерфейса о начале проведения счёта; ещё не означает успешное проведение или оплату.\n- `invoiceRun` — Проведение счёта; не означает, что счёт полностью оплачен.\n- `invoiceDelete` — Удаление счёта.\n- `invoiceRollback` — Откат проведения счёта.\n- `invoicePaidAmountEdit` — Изменение оплаченной суммы счёта.\n- `invoiceEditResponsibleDoc` — Изменение ответственного врача в счёте.\n\n**Приёмы**\n\n- `admissionAdd` — Создание приёма.\n- `admissionDirected` — Перевод приёма в состояние «направлен».\n- `admissionInTreatment` — Начало приёма, переход в состояние «на лечении».\n- `admissionAccepted` — Завершение приёма.\n- `admissionDelete` — Удаление приёма.\n- `admissionEdit` — Изменение приёма.\n- `admissionDelayed` — Перевод приёма в состояние «просрочен».\n- `admissionConfirm` — Событие подтверждения записи в расписании. В setConfirmed отправляется вместе с admissionConfirmed; не означает установку поля confirmation=confirmed.\n- `admissionChanged` — Изменение даты, клиента, питомца, типа, статуса или врача приёма, когда итоговый статус не not_approved и не not_confirmed.\n- `admissionConfirmed` — Событие после подтверждения записи в расписании, если итоговый статус не not_approved и не not_confirmed. Не является отдельным ответом клиента в поле confirmation.\n- `admissionRestored` — Восстановление удалённого приёма.\n- `admissionInvoicesSumChanged` — Уведомление об изменении сумм счетов, связанных с приёмами клиента.\n\n**Товары и услуги**\n\n- `goodAdd` — Создание товара или услуги.\n- `goodDelete` — Удаление товара или услуги.\n- `goodEdit` — Изменение товара или услуги.\n- `goodDeactivate` — Деактивация товара или услуги.\n- `goodActivate` — Активация товара или услуги.\n- `goodInvertStatus` — Переключение активности товара или услуги.\n\n**Сотрудники**\n\n- `userAdd` — Создание сотрудника.\n- `userEdit` — Изменение сотрудника.\n- `userDelete` — Удаление сотрудника.\n\n**Группы товаров и услуг**\n\n- `goodGroupAdd` — Создание группы товаров или услуг.\n- `goodGroupEdit` — Изменение группы товаров или услуг.\n- `goodGroupDelete` — Удаление группы товаров или услуг.\n\n**График работы**\n\n- `timesheetAdd` — Создание записи графика работы сотрудника.\n- `timesheetEdit` — Изменение записи графика работы сотрудника.\n- `timesheetDelete` — Удаление записи графика работы сотрудника.\n- `timesheetMassChanges` — Массовое изменение записей графика работы сотрудников.\n\n**Кассы**\n\n- `cassaAdd` — Создание кассы.\n- `cassaEdit` — Изменение кассы.\n- `cassaDelete` — Удаление кассы.\n\n**Закрытие кассы**\n\n- `cassacloseAdd` — Создание документа закрытия кассы.\n- `cassacloseDelete` — Удаление документа закрытия кассы.\n- `cassacloseEdit` — Изменение документа закрытия кассы.\n- `cassacloseRollback` — Откат проведения документа закрытия кассы.\n- `cassacloseExec` — Проведение документа закрытия кассы.\n\n**Медицинские карты**\n\n- `medicalCardsAdd` — Создание медицинской карты.\n- `medicalCardsEdit` — Изменение медицинской карты.\n- `medicalCardsDelete` — Удаление медицинской карты.\n\n**Платежи**\n\n- `paymentAdd` — Создание платежа.\n- `paymentEdit` — Изменение платежа.\n- `paymentRun` — Проведение платежа.\n- `paymentDelete` — Удаление платежа.\n- `paymentRollback` — Откат проведения платежа.\n\n**Осмотры в стационаре**\n\n- `visitAdd` — Создание осмотра в стационаре.\n- `visitDelete` — Удаление осмотра в стационаре.\n- `visitEdit` — Изменение осмотра в стационаре.\n- `visitExec` — Выполнение осмотра в стационаре: status=exec, фиксация даты выполнения.\n\n**Стационар**\n\n- `hospitalAdd` — Создание записи о госпитализации или перевод пациента в состояние «в стационаре».\n- `hospitalEdit` — Изменение записи о госпитализации, в том числе при выписке.\n- `hospitalDelete` — Удаление записи о госпитализации.\n\n**Складские документы**\n\n- `storeDocumentAdd` — Создание складского документа.\n- `storeDocumentDelete` — Удаление складского документа.\n- `storeDocumentEdit` — Изменение складского документа.\n- `storeDocumentExec` — Проведение складского документа.\n- `storeDocumentRollback` — Откат проведения складского документа.\n\n**Другие события**\n\n- `linkDiscountToClient` — Привязка скидки к клиенту.\n- `execClientOrder` — Выполнение заказа клиента; обработчик проведения связанного счёта переводит ожидающий заказ в done.\n- `fastCallingAdd` — Создание задачи. Название события историческое; публичный userCalls предназначен для создания задач."
           },
           "is_active": {
             "type": "integer",
@@ -8742,7 +8757,8 @@
             "openapi"
           ],
           "status": "openapi_only"
-        }
+        },
+        "description": "Для карт питомца используйте filter по patient_id. description содержит HTML и может включать ссылки на файлы; наличие ссылки не гарантирует её доступность без дополнительных условий доступа. Это не отдельный API списка файлов клиента/питомца."
       },
       "post": {
         "summary": "Создать медкарту",
@@ -11240,7 +11256,7 @@
       },
       "post": {
         "summary": "Создать приём",
-        "description": "Обязательны client_id и clinic_id. patient_id можно не передавать или передать 0. data.admission — массив из одной записи. Код ответа 201. В этой записи нет wait_time, а у питомца нет pet_type_data и breed_data.",
+        "description": "Обязательны client_id и clinic_id. patient_id можно не передавать или передать 0. data.admission — массив из одной записи. Код ответа 201. В этой записи нет wait_time, а у питомца нет pet_type_data и breed_data.\n\nREST-создание принудительно задаёт status=not_confirmed. Поле confirmation независимо от статуса; не подменяйте одно другим.",
         "tags": [
           "Admission"
         ],
@@ -11361,7 +11377,7 @@
           "Admission"
         ],
         "operationId": "put_rest_api_admission_ID",
-        "description": "Обязательны clinic_id, start и end. start и end — дата и время начала и конца приема. data.admission — id измененного приема.",
+        "description": "Обязательны clinic_id, start и end. start и end — дата и время начала и конца приема. data.admission — id измененного приема.\n\nДаже для изменения отдельных полей необходимо передать clinic_id, start и end. Приём со status=accepted редактировать этим методом нельзя. Сохраняйте исходные дату и время, если перенос не требуется, и учитывайте часовой пояс запроса.",
         "parameters": [
           {
             "name": "ID",
@@ -11472,7 +11488,7 @@
     "/rest/api/admission/confirmAdmission": {
       "post": {
         "summary": "Подтвердить прием",
-        "description": "Обязательны id, user_id, client_id, patient_id, admission_date, admission_type и clinic_id. description можно не передавать, тогда сохранится пустая строка. Ответ приходит с кодом 201.",
+        "description": "Обязательны id, user_id, client_id, patient_id, admission_date, admission_type и clinic_id. description можно не передавать, тогда сохранится пустая строка. Ответ приходит с кодом 201.\n\nДействие подтверждает запись в расписании: устанавливает status=save либо not_approved, если запись не проходит checkApproved. Оно не устанавливает поле confirmation=confirmed. Проверяйте success в JSON: контроллер перехватывает исключения и может вернуть success=false в обычном ответе действия.",
         "tags": [
           "Admission"
         ],
@@ -14402,7 +14418,7 @@
     "/rest/api/documentNumber": {
       "get": {
         "summary": "Список номеров документов",
-        "description": "Возвращает записи document_number.",
+        "description": "Возвращает записи нумерации document_number. Ресурс доступен только для чтения.\n\n`id` — ID записи нумерации, `document_id` — ID исходного документа, `document_number` — полный отображаемый номер. Для счёта используйте `document_type=invoice`. Не подставляйте ID счёта в `/documentNumber/{ID}`: этот путь принимает ID записи нумерации.\n\nAPI_KEY_HEADER содержит полный заголовок авторизации X-REST-API-KEY с вашим ключом.\n\nПоиск номера по ID счёта (переменные BASE_URL, API_KEY_HEADER и INVOICE_ID задаются для вашей тестовой клиники):\n\n```bash\ncurl --get \"${BASE_URL}/rest/api/documentNumber\" \\\n  --header \"${API_KEY_HEADER}\" \\\n  --data-urlencode \"filter=[{\\\"property\\\":\\\"document_type\\\",\\\"value\\\":\\\"invoice\\\",\\\"operator\\\":\\\"=\\\"},{\\\"property\\\":\\\"document_id\\\",\\\"value\\\":${INVOICE_ID},\\\"operator\\\":\\\"=\\\"}]\"\n```\n\nОбратный поиск по полному номеру (пример номера 96499; замените его своим):\n\n```bash\ncurl --get \"${BASE_URL}/rest/api/documentNumber\" \\\n  --header \"${API_KEY_HEADER}\" \\\n  --data-urlencode 'filter=[{\"property\":\"document_type\",\"value\":\"invoice\",\"operator\":\"=\"},{\"property\":\"document_number\",\"value\":\"96499\",\"operator\":\"=\"}]'\n```\n\nОтвет содержит `data.documentNumber` (массив); ID счёта находится в `document_id`. Если совпадений нет, массив пуст и `totalCount=0`. Не считайте номер уникальным без учёта типа и области нумерации. При нумерации по филиалам уточняйте поиск по `clinic_id`; при общей нумерации он равен 0, поэтому не добавляйте филиал исходного счёта в фильтр автоматически.\n\nДля складских документов (`prihod`, `rashod`, `inventar`, `transfer`) наличие записей нумерации зависит от `numbering-store-enabled`; эту настройку не нужно включать ради поиска номеров счетов (`invoice`). Чтение API не создаёт отсутствующий номер.\n\nПримеры иллюстрируют формат запросов; перед использованием подставьте существующие данные. Подробнее: https://help.vetmanager.ru/article/25443",
         "tags": [
           "DocumentNumber"
         ],
@@ -14501,8 +14517,8 @@
     },
     "/rest/api/documentNumber/{ID}": {
       "get": {
-        "summary": "Номер документа по id",
-        "description": "Возвращает одну запись объектом. Если записи нет, код все равно 200, totalCount равен 0, а documentNumber — пустой массив.",
+        "summary": "Запись нумерации по её ID",
+        "description": "Возвращает запись document_number по её собственному ID, а не по document_id или отображаемому номеру. Чтобы найти номер по ID счёта, используйте список с фильтром document_type=invoice и document_id. Если записи нет, HTTP 200, totalCount=0, documentNumber — пустой массив.",
         "tags": [
           "DocumentNumber"
         ],
@@ -14515,7 +14531,8 @@
             "schema": {
               "type": "integer"
             },
-            "example": 1
+            "example": 1,
+            "description": "ID записи в document_number; не ID исходного счёта или складского документа."
           }
         ],
         "responses": {
@@ -14618,7 +14635,7 @@
     "/rest/api/failedHook": {
       "get": {
         "summary": "Список ошибок доставки вебхуков",
-        "description": "Возвращает записи failed_hook. Параметры limit, offset, sort и filter работают как у остальных списков.",
+        "description": "Возвращает записи failed_hook. Параметры limit, offset, sort и filter работают как у остальных стандартных списков. Для диагностики конкретного получателя фильтруйте hook_url и сортируйте id DESC.\n\nЭто история фактических ошибок, а не очередь гарантированной повторной доставки. События, пропущенные во время кешированной паузы, сюда не записываются. Число ошибок считается отдельно для точного URL; успешная доставка не удаляет предыдущие строки. Удаление истории не активирует сервис, не снимает кешированную паузу и не запускает повтор.\n\nАктивация через UI справочника очищает историю URL выбранного сервиса. UI-изменение URL или dop_param1/2/3 очищает историю старого URL; изменение только title её сохраняет. REST webHook update не использует эти UI-ветки.\n\nПри работе со справочником отдельный AJAX-запрос запускает очистку не чаще раза в сутки на домен: история URL, деактивированных более 60 дней назад, удаляется при отсутствии активных сервисов с тем же URL; записи для URL без настроенного сервиса удаляются после 60 дней. Это не периодическая задача повторной отправки.",
         "tags": [
           "FailedHook"
         ],
@@ -15147,7 +15164,8 @@
             "extjs"
           ],
           "status": "confirmed"
-        }
+        },
+        "description": "Удаляет только выбранную запись истории ошибки. Не включает сервис webHook, не сбрасывает кешированную паузу и не переотправляет событие."
       }
     },
     "/rest/api/fiscalRegisterData": {
@@ -16025,7 +16043,8 @@
             "extjs"
           ],
           "status": "confirmed"
-        }
+        },
+        "description": "Возвращает параметры продажи, включая цены для конкретного филиала. Для цены товара фильтруйте одновременно good_id и clinic_id; при необходимости unit_sale_id и status=active. Один товар может иметь несколько единиц продажи. Пустой список не означает нулевую цену: подходящая запись не найдена. Метод возвращает записи модели и не выполняет автоматический подбор цены другого филиала."
       }
     },
     "/rest/api/goodSaleParam/{ID}": {
@@ -16674,8 +16693,8 @@
     },
     "/rest/api/invoice/createinvoice": {
       "post": {
-        "summary": "Создать счет",
-        "description": "Создает счет с товарами или услугами.\n\n`goods` — обязательная JSON-строка со списком позиций. Для обычных позиций суммы передаются в `pr` за всё количество строки; сервер не заменяет их автоматически ценами справочника. Для комбинации с отрицательным `id` сервер раскрывает состав и рассчитывает суммы компонентов.\n\n`amount` обязателен. Сохраняемая итоговая сумма пересчитывается из сумм строк с учетом округления, скидки и наценки счета.\n\n`client_note` игнорируется и не изменяет описание клиента. Для примечания счета используйте `description`.\n\nЧисловой `amount` принимается, даже если он не равен итогу строк. Итог пересчитывается из строк после раскрытия комбинаций, затем применяются скидка и наценка. Нечисловые `amount`, `cnt`, `pr`, `discount` и `increase` отклоняются, а `cnt` должен быть больше нуля.\n\nВ `data.invoice` поля `amount`, `status`, `creator_id`, `description` и `paid_amount` читаются из сохраненной записи. `amount` — пересчитанный итог, `status` нового счета — `save`, `paid_amount` — 0. `client_note` в ответ не попадает.",
+        "summary": "Создать счет (на тестировании)",
+        "description": "Создаёт новый счёт с товарами, услугами или комбинациями. Правила заполнения полей и расчёта сумм приведены в схемах запроса и ответа.",
         "tags": [
           "Invoice"
         ],
@@ -16736,7 +16755,7 @@
                       },
                       "status": {
                         "type": "string",
-                        "description": "Статус нового счета. Для сохраненного счета укажите save.",
+                        "description": "Новый счёт сохраняется со статусом save независимо от переданного значения. Фактический статус возвращается в ответе.",
                         "example": "save"
                       },
                       "invoice_date": {
@@ -16746,7 +16765,7 @@
                       },
                       "discount": {
                         "type": "number",
-                        "description": "Процент скидки на счет.",
+                        "description": "Процент скидки на счёт; применяется после раскрытия комбинаций и расчёта сумм строк. Нечисловое значение отклоняется.",
                         "default": 0
                       },
                       "discount_amount": {
@@ -16756,7 +16775,7 @@
                       },
                       "increase": {
                         "type": "number",
-                        "description": "Процент наценки на счет.",
+                        "description": "Процент наценки на счёт; применяется после раскрытия комбинаций и расчёта сумм строк. Нечисловое значение отклоняется.",
                         "default": 0
                       },
                       "increase_amount": {
@@ -16771,7 +16790,7 @@
                       },
                       "amount": {
                         "type": "number",
-                        "description": "Передаваемая сумма счета; поле обязательно. Сохраняемый итог сервер пересчитывает из сумм строк с учетом округления, скидки и наценки счета.",
+                        "description": "Обязательная числовая сумма из запроса. Принимается даже при несовпадении с итогом строк. После раскрытия комбинаций сервер пересчитывает итог с округлением, скидкой и наценкой; сохранённая сумма и сумма ответа могут отличаться от переданного значения. Нечисловое значение отклоняется.",
                         "example": 80
                       },
                       "description": {
@@ -16803,7 +16822,7 @@
                       },
                       "goods": {
                         "type": "string",
-                        "description": "JSON-строка с массивом позиций. Поля обычной позиции: `id` — идентификаторы товара, параметра продажи и склада в формате `good_id_sale_param_id_store_id`; `cnt` — количество; `pr` — сумма всей строки за указанное количество, сохраняемая из запроса без автоматической замены ценой справочника; `tag_id` — характеристика товара или 0; `ruid` — ответственный сотрудник; `iddfrp` — 1, чтобы использовать врача из `doctor_id`, иначе 0. Для комбинации с отрицательным `id` обязательны только `id` и `cnt`: сервер раскрывает состав и рассчитывает суммы компонентов. Дополнительные поля: `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.",
+                        "description": "Обязательная JSON-строка с массивом позиций, а не массив JSON в теле запроса.\n\nОбычная позиция:\n\n- `id` — идентификаторы товара, параметра продажи и склада в формате `good_id_sale_param_id_store_id`.\n- `cnt` — числовое количество, строго больше нуля. Нечисловое значение отклоняется.\n- `pr` — числовая сумма всей строки за указанное количество. Сохраняется из запроса, без автоматической замены ценой справочника; не является ценой одной единицы. Нечисловое значение отклоняется.\n- `tag_id` — дополнительный идентификатор позиции или 0.\n- `ruid` — ответственный сотрудник.\n- `iddfrp` — 1 для использования врача из `doctor_id`, иначе 0.\n- Дополнительные поля: `dsc`, `dp`, `di`, `pa`, `pac`, `fdd`, `fdp`, `fid`, `fip`.\n\nКомбинация:\n\n- `id` — отрицательный ID комбинации.\n- `cnt` — числовое количество комбинаций, строго больше нуля.\n- Обязательны только `id` и `cnt`: сервер раскрывает состав и рассчитывает суммы компонентов.\n\nПосле раскрытия комбинаций из строк рассчитывается итог счёта; затем применяются округление, скидка и наценка.",
                         "example": "[{\"id\":\"36760_337982_0\",\"cnt\":1,\"pr\":80,\"dp\":80,\"tag_id\":0,\"pa\":\"\",\"pac\":0,\"ruid\":1,\"iddfrp\":0}]"
                       }
                     }
@@ -16815,7 +16834,7 @@
         },
         "responses": {
           "201": {
-            "description": "Успешное создание счета определяется по success=true. data.invoice.amount, status, creator_id, description и paid_amount взяты из сохраненной записи. amount — пересчитанный итог строк, а не значение из запроса. status нового счета — save.",
+            "description": "Счёт создан при success=true. Поля результата описаны в схеме ответа.",
             "content": {
               "application/json": {
                 "schema": {
@@ -16841,12 +16860,12 @@
                       "properties": {
                         "invoice": {
                           "type": "object",
-                          "description": "Данные созданного счета.",
+                          "description": "Результат создания. amount, status, creator_id, description и paid_amount прочитаны из сохранённого счёта. client_note в ответ не включается.",
                           "additionalProperties": false,
                           "properties": {
                             "invoice_id": {
                               "type": "integer",
-                              "description": "Номер созданного счета.",
+                              "description": "Внутренний ID созданного счёта. Отображаемый номер счёта доступен через documentNumber.",
                               "example": 3615
                             },
                             "clinic_id": {
@@ -16933,7 +16952,7 @@
                                   },
                                   "pr": {
                                     "type": "number",
-                                    "description": "Сумма позиции.",
+                                    "description": "Сумма всей позиции за указанное cnt, а не цена одной единицы.",
                                     "example": 80
                                   },
                                   "dp": {
@@ -17025,8 +17044,8 @@
     },
     "/rest/api/invoice/payinvoice": {
       "post": {
-        "summary": "Оплатить счет",
-        "description": "Выполняет проведение и оплату счета от имени проверенного сотрудника user_id. Касса выбирается сервером с учетом текущего доступа сотрудника. Сохраненная касса используется, только если она ему сейчас доступна. Для кассы СБП оплата безналичная. amount — новое поступление денег: возможны частичная оплата и зачисление превышения в аванс клиента. При amount=0 используется аванс, а при его отсутствии счет может быть проведен в долг. success=true означает успешную операцию, а не обязательно полную оплату; проверяйте payment_status. Повтор частичного платежа учитывается как новое поступление: ключ идемпотентности пока не поддерживается. Для уже полностью оплаченного счета запрос возвращает 409 без нового платежа. Выбранная касса в ответ не входит: в data.invoice остаются сохраненные invoice_id, status, amount, paid_amount и payment_status.",
+        "summary": "Оплатить счет (на тестировании)",
+        "description": "Выполняет проведение и оплату счета от имени проверенного сотрудника user_id. Касса выбирается сервером с учетом текущего доступа сотрудника. Сохраненная касса используется, только если она ему сейчас доступна. Для кассы СБП оплата безналичная. amount — новое поступление денег: возможны частичная оплата и зачисление превышения в аванс клиента. При amount=0 используется аванс, а при его отсутствии счет может быть проведен в долг. success=true означает успешную операцию, а не обязательно полную оплату; проверяйте payment_status. Повтор частичного платежа учитывается как новое поступление: ключ идемпотентности пока не поддерживается. Для уже полностью оплаченного счета запрос возвращает 409 без нового платежа. Выбранная касса в ответ не входит: в data.invoice остаются сохраненные invoice_id, status, amount, paid_amount и payment_status.\n\nКонтракт находится на тестировании (BT-14451 / BT-15477 / BT-15559); доступность в production нужно подтвердить для целевого окружения. Общие POST/PUT/DELETE ресурса invoice не становятся доступными из-за наличия специальных действий.",
         "tags": [
           "Invoice"
         ],
@@ -17426,7 +17445,7 @@
           "InvoiceDocument"
         ],
         "operationId": "get_rest_api_invoiceDocument",
-        "description": "Строка содержит товар, заголовок счета и параметр продажи. Допустимые цены и party_info есть только в карточке строки.",
+        "description": "Строка содержит товар, заголовок счета и параметр продажи. Допустимые цены и party_info есть только в карточке строки.\n\nДля строк конкретного счёта фильтруйте document_id. tag_id связывает строку с обычной комбинацией; шаблон при раскрытии получает tag_id=0. price — сумма строки за всё количество. Номер счёта ищите через documentNumber с document_type=invoice и document_id.",
         "parameters": [
           {
             "name": "filter",
@@ -17606,7 +17625,7 @@
     "/rest/api/medicalCards/laboratoryResults": {
       "get": {
         "summary": "Лабораторные результаты клиента",
-        "description": "Returns active medical cards of the specified client only when a laboratory result has been recorded for the card. The HTML displayed as the laboratory result is returned in `data.medicalcards[].healing_process`.",
+        "description": "Returns active medical cards of the specified client only when a laboratory result has been recorded for the card. The HTML displayed as the laboratory result is returned in `data.medicalcards[].healing_process`.\n\nЭто чтение результатов, уже записанных в медкарты, а не Provider API создания и обработки лабораторных заявок. Ссылки на файлы могут находиться внутри HTML healing_process; отдельного массива вложений этот метод не обещает.",
         "tags": [
           "Medical Cards"
         ],
@@ -17720,8 +17739,7 @@
                                 "description": "Pet birth date."
                               },
                               "sex": {
-                                "type": "string",
-                                "nullable": true
+                                "$ref": "#/components/schemas/petSex"
                               },
                               "note": {
                                 "type": "string",
@@ -20663,8 +20681,8 @@
           "UserCalls"
         ],
         "operationId": "createUserCall",
-        "summary": "Создать задачу (в разработке)",
-        "description": "Создаёт одну запись по общим с формой задач правилам. Принимает одиночный объект JSON или поля application/x-www-form-urlencoded; пакетное создание не поддерживается. Неизвестные поля и системные id, status, create_date, executed_user, exec_note, relations запрещены и возвращают 406. Сервер задаёт status=save и текущее время create_date; после сохранения вызывает FastCallingAdd и LogEntity. Журнал использует стандартный контекст аутентификации REST; creator_id является автором записи, а не подменой пользователя сессии. Требует действующий API-ключ и включённый REST API.",
+        "summary": "Создать задачу (на тестировании)",
+        "description": "Создаёт одну запись по общим с формой задач правилам. Принимает одиночный объект JSON или поля application/x-www-form-urlencoded; пакетное создание не поддерживается. Неизвестные поля и системные id, status, create_date, executed_user, exec_note, relations запрещены и возвращают 406. Сервер задаёт status=save и текущее время create_date; после сохранения вызывает FastCallingAdd и LogEntity. Журнал использует стандартный контекст аутентификации REST; creator_id является автором записи, а не подменой пользователя сессии. Требует действующий API-ключ и включённый REST API.\n\nBT-14531: публичный сценарий — только создание задач (type=task), несмотря на историческое имя userCalls. Создание звонков, задачи только по клиенту без питомца и новый контракт выполнения/переноса/отмены/PUT не входят в эту доработку. Контракт находится на тестировании; требуется согласованный выпуск VM и мобильного backend.",
         "requestBody": {
           "required": true,
           "content": {
@@ -20683,15 +20701,15 @@
                     "note": "Проверить результаты обследования"
                   }
                 },
-                "callOnPosition": {
+                "taskOnPosition": {
                   "value": {
-                    "type": "call",
+                    "type": "task",
                     "dt": "2028-02-29",
                     "pet_id": 1,
                     "creator_id": 1,
                     "position_id": 1,
                     "clinic_id": 0,
-                    "note": "Позвонить владельцу"
+                    "note": "Проверить результаты обследования"
                   }
                 }
               }
@@ -20711,15 +20729,15 @@
                     "note": "Проверить результаты обследования"
                   }
                 },
-                "callOnPosition": {
+                "taskOnPosition": {
                   "value": {
-                    "type": "call",
+                    "type": "task",
                     "dt": "2028-02-29",
                     "pet_id": 1,
                     "creator_id": 1,
                     "position_id": 1,
                     "clinic_id": 0,
-                    "note": "Позвонить владельцу"
+                    "note": "Проверить результаты обследования"
                   }
                 }
               }
@@ -21173,7 +21191,7 @@
     "/rest/api/webHook": {
       "get": {
         "summary": "Список вебхуков",
-        "description": "Возвращает сервисы для хук-уведомлений. Отбор в программе зафиксирован на combo_manual_id 11. Параметры limit, offset, sort и filter не применяются: такой запрос отвечает 200 и success=false. combo_manual_id в списке скрыт.",
+        "description": "Возвращает сервисы для хук-уведомлений. Отбор в программе зафиксирован на combo_manual_id 11. Параметры limit, offset, sort и filter не применяются: такой запрос отвечает 200 и success=false. combo_manual_id в списке скрыт.\n\nДоставка: выбираются активные сервисы, соответствующие событию из разрешённого списка. Пустой dop_param3 означает все разрешённые события, непустой — перечисленные через запятую. Отправка асинхронная, POST application/x-www-form-urlencoded: name, data[...] и params[...]. Общий таймаут — 5 секунд. Редиректы автоматически не проходятся. HTTPHelper считает успешными только коды 200–206; любой другой код или ошибка cURL означает неудачу. Содержимое ответа получателя не определяет успех: HTTP 200 с success=false в JSON всё равно считается доставкой.\n\nВременная пауза хранится в кеше по домену и ID сервиса. Третья учтённая ошибка задаёт 5 минут паузы, следующие — 10, 20, 40 и максимум 60 минут. Счётчик хранится 24 часа с последней ошибки; успешная отправка сбрасывает счётчик и паузу, но не удаляет failed_hook. Кешевые обновления не атомарны. Во время паузы новые события пропускаются без отправки и без записи failed_hook. После паузы отправка происходит только при новом событии; автоматического повтора пропущенных событий в этом пути нет.\n\nНезависимо от паузы после фактической ошибки считается история failed_hook для точного URL на master. Если строк меньше 1000 — ошибка записывается. Если уже 1000 или больше — сервис деактивируется без новой строки. Без параллельных запросов 1000-я ошибка ещё сохраняется, отключение происходит при следующей неудачной отправке. История общая для сервисов с одинаковым URL; пауза у каждого ID своя. Успешная доставка не обнуляет историю.\n\nПосле устранения причины включите отключённый сервис через справочник: UI-активация очищает историю для URL этого сервиса (включая общую историю дублей URL), но не удаляет кешированную паузу. После её истечения создайте новое тестовое событие. Прямое удаление failedHook не включает сервис, не сбрасывает паузу и не переотправляет события. REST-обновление webHook сохраняет модель напрямую и не выполняет UI-очистку истории при активации.",
         "tags": [
           "WebHook"
         ],
@@ -21524,7 +21542,7 @@
       },
       "put": {
         "summary": "Изменить вебхук",
-        "description": "Обновляет сервис, только если его combo_manual_id принадлежит справочнику services_for_hooks. Иначе 406. combo_manual_id в ответе скрыт. Ответ — массив из одной записи.",
+        "description": "Обновляет сервис, только если его combo_manual_id принадлежит справочнику services_for_hooks. Иначе 406. combo_manual_id в ответе скрыт. Ответ — массив из одной записи.\n\nСохранение идёт напрямую через REST-модель. Оно не вызывает UI-активацию/редактирование справочника: очистку failed_hook и сброс кешированной паузы при этом обещать нельзя. Для штатного восстановления после отключения используйте активацию в справочнике и учитывайте оставшуюся временную паузу. Успех изменения настроек не подтверждает доставку события.",
         "tags": [
           "WebHook"
         ],
