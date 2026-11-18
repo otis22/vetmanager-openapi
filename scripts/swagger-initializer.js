@@ -34,6 +34,7 @@ window.onload = function() {
     url: "vetmanager_openapi_v6.yaml",
     dom_id: '#swagger-ui',
     deepLinking: true,
+    persistAuthorization: true,
     showMutatedRequest: true,
     requestInterceptor: function(request) {
       if (request.loadSpec || !window.ui) {
