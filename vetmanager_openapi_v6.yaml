@@ -12279,34 +12279,7 @@ paths:
   /rest/api/documentNumber:
     get:
       summary: Список номеров документов
-      description: |-
-        Возвращает записи нумерации document_number. Ресурс доступен только для чтения.
-
-        `id` — ID записи нумерации, `document_id` — ID исходного документа, `document_number` — полный отображаемый номер. Для счёта используйте `document_type=invoice`. Не подставляйте ID счёта в `/documentNumber/{ID}`: этот путь принимает ID записи нумерации.
-
-        API_KEY_HEADER содержит полный заголовок авторизации X-REST-API-KEY с вашим ключом.
-
-        Поиск номера по ID счёта (переменные BASE_URL, API_KEY_HEADER и INVOICE_ID задаются для вашей тестовой клиники):
-
-        ```bash
-        curl --get "${BASE_URL}/rest/api/documentNumber" \
-          --header "${API_KEY_HEADER}" \
-          --data-urlencode "filter=[{\"property\":\"document_type\",\"value\":\"invoice\",\"operator\":\"=\"},{\"property\":\"document_id\",\"value\":${INVOICE_ID},\"operator\":\"=\"}]"
-        ```
-
-        Обратный поиск по полному номеру (пример номера 96499; замените его своим):
-
-        ```bash
-        curl --get "${BASE_URL}/rest/api/documentNumber" \
-          --header "${API_KEY_HEADER}" \
-          --data-urlencode 'filter=[{"property":"document_type","value":"invoice","operator":"="},{"property":"document_number","value":"96499","operator":"="}]'
-        ```
-
-        Ответ содержит `data.documentNumber` (массив); ID счёта находится в `document_id`. Если совпадений нет, массив пуст и `totalCount=0`. Не считайте номер уникальным без учёта типа и области нумерации. При нумерации по филиалам уточняйте поиск по `clinic_id`; при общей нумерации он равен 0, поэтому не добавляйте филиал исходного счёта в фильтр автоматически.
-
-        Для складских документов (`prihod`, `rashod`, `inventar`, `transfer`) наличие записей нумерации зависит от `numbering-store-enabled`; эту настройку не нужно включать ради поиска номеров счетов (`invoice`). Чтение API не создаёт отсутствующий номер.
-
-        Примеры иллюстрируют формат запросов; перед использованием подставьте существующие данные. Подробнее: https://help.vetmanager.ru/article/25443
+      description: "Возвращает список записей нумерации документов. Только чтение.\n\n`id` — ID записи нумерации, `document_id` — ID исходного документа, `document_number` — отображаемый номер. Для счёта используйте `document_type=invoice`.\n\n[Поиск номера счёта и обратный поиск — в FAQ](./faq.html#document-number)."
       tags:
       - DocumentNumber
       operationId: get_rest_api_documentNumber

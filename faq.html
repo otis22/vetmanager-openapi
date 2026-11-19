@@ -1,27 +1,133 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FAQ по API — VetManager</title>
-    <link rel="stylesheet" href="dist/swagger-custom.css">
-    <link rel="icon" type="image/png" href="dist/favicon-32x32.png" sizes="32x32">
-  </head>
-  <body class="faq-page">
-    <nav class="docs-nav" aria-label="Навигация по документации">
-      <a class="docs-brand" href="./index.html">VetManager API</a>
-      <a class="docs-back" href="./index.html"><span aria-hidden="true">←</span> Вернуться к Swagger</a>
-    </nav>
-    <main class="faq-content">
-      <p class="faq-label">Предварительный просмотр</p>
-      <h1>FAQ по API</h1>
-      <p class="faq-intro">Ответы на частые вопросы об интеграции с VetManager.</p>
-      <section class="faq-card" aria-labelledby="test-heading">
-        <h2 id="test-heading">Это тестовая страница FAQ</h2>
-        <p>Здесь появятся вопросы, короткие ответы и примеры запросов к API.</p>
-        <p>Сейчас можно оценить оформление и переход между FAQ и документацией методов.</p>
-        <a class="docs-button" href="./index.html"><span aria-hidden="true">←</span> Вернуться к Swagger</a>
-      </section>
-    </main>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="12 ответов об API VetManager: доступ, номера счетов, цены, задачи, фильтры, вебхуки и приёмы.">
+  <title>FAQ по API — VetManager</title>
+  <link rel="stylesheet" href="dist/swagger-custom.css">
+  <link rel="icon" type="image/png" href="dist/favicon-32x32.png" sizes="32x32">
+</head>
+<body class="faq-page">
+  <nav class="docs-nav" aria-label="Навигация по документации">
+    <a class="docs-brand" href="./index.html">VetManager API</a>
+    <a class="docs-back" href="./index.html">← Вернуться к Swagger</a>
+  </nav>
+  <main class="faq-content">
+    <p class="faq-label">Руководство для интеграторов</p>
+    <h1 id="questions">FAQ по API</h1>
+    <p class="faq-intro">12 частых вопросов об интеграции с VetManager: короткие ответы, примеры запросов и ограничения.</p>
+<nav class="faq-toc faq-card" aria-label="Вопросы FAQ"><h2>Вопросы</h2><ol><li><a href="#document-number">Как сопоставить ID счёта и его номер?</a></li><li><a href="#laboratory">Есть ли API Лаборатории?</a></li><li><a href="#tasks">Есть ли API задач и плановых звонков?</a></li><li><a href="#test-access">Как получить тестовый доступ?</a></li><li><a href="#clinic-prices">Как получить цены по филиалам?</a></li><li><a href="#keys">Чем отличаются REST-ключ и сервисный ключ?</a></li><li><a href="#pagination">Почему возвращается только 100 записей?</a></li><li><a href="#combinations">Как определить позиции комбинации в счёте?</a></li><li><a href="#files">Как получить файлы клиента или питомца?</a></li><li><a href="#filter-sort">Как правильно передать filter и sort?</a></li><li><a href="#webhooks">Почему не приходят вебхуки?</a></li><li><a href="#admission-status">Как работают status и confirmation у Admission?</a></li></ol></nav><section class="faq-card" id="document-number" aria-labelledby="document-number-heading"><h2 id="document-number-heading">1. Как сопоставить ID счёта и его номер?</h2><p>Используйте <code>documentNumber</code>. В записи нумерации <code>id</code> — ID самой записи, <code>document_id</code> — ID счёта, <code>document_number</code> — отображаемый номер. ID позиции <code>invoiceDocument.id</code> тоже отличается от ID счёта.</p><p>Найти номер по ID счёта (замените 123 ID своего тестового счёта):</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/documentNumber&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;document_type&quot;,&quot;value&quot;:&quot;invoice&quot;,&quot;operator&quot;:&quot;=&quot;},{&quot;property&quot;:&quot;document_id&quot;,&quot;value&quot;:123,&quot;operator&quot;:&quot;=&quot;}]&#x27;</code></pre><p>Обратный поиск по полному номеру, включая префиксы и разделители:</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/documentNumber&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;document_type&quot;,&quot;value&quot;:&quot;invoice&quot;,&quot;operator&quot;:&quot;=&quot;},{&quot;property&quot;:&quot;document_number&quot;,&quot;value&quot;:&quot;INV-000123&quot;,&quot;operator&quot;:&quot;=&quot;}]&#x27;</code></pre><p>В <code>data.documentNumber</code> ищите соответствующую запись. Пустой список означает отсутствие совпадения. Номер зависит от настроек нумерации; не считайте его глобально уникальным. При нумерации по филиалам уточняйте поиск по <code>clinic_id</code>; при общей нумерации он равен 0, поэтому не добавляйте филиал счёта в фильтр автоматически. Чтение API не создаёт отсутствующий номер. Настройка складской нумерации не определяет нумерацию счетов.</p><p class="faq-links"><a href="./index.html#/DocumentNumber/get_rest_api_documentNumber">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="laboratory" aria-labelledby="laboratory-heading"><h2 id="laboratory-heading">2. Есть ли API Лаборатории?</h2><p><span class="faq-badge">Пилотный проект</span></p><p>Интеграция с лабораторией доступна в рамках пилотного проекта. Обратитесь к своему провайдеру лаборатории и попросите включить клинику в пилот. Заявку на подключение подаёт провайдер.</p><p>Provider API использует отдельный доступ и документацию провайдера. Обычный REST-ключ не предоставляет универсальное управление лабораторными заявками. Чтение результатов в медицинских картах — отдельная операция; оно не заменяет создание и обработку заявок.</p><p>Для чтения результатов смотрите <code>GET /rest/api/medicalCards/laboratoryResults</code> и обязательные параметры в Swagger.</p><p class="faq-links"><a href="./index.html#/Medical Cards/get_rest_api_medicalCards_laboratoryResults">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="tasks" aria-labelledby="tasks-heading"><h2 id="tasks-heading">3. Есть ли API задач и плановых звонков?</h2><p class="faq-status"><strong>На тестировании (в разработке)</strong> · BT-14531</p><p>Новая возможность ещё проходит тестирование. Доступность в рабочей версии уточняйте перед использованием.</p><p><code>POST /rest/api/userCalls</code> предназначен для создания <strong>задач</strong>. Создание звонков в эту доработку не входит, несмотря на название метода.</p><p>Ниже — примеры контракта на тестировании. Подставьте существующие ID питомца и сотрудников тестовой клиники. Дата <code>dt</code> передаётся без времени. Укажите ровно одного исполнителя: сотрудника (<code>user_id</code>) или группу (<code>position_id</code>).</p><pre tabindex="0"><code>curl &quot;$VM_URL/rest/api/userCalls&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  --data &#x27;{&quot;type&quot;:&quot;task&quot;,&quot;dt&quot;:&quot;2026-12-15&quot;,&quot;pet_id&quot;:123,&quot;creator_id&quot;:10,&quot;user_id&quot;:11,&quot;note&quot;:&quot;Контроль самочувствия&quot;}&#x27;</code></pre><p>Задача на группу:</p><pre tabindex="0"><code>curl &quot;$VM_URL/rest/api/userCalls&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  --data &#x27;{&quot;type&quot;:&quot;task&quot;,&quot;dt&quot;:&quot;2026-12-15&quot;,&quot;pet_id&quot;:123,&quot;creator_id&quot;:10,&quot;position_id&quot;:2,&quot;note&quot;:&quot;Связаться с владельцем&quot;}&#x27;</code></pre><p>Ожидаемый результат нового контракта — HTTP 201 и созданная задача; некорректные поля и ссылки отклоняются с HTTP 406. Примечание — до 250 символов, обязательно при соответствующей настройке клиники. Статус и дату создания задаёт сервер. Создание без питомца, выполнение, перенос и отмена задач этой доработкой не описываются. Итоговый контракт, включая поле <code>type</code>, уточняется по результатам тестирования.</p><p class="faq-links"><a href="./index.html#/UserCalls/createUserCall">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="test-access" aria-labelledby="test-access-heading"><h2 id="test-access-heading">4. Как получить тестовый доступ?</h2><p>При создании домена клинике предоставляется пробный период на две недели. За тестовым доменом, условиями продления и стоимостью обратитесь в поддержку VetManager. Рабочий домен клиники и тестовый домен — разные окружения.</p><p>После выдачи домена включите REST-интеграцию и получите ключ. Проверить подключение можно запросом списка с одной записью:</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/client&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;limit=1&#x27;</code></pre><p>Проверьте HTTP-код и поле <code>success</code>. Пустой список при успешном ответе допустим. Этот запрос проверяет доступ к уже выданному домену, а не создаёт тестовое окружение.</p><p><a href="https://help.vetmanager.ru/article/25187">Справка по подключению REST API</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="clinic-prices" aria-labelledby="clinic-prices-heading"><h2 id="clinic-prices-heading">5. Как получить цены по филиалам?</h2><p>Читайте <code>goodSaleParam</code> с фильтрами по товару <code>good_id</code> и филиалу <code>clinic_id</code>. У одного товара может быть несколько параметров продажи: учитывайте единицу продажи <code>unit_sale_id</code>, коэффициент <code>coefficient</code> и способ формирования цены <code>price_formation</code>.</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/goodSaleParam&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;good_id&quot;,&quot;value&quot;:123,&quot;operator&quot;:&quot;=&quot;},{&quot;property&quot;:&quot;clinic_id&quot;,&quot;value&quot;:1,&quot;operator&quot;:&quot;=&quot;}]&#x27;</code></pre><p>В <code>data.goodSaleParam</code> возвращаются совпавшие параметры и их <code>price</code>. Пустой результат не означает нулевую цену и не выбирает автоматически цену другого филиала. Цена параметра продажи отличается от исторической суммы позиции счёта.</p><p class="faq-links"><a href="./index.html#/GoodSaleParam/get_rest_api_goodSaleParam">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="keys" aria-labelledby="keys-heading"><h2 id="keys-heading">6. Чем отличаются REST-ключ и сервисный ключ?</h2><p><strong>REST-ключ</strong> выдаётся для клиники; REST-интеграция должна быть включена. Передавайте его в заголовке <code>X-REST-API-KEY</code>. Ключ не подставляет автоматически сотрудника в поля автора или исполнителя.</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/client&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;limit=1&#x27;</code></pre><p><strong>Сервисный доступ</strong> подключается отдельно для интеграции. Используются заголовки <code>X-SERVICE-NAME</code> и <code>X-SERVICE-REST-API-KEY</code>; конкретные методы и доступ клиники согласуются при подключении. Это не взаимозаменяемые ключи. Provider API лабораторий также имеет отдельный порядок подключения.</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/client&quot; \
+  -H &quot;X-SERVICE-NAME: $VM_SERVICE_NAME&quot; \
+  -H &quot;X-SERVICE-REST-API-KEY: $VM_SERVICE_KEY&quot; \
+  --data-urlencode &#x27;limit=1&#x27;</code></pre><p>Сервисный пример применим только после подключения и разрешения этого метода. При ошибке доступа проверьте домен, вид ключа, включение интеграции и разрешения. Не публикуйте ключи в URL или переписке.</p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="pagination" aria-labelledby="pagination-heading">
+  <h2 id="pagination-heading">7. Почему возвращается только 100 записей?</h2>
+  <p>По умолчанию стандартный список возвращает до 100 записей. Параметр <code>limit</code>
+    задаёт размер страницы и может быть больше 100. Например, <code>limit=500</code>
+    вернёт до 500 записей, если столько записей соответствует запросу.</p>
+  <p>Первая страница с размером 100 записей и смещением <code>offset=0</code>.</p>
+  <pre tabindex="0"><code>curl --get "$VM_URL/rest/api/client" \
+  -H "X-REST-API-KEY: $VM_API_KEY" \
+  --data-urlencode 'limit=100' \
+  --data-urlencode 'offset=0' \
+  --data-urlencode 'sort=[{"property":"id","direction":"ASC"}]'</code></pre>
+  <p>Для второй страницы <code>offset=100</code> пропускает первые 100 записей.
+    Размер страницы, фильтр и сортировка остаются теми же.</p>
+  <pre tabindex="0"><code>curl --get "$VM_URL/rest/api/client" \
+  -H "X-REST-API-KEY: $VM_API_KEY" \
+  --data-urlencode 'limit=100' \
+  --data-urlencode 'offset=100' \
+  --data-urlencode 'sort=[{"property":"id","direction":"ASC"}]'</code></pre>
+  <p>Для каждой следующей страницы увеличивайте <code>offset</code> на <code>limit</code>.
+    Записи находятся в <code>data.client</code>, а общее число совпадений в <code>data.totalCount</code>.
+    Остановитесь, когда достигнете общего числа записей или получите пустую страницу.
+    Если между запросами записи добавляются или удаляются, возможны пропуски и повторы.</p>
+  <a class="faq-top" href="#questions">К списку вопросов ↑</a>
+</section>
+<section class="faq-card" id="combinations" aria-labelledby="combinations-heading">
+  <h2 id="combinations-heading">8. Как определить позиции комбинации в счёте?</h2>
+  <p>В <code>invoiceDocument</code> поле <code>document_id</code> содержит ID счёта.
+    Для нешаблонной комбинации <code>tag_id</code> содержит ID комбинации.
+    Поле <code>good.for_combination</code> описывает товар в каталоге.</p>
+  <p>Получите позиции счёта с ID 123.</p>
+  <pre tabindex="0"><code>curl --get "$VM_URL/rest/api/invoiceDocument" \
+  -H "X-REST-API-KEY: $VM_API_KEY" \
+  --data-urlencode 'filter=[{"property":"document_id","value":123,"operator":"="}]'</code></pre>
+  <p>Пример ответа с полями, нужными для группировки.</p>
+  <pre tabindex="0"><code>{
+  "success": true,
+  "data": {
+    "totalCount": 4,
+    "invoiceDocument": [
+      {"id": 701, "document_id": 123, "good_id": 308, "tag_id": 42},
+      {"id": 702, "document_id": 123, "good_id": 309, "tag_id": 42},
+      {"id": 703, "document_id": 123, "good_id": 315, "tag_id": 0},
+      {"id": 704, "document_id": 123, "good_id": 316, "tag_id": 0}
+    ]
+  }
+}</code></pre>
+  <p>Позиции 701 и 702 относятся к комбинации 42. При группировке внутри счёта
+    объединяйте строки с одинаковым <code>tag_id</code> больше нуля.</p>
+  <p>Позиции 703 и 704 оставьте отдельными строками. <code>tag_id=0</code>
+    встречается и у товаров, добавленных по отдельности, и у компонентов шаблонной комбинации.
+    По нулю нельзя определить, как эти позиции попали в счёт.</p>
+  <p>Поле <code>price</code> содержит сумму всей строки за указанное количество.</p>
+  <p class="faq-links"><a href="./index.html#/InvoiceDocument/get_rest_api_invoiceDocument">Открыть метод в Swagger →</a></p>
+  <div id="invoice-creation">
+    <h3 id="invoice-creation-heading">Создание счёта</h3>
+    <p>Для создания счёта используйте <code>POST /rest/api/invoice/createinvoice</code>.</p>
+    <p class="faq-links"><a href="./index.html#/Invoice/post_rest_api_invoice_createinvoice">Открыть метод в Swagger →</a></p>
+  </div>
+  <div id="invoice-payment">
+    <h3 id="invoice-payment-heading">Оплата счёта</h3>
+    <p class="faq-status"><strong>На тестировании (в разработке)</strong> · BT-14451</p>
+    <p>Новая возможность ещё проходит тестирование. Доступность в рабочей версии уточняйте перед использованием.</p>
+    <p>Публичная оплата <code>POST /rest/api/invoice/payinvoice</code> по REST-ключу проходит тестирование с проверками пользователя, клиники и кассы. Не переносите требования мобильной авторизации на этот сценарий; итоговые требования проверяйте по выпущенной версии.</p>
+    <p class="faq-links"><a href="./index.html#/Invoice/post_rest_api_invoice_payinvoice">Открыть метод в Swagger →</a></p>
+  </div>
+  <a class="faq-top" href="#questions">К списку вопросов ↑</a>
+</section>
+<section class="faq-card" id="files" aria-labelledby="files-heading"><h2 id="files-heading">9. Как получить файлы клиента или питомца?</h2><p>Различайте прикреплённые файлы и ссылки внутри HTML медицинской карты. Для чтения конкретной карты используйте её ID:</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/MedicalCards/123&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot;</code></pre><p>В <code>data</code> ищите HTML-содержимое карты и ссылки на вложения. Извлечение ссылок из HTML — обходной путь: это не отдельный универсальный API списка файлов клиента или питомца. Доступность найденной ссылки и требования авторизации проверяются отдельно. Не отображайте полученный HTML без безопасной обработки.</p><p><code>MedicalCards/UploadFiles</code> служит для загрузки файлов и не заменяет их чтение. Возможность получить произвольное вложение карточки клиента этим методом не заявляется.</p><p class="faq-links"><a href="./index.html#/Medical Card/get_rest_api_MedicalCards_ID">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="filter-sort" aria-labelledby="filter-sort-heading"><h2 id="filter-sort-heading">10. Как правильно передать filter и sort?</h2><p>Оба параметра стандартного списка — JSON-массивы, переданные как строки. Условия <code>filter</code> объединяются через AND и относятся к столбцам самой модели; вложенные пути связей не поддерживаются. Для GET кодируйте их с помощью <code>--data-urlencode</code>.</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/client&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;id&quot;,&quot;value&quot;:[1,2,3],&quot;operator&quot;:&quot;in&quot;}]&#x27; \  --data-urlencode &#x27;sort=[{&quot;property&quot;:&quot;id&quot;,&quot;direction&quot;:&quot;DESC&quot;}]&#x27; \  --data-urlencode &#x27;limit=100&#x27;</code></pre><p>Операторы: <code>=</code>, <code>!=</code>, <code>&lt;&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>in</code>, <code>not in</code>, <code>like</code>. Для <code>in</code> и <code>not in</code> значение — массив. Направления сортировки — <code>ASC</code> и <code>DESC</code>. Например, диапазон дат медицинских карт:</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/MedicalCards&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;date_create&quot;,&quot;value&quot;:&quot;2026-11-01 00:00:00&quot;,&quot;operator&quot;:&quot;&gt;=&quot;},{&quot;property&quot;:&quot;date_create&quot;,&quot;value&quot;:&quot;2026-12-01 00:00:00&quot;,&quot;operator&quot;:&quot;&lt;&quot;}]&#x27;</code></pre><p>Для длинного фильтра стандартного списка используйте POST на <code>/{controller}/list</code> с полями формы:</p><pre tabindex="0"><code>curl &quot;$VM_URL/rest/api/client/list&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;id&quot;,&quot;value&quot;:[1,2,3],&quot;operator&quot;:&quot;in&quot;}]&#x27; \
+  --data-urlencode &#x27;sort=[{&quot;property&quot;:&quot;id&quot;,&quot;direction&quot;:&quot;ASC&quot;}]&#x27; \
+  --data-urlencode &#x27;limit=100&#x27;</code></pre><p>Это чтение списка, не создание клиента. Тело имеет формат <code>application/x-www-form-urlencoded</code>, а не JSON. Не дублируйте параметры одновременно в URL и теле. Пользовательские действия могут иметь иной контракт.</p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="webhooks" aria-labelledby="webhooks-heading"><h2 id="webhooks-heading">11. Почему не приходят вебхуки?</h2><ol><li>Проверьте, что сервис вебхуков активен, URL указан точно, а нужное событие включено в подписку.</li><li>Посмотрите историю ошибок для этого URL.</li><li>Устраните сетевую ошибку или ошибку приёмника. Приёмник должен ответить за 5 секунд кодом 200–206; перенаправление считается ошибкой.</li><li>Если сервис отключён, включите его в справочнике после исправления причины. Учтите возможную оставшуюся временную паузу.</li><li>Создайте новое подходящее событие в тестовой клинике и проверьте реальную доставку.</li></ol><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/failedHook&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;hook_url&quot;,&quot;value&quot;:&quot;https://example.test/hooks/vetmanager&quot;,&quot;operator&quot;:&quot;=&quot;}]&#x27; \  --data-urlencode &#x27;sort=[{&quot;property&quot;:&quot;id&quot;,&quot;direction&quot;:&quot;DESC&quot;}]&#x27; \  --data-urlencode &#x27;limit=20&#x27;</code></pre><p>Диагностика доступна при разрешённом доступе к методу. Вебхук приходит POST-запросом <code>application/x-www-form-urlencoded</code>: поля <code>name</code>, <code>data[…]</code>, <code>params[…]</code>. JSON в теле ответа приёмника не анализируется: HTTP 200 с <code>success=false</code> всё равно считается доставкой.</p><details><summary>Паузы, отключение и восстановление</summary><p>С третьей учтённой ошибки начинается пауза: 5, 10, 20, 40, затем до 60 минут. После её истечения отправка пробуется на новом событии. Успех сбрасывает счётчик и паузу, но не удаляет историю ошибок.</p><p>История считается по точному URL. Если перед очередной неудачной отправкой уже сохранено 1000 ошибок, сервис отключается. У сервисов с одним URL история общая, временная пауза — своя.</p><p>Включение через справочник очищает историю выбранного URL, но не сбрасывает временную паузу. Удаление строк <code>failedHook</code> не включает сервис и не переотправляет события. Во время паузы события пропускаются; автоматического воспроизведения пропущенных событий нет.</p></details><p>Пробный curl к приёмнику проверяет только сам приёмник. Для проверки всей цепочки нужно настоящее событие VetManager.</p><p class="faq-links"><a href="./index.html#/FailedHook/get_rest_api_failedHook">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="admission-status" aria-labelledby="admission-status-heading"><h2 id="admission-status-heading">12. Как работают status и confirmation у Admission?</h2><p><code>status</code> — состояние приёма в расписании, а <code>confirmation</code> — отдельный результат ответа клиента. Эти поля нельзя подменять друг другом.</p><div class="faq-table-wrap"><table><caption>Значения status</caption><thead><tr><th>Значение</th><th>Смысл</th></tr></thead><tbody><tr><td><code>save</code></td><td>Запланирован</td></tr><tr><td><code>directed</code></td><td>Клиент направлен на приём</td></tr><tr><td><code>in_treatment</code></td><td>Приём начат</td></tr><tr><td><code>accepted</code></td><td>Завершён</td></tr><tr><td><code>deleted</code></td><td>Удалён</td></tr><tr><td><code>delayed</code></td><td>Просрочен</td></tr><tr><td><code>not_approved</code></td><td>Не одобрен</td></tr><tr><td><code>not_confirmed</code></td><td>Не подтверждён</td></tr></tbody></table><table><caption>Значения confirmation</caption><thead><tr><th>Значение</th><th>Ответ клиента</th></tr></thead><tbody><tr><td><code>confirmed</code></td><td>Подтвердил</td></tr><tr><td><code>cancelled</code></td><td>Отменил</td></tr><tr><td><code>postponed</code></td><td>Перенёс</td></tr><tr><td>Пустая строка / <code>null</code></td><td>Ответ не указан</td></tr></tbody></table></div><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/admission/123&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot;</code></pre><p>При создании приём получает <code>status=not_confirmed</code>. Действие <code>confirmAdmission</code> подтверждает запись в расписании: устанавливает <code>save</code> либо <code>not_approved</code> при непрохождении проверки. Оно не устанавливает <code>confirmation=confirmed</code>.</p><p>Пример подтверждения тестового приёма (все ID и дату замените значениями этой записи):</p><pre tabindex="0"><code>curl &quot;$VM_URL/rest/api/admission/confirmAdmission&quot; \
+  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  --data &#x27;{&quot;id&quot;:123,&quot;user_id&quot;:10,&quot;client_id&quot;:20,&quot;patient_id&quot;:30,&quot;admission_date&quot;:&quot;2026-12-15 10:00:00&quot;,&quot;admission_type&quot;:1,&quot;clinic_id&quot;:1}&#x27;</code></pre><p>Проверяйте <code>success</code> даже при HTTP 201, затем повторно прочитайте приём. При переносе через PUT передавайте <code>start</code> и <code>end</code> по контракту метода. Значение <code>confirmation=cancelled</code> само по себе не заменяет операцию отмены приёма. Время согласуйте с часовым поясом клиники.</p><p class="faq-links"><a href="./index.html#/Admission/post_rest_api_admission_confirmAdmission">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+  </main>
+</body>
 </html>

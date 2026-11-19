@@ -4,7 +4,7 @@
     vertical-align: middle;
 }
 
-/* Shared navigation for Swagger and the standalone FAQ preview. */
+/* Shared navigation for Swagger and the standalone FAQ. */
 .docs-nav {
     box-sizing: border-box;
     display: flex;
@@ -95,3 +95,61 @@
     background: #126640;
     border-color: #126640;
 }
+
+.faq-card { margin-bottom: 24px; scroll-margin-top: 24px; }
+.faq-content a { color: #166c47; text-underline-offset: 3px; }
+.faq-toc ol { margin: 0; padding-left: 24px; }
+.faq-toc li { margin: 8px 0; }
+.faq-content code { font-size: 0.9em; overflow-wrap: anywhere; }
+.faq-content p code, .faq-content li code, .faq-content td code {
+    padding: 2px 5px; border-radius: 3px; background: #edf2ef;
+}
+.faq-content pre {
+    max-width: 100%; box-sizing: border-box; overflow-x: auto;
+    padding: 20px; border-radius: 6px; background: #172c23; color: #e7f3ec;
+    font-size: 14px; line-height: 1.6; tab-size: 2;
+}
+.faq-content pre code { overflow-wrap: normal; }
+.faq-content pre:focus-visible { outline: 3px solid #366bdf; outline-offset: 3px; }
+.faq-content .faq-status {
+    padding: 12px 16px; border-left: 4px solid #b77715; border-radius: 4px;
+    background: #fff4d9; color: #704705;
+}
+.faq-badge { padding: 4px 10px; border-radius: 4px; background: #e7eefc; color: #284f8e; }
+.faq-table-wrap { max-width: 100%; overflow-x: auto; }
+.faq-content table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; }
+.faq-content caption { text-align: left; font-weight: 700; margin-bottom: 8px; }
+.faq-content th, .faq-content td { text-align: left; padding: 10px; border-bottom: 1px solid #dce5df; }
+.faq-content summary { cursor: pointer; font-weight: 700; color: #166c47; }
+.faq-content summary:focus-visible { outline: 3px solid #366bdf; outline-offset: 3px; }
+.faq-top { display: inline-block; margin-top: 16px; font-size: 14px; }
+.faq-links { margin-top: 20px; }
+
+.faq-card { margin-bottom: 24px; scroll-margin-top: 24px; }
+.faq-content a { color: #166c47; text-underline-offset: 3px; }
+.faq-toc ol { margin: 0; padding-left: 24px; }
+.faq-toc li { margin: 8px 0; }
+.faq-content code { font-size: 0.9em; overflow-wrap: anywhere; }
+.faq-content p code, .faq-content li code, .faq-content td code {
+    padding: 2px 5px; border-radius: 3px; background: #edf2ef;
+}
+.faq-content pre {
+    max-width: 100%; box-sizing: border-box; overflow-x: auto;
+    padding: 20px; border-radius: 6px; background: #172c23; color: #e7f3ec;
+    font-size: 14px; line-height: 1.6; tab-size: 2;
+}
+.faq-content pre code { overflow-wrap: normal; }
+.faq-content pre:focus-visible { outline: 3px solid #366bdf; outline-offset: 3px; }
+.faq-content .faq-status {
+    padding: 12px 16px; border-left: 4px solid #b77715; border-radius: 4px;
+    background: #fff4d9; color: #704705;
+}
+.faq-badge { padding: 4px 10px; border-radius: 4px; background: #e7eefc; color: #284f8e; }
+.faq-table-wrap { max-width: 100%; overflow-x: auto; }
+.faq-content table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; }
+.faq-content caption { text-align: left; font-weight: 700; margin-bottom: 8px; }
+.faq-content th, .faq-content td { text-align: left; padding: 10px; border-bottom: 1px solid #dce5df; }
+.faq-content summary { cursor: pointer; font-weight: 700; color: #166c47; }
+.faq-content summary:focus-visible { outline: 3px solid #366bdf; outline-offset: 3px; }
+.faq-top { display: inline-block; margin-top: 16px; font-size: 14px; }
+.faq-links { margin-top: 20px; }

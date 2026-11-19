@@ -36,7 +36,7 @@ A plain `python3 -m http.server` serves documentation but cannot proxy local API
 
 The clinic address field sets the host for Try it out. It starts empty. Enter a clinic hostname or a local URL such as `http://one.localhost:8080/`. The value is not persisted across page reloads.
 
-The “FAQ по API” button below the specification file description opens the `faq.html` preview, with a link back to Swagger.
+The “FAQ по API” button opens the Russian [API FAQ](faq.html): 12 answers with request examples, limitations, testing notices, and links back to Swagger operations. Full HTTP verification of the examples is still pending.
 
 This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as alphabetical tag order and GET → POST → PUT → DELETE operation sorting. Port 8081 is used because Vetmanager already listens on 8080.
 
