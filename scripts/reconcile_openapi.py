@@ -582,7 +582,8 @@ def canonicalize_spec_paths(paths: dict[str, Any]) -> dict[str, Any]:
 def write_yaml(path: Path, data: dict[str, Any]) -> None:
     if yaml is None:
         raise RuntimeError("PyYAML is not installed")
-    with path.open("w", encoding="utf-8") as fh:
+    # GitHub Pages serves .yaml as text/yaml without a charset.
+    with path.open("w", encoding="utf-8-sig") as fh:
         yaml.safe_dump(data, fh, allow_unicode=True, sort_keys=False, width=120)
 
 
@@ -689,7 +690,7 @@ def main() -> int:
     # Final parse/equivalence check.
     reloaded_json = read_json(OPENAPI_JSON)
     if yaml is not None:
-        with OPENAPI_YAML.open("r", encoding="utf-8") as fh:
+        with OPENAPI_YAML.open("r", encoding="utf-8-sig") as fh:
             reloaded_yaml = yaml.safe_load(fh)
         if reloaded_json != reloaded_yaml:
             raise RuntimeError("JSON/YAML OpenAPI files are not equivalent")

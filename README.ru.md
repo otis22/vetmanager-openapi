@@ -41,8 +41,8 @@ python3 scripts/serve_docs.py
 Для обычных изменений спецификации или документации достаточно выполнить локальную проверку. Создайте временное виртуальное окружение и установите единственную зависимость Python:
 
 ```bash
-python3 -m venv /tmp/vetmanager-openapi-venv
-/tmp/vetmanager-openapi-venv/bin/pip install pyyaml
+`python3 -m venv /tmp/vetmanager-openapi-venv
+/tmp/vetmanager-openapi-venv/bin/pip install pyyaml`
 ```
 
 Затем запустите:

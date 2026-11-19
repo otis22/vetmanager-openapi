@@ -4,7 +4,6 @@
     vertical-align: middle;
 }
 
-/* Shared navigation for Swagger and the standalone FAQ. */
 .docs-nav {
     box-sizing: border-box;
     display: flex;

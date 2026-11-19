@@ -36,12 +36,48 @@
 <section class="faq-card" id="clinic-prices" aria-labelledby="clinic-prices-heading"><h2 id="clinic-prices-heading">5. Как получить цены по филиалам?</h2><p>Читайте <code>goodSaleParam</code> с фильтрами по товару <code>good_id</code> и филиалу <code>clinic_id</code>. У одного товара может быть несколько параметров продажи: учитывайте единицу продажи <code>unit_sale_id</code>, коэффициент <code>coefficient</code> и способ формирования цены <code>price_formation</code>.</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/goodSaleParam&quot; \
   -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
   --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;good_id&quot;,&quot;value&quot;:123,&quot;operator&quot;:&quot;=&quot;},{&quot;property&quot;:&quot;clinic_id&quot;,&quot;value&quot;:1,&quot;operator&quot;:&quot;=&quot;}]&#x27;</code></pre><p>В <code>data.goodSaleParam</code> возвращаются совпавшие параметры и их <code>price</code>. Пустой результат не означает нулевую цену и не выбирает автоматически цену другого филиала. Цена параметра продажи отличается от исторической суммы позиции счёта.</p><p class="faq-links"><a href="./index.html#/GoodSaleParam/get_rest_api_goodSaleParam">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
-<section class="faq-card" id="keys" aria-labelledby="keys-heading"><h2 id="keys-heading">6. Чем отличаются REST-ключ и сервисный ключ?</h2><p><strong>REST-ключ</strong> выдаётся для клиники; REST-интеграция должна быть включена. Передавайте его в заголовке <code>X-REST-API-KEY</code>. Ключ не подставляет автоматически сотрудника в поля автора или исполнителя.</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/client&quot; \
-  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
-  --data-urlencode &#x27;limit=1&#x27;</code></pre><p><strong>Сервисный доступ</strong> подключается отдельно для интеграции. Используются заголовки <code>X-SERVICE-NAME</code> и <code>X-SERVICE-REST-API-KEY</code>; конкретные методы и доступ клиники согласуются при подключении. Это не взаимозаменяемые ключи. Provider API лабораторий также имеет отдельный порядок подключения.</p><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/client&quot; \
-  -H &quot;X-SERVICE-NAME: $VM_SERVICE_NAME&quot; \
-  -H &quot;X-SERVICE-REST-API-KEY: $VM_SERVICE_KEY&quot; \
-  --data-urlencode &#x27;limit=1&#x27;</code></pre><p>Сервисный пример применим только после подключения и разрешения этого метода. При ошибке доступа проверьте домен, вид ключа, включение интеграции и разрешения. Не публикуйте ключи в URL или переписке.</p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="keys" aria-labelledby="keys-heading">
+  <h2 id="keys-heading">6. Чем отличаются REST-ключ и сервисный ключ?</h2>
+  <p>Для интеграции с публичным API своей клиники используйте её REST-ключ.
+    Сервисный ключ нужен для отдельно подключённой интеграции, у которой есть своё имя и список разрешённых методов.</p>
+
+  <h3>REST-ключ клиники</h3>
+  <p>В настройках интеграций клиники включите <strong>REST API</strong> и скопируйте значение из поля
+    «Ваш api key». Используйте домен этой клиники в <code>VM_URL</code>, а ключ передавайте
+    в заголовке <code>X-REST-API-KEY</code>. Для тестового домена используйте ключ из его настроек.</p>
+  <p>Например, запросите до одной записи из списка клиентов.</p>
+  <pre tabindex="0"><code>curl --include --get "$VM_URL/rest/api/client" \
+  -H "X-REST-API-KEY: $VM_API_KEY" \
+  --data-urlencode 'limit=1'</code></pre>
+  <p>REST-ключ даёт доступ к API клиники. Если метод требует ID автора или исполнителя,
+    передайте это поле в запросе.</p>
+
+  <h3>Имя и ключ сервиса</h3>
+  <p>При подключении сервиса уточните, на каких доменах он включён и какие методы ему доступны.
+    В <code>X-SERVICE-NAME</code> передайте выданное имя сервиса, а в <code>X-SERVICE-REST-API-KEY</code>
+    его ключ. VetManager проверяет эту пару и разрешение на конкретное действие.</p>
+  <p>Пример ниже подходит для сервиса, которому разрешено чтение списка клиентов.
+    Для других сервисов подставьте разрешённый им метод.</p>
+  <pre tabindex="0"><code>curl --include --get "$VM_URL/rest/api/client" \
+  -H "X-SERVICE-NAME: $VM_SERVICE_NAME" \
+  -H "X-SERVICE-REST-API-KEY: $VM_SERVICE_KEY" \
+  --data-urlencode 'limit=1'</code></pre>
+  <p>Для Provider API порядок подключения согласуйте с провайдером.
+    <a href="#laboratory">Как подключить лабораторную интеграцию</a></p>
+
+  <h3>Что проверить при HTTP 401</h3>
+  <ul>
+    <li><code>REST API disabled in settings</code> — включите REST API в настройках клиники.</li>
+    <li><code>Need generate api key.</code> — создайте ключ в настройках REST API.</li>
+    <li><code>Authorization failed.</code> — проверьте, что используете ключ этого домена
+      и передаёте его в <code>X-REST-API-KEY</code>.</li>
+    <li><code>Service API disabled in settings</code> — проверьте, что сервис включён для этого домена.</li>
+    <li><code>Service authorization failed.</code> — проверьте имя сервиса и соответствующий ему ключ.</li>
+    <li><code>Request not available for this service</code> — уточните доступ сервиса к этому методу.</li>
+  </ul>
+  <p>Передавайте ключи в HTTP-заголовках и храните их в настройках приложения или хранилище секретов.</p>
+  <a class="faq-top" href="#questions">К списку вопросов ↑</a>
+</section>
 <section class="faq-card" id="pagination" aria-labelledby="pagination-heading">
   <h2 id="pagination-heading">7. Почему возвращается только 100 записей?</h2>
   <p>По умолчанию стандартный список возвращает до 100 записей. Параметр <code>limit</code>
@@ -120,9 +156,81 @@
   --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;id&quot;,&quot;value&quot;:[1,2,3],&quot;operator&quot;:&quot;in&quot;}]&#x27; \
   --data-urlencode &#x27;sort=[{&quot;property&quot;:&quot;id&quot;,&quot;direction&quot;:&quot;ASC&quot;}]&#x27; \
   --data-urlencode &#x27;limit=100&#x27;</code></pre><p>Это чтение списка, не создание клиента. Тело имеет формат <code>application/x-www-form-urlencoded</code>, а не JSON. Не дублируйте параметры одновременно в URL и теле. Пользовательские действия могут иметь иной контракт.</p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
-<section class="faq-card" id="webhooks" aria-labelledby="webhooks-heading"><h2 id="webhooks-heading">11. Почему не приходят вебхуки?</h2><ol><li>Проверьте, что сервис вебхуков активен, URL указан точно, а нужное событие включено в подписку.</li><li>Посмотрите историю ошибок для этого URL.</li><li>Устраните сетевую ошибку или ошибку приёмника. Приёмник должен ответить за 5 секунд кодом 200–206; перенаправление считается ошибкой.</li><li>Если сервис отключён, включите его в справочнике после исправления причины. Учтите возможную оставшуюся временную паузу.</li><li>Создайте новое подходящее событие в тестовой клинике и проверьте реальную доставку.</li></ol><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/failedHook&quot; \
-  -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
-  --data-urlencode &#x27;filter=[{&quot;property&quot;:&quot;hook_url&quot;,&quot;value&quot;:&quot;https://example.test/hooks/vetmanager&quot;,&quot;operator&quot;:&quot;=&quot;}]&#x27; \  --data-urlencode &#x27;sort=[{&quot;property&quot;:&quot;id&quot;,&quot;direction&quot;:&quot;DESC&quot;}]&#x27; \  --data-urlencode &#x27;limit=20&#x27;</code></pre><p>Диагностика доступна при разрешённом доступе к методу. Вебхук приходит POST-запросом <code>application/x-www-form-urlencoded</code>: поля <code>name</code>, <code>data[…]</code>, <code>params[…]</code>. JSON в теле ответа приёмника не анализируется: HTTP 200 с <code>success=false</code> всё равно считается доставкой.</p><details><summary>Паузы, отключение и восстановление</summary><p>С третьей учтённой ошибки начинается пауза: 5, 10, 20, 40, затем до 60 минут. После её истечения отправка пробуется на новом событии. Успех сбрасывает счётчик и паузу, но не удаляет историю ошибок.</p><p>История считается по точному URL. Если перед очередной неудачной отправкой уже сохранено 1000 ошибок, сервис отключается. У сервисов с одним URL история общая, временная пауза — своя.</p><p>Включение через справочник очищает историю выбранного URL, но не сбрасывает временную паузу. Удаление строк <code>failedHook</code> не включает сервис и не переотправляет события. Во время паузы события пропускаются; автоматического воспроизведения пропущенных событий нет.</p></details><p>Пробный curl к приёмнику проверяет только сам приёмник. Для проверки всей цепочки нужно настоящее событие VetManager.</p><p class="faq-links"><a href="./index.html#/FailedHook/get_rest_api_failedHook">Открыть метод в Swagger →</a></p><a class="faq-top" href="#questions">К списку вопросов ↑</a></section>
+<section class="faq-card" id="webhooks" aria-labelledby="webhooks-heading">
+  <h2 id="webhooks-heading">11. Почему не приходят вебхуки?</h2>
+  <ol>
+    <li>Проверьте, что сервис активен и URL указан верно. Если <code>dop_param3</code> пуст,
+      сервис получает все поддерживаемые события. Если в поле есть список, нужное событие должно входить в него.</li>
+    <li>Откройте «Ошибки доставки» в справочнике вебхуков или прочитайте историю через <code>failedHook</code>.</li>
+    <li>Устраните ошибку приёмника или сети. Успешный ответ должен прийти за 5 секунд с кодом от 200 до 206.</li>
+    <li>Если сервис отключён, включите его в справочнике после исправления причины. Дождитесь окончания паузы, если она ещё действует.</li>
+    <li>Создайте новое событие в тестовой клинике и проверьте доставку.</li>
+  </ol>
+  <h3>Что сохраняется при ошибке</h3>
+  <p>После неудачной попытки доставки VetManager сохраняет запись в таблице <code>failed_hook</code>,
+    пока число ошибок для этого URL меньше 1000. Поля доступны через <code>GET /rest/api/failedHook</code>.</p>
+  <ul>
+    <li><code>id</code> — ID записи об ошибке.</li>
+    <li><code>create_date</code> — дата и время записи ошибки в базу.</li>
+    <li><code>hook_url</code> — адрес получателя.</li>
+    <li><code>hook_name</code> — имя события.</li>
+    <li><code>hook_data</code> — данные отправки в виде JSON-строки с полями <code>name</code>,
+      <code>data</code> и <code>params</code>.</li>
+    <li><code>error_message</code> — текст ошибки. При ошибке доставки он включает HTTP-статус
+      и сообщение cURL, если оно появилось.</li>
+    <li><code>deactivated_at</code> — дата и время отключения последнего активного сервиса с этим URL.
+      При ручном или автоматическом отключении метка ставится в последнюю запись истории,
+      если для URL есть сохранённые ошибки.</li>
+  </ul>
+  <p>Получите до 20 последних записей для нужного URL. Замените <code>https://example.test/hooks/vetmanager</code> своим адресом.</p>
+  <pre tabindex="0"><code>curl --get "$VM_URL/rest/api/failedHook" \
+  -H "X-REST-API-KEY: $VM_API_KEY" \
+  --data-urlencode 'filter=[{"property":"hook_url","value":"https://example.test/hooks/vetmanager","operator":"="}]' \
+  --data-urlencode 'sort=[{"property":"id","direction":"DESC"}]' \
+  --data-urlencode 'limit=20'</code></pre>
+  <p><code>data.totalCount</code> показывает общее число сохранённых ошибок для этого URL.
+    Если история пуста, проверьте подписку и состояние сервиса. Во время паузы новые записи не появляются.</p>
+  <p>Пример записи из массива <code>data.failedHook</code>. Ошибка HTTP 500 зафиксирована в 16:06.
+    Метка <code>deactivated_at</code> показывает, что в 16:07 для этого URL отключили последний активный сервис.</p>
+  <pre tabindex="0"><code>{
+  "id": 1472,
+  "create_date": "2026-11-12 16:06:00",
+  "hook_url": "https://example.test/hooks/vetmanager",
+  "hook_name": "invoiceAdd",
+  "hook_data": "{\"name\":\"invoiceAdd\",\"data\":{\"id\":123},\"params\":{\"dop_param1\":\"\",\"dop_param2\":\"\",\"dop_param3\":\"invoiceAdd\"}}",
+  "error_message": "Error in server response: , with http status: 500",
+  "deactivated_at": "2026-11-12 16:07:00"
+}</code></pre>
+  <h3>Когда сервис отключается</h3>
+  <p>У каждого URL свой порог в 1000 записей. Например, 1000 ошибок для <code>/hooks/a</code>
+    не влияют на счётчик <code>/hooks/b</code>. Сервисы с одинаковым URL используют общую историю,
+    даже если подписаны на разные события.</p>
+  <p>При 999 записях следующая ошибка добавит тысячную строку. Если при очередной неудачной отправке
+    для URL уже сохранено 1000 записей, VetManager отключит сервис, который пытался отправить вебхук,
+    и оставит историю без новой строки. Успешная доставка сохраняет накопленную историю.</p>
+  <details>
+    <summary>Временная пауза и восстановление</summary>
+    <p>Счётчик сбоев хранится в кеше отдельно для каждого сервиса и истекает через 24 часа
+      после последней ошибки. Третья учтённая ошибка ставит отправку на паузу на 5 минут.
+      Следующие ошибки увеличивают паузу до 10, 20, 40 и 60 минут. В конце паузы сервис ждёт
+      следующего подходящего события. Успешная отправка сбрасывает счётчик и отметку паузы в кеше.</p>
+    <p>События во время паузы пропускаются без записи в <code>failed_hook</code> и без автоматического повтора.
+      Включение через справочник очищает историю выбранного URL, а временная пауза действует до истечения.
+      Удаление строк через <code>failedHook</code> само по себе не включает сервис и не запускает повтор.</p>
+    <p>При изменении URL или параметров <code>dop_param1</code>, <code>dop_param2</code>,
+      <code>dop_param3</code> через справочник очищается история прежнего URL.</p>
+    <p>При открытии справочника VetManager может очищать историю не чаще раза в сутки.
+      История URL удаляется, если после отключения последнего активного сервиса прошло больше 60 дней
+      и у адреса по-прежнему нет активных сервисов. Для адресов, которых больше нет в справочнике,
+      удаляются записи старше 60 дней.</p>
+  </details>
+  <p>Получателю приходит POST с телом <code>application/x-www-form-urlencoded</code> и полями
+    <code>name</code>, <code>data[…]</code> и <code>params[…]</code>. Перенаправление считается ошибкой.
+    Для HTTP 200 отправка считается успешной даже при <code>success=false</code> в теле ответа.
+    Пробный curl к приёмнику проверяет его ответ. Для проверки всей доставки создайте событие в VetManager.</p>
+  <p class="faq-links"><a href="./index.html#/FailedHook/get_rest_api_failedHook">Открыть метод в Swagger →</a></p>
+  <a class="faq-top" href="#questions">К списку вопросов ↑</a>
+</section>
 <section class="faq-card" id="admission-status" aria-labelledby="admission-status-heading"><h2 id="admission-status-heading">12. Как работают status и confirmation у Admission?</h2><p><code>status</code> — состояние приёма в расписании, а <code>confirmation</code> — отдельный результат ответа клиента. Эти поля нельзя подменять друг другом.</p><div class="faq-table-wrap"><table><caption>Значения status</caption><thead><tr><th>Значение</th><th>Смысл</th></tr></thead><tbody><tr><td><code>save</code></td><td>Запланирован</td></tr><tr><td><code>directed</code></td><td>Клиент направлен на приём</td></tr><tr><td><code>in_treatment</code></td><td>Приём начат</td></tr><tr><td><code>accepted</code></td><td>Завершён</td></tr><tr><td><code>deleted</code></td><td>Удалён</td></tr><tr><td><code>delayed</code></td><td>Просрочен</td></tr><tr><td><code>not_approved</code></td><td>Не одобрен</td></tr><tr><td><code>not_confirmed</code></td><td>Не подтверждён</td></tr></tbody></table><table><caption>Значения confirmation</caption><thead><tr><th>Значение</th><th>Ответ клиента</th></tr></thead><tbody><tr><td><code>confirmed</code></td><td>Подтвердил</td></tr><tr><td><code>cancelled</code></td><td>Отменил</td></tr><tr><td><code>postponed</code></td><td>Перенёс</td></tr><tr><td>Пустая строка / <code>null</code></td><td>Ответ не указан</td></tr></tbody></table></div><pre tabindex="0"><code>curl --get &quot;$VM_URL/rest/api/admission/123&quot; \
   -H &quot;X-REST-API-KEY: $VM_API_KEY&quot;</code></pre><p>При создании приём получает <code>status=not_confirmed</code>. Действие <code>confirmAdmission</code> подтверждает запись в расписании: устанавливает <code>save</code> либо <code>not_approved</code> при непрохождении проверки. Оно не устанавливает <code>confirmation=confirmed</code>.</p><p>Пример подтверждения тестового приёма (все ID и дату замените значениями этой записи):</p><pre tabindex="0"><code>curl &quot;$VM_URL/rest/api/admission/confirmAdmission&quot; \
   -H &quot;X-REST-API-KEY: $VM_API_KEY&quot; \
