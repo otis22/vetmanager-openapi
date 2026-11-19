@@ -3124,13 +3124,14 @@ components:
     payinvoice:
       type: object
       required:
+      - user_id
       - clinic_id
       - invoice_data
       properties:
         user_id:
           type: integer
           minimum: 1
-          description: Сервер это поле не читает. Сотрудник берётся из токена пользователя. Без токена ответ success=false и error_data.message «Пользователь не определен.»
+          description: Обязательное поле публичного запроса с X-REST-API-KEY. Передайте положительный целочисленный ID активного сотрудника без ограничения доступа, которому доступна clinic_id. Сервер выбирает доступную ему кассу. При мобильной авторизации сотрудник определяется по токену.
           example: 1
         clinic_id:
           type: integer
@@ -14858,6 +14859,8 @@ paths:
         Строка содержит товар, заголовок счета и параметр продажи. Допустимые цены и party_info есть только в карточке строки.
 
         Для строк конкретного счёта фильтруйте document_id. tag_id связывает строку с обычной комбинацией; шаблон при раскрытии получает tag_id=0. price — сумма строки за всё количество. Номер счёта ищите через documentNumber с document_type=invoice и document_id.
+
+        Ресурс доступен только для чтения. Для длинных фильтров поддерживается POST /rest/api/invoiceDocument/list.
       parameters:
       - name: filter
         in: query

@@ -17,6 +17,15 @@
 - `POST /rest/api/invoice`: disabled
 - `PUT /rest/api/invoice/{id}`: disabled
 
+## Отключённые операции invoiceDocument и fiscalRegister
+
+- `POST /rest/api/invoiceDocument`: disabled
+- `PUT /rest/api/invoiceDocument/{id}`: disabled
+- `DELETE /rest/api/invoiceDocument/{id}`: disabled
+- `POST /rest/api/fiscalRegister`: disabled
+- `PUT /rest/api/fiscalRegister/{id}`: disabled
+- `DELETE /rest/api/fiscalRegister/{id}`: disabled
+
 ## API лабораторных провайдеров
 
 - `GET /rest/api/provider-lab-requests/list`: provider_service_api
