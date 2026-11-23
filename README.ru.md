@@ -22,36 +22,27 @@ python3 scripts/serve_docs.py
 
 После этого откройте http://localhost:8081.
 
-Для запросов к локальному Docker API используйте именно `scripts/serve_docs.py`: он проксирует
-`/__local_api/` только на loopback-адреса (`localhost`, `*.localhost`, `127.0.0.1`, `::1`).
-Это позволяет работать с локальным HTTP API без настройки CORS на backend.
-Ключ вводится в Authorize и передаётся локальному API; сервер предпросмотра не записывает
-заголовки, URL API и ответы в журнал. Сервер слушает только `127.0.0.1`.
-Если порт занят: `python3 scripts/serve_docs.py --port 8091`, затем откройте http://localhost:8091/.
-Обычный `python3 -m http.server` позволяет читать документацию, но не проксирует локальные API-запросы.
+Чтобы отправить запрос через **Try it out**, укажите домен клиники или локальный адрес `http://one.localhost:8080/`, затем введите API-ключ через **Authorize**. Сервер предпросмотра позволяет отправлять запросы к локальному API без настройки CORS.
 
-Поле «Домен вашей клиники» задаёт адрес для Try it out. Оно изначально пустое. Можно указать домен клиники или локальный адрес `http://one.localhost:8080/`. Значение не сохраняется между перезагрузками.
+Если порт 8081 занят, запустите `python3 scripts/serve_docs.py --port 8091` и откройте http://localhost:8091/.
 
-Кнопка «FAQ по API» открывает [FAQ для интеграторов](faq.html): 12 ответов с примерами запросов, ограничениями и пометками о возможностях на тестировании. На странице есть ссылки на методы Swagger. Полная HTTP-проверка примеров ещё требуется.
-
-Этот способ использует `dist/swagger-initializer.js` из проекта и загружает `vetmanager_openapi_v6.yaml`. Поэтому локально применяются настройки интерфейса проекта, включая алфавитный порядок групп и сортировку операций GET → POST → PUT → DELETE. Порт 8081 выбран потому, что Ветменеджер уже слушает 8080.
+Примеры запросов собраны в [FAQ для интеграторов](faq.html).
 
 ## Проверка
 
-Для обычных изменений спецификации или документации достаточно выполнить локальную проверку. Создайте временное виртуальное окружение и установите единственную зависимость Python:
+Для проверки спецификации запустите из корня репозитория:
 
 ```bash
-`python3 -m venv /tmp/vetmanager-openapi-venv
-/tmp/vetmanager-openapi-venv/bin/pip install pyyaml`
+python3 scripts/validate_openapi.py
 ```
 
-Затем запустите:
+Если валидатор сообщает, что PyYAML отсутствует, создайте временное окружение. На Debian/Ubuntu при ошибке `ensurepip is not available` сначала установите пакет `python3-venv` или пакет `pythonX.Y-venv` для используемой версии Python.
 
 ```bash
-/tmp/vetmanager-openapi-venv/bin/python scripts/validate_openapi.py
+python3 -m venv /tmp/vetmanager-openapi-venv &&
+  /tmp/vetmanager-openapi-venv/bin/python -m pip install PyYAML &&
+  /tmp/vetmanager-openapi-venv/bin/python scripts/validate_openapi.py
 ```
-
-Окружение находится в `/tmp`, за пределами репозитория, поэтому его можно в любой момент удалить или создать заново. Если PyYAML уже установлен в активном окружении Python, достаточно выполнить `python3 scripts/validate_openapi.py`.
 
 Валидатор проверяет:
 

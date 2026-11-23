@@ -11,7 +11,7 @@
       "variables": {
         "domain": {
           "default": "",
-          "description": "Укажите домен без https://. Запросы будут отправляться в эту клинику."
+          "description": "Введите домен клиники для выполнения запросов к API. Укажите домен без https://."
         }
       }
     }
@@ -83,7 +83,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-REST-API-KEY",
-        "description": "API ключ для аутентификации\n\nКлюч клиники; интеграция REST API должна быть включена. Не определяет автоматически автора задачи. Сервисный доступ и Provider API имеют отдельный порядок подключения и ограничения, описанные во введении."
+        "description": "Ключ клиники; интеграция REST API должна быть включена. Не определяет автоматически автора задачи. Сервисный доступ и Provider API имеют отдельный порядок подключения и ограничения, описанные во введении."
       }
     },
     "parameters": {
@@ -18156,7 +18156,6 @@
           "Good"
         ],
         "operationId": "get_rest_api_good_ID",
-        "description": "data.good — один объект. В нём есть группа, единица хранения и параметры продажи.",
         "parameters": [
           {
             "name": "ID",
@@ -18185,7 +18184,18 @@
                       "type": "object",
                       "properties": {
                         "good": {
-                          "$ref": "#/components/schemas/good"
+                          "oneOf": [
+                            {
+                              "$ref": "#/components/schemas/good"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/good"
+                              },
+                              "maxItems": 0
+                            }
+                          ]
                         },
                         "totalCount": {
                           "type": "integer"

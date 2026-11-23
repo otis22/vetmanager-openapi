@@ -137,8 +137,9 @@ window.onload = function() {
                       });
                     }
                   }),
-                  React.createElement("p", { id: "clinic-domain-help" },
-                    "Введите домен клиники для выполнения запросов к API.")
+                  React.createElement("p", { id: "clinic-domain-help", style: { whiteSpace: "pre-line" } },
+                    "Введите домен клиники для выполнения запросов к API.\n" +
+                    "Для авторизации нажмите Authorize и введите API-ключ клиники в поле X-REST-API-KEY.")
                 );
               };
             }

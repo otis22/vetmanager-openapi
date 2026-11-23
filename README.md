@@ -27,39 +27,27 @@ python3 scripts/serve_docs.py
 
 Then open http://localhost:8081.
 
-Use `scripts/serve_docs.py` for local Docker API calls. It proxies `/__local_api/` only to
-loopback clinic hosts (`localhost`, `*.localhost`, `127.0.0.1`, `::1`), avoiding backend CORS changes.
-The key entered in Authorize is forwarded to the local API. API URLs, headers and response bodies
-are not logged. The preview server binds to `127.0.0.1` only.
-If the port is busy, run `python3 scripts/serve_docs.py --port 8091` and open http://localhost:8091/.
-A plain `python3 -m http.server` serves documentation but cannot proxy local API requests.
+To send a request with **Try it out**, enter your clinic hostname or a local URL such as `http://one.localhost:8080/`, then enter the API key through **Authorize**. The preview server allows requests to the local API without CORS configuration.
 
-The clinic address field sets the host for Try it out. It starts empty. Enter a clinic hostname or a local URL such as `http://one.localhost:8080/`. The value is not persisted across page reloads.
+If port 8081 is busy, run `python3 scripts/serve_docs.py --port 8091` and open http://localhost:8091/.
 
-The “FAQ по API” button opens the Russian [API FAQ](faq.html): 12 answers with request examples, limitations, testing notices, and links back to Swagger operations. Full HTTP verification of the examples is still pending.
-
-This serves the project's `dist/swagger-initializer.js` and loads `vetmanager_openapi_v6.yaml`, so local previews include project UI settings such as alphabetical tag order and GET → POST → PUT → DELETE operation sorting. Port 8081 is used because Vetmanager already listens on 8080.
+See the [API FAQ](faq.html) for request examples.
 
 ## Validate
 
-For ordinary specification or documentation changes, validation is the only
-required local command. Create a temporary virtual environment and install the
-only Python dependency:
+Run the validator from the repository root:
 
 ```bash
-python3 -m venv /tmp/vetmanager-openapi-venv
-/tmp/vetmanager-openapi-venv/bin/pip install pyyaml
+python3 scripts/validate_openapi.py
 ```
 
-Then run:
+If the validator reports that PyYAML is missing, create a temporary environment. On Debian/Ubuntu, if `ensurepip is not available`, first install `python3-venv` or the `pythonX.Y-venv` package matching your Python version.
 
 ```bash
-/tmp/vetmanager-openapi-venv/bin/python scripts/validate_openapi.py
+python3 -m venv /tmp/vetmanager-openapi-venv &&
+  /tmp/vetmanager-openapi-venv/bin/python -m pip install PyYAML &&
+  /tmp/vetmanager-openapi-venv/bin/python scripts/validate_openapi.py
 ```
-
-The environment under `/tmp` is intentionally outside the repository and can
-be removed or recreated at any time. If PyYAML is already installed in the
-active Python environment, `python3 scripts/validate_openapi.py` is sufficient.
 
 The validator checks:
 
