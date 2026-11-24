@@ -126,7 +126,329 @@
         }
       }
     },
+    "requestBodies": {
+      "RestListForm": {
+        "description": "Тело запроса можно опустить. Все поля формы необязательны.",
+        "required": false,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/RestListParameters"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/RestListParameters"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "FiscalRegisterList": {
+        "description": "Список регистраторов.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "fiscalRegister": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FiscalRegisterRecord"
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FiscalRegisterDataList": {
+        "description": "Список записей для фискального регистратора.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "fiscalRegisterData": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/fiscalRegisterData"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "invoice_id": {
+                                "type": "integer",
+                                "description": "Id счета в этой записи. В карточке одной записи поля нет."
+                              },
+                              "hash": {
+                                "type": "string",
+                                "description": "Служебный признак операции, не длиннее 50 символов. В карточке одной записи поля нет.",
+                                "maxLength": 50
+                              },
+                              "register": {
+                                "$ref": "#/components/schemas/FiscalRegisterRecord"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "InvoiceDocumentList": {
+        "description": "Успешный ответ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "invoiceDocument": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/invoiceDocument"
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "InvalidRestListRequest": {
+        "description": "Invalid list request parameters or body.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RestListError"
+            },
+            "example": {
+              "success": false,
+              "error": true,
+              "message": "Invalid list payload: form fields expected."
+            }
+          }
+        }
+      },
+      "RestListRequestTooLarge": {
+        "description": "List request parameters exceed the size limit.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RestListError"
+            },
+            "example": {
+              "success": false,
+              "error": true,
+              "message": "List request fields are too large."
+            }
+          }
+        }
+      }
+    },
     "schemas": {
+      "RestListError": {
+        "type": "object",
+        "required": [
+          "success",
+          "error",
+          "message"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "RestListParameters": {
+        "type": "object",
+        "properties": {
+          "filter": {
+            "type": "string",
+            "description": "Фильтр по полям ресурса. Передайте JSON-массив условий одной строкой.",
+            "example": "[{\"property\":\"id\",\"value\":42,\"operator\":\"=\"}]"
+          },
+          "sort": {
+            "type": "string",
+            "description": "Имя поля или JSON-массив правил сортировки с направлением ASC или DESC.",
+            "example": "id"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Количество записей на странице.",
+            "default": 100,
+            "example": 10
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Количество записей, которые нужно пропустить.",
+            "default": 0,
+            "example": 0
+          }
+        }
+      },
+      "FiscalRegisterRecord": {
+        "type": "object",
+        "description": "Карточка фискального регистратора.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 250
+          },
+          "api_key": {
+            "type": "string",
+            "description": "Ключ фискального регистратора, не длиннее 35 символов.",
+            "maxLength": 35
+          },
+          "cassa_ids": {
+            "type": "string",
+            "description": "Id связанных касс через запятую."
+          },
+          "status": {
+            "type": "string",
+            "description": "active — действующий, deleted — удален.",
+            "enum": [
+              "active",
+              "deleted"
+            ]
+          },
+          "register_type": {
+            "type": "string",
+            "enum": [
+              "atol",
+              "evotor",
+              "checkbox",
+              "ikassa"
+            ]
+          },
+          "tax_system": {
+            "type": "integer",
+            "description": "Номер системы налогообложения."
+          },
+          "tax_type_number": {
+            "type": "integer"
+          },
+          "allow_to_change_tax_system": {
+            "type": "integer"
+          },
+          "clinic_id": {
+            "type": "integer"
+          },
+          "org_name": {
+            "type": "string",
+            "maxLength": 250
+          },
+          "org_inn": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "org_address": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "org_post_index": {
+            "type": "string",
+            "maxLength": 15
+          },
+          "print_type": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "is_show_clients_last_name": {
+            "type": "integer"
+          },
+          "client_version": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "is_show_invoice_number": {
+            "type": "integer"
+          },
+          "tax_type_number_ten": {
+            "type": "integer"
+          },
+          "check_header": {
+            "type": "string",
+            "maxLength": 250
+          },
+          "check_footer": {
+            "type": "string",
+            "maxLength": 250
+          },
+          "data_operator_id": {
+            "type": "integer"
+          },
+          "receipt_format": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "is_marking_code": {
+            "type": "integer"
+          },
+          "is_default_register": {
+            "type": "integer"
+          },
+          "is_skip_mc_for_combinations": {
+            "type": "integer"
+          }
+        }
+      },
       "all": {
         "type": "object",
         "additionalProperties": false,
@@ -17578,6 +17900,119 @@
         "description": "Удаляет только выбранную запись истории ошибки. Не включает сервис webHook, не сбрасывает кешированную паузу и не переотправляет событие."
       }
     },
+    "/rest/api/fiscalRegister": {
+      "get": {
+        "summary": "Список фискальных регистраторов",
+        "tags": [
+          "FiscalRegister"
+        ],
+        "operationId": "get_rest_api_fiscalRegister",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FiscalRegisterList"
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegister/list": {
+      "post": {
+        "summary": "Список фискальных регистраторов по фильтру",
+        "tags": [
+          "FiscalRegister"
+        ],
+        "operationId": "post_rest_api_fiscalRegister_list",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RestListForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FiscalRegisterList"
+          },
+          "406": {
+            "$ref": "#/components/responses/InvalidRestListRequest"
+          },
+          "413": {
+            "$ref": "#/components/responses/RestListRequestTooLarge"
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegister/{ID}": {
+      "get": {
+        "summary": "Фискальный регистратор по ID",
+        "tags": [
+          "FiscalRegister"
+        ],
+        "operationId": "get_rest_api_fiscalRegister_ID",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Карточка регистратора или пустой результат, если ID не найден.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "fiscalRegister": {
+                          "oneOf": [
+                            {
+                              "$ref": "#/components/schemas/FiscalRegisterRecord"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/FiscalRegisterRecord"
+                              },
+                              "maxItems": 0,
+                              "description": "Пустой массив, если ID не найден."
+                            }
+                          ]
+                        },
+                        "totalCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/api/fiscalRegisterData": {
       "get": {
         "summary": "Список данных фискальных регистраторов",
@@ -17602,163 +18037,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Список записей для фискального регистратора.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "fiscalRegisterData": {
-                          "type": "array",
-                          "items": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/fiscalRegisterData"
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "invoice_id": {
-                                    "type": "integer",
-                                    "description": "Id счета в этой записи. В карточке одной записи поля нет."
-                                  },
-                                  "hash": {
-                                    "type": "string",
-                                    "description": "Служебный признак операции, не длиннее 50 символов. В карточке одной записи поля нет.",
-                                    "maxLength": 50
-                                  },
-                                  "register": {
-                                    "type": "object",
-                                    "description": "Карточка фискального регистратора. В карточке одной записи ее нет.",
-                                    "properties": {
-                                      "id": {
-                                        "type": "integer"
-                                      },
-                                      "title": {
-                                        "type": "string",
-                                        "maxLength": 250
-                                      },
-                                      "api_key": {
-                                        "type": "string",
-                                        "description": "Ключ фискального регистратора, не длиннее 35 символов.",
-                                        "maxLength": 35
-                                      },
-                                      "cassa_ids": {
-                                        "type": "string",
-                                        "description": "Id связанных касс через запятую."
-                                      },
-                                      "status": {
-                                        "type": "string",
-                                        "description": "active — действующий, deleted — удален.",
-                                        "enum": [
-                                          "active",
-                                          "deleted"
-                                        ]
-                                      },
-                                      "register_type": {
-                                        "type": "string",
-                                        "enum": [
-                                          "atol",
-                                          "evotor",
-                                          "checkbox",
-                                          "ikassa"
-                                        ]
-                                      },
-                                      "tax_system": {
-                                        "type": "integer",
-                                        "description": "Номер системы налогообложения."
-                                      },
-                                      "tax_type_number": {
-                                        "type": "integer"
-                                      },
-                                      "allow_to_change_tax_system": {
-                                        "type": "integer"
-                                      },
-                                      "clinic_id": {
-                                        "type": "integer"
-                                      },
-                                      "org_name": {
-                                        "type": "string",
-                                        "maxLength": 250
-                                      },
-                                      "org_inn": {
-                                        "type": "string",
-                                        "maxLength": 50
-                                      },
-                                      "org_address": {
-                                        "type": "string",
-                                        "maxLength": 500
-                                      },
-                                      "org_post_index": {
-                                        "type": "string",
-                                        "maxLength": 15
-                                      },
-                                      "print_type": {
-                                        "type": "string",
-                                        "maxLength": 50
-                                      },
-                                      "is_show_clients_last_name": {
-                                        "type": "integer"
-                                      },
-                                      "client_version": {
-                                        "type": "string",
-                                        "maxLength": 10
-                                      },
-                                      "is_show_invoice_number": {
-                                        "type": "integer"
-                                      },
-                                      "tax_type_number_ten": {
-                                        "type": "integer"
-                                      },
-                                      "check_header": {
-                                        "type": "string",
-                                        "maxLength": 250
-                                      },
-                                      "check_footer": {
-                                        "type": "string",
-                                        "maxLength": 250
-                                      },
-                                      "data_operator_id": {
-                                        "type": "integer"
-                                      },
-                                      "receipt_format": {
-                                        "type": "string",
-                                        "maxLength": 10
-                                      },
-                                      "is_marking_code": {
-                                        "type": "integer"
-                                      },
-                                      "is_default_register": {
-                                        "type": "integer"
-                                      },
-                                      "is_skip_mc_for_combinations": {
-                                        "type": "integer"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        "totalCount": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/FiscalRegisterDataList"
           }
         },
         "x-reconciliation": {
@@ -17767,6 +18046,29 @@
             "extjs"
           ],
           "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/fiscalRegisterData/list": {
+      "post": {
+        "summary": "Список данных фискальных регистраторов по фильтру",
+        "tags": [
+          "Fiscal Register Data"
+        ],
+        "operationId": "post_rest_api_fiscalRegisterData_list",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RestListForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FiscalRegisterDataList"
+          },
+          "406": {
+            "$ref": "#/components/responses/InvalidRestListRequest"
+          },
+          "413": {
+            "$ref": "#/components/responses/RestListRequestTooLarge"
+          }
         }
       }
     },
@@ -20359,36 +20661,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Успешный ответ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "invoiceDocument": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/invoiceDocument"
-                          }
-                        },
-                        "totalCount": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/InvoiceDocumentList"
           }
         },
         "x-reconciliation": {
@@ -20397,6 +20670,29 @@
             "extjs"
           ],
           "status": "confirmed"
+        }
+      }
+    },
+    "/rest/api/invoiceDocument/list": {
+      "post": {
+        "summary": "Список строк счёта по фильтру",
+        "tags": [
+          "InvoiceDocument"
+        ],
+        "operationId": "post_rest_api_invoiceDocument_list",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RestListForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/InvoiceDocumentList"
+          },
+          "406": {
+            "$ref": "#/components/responses/InvalidRestListRequest"
+          },
+          "413": {
+            "$ref": "#/components/responses/RestListRequestTooLarge"
+          }
         }
       }
     },
