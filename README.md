@@ -62,6 +62,10 @@ The validator checks:
 
 The same validation runs in GitHub Actions on pushes and pull requests.
 
+## Preview A Backend Branch
+
+Run `python3 scripts/preview_sync.py HEAD` to compare the current backend commit with the working OpenAPI specification. The script also accepts a backend branch, tag, or SHA. It writes a specification diff and review report to a separate directory. See the [synchronization plan](openapi-sync-plan.md) for options and examples. For HTTP contract checks on a test stand, pass `--api-base-url` and set `VETMANAGER_REST_API_KEY` in the environment.
+
 ## Reconcile The Specification
 
 Reconciliation is a maintainer workflow, not a prerequisite for every OpenAPI
