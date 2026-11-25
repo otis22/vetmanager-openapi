@@ -15044,86 +15044,9 @@ paths:
         - openapi
         - extjs
         status: confirmed
-  /rest/api/fiscalRegister:
-    get:
-      summary: Список фискальных регистраторов
-      responses:
-        '200':
-          description: Запрос выполнен
-  /rest/api/fiscalRegister/{ID}:
-    get:
-      summary: Карточка фискального регистратора
-      responses:
-        '200':
-          description: Запрос выполнен
-      parameters:
-      - name: ID
-        in: path
-        required: true
-        schema:
-          type: integer
-  /rest/api/fiscalRegister/list:
-    post:
-      summary: Чтение списка регистраторов
-      responses:
-        '200':
-          description: Запрос выполнен
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                filter:
-                  type: string
-                limit:
-                  type: integer
-                offset:
-                  type: integer
-                sort:
-                  type: string
-  /rest/api/invoiceDocument/list:
-    post:
-      summary: Чтение списка строк счёта
-      responses:
-        '200':
-          description: Запрос выполнен
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                filter:
-                  type: string
-                limit:
-                  type: integer
-                offset:
-                  type: integer
-                sort:
-                  type: string
-  /rest/api/fiscalRegisterData/list:
-    post:
-      summary: Чтение списка записей фискальных регистраторов
-      responses:
-        '200':
-          description: Запрос выполнен
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                filter:
-                  type: string
-                limit:
-                  type: integer
-                offset:
-                  type: integer
-                sort:
-                  type: string
   /rest/api/fiscalRegister/evotorFiscalRegisterLog:
     post:
+      operationId: post_rest_api_fiscalRegister_evotorFiscalRegisterLog
       summary: Приём журнала Эвотор (совместимость)
       responses:
         '200':
@@ -15138,6 +15061,7 @@ paths:
                   type: string
   /rest/api/fiscalRegister/evotorTelemetry:
     post:
+      operationId: post_rest_api_fiscalRegister_evotorTelemetry
       summary: Приём телеметрии Эвотор
       responses:
         '200':
@@ -15152,6 +15076,7 @@ paths:
                   type: string
   /rest/api/fiscalRegisterData/SetResponseData:
     post:
+      operationId: post_rest_api_fiscalRegisterData_SetResponseData
       summary: Сохранение ответа фискального регистратора
       responses:
         '200':
