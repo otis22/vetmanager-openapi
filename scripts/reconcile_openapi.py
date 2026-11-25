@@ -248,8 +248,9 @@ def custom_suffix_to_path(suffix: str) -> str:
     return re.sub(r"(?<!^)([A-Z])", r"-\1", suffix).lower()
 
 
-def collect_extjs_routes() -> dict[str, dict[str, Any]]:
+def collect_extjs_routes(documented_keys: set[str] | None = None) -> dict[str, dict[str, Any]]:
     routes: dict[str, dict[str, Any]] = {}
+    framework_list = False
     if EXTJS_MAIN.exists():
         text = EXTJS_MAIN.read_text(encoding="utf-8", errors="ignore")
         for match in re.finditer(
@@ -258,6 +259,8 @@ def collect_extjs_routes() -> dict[str, dict[str, Any]]:
         ):
             target, route_path, method = match.groups()
             path = normalize_path("/" + route_path)
+            if method == "POST" and target == "<controller>/restList" and path == "/rest/api/{controller}/list":
+                framework_list = True
             key = endpoint_key(method, path)
             routes[key] = {
                 "source": "extjs_explicit_route",
@@ -299,6 +302,22 @@ def collect_extjs_routes() -> dict[str, dict[str, Any]]:
             "PUT": f"{base}/{{id}}",
             "DELETE": f"{base}/{{id}}",
         }
+        list_path = f"{base}/list"
+        list_key = endpoint_key("POST", list_path)
+        if (
+            framework_list
+            and documented_keys
+            and list_key in documented_keys
+            and not re.search(r"^\s*(?:(?:final|public)\s+)*function\s+run\s*\(", text, re.M | re.I)
+        ):
+            routes.setdefault(list_key, {
+                "source": "extjs_default_rest",
+                "method": "POST",
+                "path": list_path,
+                "controller": controller.name,
+                "target": f"{api_name}/restList",
+            })
+
         for marker, path in default_methods.items():
             method = "GET" if marker == "GET_ID" else marker
             key = endpoint_key(method, path)
@@ -636,7 +655,7 @@ def main() -> int:
     excluded_routes = load_excluded_routes(EXCLUDED_ROUTES_FILE)
 
     openapi_eps = collect_openapi(current_openapi, "openapi")
-    extjs_eps = collect_extjs_routes()
+    extjs_eps = collect_extjs_routes(set(openapi_eps))
     nullable = extract_db_nullable()
 
     matrix = merge_endpoint_sources(
