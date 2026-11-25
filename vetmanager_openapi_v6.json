@@ -75,6 +75,10 @@
     },
     {
       "name": "Role"
+    },
+    {
+      "name": "Report AI Job",
+      "description": "Создание отчётов с помощью ИИ по текстовому запросу."
     }
   ],
   "components": {
@@ -20632,6 +20636,216 @@
         }
       }
     },
+    "/rest/api/fiscalRegister": {
+      "get": {
+        "summary": "Список фискальных регистраторов",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegister/{ID}": {
+      "get": {
+        "summary": "Карточка фискального регистратора",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/rest/api/fiscalRegister/list": {
+      "post": {
+        "summary": "Чтение списка регистраторов",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filter": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "type": "integer"
+                  },
+                  "sort": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/invoiceDocument/list": {
+      "post": {
+        "summary": "Чтение списка строк счёта",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filter": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "type": "integer"
+                  },
+                  "sort": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegisterData/list": {
+      "post": {
+        "summary": "Чтение списка записей фискальных регистраторов",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filter": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "type": "integer"
+                  },
+                  "sort": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegister/evotorFiscalRegisterLog": {
+      "post": {
+        "summary": "Приём журнала Эвотор (совместимость)",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "log": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegister/evotorTelemetry": {
+      "post": {
+        "summary": "Приём телеметрии Эвотор",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "log": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegisterData/SetResponseData": {
+      "post": {
+        "summary": "Сохранение ответа фискального регистратора",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "record_id": {
+                    "type": "integer"
+                  },
+                  "is_error": {
+                    "type": "boolean"
+                  },
+                  "error_message": {
+                    "type": "string"
+                  },
+                  "fiscal_sign": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/api/invoiceDocument": {
       "get": {
         "summary": "Список строк счёта",
@@ -24616,8 +24830,8 @@
           "UserCalls"
         ],
         "operationId": "createUserCall",
-        "summary": "Создать запись обзвона",
-        "description": "Создаёт строку fast_calling.",
+        "summary": "Создать задачу или запланировать звонок",
+        "description": "При type=task создаёт задачу, при type=call добавляет запись о запланированном звонке.",
         "requestBody": {
           "required": false,
           "content": {
