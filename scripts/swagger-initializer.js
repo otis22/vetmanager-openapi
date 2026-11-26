@@ -69,7 +69,10 @@ window.onload = function() {
                 React.createElement("p", null,
                   "Описание API для импорта в Postman и другие инструменты."),
                 React.createElement("a", { className: "docs-button spec-faq-link", href: "./faq.html" },
-                  "FAQ по API", React.createElement("span", { "aria-hidden": "true" }, "→"))
+                  "FAQ по API", React.createElement("span", { "aria-hidden": "true" }, "→")),
+                " ",
+                React.createElement("a", { className: "docs-button spec-faq-link", href: "./releases.html" },
+                  "Изменения API по релизам", React.createElement("span", { "aria-hidden": "true" }, "→"))
               );
             }
           },

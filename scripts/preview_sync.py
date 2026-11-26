@@ -164,6 +164,13 @@ def main() -> int:
             output.mkdir()
         (output / "openapi.diff").write_text(diff, encoding="utf-8")
         (output / "review.md").write_text(report, encoding="utf-8")
+        candidates = [
+            {"method": row["method"], "path": row["path"], "source": row["extjs_source"],
+             "controller": row.get("extjs_controller"), "action": row.get("extjs_method_name")}
+            for row in rows if row["status"] == "extjs_only_candidate"
+            and "{controller}" not in row["path"]
+        ]
+        reconcile.write_json(output / "route-candidates.json", candidates)
         http_failures = 0
         if args.api_base_url:
             http_report, http_failures = run_http_checks(proposed, args.api_base_url)

@@ -26,8 +26,6 @@ python3 scripts/serve_docs.py
 
 Если порт 8081 занят, запустите `python3 scripts/serve_docs.py --port 8091` и откройте http://localhost:8091/.
 
-Примеры запросов собраны в [FAQ для интеграторов](faq.html).
-
 ## Проверка
 
 Для проверки спецификации запустите из корня репозитория:
@@ -36,13 +34,23 @@ python3 scripts/serve_docs.py
 python3 scripts/validate_openapi.py
 ```
 
-Если валидатор сообщает, что PyYAML отсутствует, создайте временное окружение. На Debian/Ubuntu при ошибке `ensurepip is not available` сначала установите пакет `python3-venv` или пакет `pythonX.Y-venv` для используемой версии Python.
+Если валидатор вернул `"valid": true`, проверка завершена.
+
+Если отсутствует PyYAML, установите его в отдельное окружение и запустите валидатор из него:
 
 ```bash
 python3 -m venv /tmp/vetmanager-openapi-venv &&
   /tmp/vetmanager-openapi-venv/bin/python -m pip install PyYAML &&
   /tmp/vetmanager-openapi-venv/bin/python scripts/validate_openapi.py
 ```
+
+Если при создании окружения Debian или Ubuntu сообщает `ensurepip is not available`, установите пакет для версии Python, указанной в сообщении об ошибке. Например, для Python 3.14 выполните:
+
+```bash
+sudo apt install python3.14-venv
+```
+
+После установки повторите команды создания окружения и запуска валидатора.
 
 Валидатор проверяет:
 

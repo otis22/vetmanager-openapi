@@ -245,7 +245,7 @@ def kebab_from_controller(controller_file: Path) -> str:
 def custom_suffix_to_path(suffix: str) -> str:
     if not suffix:
         return ""
-    return re.sub(r"(?<!^)([A-Z])", r"-\1", suffix).lower()
+    return suffix[:1].lower() + suffix[1:]
 
 
 def collect_extjs_routes(documented_keys: set[str] | None = None) -> dict[str, dict[str, Any]]:
@@ -306,8 +306,6 @@ def collect_extjs_routes(documented_keys: set[str] | None = None) -> dict[str, d
         list_key = endpoint_key("POST", list_path)
         if (
             framework_list
-            and documented_keys
-            and list_key in documented_keys
             and not re.search(r"^\s*(?:(?:final|public)\s+)*function\s+run\s*\(", text, re.M | re.I)
         ):
             routes.setdefault(list_key, {
@@ -482,10 +480,38 @@ def probe_devtr6(openapi_endpoints: dict[str, dict[str, Any]], limit: int = 80) 
     }
 
 
+def route_identity(key: str, custom: bool = True) -> str:
+    method, path = key.split(" ", 1)
+    parts = path.split("/")
+    if len(parts) >= 4 and parts[1:3] == ["rest", "api"]:
+        parts[3] = parts[3][:1].lower() + parts[3][1:]
+        if custom and len(parts) > 4 and not parts[-1].startswith("{"):
+            parts[-1] = parts[-1].lower()
+    return method + " " + "/".join(parts)
+
+
 def merge_endpoint_sources(
     *sources: tuple[str, dict[str, dict[str, Any]]],
     excluded_routes: dict[str, str],
 ) -> list[dict[str, Any]]:
+    reference_keys = set(excluded_routes)
+    for name, data in sources:
+        if name == "openapi":
+            reference_keys.update(data)
+    aliases = {}
+    for key in reference_keys:
+        aliases.setdefault(route_identity(key), set()).add(key)
+    aligned = []
+    for name, data in sources:
+        if name == "extjs":
+            matched = {}
+            for key, entry in data.items():
+                candidates = aliases.get(route_identity(key, entry.get("source") == "extjs_custom_rest"), set())
+                canonical = next(iter(candidates)) if len(candidates) == 1 and key not in reference_keys else key
+                matched[canonical] = entry
+            data = matched
+        aligned.append((name, data))
+    sources = aligned
     keys = sorted({key for _, data in sources for key in data})
     rows = []
     for key in keys:

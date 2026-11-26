@@ -31,7 +31,7 @@ To send a request with **Try it out**, enter your clinic hostname or a local URL
 
 If port 8081 is busy, run `python3 scripts/serve_docs.py --port 8091` and open http://localhost:8091/.
 
-See the [API FAQ](faq.html) for request examples.
+See the [API FAQ](faq.html) for request examples. The **Изменения API по релизам** button opens the [API release history](releases.html), with the latest version first.
 
 ## Validate
 
@@ -41,13 +41,23 @@ Run the validator from the repository root:
 python3 scripts/validate_openapi.py
 ```
 
-If the validator reports that PyYAML is missing, create a temporary environment. On Debian/Ubuntu, if `ensurepip is not available`, first install `python3-venv` or the `pythonX.Y-venv` package matching your Python version.
+If the validator returns `"valid": true`, validation is complete.
+
+If PyYAML is missing, install it in a virtual environment and run the validator there.
 
 ```bash
 python3 -m venv /tmp/vetmanager-openapi-venv &&
   /tmp/vetmanager-openapi-venv/bin/python -m pip install PyYAML &&
   /tmp/vetmanager-openapi-venv/bin/python scripts/validate_openapi.py
 ```
+
+If creating the environment on Debian or Ubuntu fails with `ensurepip is not available`, install the package for the Python version shown in the error. For Python 3.14, run:
+
+```bash
+sudo apt install python3.14-venv
+```
+
+Then repeat the virtual environment and validation commands.
 
 The validator checks:
 
@@ -60,7 +70,7 @@ The validator checks:
 - Swagger UI references to `vetmanager_openapi_v6.yaml`.
 - no obvious secret literals in README, scripts, or reconciliation artifacts.
 
-The same validation runs in GitHub Actions on pushes and pull requests.
+The same validation runs in GitHub Actions on pushes to `master` and on pull requests.
 
 ## Preview A Backend Branch
 
@@ -79,7 +89,7 @@ The reconciliation flow compares the committed specification with
 Expected local layout:
 
 ```text
-/home/art/Projects/
+/path/to/projects/
   vetmanager-openapi/
   vetmanager-extjs/
 ```
