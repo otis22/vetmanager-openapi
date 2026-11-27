@@ -75,6 +75,10 @@
     },
     {
       "name": "Role"
+    },
+    {
+      "name": "Report AI Job",
+      "description": "Создание отчётов с помощью ИИ по текстовому запросу."
     }
   ],
   "components": {
@@ -4269,6 +4273,7 @@
       "payinvoice": {
         "type": "object",
         "required": [
+          "user_id",
           "clinic_id",
           "invoice_data"
         ],
@@ -4276,7 +4281,7 @@
           "user_id": {
             "type": "integer",
             "minimum": 1,
-            "description": "Сервер это поле не читает. Сотрудник берётся из токена пользователя. Без токена ответ success=false и error_data.message «Пользователь не определен.»",
+            "description": "Обязательное поле публичного запроса с X-REST-API-KEY. Передайте положительный целочисленный ID активного сотрудника без ограничения доступа, которому доступна clinic_id. Сервер выбирает доступную ему кассу. При мобильной авторизации сотрудник определяется по токену.",
             "example": 1
           },
           "clinic_id": {
@@ -20631,6 +20636,90 @@
         }
       }
     },
+    "/rest/api/fiscalRegister/evotorFiscalRegisterLog": {
+      "post": {
+        "operationId": "post_rest_api_fiscalRegister_evotorFiscalRegisterLog",
+        "summary": "Приём журнала Эвотор (совместимость)",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "log": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegister/evotorTelemetry": {
+      "post": {
+        "operationId": "post_rest_api_fiscalRegister_evotorTelemetry",
+        "summary": "Приём телеметрии Эвотор",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "log": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rest/api/fiscalRegisterData/SetResponseData": {
+      "post": {
+        "operationId": "post_rest_api_fiscalRegisterData_SetResponseData",
+        "summary": "Сохранение ответа фискального регистратора",
+        "responses": {
+          "200": {
+            "description": "Запрос выполнен"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "record_id": {
+                    "type": "integer"
+                  },
+                  "is_error": {
+                    "type": "boolean"
+                  },
+                  "error_message": {
+                    "type": "string"
+                  },
+                  "fiscal_sign": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/rest/api/invoiceDocument": {
       "get": {
         "summary": "Список строк счёта",
@@ -20638,7 +20727,7 @@
           "InvoiceDocument"
         ],
         "operationId": "get_rest_api_invoiceDocument",
-        "description": "Строка содержит товар, заголовок счета и параметр продажи. Допустимые цены и party_info есть только в карточке строки.\n\nДля строк конкретного счёта фильтруйте document_id. tag_id связывает строку с обычной комбинацией; шаблон при раскрытии получает tag_id=0. price — сумма строки за всё количество. Номер счёта ищите через documentNumber с document_type=invoice и document_id.",
+        "description": "Строка содержит товар, заголовок счета и параметр продажи. Допустимые цены и party_info есть только в карточке строки.\n\nДля строк конкретного счёта фильтруйте document_id. tag_id связывает строку с обычной комбинацией; шаблон при раскрытии получает tag_id=0. price — сумма строки за всё количество. Номер счёта ищите через documentNumber с document_type=invoice и document_id.\n\nРесурс доступен только для чтения. Для длинных фильтров поддерживается POST /rest/api/invoiceDocument/list.",
         "parameters": [
           {
             "name": "filter",
@@ -24615,8 +24704,8 @@
           "UserCalls"
         ],
         "operationId": "createUserCall",
-        "summary": "Создать запись обзвона",
-        "description": "Создаёт строку fast_calling.",
+        "summary": "Создать задачу или запланировать звонок",
+        "description": "При type=task создаёт задачу, при type=call добавляет запись о запланированном звонке.",
         "requestBody": {
           "required": false,
           "content": {
